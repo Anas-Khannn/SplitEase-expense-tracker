@@ -18,6 +18,11 @@ module.exports = (sequelize) => {
         type: DataTypes.UUID,
         allowNull: false,
       },
+      role: {
+        type: DataTypes.ENUM("admin", "member"),
+        allowNull: false,
+        defaultValue: "member",
+      },
       joined_at: {
         type: DataTypes.DATE,
         allowNull: false,
