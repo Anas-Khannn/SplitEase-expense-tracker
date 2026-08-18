@@ -1,0 +1,79 @@
+const { DataTypes } = require("sequelize");
+const sequelize = require("../../config/database");
+
+const User = require("./User")(sequelize, DataTypes);
+const Group = require("./Group")(sequelize, DataTypes);
+const GroupMember = require("./GroupMember")(sequelize, DataTypes);
+const Expense = require("./Expense")(sequelize, DataTypes);
+const ExpenseSplit = require("./ExpenseSplit")(sequelize, DataTypes);
+const Payment = require("./Payment")(sequelize, DataTypes);
+const ExpenseReaction = require("./ExpenseReaction")(sequelize, DataTypes);
+const ActivityLog = require("./ActivityLog")(sequelize, DataTypes);
+
+// User ↔ Group
+User.hasMany(Group, { foreignKey: "created_by", as: "createdGroups" });
+Group.belongsTo(User, { foreignKey: "created_by", as: "creator" });
+
+// User ↔ GroupMember
+User.hasMany(GroupMember, { foreignKey: "user_id", as: "groupMemberships" });
+GroupMember.belongsTo(User, { foreignKey: "user_id", as: "user" });
+
+// Group ↔ GroupMember
+Group.hasMany(GroupMember, { foreignKey: "group_id", as: "members" });
+GroupMember.belongsTo(Group, { foreignKey: "group_id", as: "group" });
+
+// Group ↔ Expense
+Group.hasMany(Expense, { foreignKey: "group_id", as: "expenses" });
+Expense.belongsTo(Group, { foreignKey: "group_id", as: "group" });
+
+// User ↔ Expense
+User.hasMany(Expense, { foreignKey: "paid_by", as: "paidExpenses" });
+Expense.belongsTo(User, { foreignKey: "paid_by", as: "payer" });
+
+// Expense ↔ ExpenseSplit
+Expense.hasMany(ExpenseSplit, { foreignKey: "expense_id", as: "splits" });
+ExpenseSplit.belongsTo(Expense, { foreignKey: "expense_id", as: "expense" });
+
+// User ↔ ExpenseSplit
+User.hasMany(ExpenseSplit, { foreignKey: "user_id", as: "expenseSplits" });
+ExpenseSplit.belongsTo(User, { foreignKey: "user_id", as: "user" });
+
+// Group ↔ Payment
+Group.hasMany(Payment, { foreignKey: "group_id", as: "payments" });
+Payment.belongsTo(Group, { foreignKey: "group_id", as: "group" });
+
+// User ↔ Payment (paidBy)
+User.hasMany(Payment, { foreignKey: "paid_by", as: "sentPayments" });
+Payment.belongsTo(User, { foreignKey: "paid_by", as: "payer" });
+
+// User ↔ Payment (paidTo)
+User.hasMany(Payment, { foreignKey: "paid_to", as: "receivedPayments" });
+Payment.belongsTo(User, { foreignKey: "paid_to", as: "receiver" });
+
+// Expense ↔ ExpenseReaction
+Expense.hasMany(ExpenseReaction, { foreignKey: "expense_id", as: "reactions" });
+ExpenseReaction.belongsTo(Expense, { foreignKey: "expense_id", as: "expense" });
+
+// User ↔ ExpenseReaction
+User.hasMany(ExpenseReaction, { foreignKey: "user_id", as: "reactions" });
+ExpenseReaction.belongsTo(User, { foreignKey: "user_id", as: "user" });
+
+// Group ↔ ActivityLog
+Group.hasMany(ActivityLog, { foreignKey: "group_id", as: "activities" });
+ActivityLog.belongsTo(Group, { foreignKey: "group_id", as: "group" });
+
+// User ↔ ActivityLog
+User.hasMany(ActivityLog, { foreignKey: "user_id", as: "activities" });
+ActivityLog.belongsTo(User, { foreignKey: "user_id", as: "user" });
+
+module.exports = {
+  sequelize,
+  User,
+  Group,
+  GroupMember,
+  Expense,
+  ExpenseSplit,
+  Payment,
+  ExpenseReaction,
+  ActivityLog,
+};
