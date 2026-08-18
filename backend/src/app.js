@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const authRoutes = require("./modules/auth/auth.routes");
 
 const app = express();
 
@@ -12,5 +13,7 @@ app.get("/api/health", (req, res) => {
     message: "SplitEase API is running",
   });
 });
+
+app.use("/api/auth", authRoutes);
 
 module.exports = app;
