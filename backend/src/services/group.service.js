@@ -64,7 +64,7 @@ const getMyGroups = async (userId) => {
   }));
 };
 
-const getGroupById = async (groupId, userId) => {
+const getGroupById = async (groupId) => {
   const group = await Group.findByPk(groupId, {
     include: [
       {
@@ -80,17 +80,16 @@ const getGroupById = async (groupId, userId) => {
         attributes: ["role", "joined_at"],
       },
     ],
-    attributes: ["group_id", "name", "icon", "description", "created_by", "created_at", "updated_at"],
+    attributes: [
+      "group_id",
+      "name",
+      "icon",
+      "description",
+      "created_by",
+      "created_at",
+      "updated_at",
+    ],
   });
-
-  if (!group) {
-    throw new NotFoundError("Group not found");
-  }
-
-  const isMember = group.members.some((m) => m.user.user_id === userId);
-  if (!isMember) {
-    throw new ForbiddenError("You are not a member of this group");
-  }
 
   return {
     group_id: group.group_id,
@@ -110,20 +109,7 @@ const getGroupById = async (groupId, userId) => {
   };
 };
 
-const getGroupMembers = async (groupId, userId) => {
-  const group = await Group.findByPk(groupId);
-  if (!group) {
-    throw new NotFoundError("Group not found");
-  }
-
-  const requesterMembership = await GroupMember.findOne({
-    where: { group_id: groupId, user_id: userId },
-  });
-
-  if (!requesterMembership) {
-    throw new ForbiddenError("You are not a member of this group");
-  }
-
+const getGroupMembers = async (groupId) => {
   const members = await GroupMember.findAll({
     where: { group_id: groupId },
     include: [
@@ -145,20 +131,7 @@ const getGroupMembers = async (groupId, userId) => {
   }));
 };
 
-const addMember = async (groupId, requesterId, targetUserId) => {
-  const group = await Group.findByPk(groupId);
-  if (!group) {
-    throw new NotFoundError("Group not found");
-  }
-
-  const requesterMembership = await GroupMember.findOne({
-    where: { group_id: groupId, user_id: requesterId },
-  });
-
-  if (!requesterMembership || requesterMembership.role !== "admin") {
-    throw new ForbiddenError("Only group admins can add members");
-  }
-
+const addMember = async (groupId, targetUserId) => {
   const targetUser = await User.findByPk(targetUserId);
   if (!targetUser) {
     throw new NotFoundError("User not found");
@@ -187,24 +160,7 @@ const addMember = async (groupId, requesterId, targetUserId) => {
   };
 };
 
-const removeMember = async (groupId, requesterId, targetUserId) => {
-  const group = await Group.findByPk(groupId);
-  if (!group) {
-    throw new NotFoundError("Group not found");
-  }
-
-  const requesterMembership = await GroupMember.findOne({
-    where: { group_id: groupId, user_id: requesterId },
-  });
-
-  if (!requesterMembership || requesterMembership.role !== "admin") {
-    throw new ForbiddenError("Only group admins can remove members");
-  }
-
-  if (requesterId === targetUserId) {
-    throw new BadRequestError("Admins cannot remove themselves from the group");
-  }
-
+const removeMember = async (groupId, targetUserId) => {
   const targetMembership = await GroupMember.findOne({
     where: { group_id: groupId, user_id: targetUserId },
   });
@@ -228,24 +184,7 @@ const removeMember = async (groupId, requesterId, targetUserId) => {
   return { message: "Member removed successfully" };
 };
 
-const updateMemberRole = async (groupId, requesterId, targetUserId, newRole) => {
-  const group = await Group.findByPk(groupId);
-  if (!group) {
-    throw new NotFoundError("Group not found");
-  }
-
-  const requesterMembership = await GroupMember.findOne({
-    where: { group_id: groupId, user_id: requesterId },
-  });
-
-  if (!requesterMembership || requesterMembership.role !== "admin") {
-    throw new ForbiddenError("Only group admins can change member roles");
-  }
-
-  if (requesterId === targetUserId) {
-    throw new BadRequestError("Admins cannot change their own role");
-  }
-
+const updateMemberRole = async (groupId, targetUserId, newRole) => {
   const targetMembership = await GroupMember.findOne({
     where: { group_id: groupId, user_id: targetUserId },
   });

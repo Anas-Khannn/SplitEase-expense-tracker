@@ -120,14 +120,16 @@ Expense.belongsToMany(User, {
 // DATABASE AUTHENTICATION
 // =====================================================
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("Database connected successfully.");
-  })
-  .catch((error) => {
-    console.error("Unable to connect to the database:", error);
-  });
+if (process.env.NODE_ENV !== "test") {
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log("Database connected successfully.");
+    })
+    .catch((error) => {
+      console.error("Unable to connect to the database:", error);
+    });
+}
 
 module.exports = {
   sequelize,

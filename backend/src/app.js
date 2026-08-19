@@ -1,4 +1,3 @@
-const env = require("./config/env");
 const express = require("express");
 const cors = require("cors");
 const routes = require("./routes");
@@ -20,11 +19,5 @@ app.get("/api/health", (req, res) => {
 app.use("/api", routes);
 
 app.use(errorHandler);
-
-const PORT = env.port;
-
-app.listen(PORT, () => {
-  console.log(`SplitEase server running on port ${PORT} [${env.nodeEnv}]`);
-});
 
 module.exports = app;

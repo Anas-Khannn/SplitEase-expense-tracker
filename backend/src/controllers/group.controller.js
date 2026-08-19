@@ -30,10 +30,7 @@ const getMyGroups = async (req, res, next) => {
 
 const getGroupById = async (req, res, next) => {
   try {
-    const group = await groupService.getGroupById(
-      req.params.groupId,
-      req.user.user_id
-    );
+    const group = await groupService.getGroupById(req.params.groupId);
 
     return res.status(HTTP_STATUSES.OK).json({
       success: true,
@@ -46,10 +43,7 @@ const getGroupById = async (req, res, next) => {
 
 const getGroupMembers = async (req, res, next) => {
   try {
-    const members = await groupService.getGroupMembers(
-      req.params.groupId,
-      req.user.user_id
-    );
+    const members = await groupService.getGroupMembers(req.params.groupId);
 
     return res.status(HTTP_STATUSES.OK).json({
       success: true,
@@ -64,7 +58,6 @@ const addMember = async (req, res, next) => {
   try {
     const result = await groupService.addMember(
       req.params.groupId,
-      req.user.user_id,
       req.body.user_id
     );
 
@@ -82,7 +75,6 @@ const removeMember = async (req, res, next) => {
   try {
     const result = await groupService.removeMember(
       req.params.groupId,
-      req.user.user_id,
       req.params.userId
     );
 
@@ -99,7 +91,6 @@ const updateMemberRole = async (req, res, next) => {
   try {
     const result = await groupService.updateMemberRole(
       req.params.groupId,
-      req.user.user_id,
       req.params.userId,
       req.body.role
     );
