@@ -1,12 +1,13 @@
 const { verifyToken } = require("../utils/jwt");
 const { User } = require("../database/models");
+const HTTP_STATUSES = require("../constants/http-statuses");
 
 const authenticate = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({
+      return res.status(HTTP_STATUSES.UNAUTHORIZED).json({
         success: false,
         message: "Access denied. No token provided.",
       });
@@ -15,7 +16,7 @@ const authenticate = async (req, res, next) => {
     const token = authHeader.split(" ")[1];
 
     if (!token) {
-      return res.status(401).json({
+      return res.status(HTTP_STATUSES.UNAUTHORIZED).json({
         success: false,
         message: "Access denied. No token provided.",
       });
@@ -25,7 +26,7 @@ const authenticate = async (req, res, next) => {
     try {
       decoded = verifyToken(token);
     } catch (err) {
-      return res.status(401).json({
+      return res.status(HTTP_STATUSES.UNAUTHORIZED).json({
         success: false,
         message: "Invalid or expired token.",
       });
@@ -34,7 +35,7 @@ const authenticate = async (req, res, next) => {
     const user = await User.findByPk(decoded.user_id);
 
     if (!user) {
-      return res.status(401).json({
+      return res.status(HTTP_STATUSES.UNAUTHORIZED).json({
         success: false,
         message: "Invalid token. User not found.",
       });
@@ -43,7 +44,7 @@ const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    return res.status(500).json({
+    return res.status(HTTP_STATUSES.INTERNAL_SERVER_ERROR).json({
       success: false,
       message: "Internal server error.",
     });

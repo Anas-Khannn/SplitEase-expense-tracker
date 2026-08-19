@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const groupController = require("./group.controller");
-const authenticate = require("../../middlewares/auth.middleware");
-const validate = require("../../middlewares/validate.middleware");
+const groupController = require("../controllers/group.controller");
+const authenticate = require("../middlewares/auth.middleware");
+const validate = require("../middlewares/validate.middleware");
 const {
   createGroupSchema,
   addMemberSchema,
   updateMemberRoleSchema,
-} = require("./group.validation");
+} = require("../validators/group.validation");
 
 router.post(
   "/",

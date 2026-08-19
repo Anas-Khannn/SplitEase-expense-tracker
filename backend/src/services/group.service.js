@@ -1,5 +1,11 @@
-const { Group, GroupMember, User } = require("../../database/models");
-const { sequelize } = require("../../database/models");
+const { Group, GroupMember, User } = require("../database/models");
+const { sequelize } = require("../database/models");
+const {
+  NotFoundError,
+  ForbiddenError,
+  ConflictError,
+  BadRequestError,
+} = require("../errors");
 
 const createGroup = async (userId, { name, icon, description }) => {
   const result = await sequelize.transaction(async (t) => {
@@ -78,16 +84,12 @@ const getGroupById = async (groupId, userId) => {
   });
 
   if (!group) {
-    const error = new Error("Group not found");
-    error.statusCode = 404;
-    throw error;
+    throw new NotFoundError("Group not found");
   }
 
   const isMember = group.members.some((m) => m.user.user_id === userId);
   if (!isMember) {
-    const error = new Error("You are not a member of this group");
-    error.statusCode = 403;
-    throw error;
+    throw new ForbiddenError("You are not a member of this group");
   }
 
   return {
@@ -111,9 +113,7 @@ const getGroupById = async (groupId, userId) => {
 const getGroupMembers = async (groupId, userId) => {
   const group = await Group.findByPk(groupId);
   if (!group) {
-    const error = new Error("Group not found");
-    error.statusCode = 404;
-    throw error;
+    throw new NotFoundError("Group not found");
   }
 
   const requesterMembership = await GroupMember.findOne({
@@ -121,9 +121,7 @@ const getGroupMembers = async (groupId, userId) => {
   });
 
   if (!requesterMembership) {
-    const error = new Error("You are not a member of this group");
-    error.statusCode = 403;
-    throw error;
+    throw new ForbiddenError("You are not a member of this group");
   }
 
   const members = await GroupMember.findAll({
@@ -150,9 +148,7 @@ const getGroupMembers = async (groupId, userId) => {
 const addMember = async (groupId, requesterId, targetUserId) => {
   const group = await Group.findByPk(groupId);
   if (!group) {
-    const error = new Error("Group not found");
-    error.statusCode = 404;
-    throw error;
+    throw new NotFoundError("Group not found");
   }
 
   const requesterMembership = await GroupMember.findOne({
@@ -160,16 +156,12 @@ const addMember = async (groupId, requesterId, targetUserId) => {
   });
 
   if (!requesterMembership || requesterMembership.role !== "admin") {
-    const error = new Error("Only group admins can add members");
-    error.statusCode = 403;
-    throw error;
+    throw new ForbiddenError("Only group admins can add members");
   }
 
   const targetUser = await User.findByPk(targetUserId);
   if (!targetUser) {
-    const error = new Error("User not found");
-    error.statusCode = 404;
-    throw error;
+    throw new NotFoundError("User not found");
   }
 
   const existingMembership = await GroupMember.findOne({
@@ -177,9 +169,7 @@ const addMember = async (groupId, requesterId, targetUserId) => {
   });
 
   if (existingMembership) {
-    const error = new Error("User is already a member of this group");
-    error.statusCode = 409;
-    throw error;
+    throw new ConflictError("User is already a member of this group");
   }
 
   const membership = await GroupMember.create({
@@ -200,9 +190,7 @@ const addMember = async (groupId, requesterId, targetUserId) => {
 const removeMember = async (groupId, requesterId, targetUserId) => {
   const group = await Group.findByPk(groupId);
   if (!group) {
-    const error = new Error("Group not found");
-    error.statusCode = 404;
-    throw error;
+    throw new NotFoundError("Group not found");
   }
 
   const requesterMembership = await GroupMember.findOne({
@@ -210,15 +198,11 @@ const removeMember = async (groupId, requesterId, targetUserId) => {
   });
 
   if (!requesterMembership || requesterMembership.role !== "admin") {
-    const error = new Error("Only group admins can remove members");
-    error.statusCode = 403;
-    throw error;
+    throw new ForbiddenError("Only group admins can remove members");
   }
 
   if (requesterId === targetUserId) {
-    const error = new Error("Admins cannot remove themselves from the group");
-    error.statusCode = 400;
-    throw error;
+    throw new BadRequestError("Admins cannot remove themselves from the group");
   }
 
   const targetMembership = await GroupMember.findOne({
@@ -226,9 +210,7 @@ const removeMember = async (groupId, requesterId, targetUserId) => {
   });
 
   if (!targetMembership) {
-    const error = new Error("User is not a member of this group");
-    error.statusCode = 404;
-    throw error;
+    throw new NotFoundError("User is not a member of this group");
   }
 
   if (targetMembership.role === "admin") {
@@ -237,9 +219,7 @@ const removeMember = async (groupId, requesterId, targetUserId) => {
     });
 
     if (adminCount <= 1) {
-      const error = new Error("Cannot remove the last admin from the group");
-      error.statusCode = 400;
-      throw error;
+      throw new BadRequestError("Cannot remove the last admin from the group");
     }
   }
 
@@ -251,9 +231,7 @@ const removeMember = async (groupId, requesterId, targetUserId) => {
 const updateMemberRole = async (groupId, requesterId, targetUserId, newRole) => {
   const group = await Group.findByPk(groupId);
   if (!group) {
-    const error = new Error("Group not found");
-    error.statusCode = 404;
-    throw error;
+    throw new NotFoundError("Group not found");
   }
 
   const requesterMembership = await GroupMember.findOne({
@@ -261,15 +239,11 @@ const updateMemberRole = async (groupId, requesterId, targetUserId, newRole) => 
   });
 
   if (!requesterMembership || requesterMembership.role !== "admin") {
-    const error = new Error("Only group admins can change member roles");
-    error.statusCode = 403;
-    throw error;
+    throw new ForbiddenError("Only group admins can change member roles");
   }
 
   if (requesterId === targetUserId) {
-    const error = new Error("Admins cannot change their own role");
-    error.statusCode = 400;
-    throw error;
+    throw new BadRequestError("Admins cannot change their own role");
   }
 
   const targetMembership = await GroupMember.findOne({
@@ -277,15 +251,11 @@ const updateMemberRole = async (groupId, requesterId, targetUserId, newRole) => 
   });
 
   if (!targetMembership) {
-    const error = new Error("User is not a member of this group");
-    error.statusCode = 404;
-    throw error;
+    throw new NotFoundError("User is not a member of this group");
   }
 
   if (targetMembership.role === newRole) {
-    const error = new Error(`User already has the role '${newRole}'`);
-    error.statusCode = 400;
-    throw error;
+    throw new BadRequestError(`User already has the role '${newRole}'`);
   }
 
   if (targetMembership.role === "admin" && newRole === "member") {
@@ -294,9 +264,7 @@ const updateMemberRole = async (groupId, requesterId, targetUserId, newRole) => 
     });
 
     if (adminCount <= 1) {
-      const error = new Error("Cannot demote the last admin of the group");
-      error.statusCode = 400;
-      throw error;
+      throw new BadRequestError("Cannot demote the last admin of the group");
     }
   }
 

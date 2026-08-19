@@ -1,6 +1,7 @@
-const { User } = require("../../database/models");
-const { hashPassword, comparePassword } = require("../../utils/password");
-const { generateToken } = require("../../utils/jwt");
+const { User } = require("../database/models");
+const { hashPassword, comparePassword } = require("../utils/password");
+const { generateToken } = require("../utils/jwt");
+const { ConflictError, UnauthorizedError, NotFoundError } = require("../errors");
 
 const safeUserFields = ["user_id", "name", "email", "created_at", "updated_at"];
 
@@ -17,9 +18,7 @@ const signup = async ({ name, email, password }) => {
   const existingUser = await User.findOne({ where: { email } });
 
   if (existingUser) {
-    const error = new Error("A user with this email already exists");
-    error.statusCode = 409;
-    throw error;
+    throw new ConflictError("A user with this email already exists");
   }
 
   const passwordHash = await hashPassword(password);
@@ -42,17 +41,13 @@ const login = async ({ email, password }) => {
   const user = await User.findOne({ where: { email } });
 
   if (!user) {
-    const error = new Error("Invalid email or password");
-    error.statusCode = 401;
-    throw error;
+    throw new UnauthorizedError("Invalid email or password");
   }
 
   const isPasswordValid = await comparePassword(password, user.password_hash);
 
   if (!isPasswordValid) {
-    const error = new Error("Invalid email or password");
-    error.statusCode = 401;
-    throw error;
+    throw new UnauthorizedError("Invalid email or password");
   }
 
   const token = generateToken({ user_id: user.user_id });
@@ -67,9 +62,7 @@ const getMe = async (userId) => {
   const user = await User.findByPk(userId);
 
   if (!user) {
-    const error = new Error("User not found");
-    error.statusCode = 404;
-    throw error;
+    throw new NotFoundError("User not found");
   }
 
   return formatUser(user);

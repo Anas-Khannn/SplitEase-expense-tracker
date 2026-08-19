@@ -116,6 +116,19 @@ Expense.belongsToMany(User, {
   as: "reactors",
 });
 
+// =====================================================
+// DATABASE AUTHENTICATION
+// =====================================================
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Database connected successfully.");
+  })
+  .catch((error) => {
+    console.error("Unable to connect to the database:", error);
+  });
+
 module.exports = {
   sequelize,
   User,
