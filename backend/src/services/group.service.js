@@ -6,9 +6,13 @@ const {
   ConflictError,
   BadRequestError,
 } = require("../errors");
+const ACTIVITY_TYPES = require("../constants/activity-types");
+const { logActivity } = require("./activity.service");
 
 const createGroup = async (userId, { name, icon, description }) => {
   const result = await sequelize.transaction(async (t) => {
+    const user = await User.findByPk(userId, { transaction: t });
+
     const group = await Group.create(
       {
         created_by: userId,
@@ -26,6 +30,14 @@ const createGroup = async (userId, { name, icon, description }) => {
         role: "admin",
       },
       { transaction: t }
+    );
+
+    await logActivity(
+      group.group_id,
+      userId,
+      ACTIVITY_TYPES.GROUP_CREATED,
+      `${user.name} created the group.`,
+      t
     );
 
     return {
@@ -131,7 +143,7 @@ const getGroupMembers = async (groupId) => {
   }));
 };
 
-const addMember = async (groupId, targetUserId) => {
+const addMember = async (groupId, targetUserId, actorUserId) => {
   const targetUser = await User.findByPk(targetUserId);
   if (!targetUser) {
     throw new NotFoundError("User not found");
@@ -151,6 +163,15 @@ const addMember = async (groupId, targetUserId) => {
     role: "member",
   });
 
+  const actor = await User.findByPk(actorUserId);
+
+  await logActivity(
+    groupId,
+    actorUserId,
+    ACTIVITY_TYPES.MEMBER_ADDED,
+    `${actor.name} added ${targetUser.name} to the group.`
+  );
+
   return {
     group_member_id: membership.group_member_id,
     group_id: membership.group_id,
@@ -160,7 +181,7 @@ const addMember = async (groupId, targetUserId) => {
   };
 };
 
-const removeMember = async (groupId, targetUserId) => {
+const removeMember = async (groupId, targetUserId, actorUserId) => {
   const targetMembership = await GroupMember.findOne({
     where: { group_id: groupId, user_id: targetUserId },
   });
@@ -179,7 +200,17 @@ const removeMember = async (groupId, targetUserId) => {
     }
   }
 
+  const targetUser = await User.findByPk(targetUserId);
   await targetMembership.destroy();
+
+  const actor = await User.findByPk(actorUserId);
+
+  await logActivity(
+    groupId,
+    actorUserId,
+    ACTIVITY_TYPES.MEMBER_REMOVED,
+    `${actor.name} removed ${targetUser.name} from the group.`
+  );
 
   return { message: "Member removed successfully" };
 };

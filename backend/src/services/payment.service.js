@@ -12,6 +12,8 @@ const {
 } = require("../errors");
 
 const getGroupBalances = require("./balance.service").getGroupBalances;
+const ACTIVITY_TYPES = require("../constants/activity-types");
+const { logActivity } = require("./activity.service");
 
 const createPayment = async (groupId, payerId, { paid_to, amount, note, payment_date }) => {
   const group = await Group.findByPk(groupId);
@@ -71,6 +73,17 @@ const createPayment = async (groupId, payerId, { paid_to, amount, note, payment_
         payment_date,
       },
       { transaction: t }
+    );
+
+    const payer = await User.findByPk(payerId, { transaction: t });
+    const receiverUser = await User.findByPk(paid_to, { transaction: t });
+
+    await logActivity(
+      groupId,
+      payerId,
+      ACTIVITY_TYPES.PAYMENT_CREATED,
+      `${payer.name} paid Rs. ${amount} to ${receiverUser.name}.`,
+      t
     );
 
     return newPayment;

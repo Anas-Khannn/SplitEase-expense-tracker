@@ -58,7 +58,8 @@ const addMember = async (req, res, next) => {
   try {
     const result = await groupService.addMember(
       req.params.groupId,
-      req.body.user_id
+      req.body.user_id,
+      req.user.user_id
     );
 
     return res.status(HTTP_STATUSES.CREATED).json({
@@ -75,7 +76,8 @@ const removeMember = async (req, res, next) => {
   try {
     const result = await groupService.removeMember(
       req.params.groupId,
-      req.params.userId
+      req.params.userId,
+      req.user.user_id
     );
 
     return res.status(HTTP_STATUSES.OK).json({

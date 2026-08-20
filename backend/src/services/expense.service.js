@@ -9,6 +9,8 @@ const {
   NotFoundError,
   BadRequestError,
 } = require("../errors");
+const ACTIVITY_TYPES = require("../constants/activity-types");
+const { logActivity } = require("./activity.service");
 
 const calculateEqualSplits = (totalAmountCents, participantCount) => {
   const baseShare = Math.floor(totalAmountCents / participantCount);
@@ -75,7 +77,8 @@ const formatSplitResponse = (split) => ({
 
 const createExpense = async (
   groupId,
-  { amount, description, paid_by, participant_ids, expense_date }
+  { amount, description, paid_by, participant_ids, expense_date },
+  actorUserId
 ) => {
   validateParticipants(participant_ids);
 
@@ -108,6 +111,14 @@ const createExpense = async (
     }));
 
     await ExpenseSplit.bulkCreate(splitRecords, { transaction: t });
+
+    await logActivity(
+      groupId,
+      actorUserId,
+      ACTIVITY_TYPES.EXPENSE_CREATED,
+      `${payer.name} added Rs. ${amount} for ${description}.`,
+      t
+    );
 
     const splitsWithUser = await ExpenseSplit.findAll({
       where: { expense_id: expense.expense_id },
@@ -211,7 +222,8 @@ const getExpenseById = async (groupId, expenseId) => {
 const updateExpense = async (
   groupId,
   expenseId,
-  { amount, description, paid_by, participant_ids, expense_date }
+  { amount, description, paid_by, participant_ids, expense_date },
+  actorUserId
 ) => {
   const expense = await Expense.findOne({
     where: { expense_id: expenseId, group_id: groupId },
@@ -290,6 +302,16 @@ const updateExpense = async (
       transaction: t,
     });
 
+    const actor = await User.findByPk(actorUserId, { transaction: t });
+
+    await logActivity(
+      groupId,
+      actorUserId,
+      ACTIVITY_TYPES.EXPENSE_UPDATED,
+      `${actor.name} updated the ${updatedExpense.description} expense.`,
+      t
+    );
+
     const splitsWithUser = await ExpenseSplit.findAll({
       where: { expense_id: expenseId },
       include: [
@@ -316,7 +338,7 @@ const updateExpense = async (
   return result;
 };
 
-const deleteExpense = async (groupId, expenseId) => {
+const deleteExpense = async (groupId, expenseId, actorUserId) => {
   const expense = await Expense.findOne({
     where: { expense_id: expenseId, group_id: groupId },
   });
@@ -325,7 +347,17 @@ const deleteExpense = async (groupId, expenseId) => {
     throw new NotFoundError("Expense not found");
   }
 
+  const description = expense.description;
   await expense.destroy();
+
+  const actor = await User.findByPk(actorUserId);
+
+  await logActivity(
+    groupId,
+    actorUserId,
+    ACTIVITY_TYPES.EXPENSE_DELETED,
+    `${actor.name} deleted the ${description} expense.`
+  );
 
   return { message: "Expense deleted successfully" };
 };

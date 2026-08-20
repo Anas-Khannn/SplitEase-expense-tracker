@@ -42,6 +42,7 @@ afterAll(async () => {
 });
 
 beforeEach(async () => {
+  await ActivityLog.destroy({ where: {} });
   await ExpenseSplit.destroy({ where: {} });
   await Expense.destroy({ where: {} });
   await GroupMember.destroy({ where: {} });

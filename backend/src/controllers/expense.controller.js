@@ -5,7 +5,8 @@ const createExpense = async (req, res, next) => {
   try {
     const result = await expenseService.createExpense(
       req.params.groupId,
-      req.body
+      req.body,
+      req.user.user_id
     );
 
     return res.status(HTTP_STATUSES.CREATED).json({
@@ -54,7 +55,8 @@ const updateExpense = async (req, res, next) => {
     const result = await expenseService.updateExpense(
       req.params.groupId,
       req.params.expenseId,
-      req.body
+      req.body,
+      req.user.user_id
     );
 
     return res.status(HTTP_STATUSES.OK).json({
@@ -71,7 +73,8 @@ const deleteExpense = async (req, res, next) => {
   try {
     const result = await expenseService.deleteExpense(
       req.params.groupId,
-      req.params.expenseId
+      req.params.expenseId,
+      req.user.user_id
     );
 
     return res.status(HTTP_STATUSES.OK).json({
