@@ -1,5 +1,5 @@
 const { fn, col, literal } = require("sequelize");
-const { Group, GroupMember, Expense, ExpenseSplit, User } =
+const { Group, GroupMember, Expense, ExpenseSplit, Payment, User } =
   require("../database/models");
 
 const getGroupBalances = async (groupId) => {
@@ -57,10 +57,45 @@ const getGroupBalances = async (groupId) => {
     shareMap[row.user_id] = parseFloat(row.total_share);
   }
 
+  const paymentsMadeResults = await Payment.findAll({
+    attributes: [
+      "paid_by",
+      [fn("SUM", col("amount")), "total_payments_made"],
+    ],
+    where: { group_id: groupId },
+    group: ["paid_by"],
+    raw: true,
+  });
+
+  const paymentsMadeMap = {};
+  for (const row of paymentsMadeResults) {
+    paymentsMadeMap[row.paid_by] = parseFloat(row.total_payments_made);
+  }
+
+  const paymentsReceivedResults = await Payment.findAll({
+    attributes: [
+      "paid_to",
+      [fn("SUM", col("amount")), "total_payments_received"],
+    ],
+    where: { group_id: groupId },
+    group: ["paid_to"],
+    raw: true,
+  });
+
+  const paymentsReceivedMap = {};
+  for (const row of paymentsReceivedResults) {
+    paymentsReceivedMap[row.paid_to] = parseFloat(row.total_payments_received);
+  }
+
   const balances = members.map((member) => {
-    const totalPaid = paidMap[member.user.user_id] || 0;
-    const totalShare = shareMap[member.user.user_id] || 0;
-    const balance = parseFloat((totalPaid - totalShare).toFixed(2));
+    const userId = member.user.user_id;
+    const totalPaid = paidMap[userId] || 0;
+    const totalShare = shareMap[userId] || 0;
+    const totalPaymentsMade = paymentsMadeMap[userId] || 0;
+    const totalPaymentsReceived = paymentsReceivedMap[userId] || 0;
+    const balance = parseFloat(
+      (totalPaid - totalShare - totalPaymentsReceived + totalPaymentsMade).toFixed(2)
+    );
 
     let status;
     if (balance > 0) {
@@ -72,7 +107,7 @@ const getGroupBalances = async (groupId) => {
     }
 
     return {
-      user_id: member.user.user_id,
+      user_id: userId,
       name: member.user.name,
       total_paid: parseFloat(totalPaid.toFixed(2)),
       total_share: parseFloat(totalShare.toFixed(2)),
