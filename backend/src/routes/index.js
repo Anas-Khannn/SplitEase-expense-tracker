@@ -7,6 +7,7 @@ const expenseRoutes = require("./expense.routes");
 const balanceRoutes = require("./balance.routes");
 const paymentRoutes = require("./payment.routes");
 const activityRoutes = require("./activity.routes");
+const reactionRoutes = require("./reaction.routes");
 
 router.use("/auth", authRoutes);
 router.use("/groups", groupRoutes);
@@ -14,5 +15,6 @@ router.use("/groups/:groupId/expenses", expenseRoutes);
 router.use("/groups/:groupId/balances", balanceRoutes);
 router.use("/groups/:groupId/payments", paymentRoutes);
 router.use("/groups/:groupId/activity", activityRoutes);
+router.use("/expenses/:expenseId/reactions", reactionRoutes);
 
 module.exports = router;
