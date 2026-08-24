@@ -1,8 +1,8 @@
 const HTTP_STATUSES = require("../constants/http-statuses");
 
-const validate = (schema) => {
+const validate = (schema, property = "body") => {
   return (req, res, next) => {
-    const { error } = schema.validate(req.body, {
+    const { error, value } = schema.validate(req[property], {
       abortEarly: false,
       stripUnknown: true,
     });
@@ -14,6 +14,10 @@ const validate = (schema) => {
         message: "Validation failed",
         errors: messages,
       });
+    }
+
+    if (property === "query") {
+      req.validatedQuery = value;
     }
 
     next();

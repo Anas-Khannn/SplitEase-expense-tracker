@@ -60,7 +60,46 @@ const updateExpenseSchema = Joi.object({
   "object.min": "At least one field must be provided for update",
 });
 
+const getExpensesQuerySchema = Joi.object({
+  payer_id: Joi.string().uuid().optional().messages({
+    "string.uuid": "Please provide a valid user ID for payer_id",
+  }),
+  start_date: Joi.date().iso().optional().messages({
+    "date.base": "Please provide a valid date",
+    "date.iso": "Date must be in ISO 8601 format (YYYY-MM-DD)",
+  }),
+  end_date: Joi.date().iso().optional().messages({
+    "date.base": "Please provide a valid date",
+    "date.iso": "Date must be in ISO 8601 format (YYYY-MM-DD)",
+  }),
+  page: Joi.number().integer().min(1).default(1).messages({
+    "number.base": "Page must be a number",
+    "number.integer": "Page must be an integer",
+    "number.min": "Page must be greater than or equal to 1",
+  }),
+  limit: Joi.number().integer().min(1).max(100).default(20).messages({
+    "number.base": "Limit must be a number",
+    "number.integer": "Limit must be an integer",
+    "number.min": "Limit must be greater than or equal to 1",
+    "number.max": "Limit must not exceed 100",
+  }),
+})
+  .custom((value, helpers) => {
+    if (
+      value.start_date &&
+      value.end_date &&
+      new Date(value.start_date) > new Date(value.end_date)
+    ) {
+      return helpers.error("any.invalid");
+    }
+    return value;
+  })
+  .messages({
+    "any.invalid": "start_date must be less than or equal to end_date",
+  });
+
 module.exports = {
   createExpenseSchema,
   updateExpenseSchema,
+  getExpensesQuerySchema,
 };

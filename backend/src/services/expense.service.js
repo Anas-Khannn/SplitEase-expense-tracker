@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 const {
   Expense,
   ExpenseSplit,
@@ -146,9 +147,34 @@ const createExpense = async (
   return result;
 };
 
-const getExpensesByGroup = async (groupId) => {
-  const expenses = await Expense.findAll({
-    where: { group_id: groupId },
+const toDateOnly = (date) =>
+  date instanceof Date ? date.toISOString().split("T")[0] : date;
+
+const getExpensesByGroup = async (
+  groupId,
+  { payer_id, start_date, end_date, page = 1, limit = 20 } = {}
+) => {
+  const where = { group_id: groupId };
+
+  if (payer_id !== undefined && payer_id !== null && payer_id !== "") {
+    await verifyGroupMembers(groupId, [payer_id]);
+    where.paid_by = payer_id;
+  }
+
+  if (start_date || end_date) {
+    where.expense_date = {};
+    if (start_date) {
+      where.expense_date[Op.gte] = toDateOnly(start_date);
+    }
+    if (end_date) {
+      where.expense_date[Op.lte] = toDateOnly(end_date);
+    }
+  }
+
+  const offset = (page - 1) * limit;
+
+  const { rows: expenses, count } = await Expense.findAndCountAll({
+    where,
     include: [
       {
         model: User,
@@ -168,17 +194,30 @@ const getExpensesByGroup = async (groupId) => {
       },
     ],
     order: [["created_at", "DESC"]],
+    limit,
+    offset,
+    distinct: true,
   });
 
-  return expenses.map((expense) => ({
-    ...formatExpenseResponse(expense),
-    payer: {
-      user_id: expense.payer.user_id,
-      name: expense.payer.name,
-      email: expense.payer.email,
+  return {
+    expenses: expenses.map((expense) => ({
+      ...formatExpenseResponse(expense),
+      payer: expense.payer
+        ? {
+            user_id: expense.payer.user_id,
+            name: expense.payer.name,
+            email: expense.payer.email,
+          }
+        : undefined,
+      splits: expense.splits.map(formatSplitResponse),
+    })),
+    pagination: {
+      page,
+      limit,
+      total: count,
+      total_pages: Math.ceil(count / limit),
     },
-    splits: expense.splits.map(formatSplitResponse),
-  }));
+  };
 };
 
 const getExpenseById = async (groupId, expenseId) => {

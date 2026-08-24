@@ -681,3 +681,356 @@ describe("Database schema integrity", () => {
     expect(uniqueIndex).toBeDefined();
   });
 });
+
+// ============================================================
+// EXPENSE SEARCH & FILTERS
+// ============================================================
+describe("Expense search and filters", () => {
+  const createExpense = async (
+    token,
+    groupId,
+    { amount = 100, description = "Test expense", paid_by = userA.user_id, expense_date } = {}
+  ) => {
+    return request(app)
+      .post(`/api/groups/${groupId}/expenses`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        amount,
+        description,
+        paid_by,
+        participant_ids: [paid_by],
+        expense_date: expense_date || "2026-08-19",
+      });
+  };
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  // Seeds group1 with:
+  //   - "Groceries" paid by A on 2026-08-05
+  //   - "Dinner"    paid by B on 2026-08-15
+  //   - "Concert"   paid by A on 2026-09-10
+  const seedGroup1Expenses = async () => {
+    await createExpense(tokenA, group1.group_id, {
+      description: "Groceries",
+      amount: 30,
+      expense_date: "2026-08-05",
+    });
+    await delay(10);
+    await createExpense(tokenB, group1.group_id, {
+      description: "Dinner",
+      amount: 60,
+      paid_by: userB.user_id,
+      expense_date: "2026-08-15",
+    });
+    await delay(10);
+    await createExpense(tokenA, group1.group_id, {
+      description: "Concert",
+      amount: 90,
+      expense_date: "2026-09-10",
+    });
+  };
+
+  const listExpenses = async (token, groupId, query = {}) => {
+    return request(app)
+      .get(`/api/groups/${groupId}/expenses`)
+      .set("Authorization", `Bearer ${token}`)
+      .query(query);
+  };
+
+  it("TEST 1: authenticated group member can retrieve expenses (200)", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id);
+
+    expect(res.status).toBe(200);
+    expect(res.body.success).toBe(true);
+    expect(Array.isArray(res.body.data.expenses)).toBe(true);
+    expect(res.body.data.expenses).toHaveLength(3);
+  });
+
+  it("TEST 2: no filters return all expenses belonging to the group", async () => {
+    await seedGroup1Expenses();
+    await createExpense(tokenD, group2.group_id, {
+      description: "Other group",
+      paid_by: userD.user_id,
+    });
+
+    const res = await listExpenses(tokenA, group1.group_id);
+
+    const descriptions = res.body.data.expenses.map((e) => e.description);
+    expect(descriptions).toHaveLength(3);
+    expect(descriptions).toContain("Groceries");
+    expect(descriptions).toContain("Dinner");
+    expect(descriptions).toContain("Concert");
+    expect(descriptions).not.toContain("Other group");
+  });
+
+  it("TEST 3: payer_id filter returns only expenses paid by that user", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id, {
+      payer_id: userA.user_id,
+    });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.expenses).toHaveLength(2);
+    res.body.data.expenses.forEach((expense) => {
+      expect(expense.paid_by).toBe(userA.user_id);
+    });
+    const descriptions = res.body.data.expenses.map((e) => e.description);
+    expect(descriptions.sort()).toEqual(["Concert", "Groceries"]);
+  });
+
+  it("TEST 4: start_date filter works", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id, {
+      start_date: "2026-08-10",
+    });
+
+    expect(res.status).toBe(200);
+    const descriptions = res.body.data.expenses.map((e) => e.description);
+    expect(descriptions.sort()).toEqual(["Concert", "Dinner"]);
+  });
+
+  it("TEST 5: end_date filter works", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id, {
+      end_date: "2026-08-15",
+    });
+
+    expect(res.status).toBe(200);
+    const descriptions = res.body.data.expenses.map((e) => e.description);
+    expect(descriptions.sort()).toEqual(["Dinner", "Groceries"]);
+  });
+
+  it("TEST 6: start_date + end_date range works together", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id, {
+      start_date: "2026-08-01",
+      end_date: "2026-08-31",
+    });
+
+    expect(res.status).toBe(200);
+    const descriptions = res.body.data.expenses.map((e) => e.description);
+    expect(descriptions.sort()).toEqual(["Dinner", "Groceries"]);
+    expect(descriptions).not.toContain("Concert");
+  });
+
+  it("TEST 7: payer_id + date range work combined", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id, {
+      payer_id: userA.user_id,
+      start_date: "2026-08-01",
+      end_date: "2026-08-31",
+    });
+
+    expect(res.status).toBe(200);
+    const descriptions = res.body.data.expenses.map((e) => e.description);
+    expect(descriptions).toEqual(["Groceries"]);
+  });
+
+  it("TEST 8: invalid payer_id returns 400", async () => {
+    const res = await listExpenses(tokenA, group1.group_id, {
+      payer_id: "not-a-valid-uuid",
+    });
+
+    expect(res.status).toBe(400);
+    expect(res.body.success).toBe(false);
+  });
+
+  it("TEST 9: invalid start_date returns 400", async () => {
+    const res = await listExpenses(tokenA, group1.group_id, {
+      start_date: "not-a-date",
+    });
+
+    expect(res.status).toBe(400);
+    expect(res.body.success).toBe(false);
+  });
+
+  it("TEST 10: invalid end_date returns 400", async () => {
+    const res = await listExpenses(tokenA, group1.group_id, {
+      end_date: "31/12/2026",
+    });
+
+    expect(res.status).toBe(400);
+    expect(res.body.success).toBe(false);
+  });
+
+  it("TEST 11: start_date after end_date returns 400", async () => {
+    const res = await listExpenses(tokenA, group1.group_id, {
+      start_date: "2026-09-01",
+      end_date: "2026-08-01",
+    });
+
+    expect(res.status).toBe(400);
+    expect(res.body.errors.join(" ")).toMatch(/start_date/i);
+  });
+
+  it("TEST 12: invalid page returns 400", async () => {
+    const resNonNumeric = await listExpenses(tokenA, group1.group_id, {
+      page: "abc",
+    });
+    expect(resNonNumeric.status).toBe(400);
+
+    const resZero = await listExpenses(tokenA, group1.group_id, {
+      page: "0",
+    });
+    expect(resZero.status).toBe(400);
+  });
+
+  it("TEST 13: invalid limit returns 400", async () => {
+    const resNonNumeric = await listExpenses(tokenA, group1.group_id, {
+      limit: "abc",
+    });
+    expect(resNonNumeric.status).toBe(400);
+
+    const resZero = await listExpenses(tokenA, group1.group_id, {
+      limit: "0",
+    });
+    expect(resZero.status).toBe(400);
+  });
+
+  it("TEST 14: limit greater than 100 is rejected", async () => {
+    const res = await listExpenses(tokenA, group1.group_id, { limit: "101" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.errors.join(" ")).toMatch(/100/);
+  });
+
+  it("TEST 15: default page is 1", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.pagination.page).toBe(1);
+  });
+
+  it("TEST 16: default limit is 20", async () => {
+    for (let i = 0; i < 25; i++) {
+      await createExpense(tokenA, group1.group_id, {
+        description: `Bulk ${i}`,
+      });
+    }
+
+    const res = await listExpenses(tokenA, group1.group_id);
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.pagination.limit).toBe(20);
+    expect(res.body.data.expenses).toHaveLength(20);
+    expect(res.body.data.pagination.total).toBe(25);
+  });
+
+  it("TEST 17: pagination returns the correct slice of results", async () => {
+    for (let i = 1; i <= 5; i++) {
+      await createExpense(tokenA, group1.group_id, {
+        description: `Expense ${i}`,
+      });
+      await delay(10);
+    }
+
+    const res = await listExpenses(tokenA, group1.group_id, {
+      page: "2",
+      limit: "2",
+    });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.expenses).toHaveLength(2);
+    const descriptions = res.body.data.expenses.map((e) => e.description);
+    expect(descriptions).toEqual(["Expense 3", "Expense 2"]);
+  });
+
+  it("TEST 18: pagination metadata is correct", async () => {
+    for (let i = 1; i <= 5; i++) {
+      await createExpense(tokenA, group1.group_id, {
+        description: `Meta ${i}`,
+      });
+      await delay(10);
+    }
+
+    const res = await listExpenses(tokenA, group1.group_id, {
+      page: "2",
+      limit: "2",
+    });
+
+    expect(res.status).toBe(200);
+    expect(res.body.data.pagination).toEqual({
+      page: 2,
+      limit: 2,
+      total: 5,
+      total_pages: 3,
+    });
+  });
+
+  it("TEST 19: results are ordered newest first", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id);
+
+    const descriptions = res.body.data.expenses.map((e) => e.description);
+    expect(descriptions).toEqual(["Concert", "Dinner", "Groceries"]);
+  });
+
+  it("TEST 20: unauthenticated user receives 401", async () => {
+    const res = await request(app).get(`/api/groups/${group1.group_id}/expenses`);
+
+    expect(res.status).toBe(401);
+  });
+
+  it("TEST 21: non-member receives 403", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenD, group1.group_id);
+
+    expect(res.status).toBe(403);
+  });
+
+  it("TEST 22: non-existent group receives 404", async () => {
+    const fakeGroupId = require("crypto").randomUUID();
+
+    const res = await listExpenses(tokenA, fakeGroupId);
+
+    expect(res.status).toBe(404);
+  });
+
+  it("TEST 23: cross-group expenses are never returned", async () => {
+    await seedGroup1Expenses();
+    await createExpense(tokenD, group2.group_id, {
+      description: "Secret dinner",
+      paid_by: userD.user_id,
+    });
+
+    const resFromA = await listExpenses(tokenA, group1.group_id);
+    expect(
+      resFromA.body.data.expenses.map((e) => e.description)
+    ).not.toContain("Secret dinner");
+
+    const resFromD = await listExpenses(tokenD, group2.group_id);
+    expect(resFromD.body.data.expenses).toHaveLength(1);
+    expect(resFromD.body.data.expenses[0].description).toBe("Secret dinner");
+  });
+
+  it("TEST 24: payer_id belonging to another group cannot leak data", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id, {
+      payer_id: userD.user_id,
+    });
+
+    expect(res.status).toBe(400);
+  });
+
+  it("TEST 25: password_hash is never returned in payer or splits", async () => {
+    await seedGroup1Expenses();
+
+    const res = await listExpenses(tokenA, group1.group_id);
+
+    expect(res.status).toBe(200);
+    expect(JSON.stringify(res.body)).not.toContain("password_hash");
+    expect(JSON.stringify(res.body)).not.toContain(userA.password_hash);
+  });
+});

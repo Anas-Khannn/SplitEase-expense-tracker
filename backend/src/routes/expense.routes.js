@@ -9,6 +9,7 @@ const validate = require("../middlewares/validate.middleware");
 const {
   createExpenseSchema,
   updateExpenseSchema,
+  getExpensesQuerySchema,
 } = require("../validators/expense.validation");
 
 router.post(
@@ -23,6 +24,7 @@ router.get(
   "/",
   authenticate,
   authorizeGroupMember,
+  validate(getExpensesQuerySchema, "query"),
   expenseController.getExpensesByGroup
 );
 

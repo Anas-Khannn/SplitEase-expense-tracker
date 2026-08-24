@@ -21,13 +21,15 @@ const createExpense = async (req, res, next) => {
 
 const getExpensesByGroup = async (req, res, next) => {
   try {
-    const expenses = await expenseService.getExpensesByGroup(
-      req.params.groupId
+    const filters = req.validatedQuery || {};
+    const { expenses, pagination } = await expenseService.getExpensesByGroup(
+      req.params.groupId,
+      filters
     );
 
     return res.status(HTTP_STATUSES.OK).json({
       success: true,
-      data: { expenses },
+      data: { expenses, pagination },
     });
   } catch (error) {
     next(error);
