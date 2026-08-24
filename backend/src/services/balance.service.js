@@ -2,24 +2,7 @@ const { fn, col, literal } = require("sequelize");
 const { Group, GroupMember, Expense, ExpenseSplit, Payment, User } =
   require("../database/models");
 
-const getGroupBalances = async (groupId) => {
-  const group = await Group.findByPk(groupId);
-  if (!group) {
-    const { NotFoundError } = require("../errors");
-    throw new NotFoundError("Group not found");
-  }
-
-  const members = await GroupMember.findAll({
-    where: { group_id: groupId },
-    include: [
-      {
-        model: User,
-        as: "user",
-        attributes: ["user_id", "name", "email"],
-      },
-    ],
-  });
-
+const buildFinancialMaps = async (groupId) => {
   const paidResults = await Expense.findAll({
     attributes: [
       "paid_by",
@@ -29,11 +12,6 @@ const getGroupBalances = async (groupId) => {
     group: ["paid_by"],
     raw: true,
   });
-
-  const paidMap = {};
-  for (const row of paidResults) {
-    paidMap[row.paid_by] = parseFloat(row.total_paid);
-  }
 
   const shareResults = await ExpenseSplit.findAll({
     attributes: [
@@ -52,11 +30,6 @@ const getGroupBalances = async (groupId) => {
     raw: true,
   });
 
-  const shareMap = {};
-  for (const row of shareResults) {
-    shareMap[row.user_id] = parseFloat(row.total_share);
-  }
-
   const paymentsMadeResults = await Payment.findAll({
     attributes: [
       "paid_by",
@@ -66,11 +39,6 @@ const getGroupBalances = async (groupId) => {
     group: ["paid_by"],
     raw: true,
   });
-
-  const paymentsMadeMap = {};
-  for (const row of paymentsMadeResults) {
-    paymentsMadeMap[row.paid_by] = parseFloat(row.total_payments_made);
-  }
 
   const paymentsReceivedResults = await Payment.findAll({
     attributes: [
@@ -82,10 +50,65 @@ const getGroupBalances = async (groupId) => {
     raw: true,
   });
 
-  const paymentsReceivedMap = {};
-  for (const row of paymentsReceivedResults) {
-    paymentsReceivedMap[row.paid_to] = parseFloat(row.total_payments_received);
+  const toMap = (rows, key, valueKey) => {
+    const map = {};
+    for (const row of rows) {
+      map[row[key]] = parseFloat(row[valueKey]);
+    }
+    return map;
+  };
+
+  return {
+    paidMap: toMap(paidResults, "paid_by", "total_paid"),
+    shareMap: toMap(shareResults, "user_id", "total_share"),
+    paymentsMadeMap: toMap(
+      paymentsMadeResults,
+      "paid_by",
+      "total_payments_made"
+    ),
+    paymentsReceivedMap: toMap(
+      paymentsReceivedResults,
+      "paid_to",
+      "total_payments_received"
+    ),
+  };
+};
+
+const computeBalance = ({
+  totalPaid,
+  totalShare,
+  totalPaymentsMade,
+  totalPaymentsReceived,
+}) =>
+  parseFloat(
+    (
+      totalPaid -
+      totalShare -
+      totalPaymentsReceived +
+      totalPaymentsMade
+    ).toFixed(2)
+  );
+
+const getGroupBalances = async (groupId) => {
+  const group = await Group.findByPk(groupId);
+  if (!group) {
+    const { NotFoundError } = require("../errors");
+    throw new NotFoundError("Group not found");
   }
+
+  const members = await GroupMember.findAll({
+    where: { group_id: groupId },
+    include: [
+      {
+        model: User,
+        as: "user",
+        attributes: ["user_id", "name", "email"],
+      },
+    ],
+  });
+
+  const { paidMap, shareMap, paymentsMadeMap, paymentsReceivedMap } =
+    await buildFinancialMaps(groupId);
 
   const balances = members.map((member) => {
     const userId = member.user.user_id;
@@ -93,9 +116,12 @@ const getGroupBalances = async (groupId) => {
     const totalShare = shareMap[userId] || 0;
     const totalPaymentsMade = paymentsMadeMap[userId] || 0;
     const totalPaymentsReceived = paymentsReceivedMap[userId] || 0;
-    const balance = parseFloat(
-      (totalPaid - totalShare - totalPaymentsReceived + totalPaymentsMade).toFixed(2)
-    );
+    const balance = computeBalance({
+      totalPaid,
+      totalShare,
+      totalPaymentsMade,
+      totalPaymentsReceived,
+    });
 
     let status;
     if (balance > 0) {
@@ -119,4 +145,16 @@ const getGroupBalances = async (groupId) => {
   return balances;
 };
 
-module.exports = { getGroupBalances };
+const calculateUserGroupBalance = async (userId, groupId) => {
+  const { paidMap, shareMap, paymentsMadeMap, paymentsReceivedMap } =
+    await buildFinancialMaps(groupId);
+
+  return computeBalance({
+    totalPaid: paidMap[userId] || 0,
+    totalShare: shareMap[userId] || 0,
+    totalPaymentsMade: paymentsMadeMap[userId] || 0,
+    totalPaymentsReceived: paymentsReceivedMap[userId] || 0,
+  });
+};
+
+module.exports = { getGroupBalances, calculateUserGroupBalance };
