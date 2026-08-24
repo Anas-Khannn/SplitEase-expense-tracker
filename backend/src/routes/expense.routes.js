@@ -10,6 +10,7 @@ const {
   createExpenseSchema,
   updateExpenseSchema,
   getExpensesQuerySchema,
+  expenseIdParamsSchema,
 } = require("../validators/expense.validation");
 
 router.post(
@@ -32,6 +33,7 @@ router.get(
   "/:expenseId",
   authenticate,
   authorizeGroupMember,
+  validate(expenseIdParamsSchema, "params"),
   expenseController.getExpenseById
 );
 
@@ -39,6 +41,7 @@ router.put(
   "/:expenseId",
   authenticate,
   authorizeGroupMember,
+  validate(expenseIdParamsSchema, "params"),
   validate(updateExpenseSchema),
   expenseController.updateExpense
 );
@@ -47,6 +50,7 @@ router.delete(
   "/:expenseId",
   authenticate,
   authorizeGroupMember,
+  validate(expenseIdParamsSchema, "params"),
   expenseController.deleteExpense
 );
 

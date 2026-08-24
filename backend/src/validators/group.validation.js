@@ -30,8 +30,16 @@ const updateMemberRoleSchema = Joi.object({
   }),
 });
 
+const userIdParamsSchema = Joi.object({
+  userId: Joi.string().uuid().required().messages({
+    "string.uuid": "Please provide a valid user ID",
+    "any.required": "User ID is required",
+  }),
+});
+
 module.exports = {
   createGroupSchema,
   addMemberSchema,
   updateMemberRoleSchema,
+  userIdParamsSchema,
 };

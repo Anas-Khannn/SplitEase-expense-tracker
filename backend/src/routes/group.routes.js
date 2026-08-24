@@ -11,6 +11,7 @@ const {
   createGroupSchema,
   addMemberSchema,
   updateMemberRoleSchema,
+  userIdParamsSchema,
 } = require("../validators/group.validation");
 
 router.post(
@@ -48,6 +49,7 @@ router.delete(
   "/:groupId/members/:userId",
   authenticate,
   authorizeGroupAdmin,
+  validate(userIdParamsSchema, "params"),
   groupController.removeMember
 );
 
@@ -55,6 +57,7 @@ router.patch(
   "/:groupId/members/:userId/role",
   authenticate,
   authorizeGroupAdmin,
+  validate(userIdParamsSchema, "params"),
   validate(updateMemberRoleSchema),
   groupController.updateMemberRole
 );

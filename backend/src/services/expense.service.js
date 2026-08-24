@@ -387,16 +387,20 @@ const deleteExpense = async (groupId, expenseId, actorUserId) => {
   }
 
   const description = expense.description;
-  await expense.destroy();
 
-  const actor = await User.findByPk(actorUserId);
+  await sequelize.transaction(async (t) => {
+    await expense.destroy({ transaction: t });
 
-  await logActivity(
-    groupId,
-    actorUserId,
-    ACTIVITY_TYPES.EXPENSE_DELETED,
-    `${actor.name} deleted the ${description} expense.`
-  );
+    const actor = await User.findByPk(actorUserId, { transaction: t });
+
+    await logActivity(
+      groupId,
+      actorUserId,
+      ACTIVITY_TYPES.EXPENSE_DELETED,
+      `${actor.name} deleted the ${description} expense.`,
+      t
+    );
+  });
 
   return { message: "Expense deleted successfully" };
 };

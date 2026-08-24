@@ -157,27 +157,35 @@ const addMember = async (groupId, targetUserId, actorUserId) => {
     throw new ConflictError("User is already a member of this group");
   }
 
-  const membership = await GroupMember.create({
-    group_id: groupId,
-    user_id: targetUserId,
-    role: "member",
+  const result = await sequelize.transaction(async (t) => {
+    const membership = await GroupMember.create(
+      {
+        group_id: groupId,
+        user_id: targetUserId,
+        role: "member",
+      },
+      { transaction: t }
+    );
+
+    const actor = await User.findByPk(actorUserId, { transaction: t });
+
+    await logActivity(
+      groupId,
+      actorUserId,
+      ACTIVITY_TYPES.MEMBER_ADDED,
+      `${actor.name} added ${targetUser.name} to the group.`,
+      t
+    );
+
+    return membership;
   });
 
-  const actor = await User.findByPk(actorUserId);
-
-  await logActivity(
-    groupId,
-    actorUserId,
-    ACTIVITY_TYPES.MEMBER_ADDED,
-    `${actor.name} added ${targetUser.name} to the group.`
-  );
-
   return {
-    group_member_id: membership.group_member_id,
-    group_id: membership.group_id,
-    user_id: membership.user_id,
-    role: membership.role,
-    joined_at: membership.joined_at,
+    group_member_id: result.group_member_id,
+    group_id: result.group_id,
+    user_id: result.user_id,
+    role: result.role,
+    joined_at: result.joined_at,
   };
 };
 
@@ -201,16 +209,20 @@ const removeMember = async (groupId, targetUserId, actorUserId) => {
   }
 
   const targetUser = await User.findByPk(targetUserId);
-  await targetMembership.destroy();
 
-  const actor = await User.findByPk(actorUserId);
+  await sequelize.transaction(async (t) => {
+    await targetMembership.destroy({ transaction: t });
 
-  await logActivity(
-    groupId,
-    actorUserId,
-    ACTIVITY_TYPES.MEMBER_REMOVED,
-    `${actor.name} removed ${targetUser.name} from the group.`
-  );
+    const actor = await User.findByPk(actorUserId, { transaction: t });
+
+    await logActivity(
+      groupId,
+      actorUserId,
+      ACTIVITY_TYPES.MEMBER_REMOVED,
+      `${actor.name} removed ${targetUser.name} from the group.`,
+      t
+    );
+  });
 
   return { message: "Member removed successfully" };
 };

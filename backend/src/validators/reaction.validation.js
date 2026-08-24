@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const { ALLOWED_REACTIONS } = require("../constants/reaction-types");
+const { expenseIdParamsSchema } = require("./expense.validation");
 
 const addReactionSchema = Joi.object({
   reaction: Joi.string()
@@ -12,4 +13,4 @@ const addReactionSchema = Joi.object({
     }),
 });
 
-module.exports = { addReactionSchema };
+module.exports = { addReactionSchema, expenseIdParamsSchema };

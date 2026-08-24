@@ -98,8 +98,16 @@ const getExpensesQuerySchema = Joi.object({
     "any.invalid": "start_date must be less than or equal to end_date",
   });
 
+const expenseIdParamsSchema = Joi.object({
+  expenseId: Joi.string().uuid().required().messages({
+    "string.uuid": "Please provide a valid expense ID",
+    "any.required": "Expense ID is required",
+  }),
+});
+
 module.exports = {
   createExpenseSchema,
   updateExpenseSchema,
   getExpensesQuerySchema,
+  expenseIdParamsSchema,
 };
