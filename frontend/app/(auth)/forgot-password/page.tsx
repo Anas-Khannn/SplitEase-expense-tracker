@@ -14,6 +14,7 @@ import {
 import AuthCard from "@/components/auth/AuthCard";
 import AuthMethodToggle from "@/components/auth/AuthMethodToggle";
 import { Button, Input } from "@/components/ui";
+import { useShake } from "@/hooks/useShake";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -34,6 +35,7 @@ export default function ForgotPasswordPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
   const [serverError, setServerError] = useState<string | null>(null);
+  const { shakeControls, shake } = useShake();
 
   const {
     register,
@@ -74,9 +76,10 @@ export default function ForgotPasswordPage() {
             ? err.message
             : "Request failed. Please try again.";
         setServerError(message);
+        shake();
       }
     },
-    [router]
+    [router, shake]
   );
 
   return (
@@ -147,7 +150,11 @@ export default function ForgotPasswordPage() {
                 />
               </motion.div>
 
-              <form onSubmit={handleSubmit(onSubmit)} noValidate>
+              <motion.form
+                onSubmit={handleSubmit(onSubmit, () => shake())}
+                animate={shakeControls}
+                noValidate
+              >
                 <div className="flex flex-col gap-4">
                   {serverError && (
                     <motion.div
@@ -211,7 +218,7 @@ export default function ForgotPasswordPage() {
                     </Button>
                   </motion.div>
                 </div>
-              </form>
+              </motion.form>
             </motion.div>
           )}
         </AnimatePresence>

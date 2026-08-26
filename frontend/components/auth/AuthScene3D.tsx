@@ -51,39 +51,6 @@ export default function AuthScene3D() {
       <TubesCursorBackground />
 
       <m.div
-        className="relative z-10 flex flex-col items-center justify-center h-full px-8 text-center"
-        initial="initial"
-        animate="animate"
-      >
-        <m.h1
-          className="text-display font-bold text-scene-text mb-3"
-          variants={{
-            initial: { opacity: 0, y: 20 },
-            animate: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.6, delay: 0.4 },
-            },
-          }}
-        >
-          SplitEase
-        </m.h1>
-        <m.p
-          className="text-body text-scene-text-muted max-w-xs"
-          variants={{
-            initial: { opacity: 0, y: 12 },
-            animate: {
-              opacity: 1,
-              y: 0,
-              transition: { duration: 0.6, delay: 0.6 },
-            },
-          }}
-        >
-          Split expenses effortlessly with friends
-        </m.p>
-      </m.div>
-
-      <m.div
         className="absolute bottom-0 left-0 w-full z-5"
         variants={ribbonVariants}
         initial="initial"

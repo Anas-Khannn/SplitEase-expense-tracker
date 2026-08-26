@@ -14,6 +14,7 @@ import { queryKeys } from "@/lib/query-keys";
 import AuthCard from "@/components/auth/AuthCard";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { Button, Input } from "@/components/ui";
+import { useShake } from "@/hooks/useShake";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -32,6 +33,7 @@ export default function LoginPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [serverError, setServerError] = useState<string | null>(null);
+  const { shakeControls, shake } = useShake();
 
   const {
     register,
@@ -57,9 +59,10 @@ export default function LoginPage() {
         const message =
           err instanceof Error ? err.message : "Login failed. Please try again.";
         setServerError(message);
+        shake();
       }
     },
-    [queryClient, router]
+    [queryClient, router, shake]
   );
 
   return (
@@ -94,7 +97,11 @@ export default function LoginPage() {
             </div>
           </motion.div>
 
-          <form onSubmit={handleSubmit(onSubmit)} noValidate>
+          <motion.form
+            onSubmit={handleSubmit(onSubmit, () => shake())}
+            animate={shakeControls}
+            noValidate
+          >
             <div className="flex flex-col gap-4">
               {serverError && (
                 <motion.div
@@ -164,7 +171,7 @@ export default function LoginPage() {
                 </Link>
               </motion.p>
             </div>
-          </form>
+          </motion.form>
         </motion.div>
       </div>
     </AuthCard>

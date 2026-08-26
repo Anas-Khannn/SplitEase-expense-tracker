@@ -1,10 +1,13 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/gsapConfig";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import AmbientOrbs from "@/components/auth/AmbientOrbs";
 
 const AuthScene3D = dynamic(() => import("@/components/auth/AuthScene3D"), {
   ssr: false,
@@ -15,12 +18,27 @@ const AuthScene3D = dynamic(() => import("@/components/auth/AuthScene3D"), {
 
 const headlineWords = ["Split", "expenses", "effortlessly", "with", "friends"];
 
+const AUTH_ROUTE_ORDER = ["/login", "/signup", "/forgot-password", "/reset-password"];
+
+function routeIndex(pathname: string) {
+  const index = AUTH_ROUTE_ORDER.findIndex((route) => pathname.startsWith(route));
+  return index === -1 ? 0 : index;
+}
+
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const headlineRef = useRef<HTMLHeadingElement>(null);
+  const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  const [direction, setDirection] = useState(1);
+
+  if (pathname !== prevPathname) {
+    setDirection(routeIndex(pathname) >= routeIndex(prevPathname) ? 1 : -1);
+    setPrevPathname(pathname);
+  }
 
   useGSAP(
     () => {
@@ -45,6 +63,9 @@ export default function AuthLayout({
       <div className="hidden md:flex md:w-[55%] lg:w-[58%] relative">
         <AuthScene3D />
         <div className="absolute inset-0 z-20 flex flex-col items-center justify-center px-8 text-center pointer-events-none">
+          <span className="text-body-sm font-semibold tracking-wide text-scene-text-muted mb-2">
+            SplitEase
+          </span>
           <h1
             ref={headlineRef}
             className="text-h1 font-bold text-scene-text leading-tight mb-3"
@@ -59,10 +80,23 @@ export default function AuthLayout({
       </div>
 
       {/* Right: Auth card area */}
-      <div className="flex flex-1 items-center justify-center px-6 py-10 md:w-[45%] lg:w-[42%] bg-base">
-        <div className="w-full max-w-md">
-          <ProtectedRoute>{children}</ProtectedRoute>
-        </div>
+      <div className="relative flex flex-1 items-center justify-center overflow-hidden px-6 py-10 md:w-[45%] lg:w-[42%] bg-base">
+        <AmbientOrbs />
+        <MotionConfig reducedMotion="user">
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.div
+              key={pathname}
+              custom={direction}
+              initial={{ opacity: 0, y: 20, x: direction * 40 }}
+              animate={{ opacity: 1, y: 0, x: 0 }}
+              exit={{ opacity: 0, y: -20, x: direction * -40 }}
+              transition={{ duration: 0.32, ease: "easeOut" }}
+              className="relative z-10 w-full max-w-md"
+            >
+              <ProtectedRoute>{children}</ProtectedRoute>
+            </motion.div>
+          </AnimatePresence>
+        </MotionConfig>
       </div>
     </div>
   );
