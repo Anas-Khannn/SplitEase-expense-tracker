@@ -1,1 +1,10 @@
-export { apiClient } from "./client";
+export { apiClient, ApiError } from "./client";
+export { authApi } from "./auth";
+export { groupsApi } from "./groups";
+export { expensesApi } from "./expenses";
+export { paymentsApi } from "./payments";
+export { balancesApi } from "./balances";
+export { activityApi } from "./activity";
+export { summaryApi } from "./summary";
+export { reactionsApi } from "./reactions";
+export { dashboardApi } from "./dashboard";

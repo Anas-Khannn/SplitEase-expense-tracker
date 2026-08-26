@@ -1,8 +1,39 @@
+export class ApiError extends Error {
+  public readonly status: number;
+  public readonly errors: string[];
+
+  constructor(status: number, message: string, errors: string[] = []) {
+    super(message);
+    this.name = "ApiError";
+    this.status = status;
+    this.errors = errors;
+  }
+}
+
+export interface ApiErrorResponse {
+  success: false;
+  message: string;
+  errors?: string[];
+}
+
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
-interface RequestOptions extends RequestInit {
-  params?: Record<string, string>;
+interface RequestOptions {
+  params?: Record<string, string | number | undefined>;
+  headers?: Record<string, string>;
+}
+
+function serializeParams(
+  params: Record<string, string | number | undefined>
+): string {
+  const searchParams = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null && value !== "") {
+      searchParams.append(key, String(value));
+    }
+  }
+  return searchParams.toString();
 }
 
 class ApiClient {
@@ -12,24 +43,30 @@ class ApiClient {
     this.baseUrl = baseUrl;
   }
 
-  private getAuthHeaders(): HeadersInit {
+  private getAuthHeaders(): Record<string, string> {
     if (typeof window === "undefined") return {};
     const token = localStorage.getItem("token");
     return token ? { Authorization: `Bearer ${token}` } : {};
   }
 
-  private buildUrl(endpoint: string, params?: Record<string, string>): string {
-    const url = new URL(`${this.baseUrl}${endpoint}`);
-    if (params) {
-      Object.entries(params).forEach(([key, value]) => {
-        url.searchParams.append(key, value);
-      });
-    }
-    return url.toString();
+  private buildUrl(
+    endpoint: string,
+    params?: Record<string, string | number | undefined>
+  ): string {
+    const base = `${this.baseUrl}${endpoint}`;
+    if (!params) return base;
+    const qs = serializeParams(params);
+    return qs ? `${base}?${qs}` : base;
   }
 
-  async request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
-    const { params, ...fetchOptions } = options;
+  async request<T>(
+    endpoint: string,
+    options: RequestOptions & {
+      method?: string;
+      body?: string;
+    } = {}
+  ): Promise<T> {
+    const { params, headers: customHeaders, ...fetchOptions } = options;
     const url = this.buildUrl(endpoint, params);
 
     const response = await fetch(url, {
@@ -37,13 +74,17 @@ class ApiClient {
       headers: {
         "Content-Type": "application/json",
         ...this.getAuthHeaders(),
-        ...fetchOptions.headers,
+        ...customHeaders,
       },
     });
 
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: "Request failed" }));
-      throw new Error(error.message || `HTTP ${response.status}`);
+      const body = await response.json().catch(() => null);
+      throw new ApiError(
+        response.status,
+        body?.message || `Request failed (${response.status})`,
+        body?.errors || []
+      );
     }
 
     return response.json();
