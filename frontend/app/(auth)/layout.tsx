@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "@/lib/gsap/gsapConfig";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 
 const AuthScene3D = dynamic(() => import("@/components/auth/AuthScene3D"), {
   ssr: false,
@@ -60,7 +61,7 @@ export default function AuthLayout({
       {/* Right: Auth card area */}
       <div className="flex flex-1 items-center justify-center px-6 py-10 md:w-[45%] lg:w-[42%] bg-base">
         <div className="w-full max-w-md">
-          {children}
+          <ProtectedRoute>{children}</ProtectedRoute>
         </div>
       </div>
     </div>
