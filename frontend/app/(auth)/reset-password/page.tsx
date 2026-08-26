@@ -14,6 +14,7 @@ import {
 import OTPInput from "@/components/auth/OTPInput";
 import AuthCard from "@/components/auth/AuthCard";
 import { Button, Input } from "@/components/ui";
+import { useShake } from "@/hooks/useShake";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -44,6 +45,7 @@ function ResetPasswordContent() {
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
+  const { shakeControls, shake } = useShake();
 
   useEffect(() => {
     if (cooldown <= 0) return;
@@ -97,9 +99,10 @@ function ResetPasswordContent() {
             ? err.message
             : "Password reset failed. Please try again.";
         setServerError(message);
+        shake();
       }
     },
-    []
+    [shake]
   );
 
   return (
@@ -195,7 +198,11 @@ function ResetPasswordContent() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                  <motion.form
+                    onSubmit={handleSubmit(onSubmit, () => shake())}
+                    animate={shakeControls}
+                    noValidate
+                  >
                     <div className="flex flex-col gap-4">
                       {serverError && (
                         <motion.div
@@ -247,7 +254,7 @@ function ResetPasswordContent() {
                         </Button>
                       </motion.div>
                     </div>
-                  </form>
+                  </motion.form>
                 </motion.div>
               )}
             </motion.div>

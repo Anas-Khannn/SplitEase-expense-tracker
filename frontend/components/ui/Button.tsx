@@ -1,19 +1,21 @@
 "use client";
 
-import { forwardRef, type ButtonHTMLAttributes, type ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
+import { motion, type HTMLMotionProps } from "framer-motion";
 import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 
 type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 type ButtonSize = "sm" | "md" | "lg";
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends Omit<HTMLMotionProps<"button">, "children"> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   loading?: boolean;
   icon?: ReactNode;
   iconPosition?: "left" | "right";
   fullWidth?: boolean;
+  children?: ReactNode;
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
@@ -52,9 +54,12 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const isDisabled = disabled || loading;
 
     return (
-      <button
+      <motion.button
         ref={ref}
         disabled={isDisabled}
+        whileHover={isDisabled ? undefined : { scale: 1.02 }}
+        whileTap={isDisabled ? undefined : { scale: 0.97 }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
         className={cn(
           "inline-flex items-center justify-center font-semibold transition-colors duration-150",
           "focus-visible:outline-2 focus-visible:outline-offset-2",
@@ -77,7 +82,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {!loading && icon && iconPosition === "right" && (
           <span className="shrink-0 [&>svg]:size-[1em]">{icon}</span>
         )}
-      </button>
+      </motion.button>
     );
   }
 );
