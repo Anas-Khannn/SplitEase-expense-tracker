@@ -1,19 +1,14 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthProvider";
-import { useLogout } from "@/hooks/mutations/useLogout";
-import { Button } from "@/components/ui";
-import { LogOut } from "lucide-react";
+import { AppShell } from "@/components/layout/AppShell";
 
 export default function AppLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { user, isAuthenticated, isLoading } = useAuth();
-  const logout = useLogout();
-  const router = useRouter();
+  const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
     return (
@@ -30,39 +25,5 @@ export default function AppLayout({
     return null;
   }
 
-  return (
-    <div className="min-h-dvh bg-base">
-      <header className="sticky top-0 z-40 border-b border-border-default bg-surface/80 backdrop-blur-sm">
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
-          <h1 className="text-h3 font-bold text-primary-500">SplitEase</h1>
-          <div className="flex items-center gap-3">
-            {user && (
-              <span className="text-body-sm text-text-secondary hidden sm:inline">
-                {user.name}
-              </span>
-            )}
-            <Button
-              variant="ghost"
-              size="sm"
-              icon={<LogOut />}
-              onClick={() => {
-                logout.mutate(undefined, {
-                  onSettled: () => {
-                    router.push("/login");
-                  },
-                });
-              }}
-              loading={logout.isPending}
-              aria-label="Log out"
-            >
-              <span className="hidden sm:inline">Logout</span>
-            </Button>
-          </div>
-        </div>
-      </header>
-      <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
-        {children}
-      </main>
-    </div>
-  );
+  return <AppShell>{children}</AppShell>;
 }
