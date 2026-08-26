@@ -1,0 +1,147 @@
+@import "tailwindcss";
+
+/* ── Aurora Violet Design Tokens ── */
+@theme inline {
+  /* Primary palette */
+  --color-primary-100: #ECE9FB;
+  --color-primary-500: #6C5CE0;
+  --color-primary-600: #5A48C7;
+
+  /* Application surfaces */
+  --color-base: #FAFAFC;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #F1EFF9;
+
+  /* Text colors */
+  --color-text-primary: #16121F;
+  --color-text-secondary: #57536A;
+  --color-text-muted: #96919F;
+
+  /* Semantic: success */
+  --color-success-500: #12966B;
+  --color-success-100: #DCF7EA;
+
+  /* Semantic: danger */
+  --color-danger-500: #E5484D;
+  --color-danger-100: #FBE4E4;
+
+  /* Semantic: warning */
+  --color-warning-500: #E08A1E;
+  --color-warning-100: #FDF0DA;
+
+  /* Borders */
+  --color-border-default: #E7E4F0;
+  --color-border-strong: #D6D1E6;
+
+  /* Focus */
+  --color-focus-ring: #6C5CE0;
+
+  /* Auth scene */
+  --color-scene-bg-900: #07050F;
+  --color-scene-bg-800: #120C28;
+  --color-scene-bg-700: #1E1442;
+  --color-scene-wave-blue: #3B5BFF;
+  --color-scene-wave-violet: #8B3FE0;
+  --color-scene-wave-magenta: #E93FE0;
+  --color-scene-text: #F5F3FA;
+  --color-scene-text-muted: #B7B2C9;
+
+  /* Typography */
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+
+  /* Font sizes - Display */
+  --text-display: 2rem;
+  --text-h1: 1.75rem;
+  --text-h2: 1.375rem;
+  --text-h3: 1.125rem;
+  --text-body: 0.9375rem;
+  --text-body-sm: 0.8125rem;
+  --text-caption: 0.75rem;
+  --text-button: 0.875rem;
+
+  /* Line heights */
+  --leading-display: 2.5rem;
+  --leading-h1: 2.25rem;
+  --leading-h2: 1.875rem;
+  --leading-h3: 1.625rem;
+  --leading-body: 1.375rem;
+  --leading-body-sm: 1.25rem;
+  --leading-caption: 1rem;
+  --leading-button: 1.25rem;
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Border radius */
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --shadow-sm: 0 2px 6px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 8px 20px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 16px 40px rgba(16, 24, 40, 0.12);
+
+  /* Spacing scale (base 4px) */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  --spacing-16: 4rem;
+  --spacing-20: 5rem;
+  --spacing-24: 6rem;
+  --spacing-32: 8rem;
+  --spacing-40: 10rem;
+  --spacing-48: 12rem;
+  --spacing-64: 16rem;
+}
+
+/* ── Base Styles ── */
+body {
+  background-color: var(--color-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* ── Focus Visible ── */
+:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* ── Smooth Scroll ── */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
