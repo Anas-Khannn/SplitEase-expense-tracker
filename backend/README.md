@@ -28,8 +28,9 @@ backend/
 │   ├── services/        # Business logic
 │   ├── validators/      # Request validation schemas
 │   ├── utils/           # Utility functions
-│   ├── app.js           # Express application setup
-│   └── server.js        # Server entry point
+│   ├── constants/       # Constants (HTTP statuses, activity types, etc.)
+│   ├── errors/          # Custom error classes
+│   └── app.js           # Express application setup and entry point
 ├── .env                 # Environment variables (not committed)
 ├── .env.example         # Environment variable template
 ├── package.json

@@ -3,6 +3,7 @@ const cors = require("cors");
 const routes = require("./routes");
 const errorHandler = require("./middlewares/error.middleware");
 const HTTP_STATUSES = require("./constants/http-statuses");
+const env = require("./config/env");
 
 const app = express();
 
@@ -19,5 +20,12 @@ app.get("/api/health", (req, res) => {
 app.use("/api", routes);
 
 app.use(errorHandler);
+
+if (process.env.NODE_ENV !== "test") {
+  const PORT = env.port;
+  app.listen(PORT, () => {
+    console.log(`SplitEase server running on port ${PORT} [${env.nodeEnv}]`);
+  });
+}
 
 module.exports = app;

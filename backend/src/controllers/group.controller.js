@@ -1,111 +1,84 @@
 const groupService = require("../services/group.service");
 const HTTP_STATUSES = require("../constants/http-statuses");
+const asyncHandler = require("../utils/asyncHandler");
 
-const createGroup = async (req, res, next) => {
-  try {
-    const result = await groupService.createGroup(req.user.user_id, req.body);
+const createGroup = asyncHandler(async (req, res) => {
+  const result = await groupService.createGroup(req.user.user_id, req.body);
 
-    return res.status(HTTP_STATUSES.CREATED).json({
-      success: true,
-      message: "Group created successfully",
-      data: { group: result },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  return res.status(HTTP_STATUSES.CREATED).json({
+    success: true,
+    message: "Group created successfully",
+    data: { group: result },
+  });
+});
 
-const getMyGroups = async (req, res, next) => {
-  try {
-    const groups = await groupService.getMyGroups(req.user.user_id);
+const getMyGroups = asyncHandler(async (req, res) => {
+  const groups = await groupService.getMyGroups(req.user.user_id);
 
-    return res.status(HTTP_STATUSES.OK).json({
-      success: true,
-      data: { groups },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  return res.status(HTTP_STATUSES.OK).json({
+    success: true,
+    data: { groups },
+  });
+});
 
-const getGroupById = async (req, res, next) => {
-  try {
-    const group = await groupService.getGroupById(req.params.groupId);
+const getGroupById = asyncHandler(async (req, res) => {
+  const group = await groupService.getGroupById(req.params.groupId);
 
-    return res.status(HTTP_STATUSES.OK).json({
-      success: true,
-      data: { group },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  return res.status(HTTP_STATUSES.OK).json({
+    success: true,
+    data: { group },
+  });
+});
 
-const getGroupMembers = async (req, res, next) => {
-  try {
-    const members = await groupService.getGroupMembers(req.params.groupId);
+const getGroupMembers = asyncHandler(async (req, res) => {
+  const members = await groupService.getGroupMembers(req.params.groupId);
 
-    return res.status(HTTP_STATUSES.OK).json({
-      success: true,
-      data: { members },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  return res.status(HTTP_STATUSES.OK).json({
+    success: true,
+    data: { members },
+  });
+});
 
-const addMember = async (req, res, next) => {
-  try {
-    const result = await groupService.addMember(
-      req.params.groupId,
-      req.body.user_id,
-      req.user.user_id
-    );
+const addMember = asyncHandler(async (req, res) => {
+  const result = await groupService.addMember(
+    req.params.groupId,
+    req.body.user_id,
+    req.user.user_id
+  );
 
-    return res.status(HTTP_STATUSES.CREATED).json({
-      success: true,
-      message: "Member added successfully",
-      data: { member: result },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  return res.status(HTTP_STATUSES.CREATED).json({
+    success: true,
+    message: "Member added successfully",
+    data: { member: result },
+  });
+});
 
-const removeMember = async (req, res, next) => {
-  try {
-    const result = await groupService.removeMember(
-      req.params.groupId,
-      req.params.userId,
-      req.user.user_id
-    );
+const removeMember = asyncHandler(async (req, res) => {
+  const result = await groupService.removeMember(
+    req.params.groupId,
+    req.params.userId,
+    req.user.user_id
+  );
 
-    return res.status(HTTP_STATUSES.OK).json({
-      success: true,
-      message: result.message,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  return res.status(HTTP_STATUSES.OK).json({
+    success: true,
+    message: result.message,
+  });
+});
 
-const updateMemberRole = async (req, res, next) => {
-  try {
-    const result = await groupService.updateMemberRole(
-      req.params.groupId,
-      req.params.userId,
-      req.body.role
-    );
+const updateMemberRole = asyncHandler(async (req, res) => {
+  const result = await groupService.updateMemberRole(
+    req.params.groupId,
+    req.params.userId,
+    req.body.role
+  );
 
-    return res.status(HTTP_STATUSES.OK).json({
-      success: true,
-      message: "Member role updated successfully",
-      data: { member: result },
-    });
-  } catch (error) {
-    next(error);
-  }
-};
+  return res.status(HTTP_STATUSES.OK).json({
+    success: true,
+    message: "Member role updated successfully",
+    data: { member: result },
+  });
+});
 
 module.exports = {
   createGroup,
