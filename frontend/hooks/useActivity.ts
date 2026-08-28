@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { activityApi } from "@/lib/api";
+import { activityApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 import type { ActivityPagination } from "@/types";
 

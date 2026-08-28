@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { reactionsApi } from "@/lib/api";
+import { reactionsApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 
 export function useRemoveExpenseReaction() {

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { expensesApi } from "@/lib/api";
+import { expensesApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 import type { ExpenseFilters } from "@/types";
 

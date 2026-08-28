@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { balancesApi } from "@/lib/api";
+import { balancesApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 
 export function useGroupBalance(groupId: string) {

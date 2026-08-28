@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { paymentsApi } from "@/lib/api";
+import { paymentsApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 
 export function useGroupPayments(groupId: string) {

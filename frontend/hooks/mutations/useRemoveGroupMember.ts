@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { groupsApi } from "@/lib/api";
+import { groupsApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 
 export function useRemoveGroupMember() {

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { summaryApi } from "@/lib/api";
+import { summaryApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 
 export function useGroupSummary(groupId: string, month?: string) {

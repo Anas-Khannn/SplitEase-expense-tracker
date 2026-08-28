@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { expensesApi } from "@/lib/api";
+import { expensesApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 import type { UpdateExpenseRequest } from "@/types";
 

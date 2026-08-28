@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { paymentsApi } from "@/lib/api";
+import { paymentsApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 import type { CreatePaymentRequest } from "@/types";
 

@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { signupSchema, type SignupFormData } from "@/lib/validation/authSchemas";
-import { authApi } from "@/lib/api";
+import { authApi } from "@/services";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-keys";
 import AuthCard from "@/components/auth/AuthCard";

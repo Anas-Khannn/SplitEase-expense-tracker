@@ -1,4 +1,4 @@
-import { apiClient } from "./client";
+import { apiClient } from "../lib/api/client";
 import type { ApiResponse, ActivityListResponse, ActivityPagination } from "@/types";
 
 export const activityApi = {
