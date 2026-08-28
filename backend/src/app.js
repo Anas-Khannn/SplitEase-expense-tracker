@@ -8,7 +8,11 @@ const env = require("./config/env");
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: env.cors.origin,
+  })
+);
 
 app.get("/api/health", (req, res) => {
   res.status(HTTP_STATUSES.OK).json({
