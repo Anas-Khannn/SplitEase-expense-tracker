@@ -1,14 +1,14 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../../config/database");
 
-const User = require("./User")(sequelize, DataTypes);
-const Group = require("./Group")(sequelize, DataTypes);
-const GroupMember = require("./GroupMember")(sequelize, DataTypes);
-const Expense = require("./Expense")(sequelize, DataTypes);
-const ExpenseSplit = require("./ExpenseSplit")(sequelize, DataTypes);
-const Payment = require("./Payment")(sequelize, DataTypes);
-const ExpenseReaction = require("./ExpenseReaction")(sequelize, DataTypes);
-const ActivityLog = require("./ActivityLog")(sequelize, DataTypes);
+const User = require("./user")(sequelize, DataTypes);
+const Group = require("./group")(sequelize, DataTypes);
+const GroupMember = require("./group-member")(sequelize, DataTypes);
+const Expense = require("./expense")(sequelize, DataTypes);
+const ExpenseSplit = require("./expense-split")(sequelize, DataTypes);
+const Payment = require("./payment")(sequelize, DataTypes);
+const ExpenseReaction = require("./expense-reaction")(sequelize, DataTypes);
+const ActivityLog = require("./activity-log")(sequelize, DataTypes);
 
 // =====================================================
 // ONE-TO-MANY RELATIONSHIPS
