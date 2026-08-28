@@ -74,7 +74,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         {loading ? (
           <Loader2 className="animate-spin shrink-0" size={size === "sm" ? 14 : 16} />
         ) : (
-          icon && (
+          icon && iconPosition !== "right" && (
             <span className="shrink-0 [&>svg]:size-[1em]">{icon}</span>
           )
         )}
