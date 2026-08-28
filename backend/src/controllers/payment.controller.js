@@ -1,6 +1,6 @@
 const paymentService = require("../services/payment.service");
 const HTTP_STATUSES = require("../constants/http-statuses");
-const asyncHandler = require("../utils/asyncHandler");
+const asyncHandler = require("../middlewares/async-handler.middleware");
 
 const createPayment = asyncHandler(async (req, res) => {
   const result = await paymentService.createPayment(

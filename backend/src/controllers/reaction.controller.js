@@ -1,6 +1,6 @@
 const reactionService = require("../services/reaction.service");
 const HTTP_STATUSES = require("../constants/http-statuses");
-const asyncHandler = require("../utils/asyncHandler");
+const asyncHandler = require("../middlewares/async-handler.middleware");
 
 const addOrUpdateReaction = asyncHandler(async (req, res) => {
   const result = await reactionService.addOrUpdateReaction(

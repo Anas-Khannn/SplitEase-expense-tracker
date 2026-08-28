@@ -1,6 +1,6 @@
 const groupService = require("../services/group.service");
 const HTTP_STATUSES = require("../constants/http-statuses");
-const asyncHandler = require("../utils/asyncHandler");
+const asyncHandler = require("../middlewares/async-handler.middleware");
 
 const createGroup = asyncHandler(async (req, res) => {
   const result = await groupService.createGroup(req.user.user_id, req.body);

@@ -1,6 +1,6 @@
 const authService = require("../services/auth.service");
 const HTTP_STATUSES = require("../constants/http-statuses");
-const asyncHandler = require("../utils/asyncHandler");
+const asyncHandler = require("../middlewares/async-handler.middleware");
 
 const signup = asyncHandler(async (req, res) => {
   const result = await authService.signup(req.body);

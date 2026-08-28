@@ -1,6 +1,6 @@
 const summaryService = require("../services/summary.service");
 const HTTP_STATUSES = require("../constants/http-statuses");
-const asyncHandler = require("../utils/asyncHandler");
+const asyncHandler = require("../middlewares/async-handler.middleware");
 
 const getGroupSummary = asyncHandler(async (req, res) => {
   const filters = req.validatedQuery || {};

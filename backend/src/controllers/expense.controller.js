@@ -1,6 +1,6 @@
 const expenseService = require("../services/expense.service");
 const HTTP_STATUSES = require("../constants/http-statuses");
-const asyncHandler = require("../utils/asyncHandler");
+const asyncHandler = require("../middlewares/async-handler.middleware");
 
 const createExpense = asyncHandler(async (req, res) => {
   const result = await expenseService.createExpense(

@@ -1,18 +1,8 @@
 const { User } = require("../database/models");
 const { hashPassword, comparePassword } = require("../utils/password");
 const { generateToken } = require("../utils/jwt");
+const { formatUser } = require("../utils/user.utils");
 const { ConflictError, UnauthorizedError, NotFoundError } = require("../errors");
-
-const safeUserFields = ["user_id", "name", "email", "created_at", "updated_at"];
-
-const formatUser = (user) => {
-  const data = user.toJSON ? user.toJSON() : user;
-  const safe = {};
-  safeUserFields.forEach((field) => {
-    safe[field] = data[field];
-  });
-  return safe;
-};
 
 const signup = async ({ name, email, password }) => {
   const existingUser = await User.findOne({ where: { email } });
