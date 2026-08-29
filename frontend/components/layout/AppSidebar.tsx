@@ -81,7 +81,11 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
 
       {user && (
         <div className="shrink-0 border-t border-border-default p-3">
-          <div className="flex items-center gap-3 px-2 py-1.5">
+          <Link
+            href="/profile"
+            onClick={onClose}
+            className="flex items-center gap-3 rounded-radius-md px-2 py-1.5 transition-colors duration-150 hover:bg-surface-alt focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+          >
             <Avatar name={user.name} alt={user.name} size="sm" />
             <div className="min-w-0 flex-1">
               <p className="text-body-sm font-medium text-text-primary truncate">
@@ -91,7 +95,7 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
                 {user.email}
               </p>
             </div>
-          </div>
+          </Link>
           <Button
             variant="ghost"
             size="sm"

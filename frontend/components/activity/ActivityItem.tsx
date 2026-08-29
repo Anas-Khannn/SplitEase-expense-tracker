@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
+import { Badge } from "@/components/ui";
 import type { Activity, ActivityAction } from "@/types";
 
 const actionPresentation: Record<
@@ -62,6 +63,7 @@ const fallbackPresentation = {
 
 interface ActivityItemProps {
   activity: Activity;
+  groupName?: string;
 }
 
 function formatTimestamp(iso: string): string {
@@ -83,7 +85,7 @@ function formatTime(iso: string): string {
   });
 }
 
-export function ActivityItem({ activity }: ActivityItemProps) {
+export function ActivityItem({ activity, groupName }: ActivityItemProps) {
   const presentation =
     actionPresentation[activity.action] ?? fallbackPresentation;
   const Icon = presentation.icon;
@@ -105,6 +107,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
         <p className="text-body-sm text-text-primary">
           <span className="font-semibold">{actorName}</span>{" "}
           <span className="text-text-muted">{presentation.label}</span>
+          {groupName && <Badge variant="neutral" className="ml-2">{groupName}</Badge>}
         </p>
         {activity.description && (
           <p className="mt-0.5 text-body text-text-secondary break-words">

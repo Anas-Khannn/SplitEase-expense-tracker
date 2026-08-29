@@ -5,9 +5,10 @@ import type { Activity } from "@/types";
 
 interface ActivityFeedProps {
   activities: Activity[];
+  groupNames?: Record<string, string>;
 }
 
-export function ActivityFeed({ activities }: ActivityFeedProps) {
+export function ActivityFeed({ activities, groupNames }: ActivityFeedProps) {
   return (
     <ol className="space-y-5 rounded-radius-lg border border-border-default bg-surface px-4 py-5 shadow-xs">
       {activities.map((activity, index) => (
@@ -18,7 +19,10 @@ export function ActivityFeed({ activities }: ActivityFeedProps) {
               className="absolute left-[2.25rem] top-10 bottom-[-1.25rem] w-px -translate-x-px bg-border-default"
             />
           )}
-          <ActivityItem activity={activity} />
+          <ActivityItem
+            activity={activity}
+            groupName={groupNames?.[activity.group_id]}
+          />
         </li>
       ))}
     </ol>

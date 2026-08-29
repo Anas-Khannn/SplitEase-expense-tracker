@@ -1,0 +1,146 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/auth/AuthProvider";
+import { useLogout } from "@/hooks/mutations/useLogout";
+import { useGroups } from "@/hooks/useGroups";
+import {
+  Avatar,
+  Button,
+  Card,
+  CardHeader,
+  CardContent,
+  CardFooter,
+  Skeleton,
+} from "@/components/ui";
+import { LogOut, Users } from "lucide-react";
+
+function formatDate(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+export default function ProfilePage() {
+  const { user } = useAuth();
+  const logout = useLogout();
+  const router = useRouter();
+  const { data: groups, isLoading: groupsLoading } = useGroups();
+
+  const handleLogout = () => {
+    logout.mutate(undefined, {
+      onSettled: () => {
+        router.push("/login");
+      },
+    });
+  };
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-h2 font-bold text-text-primary">Profile</h2>
+        <p className="mt-1 text-body-sm text-text-muted">
+          Your account details.
+        </p>
+      </div>
+
+      {!user && (
+        <Card>
+          <CardContent className="py-6">
+            <div className="flex items-center gap-3">
+              <Skeleton variant="circle" className="h-16 w-16" />
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-5 w-40" />
+                <Skeleton className="h-4 w-56" />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {user && (
+        <>
+          <Card>
+            <CardContent className="py-6">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
+                <Avatar name={user.name} alt={user.name} size="xl" />
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-h3 font-semibold text-text-primary">
+                    {user.name}
+                  </h3>
+                  <p className="mt-1 text-body-sm text-text-muted break-words">
+                    {user.email}
+                  </p>
+                  <p className="mt-1 text-caption text-text-muted break-all">
+                    User ID: {user.user_id}
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <h3 className="text-h3 font-semibold text-text-primary">
+                Account
+              </h3>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-radius-md bg-primary-100">
+                    <Users className="h-5 w-5 text-primary-500" aria-hidden="true" />
+                  </div>
+                  <div>
+                    <p className="text-body font-medium text-text-primary">
+                      Groups
+                    </p>
+                    <p className="text-caption text-text-muted">
+                      Groups you&apos;re a member of
+                    </p>
+                  </div>
+                </div>
+                {groupsLoading ? (
+                  <Skeleton className="h-6 w-8" />
+                ) : (
+                  <span className="text-body font-semibold text-text-primary tabular-nums">
+                    {groups?.length ?? 0}
+                  </span>
+                )}
+              </div>
+
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-body font-medium text-text-primary">
+                    Member since
+                  </p>
+                  <p className="text-caption text-text-muted">
+                    Joined SplitEase
+                  </p>
+                </div>
+                <p className="text-body font-semibold text-text-primary">
+                  {formatDate(user.created_at) || "—"}
+                </p>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button
+                variant="danger"
+                size="md"
+                icon={<LogOut />}
+                onClick={handleLogout}
+                loading={logout.isPending}
+              >
+                Log out
+              </Button>
+            </CardFooter>
+          </Card>
+        </>
+      )}
+    </div>
+  );
+}
