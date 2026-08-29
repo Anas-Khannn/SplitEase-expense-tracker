@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useGroup } from "@/hooks/useGroups";
 import { Avatar, Skeleton, ErrorState } from "@/components/ui";
+import { groupIcon } from "@/lib/utils/group-icons";
 import { cn } from "@/lib/utils/cn";
 import {
   Wallet,
@@ -59,8 +60,8 @@ export function GroupHeader({ groupId }: GroupHeaderProps) {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
               <div className="flex items-center gap-3">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-radius-md bg-primary-100 text-h3">
-                  {group.icon ?? "📁"}
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-radius-md bg-primary-100 text-h3" aria-hidden="true">
+                  {groupIcon(group.icon)}
                 </span>
                 <h2 className="truncate text-h2 font-bold text-text-primary">
                   {group.name}

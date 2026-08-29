@@ -1,6 +1,6 @@
 "use client";
 
-import { ExpenseCard } from "./ExpenseCard";
+import { ExpenseCard, ExpenseTableRow } from "./ExpenseCard";
 import { EmptyState, Button } from "@/components/ui";
 import { ReceiptText, Plus, FilterX, X } from "lucide-react";
 import type { Expense } from "@/types";
@@ -14,6 +14,9 @@ interface ExpenseListProps {
   isFiltered?: boolean;
   onClearFilters?: () => void;
 }
+
+const TH_CLASS =
+  "px-4 py-3 text-caption font-medium uppercase tracking-wide text-text-muted";
 
 export function ExpenseList({
   expenses,
@@ -67,16 +70,64 @@ export function ExpenseList({
   }
 
   return (
-    <div className="space-y-3">
-      {expenses.map((expense) => (
-        <ExpenseCard
-          key={expense.expense_id}
-          expense={expense}
-          currentUserId={currentUserId}
-          onEdit={() => onEdit(expense)}
-          onDelete={() => onDelete(expense)}
-        />
-      ))}
-    </div>
+    <>
+      <div className="hidden sm:block">
+        <div className="overflow-x-auto rounded-radius-lg border border-border-default bg-surface shadow-xs">
+          <table className="w-full border-collapse text-left">
+            <thead>
+              <tr className="border-b border-border-default bg-surface-alt/60">
+                <th scope="col" className={TH_CLASS}>
+                  Description
+                </th>
+                <th scope="col" className={TH_CLASS}>
+                  Amount
+                </th>
+                <th scope="col" className={TH_CLASS}>
+                  Payer
+                </th>
+                <th scope="col" className={TH_CLASS}>
+                  Date
+                </th>
+                <th scope="col" className={TH_CLASS}>
+                  Split with
+                </th>
+                <th scope="col" className={TH_CLASS}>
+                  Reactions
+                </th>
+                <th
+                  scope="col"
+                  className={`${TH_CLASS} text-right`}
+                >
+                  <span className="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border-default">
+              {expenses.map((expense) => (
+                <ExpenseTableRow
+                  key={expense.expense_id}
+                  expense={expense}
+                  currentUserId={currentUserId}
+                  onEdit={() => onEdit(expense)}
+                  onDelete={() => onDelete(expense)}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="space-y-3 sm:hidden">
+        {expenses.map((expense) => (
+          <ExpenseCard
+            key={expense.expense_id}
+            expense={expense}
+            currentUserId={currentUserId}
+            onEdit={() => onEdit(expense)}
+            onDelete={() => onDelete(expense)}
+          />
+        ))}
+      </div>
+    </>
   );
 }

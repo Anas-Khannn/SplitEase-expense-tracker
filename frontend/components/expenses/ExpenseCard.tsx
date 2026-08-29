@@ -7,9 +7,7 @@ import {
   IconButton,
   Button,
 } from "@/components/ui";
-import {
-  useExpenseReactions,
-} from "@/hooks/useReactions";
+import { useExpenseReactions } from "@/hooks/useReactions";
 import {
   useAddExpenseReaction,
   useRemoveExpenseReaction,
@@ -20,11 +18,67 @@ import type { Expense, ReactionType } from "@/types";
 
 const REACTION_OPTIONS: ReactionType[] = ["👍", "😂", "😮", "❤️", "😢"];
 
-interface ExpenseCardProps {
-  expense: Expense;
+interface ExpenseReactionsProps {
+  expenseId: string;
   currentUserId?: string;
-  onEdit: () => void;
-  onDelete: () => void;
+  compact?: boolean;
+}
+
+function ExpenseReactions({
+  expenseId,
+  currentUserId,
+  compact = false,
+}: ExpenseReactionsProps) {
+  const { data: reactions = [] } = useExpenseReactions(expenseId);
+  const addReaction = useAddExpenseReaction();
+  const removeReaction = useRemoveExpenseReaction();
+
+  const myReaction = reactions.find((r) => r.user_id === currentUserId);
+  const busy = addReaction.isPending || removeReaction.isPending;
+
+  const handleReaction = (reaction: ReactionType) => {
+    if (busy) return;
+    if (!myReaction) {
+      addReaction.mutate({ expenseId, reaction });
+    } else if (myReaction.reaction === reaction) {
+      removeReaction.mutate(expenseId);
+    } else {
+      removeReaction.mutate(expenseId, {
+        onSuccess: () => addReaction.mutate({ expenseId, reaction }),
+      });
+    }
+  };
+
+  return (
+    <div
+      className={
+        compact
+          ? "flex flex-wrap items-center gap-1"
+          : "mt-3 flex flex-wrap items-center gap-1 border-t border-border-default pt-3"
+      }
+      aria-label="Add a reaction"
+    >
+      {REACTION_OPTIONS.map((reaction) => {
+        const count = reactions.filter((r) => r.reaction === reaction).length;
+        const active = myReaction?.reaction === reaction;
+        return (
+          <Button
+            key={reaction}
+            type="button"
+            variant="ghost"
+            size="sm"
+            disabled={busy}
+            onClick={() => handleReaction(reaction)}
+            className={cn("gap-1", active && "bg-primary-100 text-primary-600")}
+            aria-pressed={active}
+          >
+            <span aria-hidden="true">{reaction}</span>
+            {count > 0 && <span className="text-caption">{count}</span>}
+          </Button>
+        );
+      })}
+    </div>
+  );
 }
 
 function formatCurrency(amount: string): string {
@@ -48,38 +102,28 @@ function formatDate(iso: string): string {
   });
 }
 
+function getSplitLabel(expense: Expense): string {
+  const participantNames = expense.splits
+    .map((s) => s.user.name)
+    .filter(Boolean);
+  return participantNames.length
+    ? participantNames.join(", ")
+    : `${expense.splits.length} participant${expense.splits.length === 1 ? "" : "s"}`;
+}
+
+interface ExpenseCardProps {
+  expense: Expense;
+  currentUserId?: string;
+  onEdit: () => void;
+  onDelete: () => void;
+}
+
 export function ExpenseCard({
   expense,
   currentUserId,
   onEdit,
   onDelete,
 }: ExpenseCardProps) {
-  const { data: reactions = [] } = useExpenseReactions(expense.expense_id);
-  const addReaction = useAddExpenseReaction();
-  const removeReaction = useRemoveExpenseReaction();
-
-  const myReaction = reactions.find((r) => r.user_id === currentUserId);
-  const busy = addReaction.isPending || removeReaction.isPending;
-
-  const handleReaction = (reaction: ReactionType) => {
-    if (busy) return;
-    if (!myReaction) {
-      addReaction.mutate({ expenseId: expense.expense_id, reaction });
-    } else if (myReaction.reaction === reaction) {
-      removeReaction.mutate(expense.expense_id);
-    } else {
-      removeReaction.mutate(expense.expense_id, {
-        onSuccess: () =>
-          addReaction.mutate({ expenseId: expense.expense_id, reaction }),
-      });
-    }
-  };
-
-  const participantNames = expense.splits.map((s) => s.user.name).filter(Boolean);
-  const participantsLabel = participantNames.length
-    ? participantNames.join(", ")
-    : `${expense.splits.length} participant${expense.splits.length === 1 ? "" : "s"}`;
-
   return (
     <Card>
       <CardContent className="py-4">
@@ -113,39 +157,83 @@ export function ExpenseCard({
           {expense.description || "Untitled expense"}
         </p>
         <p className="mt-1 text-caption text-text-muted">
-          Paid by {expense.payer?.name ?? "Unknown"} · {participantsLabel}
+          Paid by {expense.payer?.name ?? "Unknown"} · {getSplitLabel(expense)}
         </p>
 
-        <div
-          className="mt-3 flex flex-wrap items-center gap-1 border-t border-border-default pt-3"
-          aria-label="Add a reaction"
-        >
-          {REACTION_OPTIONS.map((reaction) => {
-            const count = reactions.filter(
-              (r) => r.reaction === reaction
-            ).length;
-            const active = myReaction?.reaction === reaction;
-            return (
-              <Button
-                key={reaction}
-                type="button"
-                variant="ghost"
-                size="sm"
-                disabled={busy}
-                onClick={() => handleReaction(reaction)}
-                className={cn(
-                  "gap-1",
-                  active && "bg-primary-100 text-primary-600"
-                )}
-                aria-pressed={active}
-              >
-                <span aria-hidden="true">{reaction}</span>
-                {count > 0 && <span className="text-caption">{count}</span>}
-              </Button>
-            );
-          })}
-        </div>
+        <ExpenseReactions
+          expenseId={expense.expense_id}
+          currentUserId={currentUserId}
+        />
       </CardContent>
     </Card>
+  );
+}
+
+interface ExpenseTableRowProps {
+  expense: Expense;
+  currentUserId?: string;
+  onEdit: () => void;
+  onDelete: () => void;
+}
+
+export function ExpenseTableRow({
+  expense,
+  currentUserId,
+  onEdit,
+  onDelete,
+}: ExpenseTableRowProps) {
+  const splitLabel = getSplitLabel(expense);
+
+  return (
+    <tr className="transition-colors duration-150 hover:bg-surface-alt/60 focus-within:bg-surface-alt/60">
+      <td className="min-w-44 px-4 py-3">
+        <p className="truncate text-body font-medium text-text-primary max-w-48">
+          {expense.description || "Untitled expense"}
+        </p>
+      </td>
+      <td className="px-4 py-3">
+        <span className="whitespace-nowrap text-body font-semibold text-text-primary">
+          {formatCurrency(expense.amount)}
+        </span>
+      </td>
+      <td className="whitespace-nowrap px-4 py-3 text-body-sm text-text-secondary">
+        {expense.payer?.name ?? "Unknown"}
+      </td>
+      <td className="whitespace-nowrap px-4 py-3 text-body-sm text-text-secondary">
+        {formatDate(expense.expense_date) || "No date"}
+      </td>
+      <td className="min-w-40 max-w-56 px-4 py-3">
+        <p
+          className="truncate text-body-sm text-text-secondary"
+          title={splitLabel}
+        >
+          {splitLabel}
+        </p>
+      </td>
+      <td className="px-4 py-3">
+        <ExpenseReactions
+          expenseId={expense.expense_id}
+          currentUserId={currentUserId}
+          compact
+        />
+      </td>
+      <td className="px-4 py-3">
+        <div className="flex items-center justify-end gap-1">
+          <IconButton
+            icon={<Pencil />}
+            aria-label={`Edit expense ${expense.description}`}
+            size="sm"
+            onClick={onEdit}
+          />
+          <IconButton
+            icon={<Trash2 />}
+            aria-label={`Delete expense ${expense.description}`}
+            variant="danger"
+            size="sm"
+            onClick={onDelete}
+          />
+        </div>
+      </td>
+    </tr>
   );
 }
