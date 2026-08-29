@@ -94,7 +94,9 @@ export function MemberList({
         {members.map((member) => {
           const isSelf = member.user_id === currentUserId;
           const displayName =
-            isSelf && currentUserName ? currentUserName : "Member";
+            member.name ||
+            (isSelf && currentUserName ? currentUserName : undefined) ||
+            "Member";
           const joined = formatDate(member.joined_at);
 
           return (

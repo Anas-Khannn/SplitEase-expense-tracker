@@ -11,7 +11,7 @@ interface GroupCardProps {
 export function GroupCard({ group }: GroupCardProps) {
   return (
     <Link
-      href={`/groups/${group.group_id}`}
+      href={`/groups/${group.group_id}/expenses`}
       className="block focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring rounded-radius-lg"
     >
       <Card variant="interactive">

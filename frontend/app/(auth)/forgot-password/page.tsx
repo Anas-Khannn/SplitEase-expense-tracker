@@ -109,10 +109,12 @@ export default function ForgotPasswordPage() {
                 </span>
                 . Please check your inbox.
               </p>
-              <Link href="/login">
-                <Button variant="secondary" fullWidth icon={<ArrowLeft />}>
-                  Back to login
-                </Button>
+              <Link
+                href="/login"
+                className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-radius-md border border-border-default bg-surface px-4 text-button font-semibold text-text-primary transition-colors duration-150 hover:bg-surface-alt focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
+              >
+                <ArrowLeft aria-hidden="true" />
+                Back to login
               </Link>
             </motion.div>
           ) : (

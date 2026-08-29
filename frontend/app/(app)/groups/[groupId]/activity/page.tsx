@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, use } from "react";
+import { use } from "react";
 import { useGroupActivity } from "@/hooks/useActivity";
 import { ActivityFeed } from "@/components/activity/ActivityFeed";
 import {
@@ -11,15 +11,12 @@ import {
 } from "@/components/ui";
 import { ListTree } from "lucide-react";
 
-const PAGE_SIZE = 20;
-
 interface ActivityPageProps {
   params: Promise<{ groupId: string }>;
 }
 
 export default function ActivityPage({ params }: ActivityPageProps) {
   const { groupId } = use(params);
-  const [page, setPage] = useState(1);
 
   const {
     data,
@@ -27,10 +24,12 @@ export default function ActivityPage({ params }: ActivityPageProps) {
     isError,
     error,
     refetch,
-  } = useGroupActivity(groupId, { page, limit: PAGE_SIZE });
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGroupActivity(groupId);
 
-  const activities = data?.activities ?? [];
-  const totalPages = data?.pagination?.total_pages ?? 0;
+  const activities = data?.pages.flatMap((page) => page.activities) ?? [];
 
   return (
     <div className="space-y-5">
@@ -76,12 +75,13 @@ export default function ActivityPage({ params }: ActivityPageProps) {
         <ActivityFeed activities={activities} />
       )}
 
-      {!isLoading && !isError && page < totalPages && (
+      {!isLoading && !isError && hasNextPage && (
         <div className="flex justify-center">
           <Button
             variant="secondary"
             size="md"
-            onClick={() => setPage((p) => p + 1)}
+            loading={isFetchingNextPage}
+            onClick={() => fetchNextPage()}
           >
             Load more
           </Button>

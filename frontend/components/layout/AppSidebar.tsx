@@ -117,7 +117,13 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
 
       {/* Mobile drawer */}
       {open !== undefined && (
-        <div className="lg:hidden" role="dialog" aria-modal="true" aria-label="Navigation menu">
+        <div
+          className="lg:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+          inert={!open}
+        >
           <div
             className={cn(
               "fixed inset-0 z-40 bg-black/50 transition-opacity duration-300",

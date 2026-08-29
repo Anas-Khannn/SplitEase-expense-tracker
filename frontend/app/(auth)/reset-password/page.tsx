@@ -128,10 +128,12 @@ function ResetPasswordContent() {
               <p className="text-body-sm text-text-muted mb-6">
                 Your password has been updated. Redirecting to login...
               </p>
-              <Link href="/login">
-                <Button variant="primary" fullWidth icon={<ArrowRight />} iconPosition="right">
-                  Go to login
-                </Button>
+              <Link
+                href="/login"
+                className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-radius-md bg-primary-500 px-4 text-button font-semibold text-white transition-colors duration-150 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
+              >
+                Go to login
+                <ArrowRight aria-hidden="true" />
               </Link>
             </motion.div>
           ) : (

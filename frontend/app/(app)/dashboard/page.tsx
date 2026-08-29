@@ -1,13 +1,20 @@
 "use client";
 
+import Link from "next/link";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useDashboardSummary } from "@/hooks/useDashboard";
 import { Card, CardContent, CardHeader, Skeleton, EmptyState, ErrorState } from "@/components/ui";
-import { DollarSign, TrendingUp, TrendingDown } from "lucide-react";
+import { DollarSign, TrendingUp, TrendingDown, Plus } from "lucide-react";
 
 export default function DashboardPage() {
   const { user } = useAuth();
-  const { data: summary, isLoading, isError, error } = useDashboardSummary();
+  const {
+    data: summary,
+    isLoading,
+    isError,
+    error,
+    refetch,
+  } = useDashboardSummary();
 
   return (
     <div className="space-y-6">
@@ -37,6 +44,7 @@ export default function DashboardPage() {
         <ErrorState
           title="Failed to load dashboard"
           description={error?.message ?? "Something went wrong"}
+          onRetry={refetch}
         />
       )}
 
@@ -92,8 +100,18 @@ export default function DashboardPage() {
 
           {summary.groups.length === 0 ? (
             <EmptyState
+              icon={<Plus />}
               title="No groups yet"
               description="Create a group to start splitting expenses with friends"
+              action={
+                <Link
+                  href="/groups"
+                  className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-radius-md bg-primary-500 px-4 text-button font-semibold text-white transition-colors duration-150 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
+                >
+                  <Plus aria-hidden="true" />
+                  Create group
+                </Link>
+              }
             />
           ) : (
             <Card>
