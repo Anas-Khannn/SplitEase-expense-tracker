@@ -69,6 +69,8 @@ export interface GroupMemberRecord {
   user_id: string;
   role: "admin" | "member";
   joined_at: string;
+  name?: string;
+  email?: string;
 }
 
 /* ── Expense ── */

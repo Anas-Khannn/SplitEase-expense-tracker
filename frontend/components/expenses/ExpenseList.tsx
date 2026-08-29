@@ -2,7 +2,7 @@
 
 import { ExpenseCard } from "./ExpenseCard";
 import { EmptyState, Button } from "@/components/ui";
-import { ReceiptText, Plus } from "lucide-react";
+import { ReceiptText, Plus, FilterX, X } from "lucide-react";
 import type { Expense } from "@/types";
 
 interface ExpenseListProps {
@@ -11,6 +11,8 @@ interface ExpenseListProps {
   onAddExpense: () => void;
   onEdit: (expense: Expense) => void;
   onDelete: (expense: Expense) => void;
+  isFiltered?: boolean;
+  onClearFilters?: () => void;
 }
 
 export function ExpenseList({
@@ -19,8 +21,32 @@ export function ExpenseList({
   onAddExpense,
   onEdit,
   onDelete,
+  isFiltered = false,
+  onClearFilters,
 }: ExpenseListProps) {
   if (expenses.length === 0) {
+    if (isFiltered) {
+      return (
+        <EmptyState
+          icon={<FilterX />}
+          title="No expenses match your filters"
+          description="Try adjusting or clearing the filters to see more expenses."
+          action={
+            onClearFilters && (
+              <Button
+                variant="secondary"
+                size="md"
+                icon={<X />}
+                onClick={onClearFilters}
+              >
+                Clear filters
+              </Button>
+            )
+          }
+        />
+      );
+    }
+
     return (
       <EmptyState
         icon={<ReceiptText />}

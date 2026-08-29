@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { expensesApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
 import type { ExpenseFilters } from "@/types";
@@ -10,6 +10,7 @@ export function useGroupExpenses(groupId: string, filters?: ExpenseFilters) {
       const res = await expensesApi.list(groupId, filters);
       return res.data;
     },
+    placeholderData: keepPreviousData,
     enabled: !!groupId,
   });
 }
