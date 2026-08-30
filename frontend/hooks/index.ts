@@ -1,6 +1,7 @@
 export { useCurrentUser } from "./useCurrentUser";
 export { useGroups, useGroup, useGroupMembers } from "./useGroups";
 export { useGroupExpenses, useExpense } from "./useExpenses";
+export { useAllExpenses } from "./useAllExpenses";
 export { useGroupBalance } from "./useBalances";
 export { useGroupPayments } from "./usePayments";
 export { useGroupActivity } from "./useActivity";

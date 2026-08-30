@@ -11,12 +11,14 @@ import {
   Users,
   Wallet,
   Activity,
+  ReceiptText,
   LogOut,
 } from "lucide-react";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/groups", label: "Groups", icon: Users },
+  { href: "/expenses", label: "Expenses", icon: ReceiptText },
   { href: "/balances", label: "Balances", icon: Wallet },
   { href: "/activity", label: "Activity", icon: Activity },
 ] as const;

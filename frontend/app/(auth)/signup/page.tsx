@@ -9,8 +9,6 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { signupSchema, type SignupFormData } from "@/lib/validation/authSchemas";
 import { authApi } from "@/services";
-import { useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "@/lib/query-keys";
 import AuthCard from "@/components/auth/AuthCard";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { Button, Input } from "@/components/ui";
@@ -31,7 +29,6 @@ const itemVariants = {
 
 export default function SignupPage() {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const [serverError, setServerError] = useState<string | null>(null);
   const { shakeControls, shake } = useShake();
 
@@ -48,14 +45,12 @@ export default function SignupPage() {
     async (data: SignupFormData) => {
       setServerError(null);
       try {
-        const res = await authApi.signup({
+        await authApi.signup({
           name: data.name,
           email: data.email,
           password: data.password,
         });
-        localStorage.setItem("token", res.data.token);
-        queryClient.setQueryData(queryKeys.auth.me(), res.data.user);
-        router.push("/dashboard");
+        router.push("/login");
       } catch (err: unknown) {
         const message =
           err instanceof Error ? err.message : "Signup failed. Please try again.";
@@ -63,7 +58,7 @@ export default function SignupPage() {
         shake();
       }
     },
-    [queryClient, router, shake]
+    [router, shake]
   );
 
   return (
