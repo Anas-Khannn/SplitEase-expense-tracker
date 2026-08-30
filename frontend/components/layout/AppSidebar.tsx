@@ -12,6 +12,7 @@ import {
   Wallet,
   Activity,
   ReceiptText,
+  Settings2,
   LogOut,
 } from "lucide-react";
 
@@ -21,6 +22,10 @@ const NAV_ITEMS = [
   { href: "/expenses", label: "Expenses", icon: ReceiptText },
   { href: "/balances", label: "Balances", icon: Wallet },
   { href: "/activity", label: "Activity", icon: Activity },
+] as const;
+
+const SECTION_ITEMS = [
+  { href: "/settings", label: "Settings", icon: Settings2 },
 ] as const;
 
 function isActive(pathname: string, href: string) {
@@ -58,6 +63,32 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
       <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Main navigation">
         <ul className="space-y-1" role="list">
           {NAV_ITEMS.map((item) => {
+            const active = isActive(pathname, item.href);
+            return (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  onClick={onClose}
+                  className={cn(
+                    "flex items-center gap-3 rounded-radius-md px-3 py-2 text-body-sm font-medium transition-colors duration-150",
+                    active
+                      ? "bg-primary-100 text-primary-600"
+                      : "text-text-secondary hover:bg-surface-alt hover:text-text-primary"
+                  )}
+                  aria-current={active ? "page" : undefined}
+                >
+                  <item.icon className="h-5 w-5 shrink-0" aria-hidden="true" />
+                  <span>{item.label}</span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      </nav>
+
+      <nav className="shrink-0 border-t border-border-default px-3 py-3" aria-label="Secondary navigation">
+        <ul className="space-y-1" role="list">
+          {SECTION_ITEMS.map((item) => {
             const active = isActive(pathname, item.href);
             return (
               <li key={item.href}>
