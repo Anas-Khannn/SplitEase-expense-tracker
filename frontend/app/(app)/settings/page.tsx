@@ -29,39 +29,57 @@ const THEME_OPTIONS: { value: ThemePreference; label: string; icon: typeof Monit
 const THEME_STORAGE_KEY = "split-ease-theme-preference";
 const THEME_SYNC_EVENT = "split-ease-theme-change";
 
-function subscribeToTheme(callback: () => void) {
-  if (typeof window === "undefined") return () => {};
-  window.addEventListener("storage", callback);
-  window.addEventListener(THEME_SYNC_EVENT, callback);
-  return () => {
-    window.removeEventListener("storage", callback);
-    window.removeEventListener(THEME_SYNC_EVENT, callback);
-  };
-}
+let currentTheme: ThemePreference = "system";
 
 function getThemeSnapshot(): ThemePreference {
-  if (typeof window === "undefined") return "system";
+  return currentTheme;
+}
+
+function getServerSnapshot(): ThemePreference {
+  return "system";
+}
+
+function subscribeToTheme(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+
+  // Read stored preference AFTER hydration (this runs in a passive effect).
   try {
     const stored = localStorage.getItem(THEME_STORAGE_KEY) as ThemePreference | null;
-    return stored && THEME_OPTIONS.some((o) => o.value === stored)
-      ? stored
-      : "system";
+    if (stored && THEME_OPTIONS.some((o) => o.value === stored)) {
+      currentTheme = stored;
+      callback();
+    }
   } catch {
-    return "system";
+    // Storage unavailable — use default.
   }
+
+  const onThemeSync = (e: Event) => {
+    const detail = (e as CustomEvent<ThemePreference>).detail;
+    if (detail && THEME_OPTIONS.some((o) => o.value === detail)) {
+      currentTheme = detail;
+    }
+    callback();
+  };
+
+  window.addEventListener("storage", callback);
+  window.addEventListener(THEME_SYNC_EVENT, onThemeSync);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener(THEME_SYNC_EVENT, onThemeSync);
+  };
 }
 
 function AppearancesSection() {
   const theme = useSyncExternalStore(
     subscribeToTheme,
     getThemeSnapshot,
-    () => "system"
+    getServerSnapshot
   );
 
   const handleSelect = (next: ThemePreference) => {
     try {
       localStorage.setItem(THEME_STORAGE_KEY, next);
-      window.dispatchEvent(new Event(THEME_SYNC_EVENT));
+      window.dispatchEvent(new CustomEvent(THEME_SYNC_EVENT, { detail: next }));
     } catch {
       // Storage unavailable — preference only applies for this session.
     }
