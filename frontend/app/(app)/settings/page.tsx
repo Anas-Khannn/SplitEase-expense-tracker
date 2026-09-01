@@ -1,7 +1,6 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useLogout } from "@/hooks/mutations/useLogout";
 import {
@@ -144,14 +143,9 @@ function AppearancesSection() {
 export default function SettingsPage() {
   const { user, isLoading } = useAuth();
   const logout = useLogout();
-  const router = useRouter();
 
   const handleLogout = () => {
-    logout.mutate(undefined, {
-      onSettled: () => {
-        router.push("/login");
-      },
-    });
+    logout.mutate();
   };
 
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useLogout } from "@/hooks/mutations/useLogout";
 import { Button, Avatar } from "@/components/ui";
@@ -42,14 +42,9 @@ export function AppSidebar({ open, onClose }: AppSidebarProps) {
   const pathname = usePathname();
   const { user } = useAuth();
   const logout = useLogout();
-  const router = useRouter();
 
   const handleLogout = () => {
-    logout.mutate(undefined, {
-      onSettled: () => {
-        router.push("/login");
-      },
-    });
+    logout.mutate();
   };
 
   const navContent = (

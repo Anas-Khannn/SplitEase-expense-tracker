@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { loginSchema, type LoginFormData } from "@/lib/validation/authSchemas";
 import { authApi } from "@/services";
+import { setAuthToken } from "@/lib/auth-token";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-keys";
 import AuthCard from "@/components/auth/AuthCard";
@@ -52,7 +53,7 @@ export default function LoginPage() {
           email: data.email,
           password: data.password,
         });
-        localStorage.setItem("token", res.data.token);
+        setAuthToken(res.data.token);
         queryClient.setQueryData(queryKeys.auth.me(), res.data.user);
         router.push("/dashboard");
       } catch (err: unknown) {

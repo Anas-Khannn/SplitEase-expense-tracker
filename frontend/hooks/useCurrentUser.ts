@@ -1,20 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import { authApi } from "@/services";
 import { queryKeys } from "@/lib/query-keys";
-
-function hasToken() {
-  if (typeof window === "undefined") return false;
-  return !!localStorage.getItem("token");
-}
+import { useAuthToken } from "@/hooks/useAuthToken";
 
 export function useCurrentUser() {
+  const token = useAuthToken();
+
   return useQuery({
     queryKey: queryKeys.auth.me(),
     queryFn: async () => {
       const res = await authApi.getMe();
       return res.data.user;
     },
-    enabled: hasToken(),
+    enabled: token != null,
     retry: false,
   });
 }

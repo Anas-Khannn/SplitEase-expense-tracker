@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useLogout } from "@/hooks/mutations/useLogout";
 import { useGroups } from "@/hooks/useGroups";
@@ -28,15 +27,10 @@ function formatDate(iso: string): string {
 export default function ProfilePage() {
   const { user } = useAuth();
   const logout = useLogout();
-  const router = useRouter();
   const { data: groups, isLoading: groupsLoading } = useGroups();
 
   const handleLogout = () => {
-    logout.mutate(undefined, {
-      onSettled: () => {
-        router.push("/login");
-      },
-    });
+    logout.mutate();
   };
 
   return (

@@ -10,16 +10,16 @@ export default function AppLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { status } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (status === "unauthenticated") {
       router.replace("/login");
     }
-  }, [isLoading, isAuthenticated, router]);
+  }, [status, router]);
 
-  if (isLoading) {
+  if (status === "initializing") {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-base">
         <div className="flex flex-col items-center gap-3">
@@ -30,7 +30,7 @@ export default function AppLayout({
     );
   }
 
-  if (!isAuthenticated) {
+  if (status === "unauthenticated") {
     return null;
   }
 
