@@ -104,13 +104,13 @@ export function ActivityItem({ activity, groupName }: ActivityItemProps) {
       </span>
 
       <div className="min-w-0 flex-1 py-0.5">
-        <p className="text-body-sm text-text-primary">
+        <p className="text-sm text-text-primary">
           <span className="font-semibold">{actorName}</span>{" "}
-          <span className="text-text-muted">{presentation.label}</span>
+          <span className="text-muted-foreground">{presentation.label}</span>
           {groupName && <Badge variant="neutral" className="ml-2">{groupName}</Badge>}
         </p>
         {activity.description && (
-          <p className="mt-0.5 text-body text-text-secondary break-words">
+          <p className="mt-0.5 text-sm text-text-secondary break-words">
             {activity.description}
           </p>
         )}
@@ -119,7 +119,7 @@ export function ActivityItem({ activity, groupName }: ActivityItemProps) {
           const time = formatTime(activity.created_at);
           if (!date && !time) return null;
           return (
-            <p className="mt-0.5 flex flex-wrap items-center gap-1 text-caption text-text-muted">
+            <p className="mt-0.5 flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
               {date && <span>{date}</span>}
               {time && <span>· {time}</span>}
             </p>

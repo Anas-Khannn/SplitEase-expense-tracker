@@ -34,8 +34,8 @@ export default function ActivityPage({ params }: ActivityPageProps) {
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="text-h3 font-semibold text-text-primary">Activity</h3>
-        <p className="text-body-sm text-text-muted mt-1">
+        <h3 className="text-2xl text-foreground">Activity</h3>
+        <p className="text-sm text-muted-foreground mt-1">
           Recent group activity like new expenses, payments, and member changes.
         </p>
       </div>

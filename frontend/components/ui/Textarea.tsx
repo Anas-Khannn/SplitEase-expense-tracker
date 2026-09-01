@@ -2,6 +2,7 @@
 
 import { forwardRef, useId, type TextareaHTMLAttributes } from "react";
 import { cn } from "@/lib/utils/cn";
+import { Textarea as ShadcnTextarea } from "./primitives/textarea";
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -19,47 +20,32 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     return (
       <div className="flex flex-col gap-1.5">
         {label && (
-          <label
-            htmlFor={id}
-            className="text-body-sm font-medium text-text-primary"
-          >
+          <label htmlFor={id} className="text-sm text-muted-foreground">
             {label}
             {required && (
-              <span className="ml-0.5 text-danger-500" aria-hidden="true">
+              <span className="ml-0.5 text-destructive" aria-hidden="true">
                 *
               </span>
             )}
           </label>
         )}
-        <textarea
+        <ShadcnTextarea
           ref={ref}
           id={id}
           required={required}
           disabled={disabled}
           aria-invalid={error ? true : undefined}
-          aria-describedby={
-            error ? errorId : helperText ? helperId : undefined
-          }
-          className={cn(
-            "min-h-[80px] w-full rounded-radius-md border bg-surface px-3 py-2.5 text-body",
-            "text-text-primary placeholder:text-text-muted",
-            "transition-colors duration-150 resize-y",
-            "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus-ring",
-            "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-surface-alt",
-            error
-              ? "border-danger-500 focus-visible:outline-danger-500"
-              : "border-border-default hover:border-border-strong",
-            className
-          )}
+          aria-describedby={error ? errorId : helperText ? helperId : undefined}
+          className={cn(error && "border-destructive focus-visible:border-destructive", className)}
           {...props}
         />
         {error && (
-          <p id={errorId} className="text-caption text-danger-500" role="alert">
+          <p id={errorId} className="text-xs text-destructive" role="alert">
             {error}
           </p>
         )}
         {!error && helperText && (
-          <p id={helperId} className="text-caption text-text-muted">
+          <p id={helperId} className="text-xs text-muted-foreground">
             {helperText}
           </p>
         )}

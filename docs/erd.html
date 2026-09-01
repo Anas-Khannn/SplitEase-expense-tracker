@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SplitEase — Data Model &amp; ERD</title>
+<style>
+  :root {
+    --pri:#6C5CE0; --bg:#FAFAFC; --surface:#fff; --alt:#F1EFF9;
+    --text:#16121F; --border:#E7E4F0; --muted:#96919F;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  header{background:linear-gradient(135deg,#5A48C7,#6C5CE0);color:#fff;padding:40px 32px}
+  header h1{margin:0}
+  header p{margin:6px 0 0;opacity:.9}
+  main{max-width:1100px;margin:0 auto;padding:28px 24px}
+  section{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:22px}
+  h2{color:var(--pri);border-bottom:2px solid var(--alt);padding-bottom:8px}
+  code{background:var(--alt);padding:2px 6px;border-radius:4px;font-size:.85em}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:.9rem}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--border)}
+  th{background:var(--alt)}
+  .tbl{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:auto;margin:16px 0;font-family:ui-monospace,monospace;font-size:.85rem}
+  .tbl .title{position:sticky;left:0;background:var(--pri);color:#fff;font-weight:700;padding:8px 14px}
+  .tbl table{margin:0}
+  .rel{color:var(--muted);font-style:italic;padding:4px 14px;background:var(--alt);border-top:1px solid var(--border);font-size:.8rem}
+</style>
+</head>
+<body>
+<header>
+  <h1>SplitEase — Data Model &amp; ERD</h1>
+  <p>Sequelize models · migrations · relationships</p>
+</header>
+<main>
+
+<section>
+  <h2>Entity relationships</h2>
+  <table>
+    <tr><th>Entity</th><th>Relation</th><th>Target</th></tr>
+    <tr><td>Group</td><td>N:1 → belongsTo</td><td>User (created_by, "creator")</td></tr>
+    <tr><td>GroupMember</td><td>N:M via GroupMember</td><td>User ↔ Group ("groups")</td></tr>
+    <tr><td>GroupMember</td><td>N:1 → belongsTo</td><td>User ("user")</td></tr>
+    <tr><td>Expense</td><td>N:1 → belongsTo</td><td>Group ("group")</td></tr>
+    <tr><td>Expense</td><td>N:1 → belongsTo</td><td>User (paid_by, "payer")</td></tr>
+    <tr><td>ExpenseSplit</td><td>N:M via ExpenseSplit</td><td>User ↔ Expense ("splitExpenses")</td></tr>
+    <tr><td>Payment</td><td>N:1 → belongsTo</td><td>Group ("payments")</td></tr>
+    <tr><td>Payment</td><td>N:1 → belongsTo</td><td>User (paid_by "payer" / paid_to "receiver")</td></tr>
+    <tr><td>ExpenseReaction</td><td>N:M via ExpenseReaction</td><td>User ↔ Expense ("reactors")</td></tr>
+    <tr><td>ActivityLog</td><td>N:1 → belongsTo</td><td>Group / User</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Tables</h2>
+
+  <div class="tbl"><div class="title">users</div>
+    <table><tr><th>Column</th><th>Type</th></tr>
+      <tr><td>user_id <code>PK</code></td><td>UUID</td></tr>
+      <tr><td>name</td><td>STRING</td></tr>
+      <tr><td>email</td><td>STRING (unique)</td></tr>
+      <tr><td>password_hash</td><td>STRING</td></tr>
+      <tr><td>created_at / updated_at</td><td>DATE</td></tr>
+    </table><div class="rel">children: createdGroups, groupMemberships, paidExpenses, expenseSplits, sentPayments, receivedPayments, expenseReactions, activities</div>
+  </div>
+
+  <div class="tbl"><div class="title">groups</div>
+    <table><tr><th>Column</th><th>Type</th></tr>
+      <tr><td>group_id <code>PK</code></td><td>UUID</td></tr>
+      <tr><td>name</td><td>STRING</td></tr>
+      <tr><td>icon</td><td>STRING (nullable)</td></tr>
+      <tr><td>description</td><td>STRING (nullable)</td></tr>
+      <tr><td>created_by <code>FK</code></td><td>UUID → users</td></tr>
+      <tr><td>created_at / updated_at</td><td>DATE</td></tr>
+    </table><div class="rel">children: members, expenses, payments, activities · belongsTo creator</div>
+  </div>
+
+  <div class="tbl"><div class="title">group_members</div>
+    <table><tr><th>Column</th><th>Type</th></tr>
+      <tr><td>group_member_id <code>PK</code></td><td>UUID</td></tr>
+      <tr><td>group_id <code>FK</code></td><td>UUID → groups</td></tr>
+      <tr><td>user_id <code>FK</code></td><td>UUID → users</td></tr>
+      <tr><td>role</td><td>ENUM admin | member (added by migration 09)</td></tr>
+      <tr><td>joined_at</td><td>DATE</td></tr>
+    </table><div class="rel">join table for User ↔ Group many-to-many</div>
+  </div>
+
+  <div class="tbl"><div class="title">expenses</div>
+    <table><tr><th>Column</th><th>Type</th></tr>
+      <tr><td>expense_id <code>PK</code></td><td>UUID</td></tr>
+      <tr><td>group_id <code>FK</code></td><td>UUID → groups</td></tr>
+      <tr><td>description</td><td>STRING</td></tr>
+      <tr><td>amount</td><td>DECIMAL</td></tr>
+      <tr><td>paid_by <code>FK</code></td><td>UUID → users</td></tr>
+      <tr><td>expense_date</td><td>DATE</td></tr>
+      <tr><td>created_at / updated_at</td><td>DATE</td></tr>
+    </table><div class="rel">children: splits, reactions · belongsTo group, payer</div>
+  </div>
+
+  <div class="tbl"><div class="title">expense_splits</div>
+    <table><tr><th>Column</th><th>Type</th></tr>
+      <tr><td>expense_split_id <code>PK</code></td><td>UUID</td></tr>
+      <tr><td>expense_id <code>FK</code></td><td>UUID → expenses</td></tr>
+      <tr><td>user_id <code>FK</code></td><td>UUID → users</td></tr>
+      <tr><td>share_amount</td><td>DECIMAL</td></tr>
+    </table><div class="rel">join table for User ↔ Expense split many-to-many; share = equal split with fair cent remainder</div>
+  </div>
+
+  <div class="tbl"><div class="title">payments</div>
+    <table><tr><th>Column</th><th>Type</th></tr>
+      <tr><td>payment_id <code>PK</code></td><td>UUID</td></tr>
+      <tr><td>group_id <code>FK</code></td><td>UUID → groups</td></tr>
+      <tr><td>paid_by <code>FK</code></td><td>UUID → users (payer)</td></tr>
+      <tr><td>paid_to <code>FK</code></td><td>UUID → users (receiver)</td></tr>
+      <tr><td>amount</td><td>DECIMAL</td></tr>
+      <tr><td>note</td><td>STRING (nullable)</td></tr>
+      <tr><td>payment_date</td><td>DATE</td></tr>
+      <tr><td>created_at / updated_at</td><td>DATE</td></tr>
+    </table></div>
+
+  <div class="tbl"><div class="title">expense_reactions</div>
+    <table><tr><th>Column</th><th>Type</th></tr>
+      <tr><td>reaction_id <code>PK</code></td><td>UUID</td></tr>
+      <tr><td>expense_id <code>FK</code></td><td>UUID → expenses</td></tr>
+      <tr><td>user_id <code>FK</code></td><td>UUID → users</td></tr>
+      <tr><td>reaction</td><td>ENUM 👍 😂 😮 ❤️ 😢</td></tr>
+      <tr><td>created_at</td><td>DATE</td></tr>
+    </table></div>
+
+  <div class="tbl"><div class="title">activity_logs</div>
+    <table><tr><th>Column</th><th>Type</th></tr>
+      <tr><td>activity_id <code>PK</code></td><td>UUID</td></tr>
+      <tr><td>group_id <code>FK</code></td><td>UUID → groups</td></tr>
+      <tr><td>user_id <code>FK</code></td><td>UUID → users (actor)</td></tr>
+      <tr><td>action</td><td>ENUM GROUP_CREATED, MEMBER_ADDED/REMOVED, EXPENSE_CREATED/UPDATED/DELETED, PAYMENT_CREATED</td></tr>
+      <tr><td>description</td><td>TEXT</td></tr>
+      <tr><td>created_at</td><td>DATE</td></tr>
+    </table></div>
+</section>
+
+<section>
+  <h2>Migrations (9) &amp; Seeders (8)</h2>
+  <p><code>database/migrations/</code>: create users, groups, group-members, expenses, expense-splits, payments, expense-reactions, activity-logs, and add-role-to-group-members.</p>
+  <p><code>database/seeders/</code>: matching seed data for every table.</p>
+</section>
+
+</main>
+</body>
+</html>

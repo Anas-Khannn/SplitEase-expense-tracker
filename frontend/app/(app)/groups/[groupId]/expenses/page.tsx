@@ -111,8 +111,8 @@ export default function ExpensesPage({ params }: ExpensesPageProps) {
     <div className="space-y-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-h3 font-semibold text-text-primary">Expenses</h3>
-          <p className="text-body-sm text-text-muted mt-1">
+          <h3 className="text-2xl text-foreground">Expenses</h3>
+          <p className="text-sm text-muted-foreground mt-1">
             Track and split shared expenses with the group.
           </p>
         </div>
@@ -179,7 +179,7 @@ export default function ExpensesPage({ params }: ExpensesPageProps) {
 
       {!isLoading && !isError && total > 0 && (
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="text-caption text-text-muted" aria-live="polite">
+          <p className="text-xs text-muted-foreground" aria-live="polite">
             Showing {startIndex}-{endIndex} of {total} expense
             {total === 1 ? "" : "s"}
           </p>
@@ -194,7 +194,7 @@ export default function ExpensesPage({ params }: ExpensesPageProps) {
               >
                 Previous
               </Button>
-              <span className="text-caption text-text-secondary">
+              <span className="text-xs text-muted-foreground">
                 Page {page} of {totalPages}
               </span>
               <Button
@@ -213,7 +213,7 @@ export default function ExpensesPage({ params }: ExpensesPageProps) {
       )}
 
       {deleteError && (
-        <p className="text-body-sm text-danger-500" role="alert">
+        <p className="text-sm text-danger" role="alert">
           {deleteError}
         </p>
       )}

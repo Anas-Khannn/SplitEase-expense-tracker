@@ -1,5 +1,11 @@
 import { type HTMLAttributes } from "react";
 import { cn } from "@/lib/utils/cn";
+import {
+  Card as ShadcnCard,
+  CardHeader as ShadcnCardHeader,
+  CardContent as ShadcnCardContent,
+  CardFooter as ShadcnCardFooter,
+} from "./primitives/card";
 
 type CardVariant = "default" | "elevated" | "interactive";
 
@@ -8,45 +14,33 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variantStyles: Record<CardVariant, string> = {
-  default: "bg-surface border border-border-default shadow-xs",
-  elevated: "bg-surface border border-border-default shadow-md",
+  default: "",
+  elevated: "",
   interactive:
-    "bg-surface border border-border-default shadow-xs hover:shadow-sm hover:border-border-strong transition-shadow duration-150 cursor-pointer",
+    "hover:border-foreground/20 transition-colors duration-150 cursor-pointer",
 };
 
 function Card({ className, variant = "default", ...props }: CardProps) {
   return (
-    <div
-      className={cn(
-        "rounded-radius-lg overflow-hidden",
-        variantStyles[variant],
-        className
-      )}
+    <ShadcnCard
+      className={cn(variantStyles[variant], className)}
       {...props}
     />
   );
 }
 
 function CardHeader({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return (
-    <div
-      className={cn("px-5 py-4 border-b border-border-default", className)}
-      {...props}
-    />
-  );
+  return <ShadcnCardHeader className={cn("border-b border-border", className)} {...props} />;
 }
 
 function CardContent({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
-  return <div className={cn("px-5 py-4", className)} {...props} />;
+  return <ShadcnCardContent className={cn("px-5 py-4", className)} {...props} />;
 }
 
 function CardFooter({ className, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div
-      className={cn(
-        "px-5 py-3 border-t border-border-default bg-surface-alt/50",
-        className
-      )}
+    <ShadcnCardFooter
+      className={cn("bg-muted/40", className)}
       {...props}
     />
   );

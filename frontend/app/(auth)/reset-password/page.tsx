@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import {
   resetPasswordSchema,
@@ -15,19 +15,6 @@ import OTPInput from "@/components/auth/OTPInput";
 import AuthCard from "@/components/auth/AuthCard";
 import { Button, Input } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-};
 
 const RESEND_COOLDOWN = 30;
 
@@ -91,7 +78,6 @@ function ResetPasswordContent() {
     async (_data: ResetPasswordFormData) => {
       setServerError(null);
       try {
-        // TODO: POST /api/auth/reset-password with { token/otp, newPassword }
         setSuccess(true);
       } catch (err: unknown) {
         const message =
@@ -120,17 +106,17 @@ function ResetPasswordContent() {
             >
               <CheckCircle2
                 size={48}
-                className="mx-auto mb-4 text-success-500"
+                className="mx-auto mb-4 text-success"
               />
-              <h2 className="text-h2 font-bold text-text-primary mb-2">
+              <h2 className="text-4xl text-foreground mb-2">
                 Password reset successful
               </h2>
-              <p className="text-body-sm text-text-muted mb-6">
+              <p className="text-sm text-muted-foreground mb-6">
                 Your password has been updated. Redirecting to login...
               </p>
               <Link
                 href="/login"
-                className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-radius-md bg-primary-500 px-4 text-button font-semibold text-white transition-colors duration-150 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
+                className="inline-flex h-10 w-full items-center justify-center gap-2 bg-foreground px-4 text-sm text-background transition-opacity duration-150 hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
               >
                 Go to login
                 <ArrowRight aria-hidden="true" />
@@ -142,37 +128,36 @@ function ResetPasswordContent() {
               initial="hidden"
               animate="visible"
               exit={{ opacity: 0 }}
-              variants={containerVariants}
             >
-              <motion.div variants={itemVariants}>
+              <div>
                 <Link
                   href="/forgot-password"
-                  className="inline-flex items-center gap-1 text-body-sm text-text-muted hover:text-text-primary transition-colors mb-5"
+                  className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-5"
                 >
                   <ArrowLeft size={14} />
                   Back to forgot password
                 </Link>
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants}>
-                <h2 className="text-h2 font-bold text-text-primary mb-1.5">
+              <div>
+                <h2 className="text-4xl text-foreground mb-1.5">
                   {isTokenFlow
                     ? "Set new password"
                     : otpVerified
                       ? "Set new password"
                       : "Enter verification code"}
                 </h2>
-                <p className="text-body-sm text-text-muted mb-6">
+                <p className="text-sm text-muted-foreground mb-6">
                   {isTokenFlow
                     ? "Choose a strong new password for your account."
                     : otpVerified
                       ? "Choose a strong new password for your account."
                       : `Enter the 6-digit code sent to ${phone}`}
                 </p>
-              </motion.div>
+              </div>
 
               {isOTPFlow && !otpVerified && (
-                <motion.div variants={itemVariants} className="mb-6">
+                <div className="mb-6">
                   <OTPInput
                     value={otp}
                     onChange={handleOTPComplete}
@@ -183,45 +168,37 @@ function ResetPasswordContent() {
                       type="button"
                       onClick={handleResendOTP}
                       disabled={cooldown > 0}
-                      className="text-body-sm text-primary-500 hover:text-primary-600 transition-colors disabled:text-text-muted disabled:cursor-not-allowed"
+                      className="text-sm text-foreground hover:opacity-70 transition-opacity disabled:text-muted-foreground disabled:cursor-not-allowed"
                     >
                       {cooldown > 0
                         ? `Resend code in ${cooldown}s`
                         : "Resend code"}
                     </button>
                   </div>
-                </motion.div>
+                </div>
               )}
 
               {showNewPassword && (
-                <motion.div
-                  key="new-password"
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <motion.form
+                <div key="new-password">
+                  <form
                     onSubmit={handleSubmit(onSubmit, () => shake())}
-                    animate={shakeControls}
                     noValidate
                   >
                     <div className="flex flex-col gap-4">
                       {serverError && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="rounded-radius-md bg-danger-100 border border-danger-500/20 px-4 py-3 text-body-sm text-danger-500"
+                        <div
+                          className="bg-danger-muted border border-danger/20 px-4 py-3 text-sm text-danger"
                           role="alert"
                         >
                           {serverError}
-                        </motion.div>
+                        </div>
                       )}
 
                       {isOTPFlow && (
                         <input type="hidden" {...register("otp")} value={otp} />
                       )}
 
-                      <motion.div variants={itemVariants}>
+                      <div>
                         <Input
                           label="New password"
                           type="password"
@@ -230,9 +207,9 @@ function ResetPasswordContent() {
                           error={errors.newPassword?.message}
                           {...register("newPassword")}
                         />
-                      </motion.div>
+                      </div>
 
-                      <motion.div variants={itemVariants}>
+                      <div>
                         <Input
                           label="Confirm new password"
                           type="password"
@@ -241,9 +218,9 @@ function ResetPasswordContent() {
                           error={errors.confirmPassword?.message}
                           {...register("confirmPassword")}
                         />
-                      </motion.div>
+                      </div>
 
-                      <motion.div variants={itemVariants}>
+                      <div>
                         <Button
                           type="submit"
                           fullWidth
@@ -254,10 +231,10 @@ function ResetPasswordContent() {
                         >
                           Reset password
                         </Button>
-                      </motion.div>
+                      </div>
                     </div>
-                  </motion.form>
-                </motion.div>
+                  </form>
+                </div>
               )}
             </motion.div>
           )}
@@ -272,7 +249,7 @@ export default function ResetPasswordPage() {
     <Suspense
       fallback={
         <div className="flex items-center justify-center py-8">
-          <div className="animate-pulse text-text-muted text-body-sm">Loading...</div>
+          <div className="animate-pulse text-muted-foreground text-sm">Loading...</div>
         </div>
       }
     >

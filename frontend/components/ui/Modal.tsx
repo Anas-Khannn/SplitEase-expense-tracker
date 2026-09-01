@@ -1,12 +1,9 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
-import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import type { ReactNode } from "react";
 import { cn } from "@/lib/utils/cn";
-import { IconButton } from "./IconButton";
-
+import { Dialog as DialogPrimitive } from "@base-ui/react/dialog";
+import { XIcon } from "lucide-react";
 interface ModalProps {
   open: boolean;
   onClose: () => void;
@@ -16,19 +13,6 @@ interface ModalProps {
   className?: string;
 }
 
-const overlayVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-};
-
-const contentVariants = {
-  hidden: { opacity: 0, scale: 0.95, y: 8 },
-  visible: { opacity: 1, scale: 1, y: 0 },
-};
-
-const FOCUSABLE_SELECTOR =
-  'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
 function Modal({
   open,
   onClose,
@@ -37,121 +21,38 @@ function Modal({
   description,
   className,
 }: ModalProps) {
-  const dialogRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const previouslyFocused =
-      document.activeElement instanceof HTMLElement
-        ? document.activeElement
-        : null;
-    const dialog = dialogRef.current;
-    dialog?.focus({ preventScroll: true });
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-        return;
-      }
-      if (e.key !== "Tab" || !dialog) return;
-
-      const focusable = Array.from(
-        dialog.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
-      ).filter((el) => !el.hasAttribute("disabled"));
-
-      if (focusable.length === 0) {
-        e.preventDefault();
-        dialog.focus();
-        return;
-      }
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      const active = document.activeElement;
-
-      if (e.shiftKey && (active === first || active === dialog)) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && active === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "";
-      previouslyFocused?.focus?.();
-    };
-  }, [open, onClose]);
-
-  if (typeof window === "undefined") return null;
-
-  return createPortal(
-    <AnimatePresence>
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-          <motion.div
-            className="fixed inset-0 bg-text-primary/50"
-            variants={overlayVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            transition={{ duration: 0.15 }}
-            onClick={onClose}
-            aria-hidden="true"
-          />
-          <motion.div
-            ref={dialogRef}
-            role="dialog"
-            aria-modal="true"
-            aria-label={title}
-            aria-describedby={description ? "modal-description" : undefined}
-            tabIndex={-1}
-            className={cn(
-              "relative z-10 w-full max-w-lg bg-surface rounded-radius-lg shadow-lg outline-none",
-              "max-h-[calc(100vh-2rem)] overflow-y-auto",
-              className
-            )}
-            variants={contentVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            transition={{ duration: 0.15, ease: "easeOut" }}
-          >
-            {(title || description) && (
-              <div className="px-5 pt-5 pb-0">
-                {title && (
-                  <h2 className="text-h3 font-semibold text-text-primary pr-8">
-                    {title}
-                  </h2>
-                )}
-                {description && (
-                  <p
-                    id="modal-description"
-                    className="mt-1 text-body-sm text-text-secondary"
-                  >
-                    {description}
-                  </p>
-                )}
-              </div>
-            )}
-            <IconButton
-              icon={<X />}
-              aria-label="Close modal"
-              size="sm"
-              className="absolute top-4 right-4"
-              onClick={onClose}
-            />
-            <div className="p-5">{children}</div>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>,
-    document.body
+  return (
+    <DialogPrimitive.Root open={open} onOpenChange={(o) => !o && onClose()}>
+      <DialogPrimitive.Portal>
+        <DialogPrimitive.Backdrop className="fixed inset-0 isolate z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0" />
+        <DialogPrimitive.Popup
+          className={cn(
+            "fixed top-1/2 left-1/2 z-50 w-full max-w-lg -translate-x-1/2 -translate-y-1/2 rounded-xl border border-border bg-background p-0 ring-1 ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 sm:max-w-lg",
+            className
+          )}
+        >
+          {(title || description) && (
+            <div className="border-b border-border px-5 pt-5 pb-4">
+              {title && (
+                <DialogPrimitive.Title className="text-lg font-semibold text-foreground">
+                  {title}
+                </DialogPrimitive.Title>
+              )}
+              {description && (
+                <DialogPrimitive.Description className="mt-1 text-sm text-muted-foreground">
+                  {description}
+                </DialogPrimitive.Description>
+              )}
+            </div>
+          )}
+          <DialogPrimitive.Close className="absolute top-4 right-4 rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring">
+            <XIcon className="size-4" />
+            <span className="sr-only">Close modal</span>
+          </DialogPrimitive.Close>
+          <div className="p-5">{children}</div>
+        </DialogPrimitive.Popup>
+      </DialogPrimitive.Portal>
+    </DialogPrimitive.Root>
   );
 }
 

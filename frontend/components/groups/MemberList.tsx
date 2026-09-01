@@ -90,7 +90,7 @@ export function MemberList({
 
   return (
     <div>
-      <ul className="divide-y divide-border-default overflow-hidden rounded-radius-lg border border-border-default bg-surface shadow-xs">
+      <ul className="divide-y divide-border-default overflow-hidden rounded-radius-lg border border-border-default bg-card shadow-xs">
         {members.map((member) => {
           const isSelf = member.user_id === currentUserId;
           const displayName =
@@ -101,14 +101,14 @@ export function MemberList({
 
           return (
             <li
-              key={member.group_member_id}
+              key={`${member.group_member_id}-${member.user_id}`}
               className="flex items-center gap-3 px-4 py-3"
             >
               <Avatar name={displayName} alt={displayName} size="md" />
 
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <p className="truncate text-body font-medium text-text-primary">
+                  <p className="truncate text-sm font-medium text-text-primary">
                     {displayName}
                   </p>
                   {isSelf && <Badge variant="primary">You</Badge>}
@@ -118,7 +118,7 @@ export function MemberList({
                     {member.role}
                   </Badge>
                 </div>
-                <p className="truncate text-caption text-text-muted">
+                <p className="truncate text-xs text-muted-foreground">
                   {member.user_id}
                   {joined ? ` · Joined ${joined}` : ""}
                 </p>
@@ -155,7 +155,7 @@ export function MemberList({
       </ul>
 
       {actionError && (
-        <p className="mt-3 text-body-sm text-danger-500" role="alert">
+        <p className="mt-3 text-sm text-danger-500" role="alert">
           {actionError}
         </p>
       )}

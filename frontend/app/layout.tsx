@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { Providers } from "@/components/Providers";
+import { Geist, Geist_Mono } from "next/font/google";
+import Providers from "@/components/Providers";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils/index";
 import "./globals.css";
+import ScrollToTop from "@/components/layout/ScrollToTop";
 
-const inter = Inter({
-  variable: "--font-inter",
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap",
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
@@ -20,9 +27,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
-      <body className="min-h-full bg-base text-text-primary antialiased">
-        <Providers>{children}</Providers>
+    <html
+      lang="en"
+      className={cn(
+        geistSans.variable,
+        geistMono.variable,
+        "flex min-h-full w-full antialiased"
+      )}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
+      <body className="flex min-h-full w-full flex-auto flex-col">
+        <Providers sidebarDefaultOpen={true}>
+          <TooltipProvider>{children}</TooltipProvider>
+        </Providers>
+        <ScrollToTop />
       </body>
     </html>
   );

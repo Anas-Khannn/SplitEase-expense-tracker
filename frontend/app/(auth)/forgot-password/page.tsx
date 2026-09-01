@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
 import {
   forgotPasswordSchema,
@@ -15,19 +15,6 @@ import AuthCard from "@/components/auth/AuthCard";
 import AuthMethodToggle from "@/components/auth/AuthMethodToggle";
 import { Button, Input } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-};
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -60,14 +47,10 @@ export default function ForgotPasswordPage() {
     async (data: ForgotPasswordFormData) => {
       setServerError(null);
       try {
-        // TODO: POST /api/auth/forgot-password (backend endpoint not implemented yet)
-        // For now, simulate success for email flow
         if (data.method === "email" && data.email) {
           setSubmittedEmail(data.email);
           setSubmitted(true);
         } else if (data.method === "phone" && data.phone) {
-          // TODO: POST /api/auth/forgot-password with phone
-          // Navigate to OTP entry
           router.push(`/reset-password?phone=${encodeURIComponent(data.phone)}`);
         }
       } catch (err: unknown) {
@@ -97,21 +80,21 @@ export default function ForgotPasswordPage() {
             >
               <CheckCircle2
                 size={48}
-                className="mx-auto mb-4 text-success-500"
+                className="mx-auto mb-4 text-success"
               />
-              <h2 className="text-h2 font-bold text-text-primary mb-2">
+              <h2 className="text-4xl text-foreground mb-2">
                 Check your email
               </h2>
-              <p className="text-body-sm text-text-muted mb-6">
+              <p className="text-sm text-muted-foreground mb-6">
                 We&apos;ve sent a password reset link to{" "}
-                <span className="font-medium text-text-primary">
+                <span className="text-foreground">
                   {submittedEmail}
                 </span>
                 . Please check your inbox.
               </p>
               <Link
                 href="/login"
-                className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-radius-md border border-border-default bg-surface px-4 text-button font-semibold text-text-primary transition-colors duration-150 hover:bg-surface-alt focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
+                className="inline-flex h-10 w-full items-center justify-center gap-2 border border-border bg-background px-4 text-sm text-foreground transition-colors duration-150 hover:bg-card focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
               >
                 <ArrowLeft aria-hidden="true" />
                 Back to login
@@ -123,62 +106,52 @@ export default function ForgotPasswordPage() {
               initial="hidden"
               animate="visible"
               exit={{ opacity: 0 }}
-              variants={containerVariants}
             >
-              <motion.div variants={itemVariants}>
+              <div>
                 <Link
                   href="/login"
-                  className="inline-flex items-center gap-1 text-body-sm text-text-muted hover:text-text-primary transition-colors mb-5"
+                  className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-5"
                 >
                   <ArrowLeft size={14} />
                   Back to login
                 </Link>
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants}>
-                <h2 className="text-h2 font-bold text-text-primary mb-1.5">
+              <div>
+                <h2 className="text-4xl text-foreground mb-1.5">
                   Reset your password
                 </h2>
-                <p className="text-body-sm text-text-muted mb-6">
+                <p className="text-sm text-muted-foreground mb-6">
                   Choose how you&apos;d like to reset your password
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants} className="mb-5">
+              <div className="mb-5">
                 <AuthMethodToggle
                   value={method}
                   onChange={handleMethodChange}
                   disabled={isSubmitting}
                 />
-              </motion.div>
+              </div>
 
-              <motion.form
+              <form
                 onSubmit={handleSubmit(onSubmit, () => shake())}
-                animate={shakeControls}
                 noValidate
               >
                 <div className="flex flex-col gap-4">
                   {serverError && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="rounded-radius-md bg-danger-100 border border-danger-500/20 px-4 py-3 text-body-sm text-danger-500"
+                    <div
+                      className="bg-danger-muted border border-danger/20 px-4 py-3 text-sm text-danger"
                       role="alert"
                     >
                       {serverError}
-                    </motion.div>
+                    </div>
                   )}
 
                   <input type="hidden" {...register("method")} value={method} />
 
                   {method === "email" ? (
-                    <motion.div
-                      key="email"
-                      variants={itemVariants}
-                      initial={{ opacity: 0, x: -12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
+                    <div key="email">
                       <Input
                         label="Email address"
                         type="email"
@@ -187,15 +160,9 @@ export default function ForgotPasswordPage() {
                         error={errors.email?.message}
                         {...register("email")}
                       />
-                    </motion.div>
+                    </div>
                   ) : (
-                    <motion.div
-                      key="phone"
-                      variants={itemVariants}
-                      initial={{ opacity: 0, x: 12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
+                    <div key="phone">
                       <Input
                         label="Phone number"
                         type="tel"
@@ -204,10 +171,10 @@ export default function ForgotPasswordPage() {
                         error={errors.phone?.message}
                         {...register("phone")}
                       />
-                    </motion.div>
+                    </div>
                   )}
 
-                  <motion.div variants={itemVariants}>
+                  <div>
                     <Button
                       type="submit"
                       fullWidth
@@ -218,9 +185,9 @@ export default function ForgotPasswordPage() {
                     >
                       {method === "email" ? "Send reset link" : "Send OTP"}
                     </Button>
-                  </motion.div>
+                  </div>
                 </div>
-              </motion.form>
+              </form>
             </motion.div>
           )}
         </AnimatePresence>

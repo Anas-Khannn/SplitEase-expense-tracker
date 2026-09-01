@@ -31,9 +31,9 @@ function ConfirmDialog({
     <Modal open={open} onClose={onClose} title={title} description={description}>
       <div className="flex flex-col gap-4">
         {danger && (
-          <div className="flex items-center gap-3 rounded-radius-md bg-danger-100 p-3">
-            <AlertTriangle className="shrink-0 text-danger-500" size={20} />
-            <p className="text-body-sm text-danger-500">
+          <div className="flex items-center gap-3 bg-destructive/10 rounded-lg p-3">
+            <AlertTriangle className="shrink-0 text-destructive" size={20} />
+            <p className="text-sm text-destructive">
               This action cannot be undone.
             </p>
           </div>

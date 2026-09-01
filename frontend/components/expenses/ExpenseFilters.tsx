@@ -19,7 +19,7 @@ interface ExpenseFiltersProps {
 }
 
 const selectClass =
-  "h-10 w-full rounded-radius-md border border-border-default bg-surface px-3 text-body text-text-primary focus-visible:outline-2 focus-visible:outline-focus-ring disabled:opacity-50";
+  "h-10 w-full rounded-md border border-border-default bg-card px-3 text-sm text-text-primary focus-visible:outline-2 focus-visible:outline-focus-ring disabled:opacity-50";
 
 export function ExpenseFilters({
   members,
@@ -49,7 +49,7 @@ export function ExpenseFilters({
             <div className="flex flex-col gap-1.5 lg:w-56">
               <label
                 htmlFor="expense-filter-payer"
-                className="text-body-sm font-medium text-text-primary"
+                className="text-sm font-medium text-text-primary"
               >
                 Paid by
               </label>
@@ -110,7 +110,7 @@ export function ExpenseFilters({
 
             <div className="flex flex-wrap items-center gap-2 lg:ml-auto">
               {activeCount > 0 && (
-                <span className="text-caption font-medium text-text-secondary">
+                  <span className="text-xs font-medium text-text-secondary">
                   {activeCount} active filter{activeCount === 1 ? "" : "s"}
                 </span>
               )}
@@ -133,7 +133,7 @@ export function ExpenseFilters({
           </div>
 
           {error && (
-            <p className="mt-3 text-caption text-danger-500" role="alert">
+            <p className="mt-3 text-xs text-danger-500" role="alert">
               {error}
             </p>
           )}

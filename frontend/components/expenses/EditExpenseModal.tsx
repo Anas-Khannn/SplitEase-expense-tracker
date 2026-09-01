@@ -90,7 +90,7 @@ export function EditExpenseModal({
   };
 
   const selectClass =
-    "h-10 w-full rounded-radius-md border border-border-default bg-surface px-3 text-body text-text-primary focus-visible:outline-2 focus-visible:outline-focus-ring disabled:opacity-50";
+    "h-10 w-full rounded-md border border-border-default bg-card px-3 text-sm text-text-primary focus-visible:outline-2 focus-visible:outline-focus-ring disabled:opacity-50";
 
   return (
     <Modal
@@ -116,7 +116,7 @@ export function EditExpenseModal({
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="edit-expense-date"
-                className="text-body-sm font-medium text-text-primary"
+                className="text-sm font-medium text-text-primary"
               >
                 Date
               </label>
@@ -128,7 +128,7 @@ export function EditExpenseModal({
                 {...register("expense_date")}
               />
               {errors.expense_date && (
-                <p className="text-caption text-danger-500" role="alert">
+                <p className="text-xs text-danger-500" role="alert">
                   {errors.expense_date.message}
                 </p>
               )}
@@ -147,7 +147,7 @@ export function EditExpenseModal({
           <div className="flex flex-col gap-1.5">
             <label
               htmlFor="edit-expense-payer"
-              className="text-body-sm font-medium text-text-primary"
+              className="text-sm font-medium text-text-primary"
             >
               Paid by
             </label>
@@ -164,17 +164,17 @@ export function EditExpenseModal({
               ))}
             </select>
             {errors.paid_by && (
-              <p className="text-caption text-danger-500" role="alert">
+              <p className="text-xs text-danger-500" role="alert">
                 {errors.paid_by.message}
               </p>
             )}
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <span className="text-body-sm font-medium text-text-primary">
+            <span className="text-sm font-medium text-text-primary">
               Split between
             </span>
-            <div className="divide-y divide-border-default overflow-hidden rounded-radius-md border border-border-default bg-surface">
+            <div className="divide-y divide-border-default overflow-hidden rounded-md border border-border-default bg-card">
               <Controller
                 control={control}
                 name="participant_ids"
@@ -204,7 +204,7 @@ export function EditExpenseModal({
                               }}
                               className="h-4 w-4 accent-primary-500"
                             />
-                            <span className="text-body text-text-primary">
+                            <span className="text-sm text-text-primary">
                               {member.name}
                             </span>
                           </label>
@@ -216,14 +216,14 @@ export function EditExpenseModal({
               />
             </div>
             {errors.participant_ids && (
-              <p className="text-caption text-danger-500" role="alert">
+              <p className="text-xs text-danger-500" role="alert">
                 {errors.participant_ids.message}
               </p>
             )}
           </div>
 
           {updateExpense.isError && (
-            <p className="text-body-sm text-danger-500" role="alert">
+            <p className="text-sm text-danger-500" role="alert">
               {updateExpense.error instanceof Error
                 ? updateExpense.error.message
                 : "Failed to update expense. Please try again."}
