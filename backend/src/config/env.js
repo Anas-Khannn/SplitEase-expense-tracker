@@ -1,8 +1,18 @@
 require("dotenv").config();
 
+const nodeEnv = process.env.NODE_ENV || "development";
+
+const jwtSecret = process.env.JWT_SECRET || "";
+
+if (nodeEnv === "production" && !jwtSecret.trim()) {
+  throw new Error(
+    "JWT_SECRET is required in production. Set JWT_SECRET to a non-empty secret before starting the server."
+  );
+}
+
 const env = {
   port: parseInt(process.env.PORT, 10) || 5000,
-  nodeEnv: process.env.NODE_ENV || "development",
+  nodeEnv,
 
   db: {
     host: process.env.DB_HOST || "localhost",
@@ -13,7 +23,7 @@ const env = {
   },
 
   jwt: {
-    secret: process.env.JWT_SECRET || "",
+    secret: jwtSecret,
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
   },
 

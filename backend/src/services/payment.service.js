@@ -63,6 +63,17 @@ const createPayment = async (groupId, payerId, { paid_to, amount, note, payment_
     );
   }
 
+  // A payer who owes money has a negative net balance. Derive the outstanding
+  // amount as the absolute value of that balance and reject any payment that
+  // would exceed it. A sub-cent epsilon absorbs float noise from the 2-decimal
+  // representation while still rejecting every genuine overpayment.
+  const outstandingAmount = Math.abs(payerBalance.balance);
+  if (amount > outstandingAmount + 0.000001) {
+    throw new BadRequestError(
+      "Payment amount cannot exceed your outstanding balance"
+    );
+  }
+
   const payment = await sequelize.transaction(async (t) => {
     const newPayment = await Payment.create(
       {
