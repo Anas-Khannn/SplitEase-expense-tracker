@@ -7,18 +7,17 @@ const ENV_PATH = path.join(__dirname, "..", "src", "config", "env.js");
 
 // Run env.js in a fresh Node process working directory with no .env file, so
 // dotenv loads nothing and only the explicitly passed env vars are visible.
-function loadEnvInFreshProcess(nodeEnv, jwtSecret) {
+function loadEnvInFreshProcess(nodeEnv, jwtSecret, corsOrigin = "https://app.example.com") {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "splitease-env-"));
   try {
-    const env = {};
-    if (nodeEnv !== undefined) env.NODE_ENV = nodeEnv;
+    const env = { NODE_ENV: nodeEnv, CORS_ORIGIN: corsOrigin };
     if (jwtSecret !== undefined) env.JWT_SECRET = jwtSecret;
 
-    const res = spawnSync(
-      process.execPath,
-      ["-e", `require(${JSON.stringify(ENV_PATH)});`],
-      { env, cwd, encoding: "utf8" }
-    );
+    const res = spawnSync(process.execPath, ["-e", `require(${JSON.stringify(ENV_PATH)});`], {
+      env,
+      cwd,
+      encoding: "utf8",
+    });
     return {
       status: res.status,
       stderr: res.stderr || "",
@@ -42,10 +41,7 @@ describe("JWT_SECRET production validation", () => {
   });
 
   it("loads successfully when NODE_ENV=production and a valid JWT_SECRET is set", () => {
-    const { status, stderr } = loadEnvInFreshProcess(
-      "production",
-      "some-production-secret"
-    );
+    const { status, stderr } = loadEnvInFreshProcess("production", "some-production-secret");
     expect(status).toBe(0);
     expect(stderr).not.toMatch(/JWT_SECRET is required in production/);
   });

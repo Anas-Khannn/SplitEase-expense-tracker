@@ -40,7 +40,7 @@ module.exports = (sequelize) => {
           fields: ["group_id", "user_id"],
         },
       ],
-    }
+    },
   );
 
   return GroupMember;

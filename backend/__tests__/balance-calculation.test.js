@@ -14,7 +14,7 @@ const {
 const { generateToken } = require("../src/utils/jwt");
 
 let userA, userB, userC, userD;
-let tokenA, tokenB, tokenC, tokenD;
+let tokenA, tokenB, tokenD;
 let group1, group2;
 
 const createTestUser = async (name, email) => {
@@ -33,7 +33,6 @@ beforeAll(async () => {
 
   tokenA = generateToken({ user_id: userA.user_id });
   tokenB = generateToken({ user_id: userB.user_id });
-  tokenC = generateToken({ user_id: userC.user_id });
   tokenD = generateToken({ user_id: userD.user_id });
 });
 
@@ -228,16 +227,10 @@ describe("Uneven split - $100 among 3", () => {
       balancesMap[b.user_id] = b;
     });
 
-    const totalShares = res.body.data.balances.reduce(
-      (sum, b) => sum + b.total_share,
-      0
-    );
+    const totalShares = res.body.data.balances.reduce((sum, b) => sum + b.total_share, 0);
     expect(totalShares).toBe(100);
 
-    const totalPaid = res.body.data.balances.reduce(
-      (sum, b) => sum + b.total_paid,
-      0
-    );
+    const totalPaid = res.body.data.balances.reduce((sum, b) => sum + b.total_paid, 0);
     expect(totalPaid).toBe(100);
   });
 });
@@ -311,8 +304,7 @@ describe("Nonexistent group", () => {
 // ============================================================
 describe("Unauthenticated balance access", () => {
   it("should return 401 without token", async () => {
-    const res = await request(app)
-      .get(`/api/groups/${group1.group_id}/balances`);
+    const res = await request(app).get(`/api/groups/${group1.group_id}/balances`);
 
     expect(res.status).toBe(401);
   });
@@ -351,10 +343,7 @@ describe("Cross-group balance isolation", () => {
 
     expect(res.status).toBe(200);
 
-    const totalPaid = res.body.data.balances.reduce(
-      (sum, b) => sum + b.total_paid,
-      0
-    );
+    const totalPaid = res.body.data.balances.reduce((sum, b) => sum + b.total_paid, 0);
     expect(totalPaid).toBe(90);
   });
 });
@@ -392,10 +381,7 @@ describe("Balance consistency", () => {
 
     expect(res.status).toBe(200);
 
-    const totalBalance = res.body.data.balances.reduce(
-      (sum, b) => sum + b.balance,
-      0
-    );
+    const totalBalance = res.body.data.balances.reduce((sum, b) => sum + b.balance, 0);
     expect(totalBalance).toBe(0);
   });
 });
@@ -648,13 +634,11 @@ describe("Response format", () => {
 // ============================================================
 describe("Auth endpoints regression", () => {
   it("should still support signup", async () => {
-    const res = await request(app)
-      .post("/api/auth/signup")
-      .send({
-        name: "New User",
-        email: "newuser@test.com",
-        password: "Test1234!",
-      });
+    const res = await request(app).post("/api/auth/signup").send({
+      name: "New User",
+      email: "newuser@test.com",
+      password: "Test1234!",
+    });
 
     expect(res.status).toBe(201);
     expect(res.body.data.token).toBeDefined();
@@ -670,9 +654,7 @@ describe("Auth endpoints regression", () => {
   });
 
   it("should still support /me", async () => {
-    const res = await request(app)
-      .get("/api/auth/me")
-      .set("Authorization", `Bearer ${tokenA}`);
+    const res = await request(app).get("/api/auth/me").set("Authorization", `Bearer ${tokenA}`);
 
     expect(res.status).toBe(200);
     expect(res.body.data.user.email).toBe("anas@test.com");

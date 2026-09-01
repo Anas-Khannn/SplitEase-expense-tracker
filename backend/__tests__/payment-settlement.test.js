@@ -114,13 +114,11 @@ describe("POST /api/groups/:groupId/payments", () => {
 // ============================================================
 describe("Unauthenticated payment", () => {
   it("should return 401 without token", async () => {
-    const res = await request(app)
-      .post(`/api/groups/${group1.group_id}/payments`)
-      .send({
-        paid_to: userA.user_id,
-        amount: 30,
-        payment_date: "2026-08-20",
-      });
+    const res = await request(app).post(`/api/groups/${group1.group_id}/payments`).send({
+      paid_to: userA.user_id,
+      amount: 30,
+      payment_date: "2026-08-20",
+    });
 
     expect(res.status).toBe(401);
   });
@@ -498,13 +496,11 @@ describe("Expense balance regression", () => {
 // ============================================================
 describe("Auth endpoints regression", () => {
   it("should still support signup", async () => {
-    const res = await request(app)
-      .post("/api/auth/signup")
-      .send({
-        name: "New User",
-        email: "newuser@test.com",
-        password: "Test1234!",
-      });
+    const res = await request(app).post("/api/auth/signup").send({
+      name: "New User",
+      email: "newuser@test.com",
+      password: "Test1234!",
+    });
 
     expect(res.status).toBe(201);
     expect(res.body.data.token).toBeDefined();
@@ -520,9 +516,7 @@ describe("Auth endpoints regression", () => {
   });
 
   it("should still support /me", async () => {
-    const res = await request(app)
-      .get("/api/auth/me")
-      .set("Authorization", `Bearer ${tokenA}`);
+    const res = await request(app).get("/api/auth/me").set("Authorization", `Bearer ${tokenA}`);
 
     expect(res.status).toBe(200);
     expect(res.body.data.user.email).toBe("anas@test.com");
@@ -614,10 +608,7 @@ describe("Balance consistency after payments", () => {
 
     expect(res.status).toBe(200);
 
-    const totalBalance = res.body.data.balances.reduce(
-      (sum, b) => sum + b.balance,
-      0
-    );
+    const totalBalance = res.body.data.balances.reduce((sum, b) => sum + b.balance, 0);
     expect(totalBalance).toBe(0);
   });
 
@@ -657,10 +648,7 @@ describe("Balance consistency after payments", () => {
 
     expect(res.status).toBe(200);
 
-    const totalBalance = res.body.data.balances.reduce(
-      (sum, b) => sum + b.balance,
-      0
-    );
+    const totalBalance = res.body.data.balances.reduce((sum, b) => sum + b.balance, 0);
     expect(totalBalance).toBe(0);
 
     const balancesMap = {};
@@ -682,8 +670,7 @@ describe("Balance consistency after payments", () => {
 // ============================================================
 describe("Payment history auth", () => {
   it("should return 401 for unauthenticated payment history access", async () => {
-    const res = await request(app)
-      .get(`/api/groups/${group1.group_id}/payments`);
+    const res = await request(app).get(`/api/groups/${group1.group_id}/payments`);
 
     expect(res.status).toBe(401);
   });
@@ -790,9 +777,7 @@ describe("Payment overpayment prevention", () => {
 
     expect(res.status).toBe(400);
     expect(res.body.success).toBe(false);
-    expect(res.body.message).toBe(
-      "Payment amount cannot exceed your outstanding balance"
-    );
+    expect(res.body.message).toBe("Payment amount cannot exceed your outstanding balance");
   });
 
   it("should not create a Payment record when overpayment is rejected", async () => {
@@ -828,9 +813,7 @@ describe("Payment overpayment prevention", () => {
     const logs = await ActivityLog.findAll({
       where: { group_id: group1.group_id },
     });
-    const paymentLogs = logs.filter(
-      (log) => log.action === "PAYMENT_CREATED"
-    );
+    const paymentLogs = logs.filter((log) => log.action === "PAYMENT_CREATED");
     expect(paymentLogs).toHaveLength(0);
   });
 });

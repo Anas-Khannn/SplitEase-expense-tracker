@@ -8,13 +8,11 @@ const {
   Expense,
   ExpenseSplit,
   ActivityLog,
-  ExpenseReaction,
-  Payment,
 } = require("../src/database/models");
 const { generateToken } = require("../src/utils/jwt");
 
 let userA, userB, userC, userD;
-let tokenA, tokenB, tokenC, tokenD;
+let tokenA, tokenB, tokenD;
 let group1, group2;
 
 const createTestUser = async (name, email) => {
@@ -33,7 +31,6 @@ beforeAll(async () => {
 
   tokenA = generateToken({ user_id: userA.user_id });
   tokenB = generateToken({ user_id: userB.user_id });
-  tokenC = generateToken({ user_id: userC.user_id });
   tokenD = generateToken({ user_id: userD.user_id });
 });
 
@@ -180,9 +177,7 @@ describe("Uneven division rounding", () => {
     const splits = res.body.data.expense.splits;
     expect(splits).toHaveLength(3);
 
-    const shareAmounts = splits
-      .map((s) => parseFloat(s.share_amount))
-      .sort((a, b) => a - b);
+    const shareAmounts = splits.map((s) => parseFloat(s.share_amount)).sort((a, b) => a - b);
 
     expect(shareAmounts[0]).toBe(33.33);
     expect(shareAmounts[1]).toBe(33.33);
@@ -350,9 +345,7 @@ describe("GET /api/groups/:groupId/expenses/:expenseId", () => {
     expect(res.body.data.expense.amount).toBe("60.00");
     expect(res.body.data.expense.splits).toHaveLength(2);
 
-    const shareAmounts = res.body.data.expense.splits.map((s) =>
-      parseFloat(s.share_amount)
-    );
+    const shareAmounts = res.body.data.expense.splits.map((s) => parseFloat(s.share_amount));
     expect(shareAmounts).toContain(30);
   });
 });
@@ -557,14 +550,12 @@ describe("Update failure preserves old state", () => {
     const expenseId = createRes.body.data.expense.expense_id;
 
     const originalDestroy = ExpenseSplit.destroy;
-    let destroyCalled = false;
 
-    ExpenseSplit.destroy = async (...args) => {
-      destroyCalled = true;
+    ExpenseSplit.destroy = async () => {
       throw new Error("Simulated split delete failure");
     };
 
-    const updateRes = await request(app)
+    await request(app)
       .put(`/api/groups/${group1.group_id}/expenses/${expenseId}`)
       .set("Authorization", `Bearer ${tokenA}`)
       .send({ amount: 200 });
@@ -587,13 +578,11 @@ describe("Update failure preserves old state", () => {
 // ============================================================
 describe("Auth endpoints regression", () => {
   it("should still support signup", async () => {
-    const res = await request(app)
-      .post("/api/auth/signup")
-      .send({
-        name: "New User",
-        email: "newuser@test.com",
-        password: "Test1234!",
-      });
+    const res = await request(app).post("/api/auth/signup").send({
+      name: "New User",
+      email: "newuser@test.com",
+      password: "Test1234!",
+    });
 
     expect(res.status).toBe(201);
     expect(res.body.data.token).toBeDefined();
@@ -609,9 +598,7 @@ describe("Auth endpoints regression", () => {
   });
 
   it("should still support /me", async () => {
-    const res = await request(app)
-      .get("/api/auth/me")
-      .set("Authorization", `Bearer ${tokenA}`);
+    const res = await request(app).get("/api/auth/me").set("Authorization", `Bearer ${tokenA}`);
 
     expect(res.status).toBe(200);
     expect(res.body.data.user.email).toBe("alice@test.com");
@@ -656,10 +643,9 @@ describe("Group management regression", () => {
 // ============================================================
 describe("Database schema integrity", () => {
   it("should have all required tables", async () => {
-    const tables = await sequelize.query(
-      "SELECT name FROM sqlite_master WHERE type='table'",
-      { type: sequelize.QueryTypes.SELECT }
-    );
+    const tables = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table'", {
+      type: sequelize.QueryTypes.SELECT,
+    });
     const tableNames = tables.map((t) => t.name);
 
     expect(tableNames).toContain("users");
@@ -673,10 +659,9 @@ describe("Database schema integrity", () => {
   });
 
   it("should have expense_splits unique constraint", async () => {
-    const indexes = await sequelize.query(
-      "PRAGMA index_list(expense_splits)",
-      { type: sequelize.QueryTypes.SELECT }
-    );
+    const indexes = await sequelize.query("PRAGMA index_list(expense_splits)", {
+      type: sequelize.QueryTypes.SELECT,
+    });
     const uniqueIndex = indexes.find((i) => i.unique === 1);
     expect(uniqueIndex).toBeDefined();
   });
@@ -689,7 +674,7 @@ describe("Expense search and filters", () => {
   const createExpense = async (
     token,
     groupId,
-    { amount = 100, description = "Test expense", paid_by = userA.user_id, expense_date } = {}
+    { amount = 100, description = "Test expense", paid_by = userA.user_id, expense_date } = {},
   ) => {
     return request(app)
       .post(`/api/groups/${groupId}/expenses`)
@@ -1005,9 +990,7 @@ describe("Expense search and filters", () => {
     });
 
     const resFromA = await listExpenses(tokenA, group1.group_id);
-    expect(
-      resFromA.body.data.expenses.map((e) => e.description)
-    ).not.toContain("Secret dinner");
+    expect(resFromA.body.data.expenses.map((e) => e.description)).not.toContain("Secret dinner");
 
     const resFromD = await listExpenses(tokenD, group2.group_id);
     expect(resFromD.body.data.expenses).toHaveLength(1);

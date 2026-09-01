@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
           fields: ["expense_id", "user_id"],
         },
       ],
-    }
+    },
   );
 
   return ExpenseSplit;

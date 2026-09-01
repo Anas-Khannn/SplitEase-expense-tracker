@@ -36,8 +36,7 @@ const buildSummaryWhere = (groupId, month) => {
   return where;
 };
 
-const toNumber = (value) =>
-  value === null || value === undefined ? 0 : parseFloat(value);
+const toNumber = (value) => (value === null || value === undefined ? 0 : parseFloat(value));
 
 const getGroupSummary = async (groupId, { month } = {}) => {
   const where = buildSummaryWhere(groupId, month);
@@ -49,17 +48,14 @@ const getGroupSummary = async (groupId, { month } = {}) => {
   });
 
   const totalSpending = parseFloat(
-    toNumber(totalResult ? totalResult.total_spending : null).toFixed(2)
+    toNumber(totalResult ? totalResult.total_spending : null).toFixed(2),
   );
 
   // GROUP BY paid_by: how much each user actually paid.
   // The payer LEFT JOIN cannot multiply expense rows (user_id is the
   // users primary key), so SUM(amount) stays mathematically correct.
   const contributionsRaw = await Expense.findAll({
-    attributes: [
-      "paid_by",
-      [fn("SUM", col("amount")), "total_paid"],
-    ],
+    attributes: ["paid_by", [fn("SUM", col("amount")), "total_paid"]],
     where,
     include: [
       {

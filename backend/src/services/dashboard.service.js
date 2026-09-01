@@ -22,10 +22,7 @@ const getUserDashboard = async (userId) => {
   const groups = [];
   for (const membership of memberships) {
     const group = membership.group;
-    const balance = await calculateUserGroupBalance(
-      userId,
-      group.group_id
-    );
+    const balance = await calculateUserGroupBalance(userId, group.group_id);
 
     if (balance > 0) {
       totalOwed += balance;

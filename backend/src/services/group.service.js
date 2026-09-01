@@ -1,11 +1,6 @@
 const { Group, GroupMember, User } = require("../database/models");
 const { sequelize } = require("../database/models");
-const {
-  NotFoundError,
-  ForbiddenError,
-  ConflictError,
-  BadRequestError,
-} = require("../errors");
+const { NotFoundError, ConflictError, BadRequestError } = require("../errors");
 const ACTIVITY_TYPES = require("../constants/activity-types");
 const { logActivity } = require("./activity.service");
 
@@ -20,16 +15,16 @@ const createGroup = async (userId, { name, icon, description }) => {
         icon: icon || null,
         description: description || null,
       },
-      { transaction: t }
+      { transaction: t },
     );
 
-    const membership = await GroupMember.create(
+    await GroupMember.create(
       {
         group_id: group.group_id,
         user_id: userId,
         role: "admin",
       },
-      { transaction: t }
+      { transaction: t },
     );
 
     await logActivity(
@@ -37,7 +32,7 @@ const createGroup = async (userId, { name, icon, description }) => {
       userId,
       ACTIVITY_TYPES.GROUP_CREATED,
       `${user.name} created the group.`,
-      t
+      t,
     );
 
     return {
@@ -164,7 +159,7 @@ const addMember = async (groupId, targetUserId, actorUserId) => {
         user_id: targetUserId,
         role: "member",
       },
-      { transaction: t }
+      { transaction: t },
     );
 
     const actor = await User.findByPk(actorUserId, { transaction: t });
@@ -174,7 +169,7 @@ const addMember = async (groupId, targetUserId, actorUserId) => {
       actorUserId,
       ACTIVITY_TYPES.MEMBER_ADDED,
       `${actor.name} added ${targetUser.name} to the group.`,
-      t
+      t,
     );
 
     return membership;
@@ -220,7 +215,7 @@ const removeMember = async (groupId, targetUserId, actorUserId) => {
       actorUserId,
       ACTIVITY_TYPES.MEMBER_REMOVED,
       `${actor.name} removed ${targetUser.name} from the group.`,
-      t
+      t,
     );
   });
 

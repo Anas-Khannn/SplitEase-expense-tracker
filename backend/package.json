@@ -6,7 +6,10 @@
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
-    "test": "cross-env NODE_ENV=test jest --runInBand --forceExit"
+    "test": "cross-env NODE_ENV=test jest --runInBand --forceExit",
+    "lint": "eslint src __tests__ config",
+    "format": "prettier --write \"src/**/*.js\" \"__tests__/**/*.js\" \"config/**/*.js\" \"eslint.config.js\" \"prettier.config.js\"",
+    "format:check": "prettier --check \"src/**/*.js\" \"__tests__/**/*.js\" \"config/**/*.js\" \"eslint.config.js\" \"prettier.config.js\""
   },
   "keywords": [
     "splitease",
@@ -27,9 +30,14 @@
     "sequelize": "^6.37.8"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "cross-env": "^10.1.0",
+    "eslint": "^10.9.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.12.0",
     "jest": "^30.4.2",
     "nodemon": "^3.1.14",
+    "prettier": "^3.9.6",
     "sequelize-cli": "^6.6.5",
     "sqlite3": "^6.0.1",
     "supertest": "^7.2.2"

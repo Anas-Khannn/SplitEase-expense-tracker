@@ -2,10 +2,7 @@ const express = require("express");
 const router = express.Router();
 const groupController = require("../controllers/group.controller");
 const authenticate = require("../middlewares/auth.middleware");
-const {
-  authorizeGroupMember,
-  authorizeGroupAdmin,
-} = require("../middlewares/group.middleware");
+const { authorizeGroupMember, authorizeGroupAdmin } = require("../middlewares/group.middleware");
 const validate = require("../middlewares/validate.middleware");
 const {
   createGroupSchema,
@@ -14,27 +11,17 @@ const {
   userIdParamsSchema,
 } = require("../validators/group.validation");
 
-router.post(
-  "/",
-  authenticate,
-  validate(createGroupSchema),
-  groupController.createGroup
-);
+router.post("/", authenticate, validate(createGroupSchema), groupController.createGroup);
 
 router.get("/", authenticate, groupController.getMyGroups);
 
-router.get(
-  "/:groupId",
-  authenticate,
-  authorizeGroupMember,
-  groupController.getGroupById
-);
+router.get("/:groupId", authenticate, authorizeGroupMember, groupController.getGroupById);
 
 router.get(
   "/:groupId/members",
   authenticate,
   authorizeGroupMember,
-  groupController.getGroupMembers
+  groupController.getGroupMembers,
 );
 
 router.post(
@@ -42,7 +29,7 @@ router.post(
   authenticate,
   authorizeGroupAdmin,
   validate(addMemberSchema),
-  groupController.addMember
+  groupController.addMember,
 );
 
 router.delete(
@@ -50,7 +37,7 @@ router.delete(
   authenticate,
   authorizeGroupAdmin,
   validate(userIdParamsSchema, "params"),
-  groupController.removeMember
+  groupController.removeMember,
 );
 
 router.patch(
@@ -59,7 +46,7 @@ router.patch(
   authorizeGroupAdmin,
   validate(userIdParamsSchema, "params"),
   validate(updateMemberRoleSchema),
-  groupController.updateMemberRole
+  groupController.updateMemberRole,
 );
 
 module.exports = router;

@@ -16,15 +16,11 @@ const createExpenseSchema = Joi.object({
     "string.uuid": "Please provide a valid user ID for paid_by",
     "any.required": "paid_by is required",
   }),
-  participant_ids: Joi.array()
-    .items(Joi.string().uuid())
-    .min(1)
-    .required()
-    .messages({
-      "array.min": "At least one participant is required",
-      "any.required": "participant_ids is required",
-      "string.uuid": "Each participant must be a valid user ID",
-    }),
+  participant_ids: Joi.array().items(Joi.string().uuid()).min(1).required().messages({
+    "array.min": "At least one participant is required",
+    "any.required": "participant_ids is required",
+    "string.uuid": "Each participant must be a valid user ID",
+  }),
   expense_date: Joi.date().iso().required().messages({
     "date.base": "Please provide a valid date",
     "date.iso": "Date must be in ISO 8601 format (YYYY-MM-DD)",
@@ -44,21 +40,19 @@ const updateExpenseSchema = Joi.object({
   paid_by: Joi.string().uuid().optional().messages({
     "string.uuid": "Please provide a valid user ID for paid_by",
   }),
-  participant_ids: Joi.array()
-    .items(Joi.string().uuid())
-    .min(1)
-    .optional()
-    .messages({
-      "array.min": "At least one participant is required",
-      "string.uuid": "Each participant must be a valid user ID",
-    }),
+  participant_ids: Joi.array().items(Joi.string().uuid()).min(1).optional().messages({
+    "array.min": "At least one participant is required",
+    "string.uuid": "Each participant must be a valid user ID",
+  }),
   expense_date: Joi.date().iso().optional().messages({
     "date.base": "Please provide a valid date",
     "date.iso": "Date must be in ISO 8601 format (YYYY-MM-DD)",
   }),
-}).min(1).messages({
-  "object.min": "At least one field must be provided for update",
-});
+})
+  .min(1)
+  .messages({
+    "object.min": "At least one field must be provided for update",
+  });
 
 const getExpensesQuerySchema = Joi.object({
   payer_id: Joi.string().uuid().optional().messages({

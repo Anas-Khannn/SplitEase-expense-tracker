@@ -2,9 +2,7 @@ const express = require("express");
 const router = express.Router({ mergeParams: true });
 const expenseController = require("../controllers/expense.controller");
 const authenticate = require("../middlewares/auth.middleware");
-const {
-  authorizeGroupMember,
-} = require("../middlewares/group.middleware");
+const { authorizeGroupMember } = require("../middlewares/group.middleware");
 const validate = require("../middlewares/validate.middleware");
 const {
   createExpenseSchema,
@@ -18,7 +16,7 @@ router.post(
   authenticate,
   authorizeGroupMember,
   validate(createExpenseSchema),
-  expenseController.createExpense
+  expenseController.createExpense,
 );
 
 router.get(
@@ -26,7 +24,7 @@ router.get(
   authenticate,
   authorizeGroupMember,
   validate(getExpensesQuerySchema, "query"),
-  expenseController.getExpensesByGroup
+  expenseController.getExpensesByGroup,
 );
 
 router.get(
@@ -34,7 +32,7 @@ router.get(
   authenticate,
   authorizeGroupMember,
   validate(expenseIdParamsSchema, "params"),
-  expenseController.getExpenseById
+  expenseController.getExpenseById,
 );
 
 router.put(
@@ -43,7 +41,7 @@ router.put(
   authorizeGroupMember,
   validate(expenseIdParamsSchema, "params"),
   validate(updateExpenseSchema),
-  expenseController.updateExpense
+  expenseController.updateExpense,
 );
 
 router.delete(
@@ -51,7 +49,7 @@ router.delete(
   authenticate,
   authorizeGroupMember,
   validate(expenseIdParamsSchema, "params"),
-  expenseController.deleteExpense
+  expenseController.deleteExpense,
 );
 
 module.exports = router;

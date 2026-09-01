@@ -22,7 +22,6 @@ const formatSplitResponse = (split) => ({
     : undefined,
 });
 
-const toDateOnly = (date) =>
-  date instanceof Date ? date.toISOString().split("T")[0] : date;
+const toDateOnly = (date) => (date instanceof Date ? date.toISOString().split("T")[0] : date);
 
 module.exports = { formatExpenseResponse, formatSplitResponse, toDateOnly };

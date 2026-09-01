@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: env.cors.origin,
-  })
+  }),
 );
 
 app.get("/api/health", (req, res) => {

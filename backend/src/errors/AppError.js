@@ -1,5 +1,3 @@
-const HTTP_STATUSES = require("../constants/http-statuses");
-
 class AppError extends Error {
   constructor(message, statusCode) {
     super(message);

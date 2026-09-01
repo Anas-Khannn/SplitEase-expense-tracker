@@ -10,17 +10,12 @@ if (process.env.NODE_ENV === "test") {
     logging: false,
   });
 } else {
-  sequelize = new Sequelize(
-    env.db.name,
-    env.db.user,
-    env.db.password,
-    {
-      host: env.db.host,
-      port: env.db.port,
-      dialect: "postgres",
-      logging: env.nodeEnv === "development" ? console.log : false,
-    }
-  );
+  sequelize = new Sequelize(env.db.name, env.db.user, env.db.password, {
+    host: env.db.host,
+    port: env.db.port,
+    dialect: "postgres",
+    logging: env.nodeEnv === "development" ? console.log : false,
+  });
 }
 
 module.exports = sequelize;

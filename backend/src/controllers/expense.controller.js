@@ -3,11 +3,7 @@ const HTTP_STATUSES = require("../constants/http-statuses");
 const asyncHandler = require("../middlewares/async-handler.middleware");
 
 const createExpense = asyncHandler(async (req, res) => {
-  const result = await expenseService.createExpense(
-    req.params.groupId,
-    req.body,
-    req.user.user_id
-  );
+  const result = await expenseService.createExpense(req.params.groupId, req.body, req.user.user_id);
 
   return res.status(HTTP_STATUSES.CREATED).json({
     success: true,
@@ -20,7 +16,7 @@ const getExpensesByGroup = asyncHandler(async (req, res) => {
   const filters = req.validatedQuery || {};
   const { expenses, pagination } = await expenseService.getExpensesByGroup(
     req.params.groupId,
-    filters
+    filters,
   );
 
   return res.status(HTTP_STATUSES.OK).json({
@@ -30,10 +26,7 @@ const getExpensesByGroup = asyncHandler(async (req, res) => {
 });
 
 const getExpenseById = asyncHandler(async (req, res) => {
-  const expense = await expenseService.getExpenseById(
-    req.params.groupId,
-    req.params.expenseId
-  );
+  const expense = await expenseService.getExpenseById(req.params.groupId, req.params.expenseId);
 
   return res.status(HTTP_STATUSES.OK).json({
     success: true,
@@ -46,7 +39,7 @@ const updateExpense = asyncHandler(async (req, res) => {
     req.params.groupId,
     req.params.expenseId,
     req.body,
-    req.user.user_id
+    req.user.user_id,
   );
 
   return res.status(HTTP_STATUSES.OK).json({
@@ -60,7 +53,7 @@ const deleteExpense = asyncHandler(async (req, res) => {
   const result = await expenseService.deleteExpense(
     req.params.groupId,
     req.params.expenseId,
-    req.user.user_id
+    req.user.user_id,
   );
 
   return res.status(HTTP_STATUSES.OK).json({

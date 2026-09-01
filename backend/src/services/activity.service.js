@@ -14,7 +14,7 @@ const logActivity = async (groupId, userId, action, description, transaction) =>
       action,
       description,
     },
-    options
+    options,
   );
 };
 

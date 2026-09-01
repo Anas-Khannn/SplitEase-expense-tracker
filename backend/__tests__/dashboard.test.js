@@ -54,9 +54,7 @@ beforeEach(async () => {
 // Helpers
 // ============================================================
 const getDashboard = async (token) =>
-  request(app)
-    .get("/api/dashboard/summary")
-    .set("Authorization", `Bearer ${token}`);
+  request(app).get("/api/dashboard/summary").set("Authorization", `Bearer ${token}`);
 
 const createGroup = async (token, name) => {
   const res = await request(app)
@@ -75,7 +73,7 @@ const addMember = async (token, groupId, userId) =>
 const createExpense = async (
   token,
   groupId,
-  { amount, description = "Test expense", paid_by, participant_ids }
+  { amount, description = "Test expense", paid_by, participant_ids },
 ) =>
   request(app)
     .post(`/api/groups/${groupId}/expenses`)
@@ -88,18 +86,13 @@ const createExpense = async (
       expense_date: "2026-08-20",
     });
 
-const createPayment = async (
-  token,
-  groupId,
-  { paid_to, amount, note }
-) =>
+const createPayment = async (token, groupId, { paid_to, amount, note }) =>
   request(app)
     .post(`/api/groups/${groupId}/payments`)
     .set("Authorization", `Bearer ${token}`)
     .send({ paid_to, amount, note, payment_date: "2026-08-21" });
 
-const findGroupEntry = (res, groupId) =>
-  res.body.data.groups.find((g) => g.group_id === groupId);
+const findGroupEntry = (res, groupId) => res.body.data.groups.find((g) => g.group_id === groupId);
 
 // Builds the PRD reference scenario for userA:
 //   Apartment 4B -> A is owed  +2500 (expense 5000 paid by A, split A/B)
@@ -261,9 +254,7 @@ describe("GET /api/dashboard/summary - aggregation", () => {
 
     const positiveGroups = res.body.data.groups.filter((g) => g.balance > 0);
     expect(positiveGroups).toHaveLength(2);
-    expect(
-      positiveGroups.reduce((sum, g) => sum + g.balance, 0)
-    ).toBe(6500);
+    expect(positiveGroups.reduce((sum, g) => sum + g.balance, 0)).toBe(6500);
     expect(res.body.data.total_owed).toBe(6500);
   });
 
@@ -274,9 +265,7 @@ describe("GET /api/dashboard/summary - aggregation", () => {
 
     const negativeGroups = res.body.data.groups.filter((g) => g.balance < 0);
     expect(negativeGroups).toHaveLength(2);
-    expect(negativeGroups.map((g) => g.group_id)).toContain(
-      movies.group_id
-    );
+    expect(negativeGroups.map((g) => g.group_id)).toContain(movies.group_id);
     expect(res.body.data.total_owe).toBe(1250);
   });
 
@@ -288,10 +277,9 @@ describe("GET /api/dashboard/summary - aggregation", () => {
     expect(res.body.data.total_owed).toBe(6500);
     expect(res.body.data.total_owe).toBe(1250);
     expect(res.body.data.net_balance).toBe(5250);
-    expect(
-      res.body.data.net_balance -
-        (res.body.data.total_owed - res.body.data.total_owe)
-    ).toBe(0);
+    expect(res.body.data.net_balance - (res.body.data.total_owed - res.body.data.total_owe)).toBe(
+      0,
+    );
   });
 });
 
@@ -355,9 +343,7 @@ describe("GET /api/dashboard/summary - isolation", () => {
 
     const resDiana = await getDashboard(tokenD);
     expect(resDiana.body.data.groups).toHaveLength(1);
-    expect(resDiana.body.data.groups[0].group_name).toBe(
-      "Diana Secret Squad"
-    );
+    expect(resDiana.body.data.groups[0].group_name).toBe("Diana Secret Squad");
   });
 
   it("TEST 15: another group's financial data cannot leak into the dashboard", async () => {

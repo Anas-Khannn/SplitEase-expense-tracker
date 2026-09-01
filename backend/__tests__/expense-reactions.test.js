@@ -14,8 +14,8 @@ const {
 const { generateToken } = require("../src/utils/jwt");
 
 let userA, userB, userC, userD;
-let tokenA, tokenB, tokenC, tokenD;
-let group1, group2;
+let tokenA, tokenB, tokenD;
+let group1;
 let expense1;
 
 const createTestUser = async (name, email) => {
@@ -34,7 +34,6 @@ beforeAll(async () => {
 
   tokenA = generateToken({ user_id: userA.user_id });
   tokenB = generateToken({ user_id: userB.user_id });
-  tokenC = generateToken({ user_id: userC.user_id });
   tokenD = generateToken({ user_id: userD.user_id });
 });
 
@@ -67,11 +66,10 @@ beforeEach(async () => {
     .set("Authorization", `Bearer ${tokenA}`)
     .send({ user_id: userC.user_id });
 
-  const res2 = await request(app)
+  await request(app)
     .post("/api/groups")
     .set("Authorization", `Bearer ${tokenD}`)
     .send({ name: "Test Group 2" });
-  group2 = res2.body.data.group;
 
   const expenseRes = await request(app)
     .post(`/api/groups/${group1.group_id}/expenses`)
@@ -181,8 +179,7 @@ describe("Unauthenticated reaction creation", () => {
 // ============================================================
 describe("Unauthenticated reaction retrieval", () => {
   it("should return 401 without token", async () => {
-    const res = await request(app)
-      .get(`/api/expenses/${expense1.expense_id}/reactions`);
+    const res = await request(app).get(`/api/expenses/${expense1.expense_id}/reactions`);
 
     expect(res.status).toBe(401);
   });
@@ -193,8 +190,7 @@ describe("Unauthenticated reaction retrieval", () => {
 // ============================================================
 describe("Unauthenticated reaction deletion", () => {
   it("should return 401 without token", async () => {
-    const res = await request(app)
-      .delete(`/api/expenses/${expense1.expense_id}/reactions`);
+    const res = await request(app).delete(`/api/expenses/${expense1.expense_id}/reactions`);
 
     expect(res.status).toBe(401);
   });
@@ -457,13 +453,11 @@ describe("Expense isolation", () => {
 // ============================================================
 describe("Auth regression", () => {
   it("should still support signup", async () => {
-    const res = await request(app)
-      .post("/api/auth/signup")
-      .send({
-        name: "New User",
-        email: "newuser@test.com",
-        password: "Test1234!",
-      });
+    const res = await request(app).post("/api/auth/signup").send({
+      name: "New User",
+      email: "newuser@test.com",
+      password: "Test1234!",
+    });
     expect(res.status).toBe(201);
     expect(res.body.data.token).toBeDefined();
   });

@@ -43,7 +43,7 @@ const addMember = asyncHandler(async (req, res) => {
   const result = await groupService.addMember(
     req.params.groupId,
     req.body.user_id,
-    req.user.user_id
+    req.user.user_id,
   );
 
   return res.status(HTTP_STATUSES.CREATED).json({
@@ -57,7 +57,7 @@ const removeMember = asyncHandler(async (req, res) => {
   const result = await groupService.removeMember(
     req.params.groupId,
     req.params.userId,
-    req.user.user_id
+    req.user.user_id,
   );
 
   return res.status(HTTP_STATUSES.OK).json({
@@ -70,7 +70,7 @@ const updateMemberRole = asyncHandler(async (req, res) => {
   const result = await groupService.updateMemberRole(
     req.params.groupId,
     req.params.userId,
-    req.body.role
+    req.body.role,
   );
 
   return res.status(HTTP_STATUSES.OK).json({

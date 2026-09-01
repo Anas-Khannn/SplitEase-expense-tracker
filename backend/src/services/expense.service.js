@@ -1,15 +1,7 @@
 const { Op } = require("sequelize");
-const {
-  Expense,
-  ExpenseSplit,
-  GroupMember,
-  User,
-} = require("../database/models");
+const { Expense, ExpenseSplit, GroupMember, User } = require("../database/models");
 const { sequelize } = require("../database/models");
-const {
-  NotFoundError,
-  BadRequestError,
-} = require("../errors");
+const { NotFoundError, BadRequestError } = require("../errors");
 const ACTIVITY_TYPES = require("../constants/activity-types");
 const {
   formatExpenseResponse,
@@ -44,9 +36,7 @@ const verifyGroupMembers = async (groupId, userIds) => {
   if (members.length !== uniqueUserIds.length) {
     const foundIds = members.map((m) => m.user_id);
     const missing = uniqueUserIds.filter((id) => !foundIds.includes(id));
-    throw new BadRequestError(
-      `User(s) not found in this group: ${missing.join(", ")}`
-    );
+    throw new BadRequestError(`User(s) not found in this group: ${missing.join(", ")}`);
   }
 };
 
@@ -60,7 +50,7 @@ const validateParticipants = (participantIds) => {
 const createExpense = async (
   groupId,
   { amount, description, paid_by, participant_ids, expense_date },
-  actorUserId
+  actorUserId,
 ) => {
   validateParticipants(participant_ids);
 
@@ -83,7 +73,7 @@ const createExpense = async (
         amount,
         expense_date,
       },
-      { transaction: t }
+      { transaction: t },
     );
 
     const splitRecords = participant_ids.map((userId, index) => ({
@@ -99,7 +89,7 @@ const createExpense = async (
       actorUserId,
       ACTIVITY_TYPES.EXPENSE_CREATED,
       `${payer.name} added Rs. ${amount} for ${description}.`,
-      t
+      t,
     );
 
     const splitsWithUser = await ExpenseSplit.findAll({
@@ -130,7 +120,7 @@ const createExpense = async (
 
 const getExpensesByGroup = async (
   groupId,
-  { payer_id, start_date, end_date, page = 1, limit = 20 } = {}
+  { payer_id, start_date, end_date, page = 1, limit = 20 } = {},
 ) => {
   const where = { group_id: groupId };
 
@@ -240,7 +230,7 @@ const updateExpense = async (
   groupId,
   expenseId,
   { amount, description, paid_by, participant_ids, expense_date },
-  actorUserId
+  actorUserId,
 ) => {
   const expense = await Expense.findOne({
     where: { expense_id: expenseId, group_id: groupId },
@@ -252,12 +242,9 @@ const updateExpense = async (
 
   const newAmount = amount !== undefined ? amount : expense.amount;
   const newPaidBy = paid_by !== undefined ? paid_by : expense.paid_by;
-  const newParticipants =
-    participant_ids !== undefined ? participant_ids : null;
-  const newDescription =
-    description !== undefined ? description : expense.description;
-  const newDate =
-    expense_date !== undefined ? expense_date : expense.expense_date;
+  const newParticipants = participant_ids !== undefined ? participant_ids : null;
+  const newDescription = description !== undefined ? description : expense.description;
+  const newDate = expense_date !== undefined ? expense_date : expense.expense_date;
 
   if (paid_by !== undefined) {
     const payer = await User.findByPk(newPaidBy);
@@ -292,7 +279,7 @@ const updateExpense = async (
         paid_by: newPaidBy,
         expense_date: newDate,
       },
-      { transaction: t }
+      { transaction: t },
     );
 
     await ExpenseSplit.destroy({
@@ -326,7 +313,7 @@ const updateExpense = async (
       actorUserId,
       ACTIVITY_TYPES.EXPENSE_UPDATED,
       `${actor.name} updated the ${updatedExpense.description} expense.`,
-      t
+      t,
     );
 
     const splitsWithUser = await ExpenseSplit.findAll({
@@ -376,7 +363,7 @@ const deleteExpense = async (groupId, expenseId, actorUserId) => {
       actorUserId,
       ACTIVITY_TYPES.EXPENSE_DELETED,
       `${actor.name} deleted the ${description} expense.`,
-      t
+      t,
     );
   });
 

@@ -76,7 +76,7 @@ beforeEach(async () => {
 const createExpense = async (
   token,
   groupId,
-  { amount, description = "Test expense", paid_by, expense_date }
+  { amount, description = "Test expense", paid_by, expense_date },
 ) => {
   return request(app)
     .post(`/api/groups/${groupId}/expenses`)
@@ -319,12 +319,9 @@ describe("GET /api/groups/:groupId/summary?month=YYYY-MM", () => {
       month: "2026-08",
     });
     expect(
-      augustRes.body.data.contributions.find((c) => c.user_id === userC.user_id)
+      augustRes.body.data.contributions.find((c) => c.user_id === userC.user_id),
     ).toBeUndefined();
-    expect(augustRes.body.data.contributions.map((c) => c.name).sort()).toEqual([
-      "Alice",
-      "Bob",
-    ]);
+    expect(augustRes.body.data.contributions.map((c) => c.name).sort()).toEqual(["Alice", "Bob"]);
 
     const septemberRes = await getSummary(tokenA, group1.group_id, {
       month: "2026-09",
@@ -332,12 +329,10 @@ describe("GET /api/groups/:groupId/summary?month=YYYY-MM", () => {
     expect(septemberRes.body.data.total_spending).toBe(1300);
     expect(septemberRes.body.data.contributions).toHaveLength(2);
     expect(
-      septemberRes.body.data.contributions.find((c) => c.user_id === userA.user_id)
-        .amount
+      septemberRes.body.data.contributions.find((c) => c.user_id === userA.user_id).amount,
     ).toBe(900);
     expect(
-      septemberRes.body.data.contributions.find((c) => c.user_id === userC.user_id)
-        .amount
+      septemberRes.body.data.contributions.find((c) => c.user_id === userC.user_id).amount,
     ).toBe(400);
   });
 });
@@ -376,7 +371,7 @@ describe("GET /api/groups/:groupId/summary - month validation", () => {
 
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
-    }
+    },
   );
 
   it.each(["2026-13", "2026-00", "2026-99"])(
@@ -389,7 +384,7 @@ describe("GET /api/groups/:groupId/summary - month validation", () => {
       expect(res.status).toBe(400);
       expect(res.body.success).toBe(false);
       expect(res.body.errors.join(" ")).toMatch(/month/i);
-    }
+    },
   );
 });
 

@@ -14,7 +14,7 @@ const {
 const { generateToken } = require("../src/utils/jwt");
 
 let userA, userB, userC, userD;
-let tokenA, tokenB, tokenC, tokenD;
+let tokenA, tokenB, tokenD;
 let group1, group2;
 
 const createTestUser = async (name, email) => {
@@ -33,7 +33,6 @@ beforeAll(async () => {
 
   tokenA = generateToken({ user_id: userA.user_id });
   tokenB = generateToken({ user_id: userB.user_id });
-  tokenC = generateToken({ user_id: userC.user_id });
   tokenD = generateToken({ user_id: userD.user_id });
 });
 
@@ -365,8 +364,7 @@ describe("Non-member activity access", () => {
 // ============================================================
 describe("Unauthenticated activity access", () => {
   it("should return 401 without token", async () => {
-    const res = await request(app)
-      .get(`/api/groups/${group1.group_id}/activity`);
+    const res = await request(app).get(`/api/groups/${group1.group_id}/activity`);
 
     expect(res.status).toBe(401);
   });
@@ -429,7 +427,7 @@ describe("Activity ordering", () => {
       .set("Authorization", `Bearer ${tokenA}`);
 
     const expenseActivities = res.body.data.activities.filter(
-      (a) => a.action === "EXPENSE_CREATED"
+      (a) => a.action === "EXPENSE_CREATED",
     );
     expect(expenseActivities).toHaveLength(3);
     expect(expenseActivities[0].description).toContain("Third");
@@ -465,9 +463,7 @@ describe("Pagination", () => {
     expect(res1.body.data.activities).toHaveLength(20);
     expect(res1.body.data.pagination.page).toBe(1);
     expect(res1.body.data.pagination.total).toBe(totalBefore);
-    expect(res1.body.data.pagination.total_pages).toBe(
-      Math.ceil(totalBefore / 20)
-    );
+    expect(res1.body.data.pagination.total_pages).toBe(Math.ceil(totalBefore / 20));
 
     const res2 = await request(app)
       .get(`/api/groups/${group1.group_id}/activity?page=2&limit=20`)
@@ -502,9 +498,7 @@ describe("Default pagination", () => {
       .get(`/api/groups/${group1.group_id}/activity`)
       .set("Authorization", `Bearer ${tokenA}`);
 
-    expect(res.body.data.activities).toHaveLength(
-      Math.min(20, totalBefore)
-    );
+    expect(res.body.data.activities).toHaveLength(Math.min(20, totalBefore));
     expect(res.body.data.pagination.page).toBe(1);
     expect(res.body.data.pagination.limit).toBe(20);
   });
@@ -540,7 +534,7 @@ describe("Cross-group isolation", () => {
       .set("Authorization", `Bearer ${tokenA}`);
 
     const group2Activities = res.body.data.activities.filter(
-      (a) => a.description === "Group 2 Activity"
+      (a) => a.description === "Group 2 Activity",
     );
     expect(group2Activities).toHaveLength(0);
   });
@@ -578,13 +572,11 @@ describe("Security", () => {
 // ============================================================
 describe("Auth regression", () => {
   it("should still support signup", async () => {
-    const res = await request(app)
-      .post("/api/auth/signup")
-      .send({
-        name: "New User",
-        email: "newuser@test.com",
-        password: "Test1234!",
-      });
+    const res = await request(app).post("/api/auth/signup").send({
+      name: "New User",
+      email: "newuser@test.com",
+      password: "Test1234!",
+    });
     expect(res.status).toBe(201);
     expect(res.body.data.token).toBeDefined();
   });

@@ -1,15 +1,10 @@
 const request = require("supertest");
 const app = require("../src/app");
-const {
-  sequelize,
-  User,
-  Group,
-  GroupMember,
-} = require("../src/database/models");
+const { sequelize, User, Group, GroupMember } = require("../src/database/models");
 const { generateToken } = require("../src/utils/jwt");
 
 let userA, userB;
-let tokenA, tokenB;
+let tokenA;
 let group1;
 
 const createTestUser = async (name, email) => {
@@ -25,7 +20,6 @@ beforeAll(async () => {
   userB = await createTestUser("Ali", "ali@test.com");
 
   tokenA = generateToken({ user_id: userA.user_id });
-  tokenB = generateToken({ user_id: userB.user_id });
 });
 
 afterAll(async () => {
@@ -153,9 +147,7 @@ describe("Malformed route parameter validation", () => {
 // ============================================================
 describe("Sensitive data protection", () => {
   it("GET /me never returns password_hash", async () => {
-    const res = await request(app)
-      .get("/api/auth/me")
-      .set("Authorization", `Bearer ${tokenA}`);
+    const res = await request(app).get("/api/auth/me").set("Authorization", `Bearer ${tokenA}`);
 
     expect(res.status).toBe(200);
     expect(JSON.stringify(res.body)).not.toContain("password_hash");

@@ -32,7 +32,7 @@ module.exports = (sequelize) => {
       timestamps: true,
       createdAt: "created_at",
       updatedAt: false,
-    }
+    },
   );
 
   return ActivityLog;

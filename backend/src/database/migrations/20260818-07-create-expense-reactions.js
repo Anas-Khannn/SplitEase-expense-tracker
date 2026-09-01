@@ -48,10 +48,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeConstraint(
-      "expense_reactions",
-      "unique_expense_reaction_user"
-    );
+    await queryInterface.removeConstraint("expense_reactions", "unique_expense_reaction_user");
     await queryInterface.dropTable("expense_reactions");
   },
 };

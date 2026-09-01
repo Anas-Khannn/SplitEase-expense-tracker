@@ -65,9 +65,7 @@ describe("POST /api/groups", () => {
   });
 
   it("should return 401 without authentication", async () => {
-    const res = await request(app)
-      .post("/api/groups")
-      .send({ name: "No Auth Group" });
+    const res = await request(app).post("/api/groups").send({ name: "No Auth Group" });
 
     expect(res.status).toBe(401);
   });
@@ -367,7 +365,7 @@ describe("GET /api/groups", () => {
       .set("Authorization", `Bearer ${tokenA}`)
       .send({ name: "Alice Group 1" });
 
-    const createRes2 = await request(app)
+    await request(app)
       .post("/api/groups")
       .set("Authorization", `Bearer ${tokenA}`)
       .send({ name: "Alice Group 2" });
@@ -378,24 +376,18 @@ describe("GET /api/groups", () => {
       .set("Authorization", `Bearer ${tokenA}`)
       .send({ user_id: userB.user_id });
 
-    const resA = await request(app)
-      .get("/api/groups")
-      .set("Authorization", `Bearer ${tokenA}`);
+    const resA = await request(app).get("/api/groups").set("Authorization", `Bearer ${tokenA}`);
 
     expect(resA.status).toBe(200);
     expect(resA.body.data.groups.length).toBe(2);
 
-    const resB = await request(app)
-      .get("/api/groups")
-      .set("Authorization", `Bearer ${tokenB}`);
+    const resB = await request(app).get("/api/groups").set("Authorization", `Bearer ${tokenB}`);
 
     expect(resB.status).toBe(200);
     expect(resB.body.data.groups.length).toBe(1);
     expect(resB.body.data.groups[0].role).toBe("member");
 
-    const resC = await request(app)
-      .get("/api/groups")
-      .set("Authorization", `Bearer ${tokenC}`);
+    const resC = await request(app).get("/api/groups").set("Authorization", `Bearer ${tokenC}`);
 
     expect(resC.status).toBe(200);
     expect(resC.body.data.groups.length).toBe(0);
@@ -450,9 +442,7 @@ describe("Auth endpoints regression", () => {
   });
 
   it("should still support /me", async () => {
-    const res = await request(app)
-      .get("/api/auth/me")
-      .set("Authorization", `Bearer ${tokenA}`);
+    const res = await request(app).get("/api/auth/me").set("Authorization", `Bearer ${tokenA}`);
 
     expect(res.status).toBe(200);
     expect(res.body.data.user.email).toBe("alice@test.com");
@@ -481,10 +471,9 @@ describe("Auth endpoints regression", () => {
 // ============================================================
 describe("Database schema integrity", () => {
   it("should have all required tables", async () => {
-    const tables = await sequelize.query(
-      "SELECT name FROM sqlite_master WHERE type='table'",
-      { type: sequelize.QueryTypes.SELECT }
-    );
+    const tables = await sequelize.query("SELECT name FROM sqlite_master WHERE type='table'", {
+      type: sequelize.QueryTypes.SELECT,
+    });
     const tableNames = tables.map((t) => t.name);
 
     expect(tableNames).toContain("users");
@@ -498,20 +487,18 @@ describe("Database schema integrity", () => {
   });
 
   it("should have role column in group_members", async () => {
-    const columns = await sequelize.query(
-      "PRAGMA table_info(group_members)",
-      { type: sequelize.QueryTypes.SELECT }
-    );
+    const columns = await sequelize.query("PRAGMA table_info(group_members)", {
+      type: sequelize.QueryTypes.SELECT,
+    });
     const columnNames = columns.map((c) => c.name);
 
     expect(columnNames).toContain("role");
   });
 
   it("should have unique constraint on group_members(group_id, user_id)", async () => {
-    const indexes = await sequelize.query(
-      "PRAGMA index_list(group_members)",
-      { type: sequelize.QueryTypes.SELECT }
-    );
+    const indexes = await sequelize.query("PRAGMA index_list(group_members)", {
+      type: sequelize.QueryTypes.SELECT,
+    });
     const uniqueIndex = indexes.find((i) => i.unique === 1);
     expect(uniqueIndex).toBeDefined();
   });

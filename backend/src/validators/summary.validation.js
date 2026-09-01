@@ -6,8 +6,7 @@ const getSummaryQuerySchema = Joi.object({
     .optional()
     .messages({
       "string.base": "Month must be a string",
-      "string.pattern.base":
-        "Month must be in YYYY-MM format (e.g., 2026-08)",
+      "string.pattern.base": "Month must be in YYYY-MM format (e.g., 2026-08)",
     }),
 });
 

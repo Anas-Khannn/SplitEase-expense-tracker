@@ -1,13 +1,5 @@
-const {
-  Expense,
-  ExpenseReaction,
-  GroupMember,
-  User,
-} = require("../database/models");
-const {
-  NotFoundError,
-  ForbiddenError,
-} = require("../errors");
+const { Expense, ExpenseReaction, GroupMember, User } = require("../database/models");
+const { NotFoundError, ForbiddenError } = require("../errors");
 const { formatReactionResponse } = require("../utils/reaction.utils");
 
 const validateExpenseAndMembership = async (expenseId, userId) => {

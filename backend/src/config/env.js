@@ -6,8 +6,25 @@ const jwtSecret = process.env.JWT_SECRET || "";
 
 if (nodeEnv === "production" && !jwtSecret.trim()) {
   throw new Error(
-    "JWT_SECRET is required in production. Set JWT_SECRET to a non-empty secret before starting the server."
+    "JWT_SECRET is required in production. Set JWT_SECRET to a non-empty secret before starting the server.",
   );
+}
+
+const corsOriginRaw = process.env.CORS_ORIGIN;
+
+const corsOrigin =
+  corsOriginRaw && corsOriginRaw.trim()
+    ? corsOriginRaw.split(",").map((origin) => origin.trim())
+    : ["http://localhost:3000"];
+
+if (nodeEnv === "production") {
+  const isExplicitlySet = Boolean(corsOriginRaw && corsOriginRaw.trim());
+  const hasValidOrigin = corsOrigin.some((origin) => origin.length > 0);
+  if (!isExplicitlySet || !hasValidOrigin) {
+    throw new Error(
+      "CORS_ORIGIN is required in production. Set CORS_ORIGIN to a non-empty, comma-separated list of allowed origins before starting the server.",
+    );
+  }
 }
 
 const env = {
@@ -28,9 +45,7 @@ const env = {
   },
 
   cors: {
-    origin: process.env.CORS_ORIGIN
-      ? process.env.CORS_ORIGIN.split(",").map((origin) => origin.trim())
-      : ["http://localhost:3000"],
+    origin: corsOrigin,
   },
 };
 
