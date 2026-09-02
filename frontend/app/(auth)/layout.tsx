@@ -1,34 +1,103 @@
-import BlankLayout from "@/components/layout/BlankLayout";
-import { LoginVideoBackground } from "@/components/auth/LoginVideoBackground";
+"use client";
+
+import dynamic from "next/dynamic";
+import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "@/lib/gsap/gsapConfig";
+import { AnimatePresence, motion, MotionConfig } from "framer-motion";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import AmbientOrbs from "@/components/auth/AmbientOrbs";
+
+const AuthScene3D = dynamic(() => import("@/components/auth/AuthScene3D"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full bg-gradient-to-br from-scene-bg-900 via-scene-bg-800 to-scene-bg-700" />
+  ),
+});
+
+const headlineWords = ["Split", "expenses", "effortlessly", "with", "friends"];
+
+const AUTH_ROUTE_ORDER = ["/login", "/signup", "/forgot-password", "/reset-password"];
+
+function routeIndex(pathname: string) {
+  const index = AUTH_ROUTE_ORDER.findIndex((route) => pathname.startsWith(route));
+  return index === -1 ? 0 : index;
+}
 
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const pathname = usePathname();
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  const [direction, setDirection] = useState(1);
+
+  if (pathname !== prevPathname) {
+    setDirection(routeIndex(pathname) >= routeIndex(prevPathname) ? 1 : -1);
+    setPrevPathname(pathname);
+  }
+
+  useGSAP(
+    () => {
+      if (!headlineRef.current) return;
+      const words = headlineRef.current.querySelectorAll(".word");
+      gsap.set(words, { opacity: 0, y: 18 });
+      gsap.to(words, {
+        opacity: 1,
+        y: 0,
+        duration: 0.45,
+        stagger: 0.08,
+        ease: "power2.out",
+        delay: 0.5,
+      });
+    },
+    { scope: headlineRef, dependencies: [] }
+  );
+
   return (
-    <BlankLayout>
-      <div className="min-h-screen bg-background flex relative">
-        <div className="fixed top-0 left-0 right-0 z-50 w-full">
-          <nav className="w-full pointer-events-none">
-            <div className="relative py-3 xl:py-4 px-4 sm:px-4 md:px-4 lg:px-4 xl:px-6 2xl:px-8 flex items-center">
-              <span className="font-semibold text-base tracking-tight lg:text-white">
-                SplitEase
+    <div className="relative flex min-h-dvh w-full overflow-hidden">
+      {/* Left: Auth scene (hidden < md) */}
+      <div className="hidden md:flex md:w-[55%] lg:w-[58%] relative">
+        <AuthScene3D />
+        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center px-8 text-center pointer-events-none">
+          <span className="text-body-sm font-semibold tracking-wide text-scene-text-muted mb-2">
+            SplitEase
+          </span>
+          <h1
+            ref={headlineRef}
+            className="text-h1 font-bold text-scene-text leading-tight mb-3"
+          >
+            {headlineWords.map((w, i) => (
+              <span key={i} className="word inline-block mr-[0.35em]">
+                {w}
               </span>
-            </div>
-          </nav>
-        </div>
-
-        <LoginVideoBackground />
-
-        <div className="w-full lg:w-1/2 flex flex-col justify-center items-center p-8 lg:p-12 pb-2">
-          <div className="w-full max-w-md flex flex-col h-full">
-            <div className="space-y-8 flex-1 flex flex-col justify-center">
-              {children}
-            </div>
-          </div>
+            ))}
+          </h1>
         </div>
       </div>
-    </BlankLayout>
+
+      {/* Right: Auth card area */}
+      <div className="relative flex flex-1 items-center justify-center overflow-hidden px-6 py-10 md:w-[45%] lg:w-[42%] bg-base">
+        <AmbientOrbs />
+        <MotionConfig reducedMotion="user">
+          <AnimatePresence mode="wait" initial={false} custom={direction}>
+            <motion.div
+              key={pathname}
+              custom={direction}
+              initial={{ opacity: 0, y: 20, x: direction * 40 }}
+              animate={{ opacity: 1, y: 0, x: 0 }}
+              exit={{ opacity: 0, y: -20, x: direction * -40 }}
+              transition={{ duration: 0.32, ease: "easeOut" }}
+              className="relative z-10 w-full max-w-md"
+            >
+              <ProtectedRoute>{children}</ProtectedRoute>
+            </motion.div>
+          </AnimatePresence>
+        </MotionConfig>
+      </div>
+    </div>
   );
 }

@@ -5,27 +5,36 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { loginSchema, type LoginFormData } from "@/lib/validation/authSchemas";
 import { authApi } from "@/services";
 import { setAuthToken } from "@/lib/auth-token";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-keys";
+import AuthCard from "@/components/auth/AuthCard";
 import SocialLogin from "@/components/auth/SocialLogin";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/primitives/accordion";
-import { Button } from "@/components/ui/primitives/button";
-import { Input } from "@/components/ui/primitives/input";
-import { Label } from "@/components/ui/primitives/label";
+import { Button, Input } from "@/components/ui";
+import { useShake } from "@/hooks/useShake";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
 
 export default function LoginPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [serverError, setServerError] = useState<string | null>(null);
+  const { shakeControls, shake } = useShake();
 
   const {
     register,
@@ -51,148 +60,121 @@ export default function LoginPage() {
         const message =
           err instanceof Error ? err.message : "Login failed. Please try again.";
         setServerError(message);
+        shake();
       }
     },
-    [queryClient, router]
+    [queryClient, router, shake]
   );
 
   return (
-    <>
-      {/* Header */}
-      <div className="text-center space-y-2">
-        <h1 className="text-lg lg:text-xl mb-4">Welcome back</h1>
-        <p className="font-sans text-sm text-[#878787]">
-          Sign in to continue to SplitEase
-        </p>
-      </div>
+    <AuthCard screenKey="login" className="w-full">
+      <div className="px-6 py-8 sm:px-8">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
+          <motion.div variants={itemVariants}>
+            <h2 className="text-h2 font-bold text-text-primary mb-1.5">
+              Welcome back
+            </h2>
+            <p className="text-body-sm text-text-muted mb-6">
+              Sign in to continue to SplitEase
+            </p>
+          </motion.div>
 
-      {/* Sign In Options */}
-      <div className="space-y-3 flex items-center justify-center w-full">
-        <SocialLogin />
-      </div>
+          <motion.div variants={itemVariants} className="mb-6">
+            <SocialLogin />
+          </motion.div>
 
-      {/* Divider */}
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-border" />
-        </div>
-        <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-background font-sans text-[#878787]">
-            or
-          </span>
-        </div>
-      </div>
+          <motion.div variants={itemVariants} className="mb-5">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-border-default" />
+              </div>
+              <div className="relative flex justify-center text-caption text-text-muted">
+                <span className="bg-surface px-3">or continue with email</span>
+              </div>
+            </div>
+          </motion.div>
 
-      {/* More Options Accordion */}
-      <Accordion type="single" collapsible className="w-full">
-        <AccordionItem value="item-1" className="border-0">
-          <AccordionTrigger className="w-full bg-[#0e0e0e] border border-[#0e0e0e] text-white font-sans text-sm h-11 px-4 hover:bg-[#1a1a1a] dark:bg-[#131313] dark:border-border dark:text-foreground dark:hover:bg-border/50 transition-colors rounded-lg flex items-center justify-center hover:no-underline [&_svg]:hidden">
-            <span className="text-white dark:text-foreground">
-              Show other options
-            </span>
-          </AccordionTrigger>
-          <AccordionContent className="pt-4">
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              noValidate
-              className="flex flex-col space-y-4"
-            >
+          <motion.form
+            onSubmit={handleSubmit(onSubmit, () => shake())}
+            animate={shakeControls}
+            noValidate
+          >
+            <div className="flex flex-col gap-4">
               {serverError && (
-                <div
-                  className="bg-destructive/10 border border-destructive/20 px-4 py-3 text-sm text-destructive"
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="rounded-radius-md bg-danger-100 border border-danger-500/20 px-4 py-3 text-body-sm text-danger-500"
                   role="alert"
                 >
                   {serverError}
-                </div>
+                </motion.div>
               )}
 
-              <div className="flex flex-col space-y-2">
-                <Label htmlFor="login-email">Email</Label>
+              <motion.div variants={itemVariants}>
                 <Input
-                  id="login-email"
+                  label="Email"
                   type="email"
                   placeholder="you@example.com"
                   autoComplete="email"
-                  aria-invalid={errors.email ? true : undefined}
+                  error={errors.email?.message}
                   {...register("email")}
                 />
-                {errors.email && (
-                  <p className="text-xs text-destructive" role="alert">
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
+              </motion.div>
 
-              <div className="flex flex-col space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="login-password">Password</Label>
-                  <Link
-                    href="/forgot-password"
-                    className="text-sm text-foreground hover:opacity-70 transition-opacity"
-                  >
-                    Forgot password?
-                  </Link>
-                </div>
+              <motion.div variants={itemVariants}>
                 <Input
-                  id="login-password"
+                  label="Password"
                   type="password"
                   placeholder="Enter your password"
                   autoComplete="current-password"
-                  aria-invalid={errors.password ? true : undefined}
+                  error={errors.password?.message}
                   {...register("password")}
                 />
-                {errors.password && (
-                  <p className="text-xs text-destructive" role="alert">
-                    {errors.password.message}
-                  </p>
-                )}
-              </div>
+              </motion.div>
 
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-primary px-6 h-11 text-primary-foreground font-sans"
+              <motion.div variants={itemVariants} className="flex justify-end">
+                <Link
+                  href="/forgot-password"
+                  className="text-body-sm text-primary-500 hover:text-primary-600 transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </motion.div>
+
+              <motion.div variants={itemVariants}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  size="lg"
+                  loading={isSubmitting}
+                  icon={<ArrowRight />}
+                  iconPosition="right"
+                >
+                  Sign in
+                </Button>
+              </motion.div>
+
+              <motion.p
+                variants={itemVariants}
+                className="text-body-sm text-text-muted text-center mt-1"
               >
-                {isSubmitting ? (
-                  <Loader2 className="animate-spin shrink-0" size={16} />
-                ) : (
-                  "Sign in"
-                )}
-              </Button>
-            </form>
-
-            <p className="text-sm text-muted-foreground text-center mt-4">
-              Don&apos;t have an account?{" "}
-              <Link
-                href="/signup"
-                className="text-foreground hover:opacity-70 transition-opacity"
-              >
-                Create account
-              </Link>
-            </p>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-
-      {/* Terms and Privacy Policy - Bottom aligned */}
-      <div className="text-center mt-auto">
-        <p className="font-sans text-xs text-[#878787]">
-          By signing in you agree to our{" "}
-          <Link
-            href="/terms"
-            className="text-[#878787] hover:text-foreground transition-colors underline"
-          >
-            Terms of service
-          </Link>{" "}
-          &{" "}
-          <Link
-            href="/privacy"
-            className="text-[#878787] hover:text-foreground transition-colors underline"
-          >
-            Privacy policy
-          </Link>
-        </p>
+                Don&apos;t have an account?{" "}
+                <Link
+                  href="/signup"
+                  className="text-primary-500 font-semibold hover:text-primary-600 transition-colors"
+                >
+                  Create account
+                </Link>
+              </motion.p>
+            </div>
+          </motion.form>
+        </motion.div>
       </div>
-    </>
+    </AuthCard>
   );
 }

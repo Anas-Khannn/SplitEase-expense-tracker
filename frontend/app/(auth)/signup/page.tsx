@@ -5,16 +5,34 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { signupSchema, type SignupFormData } from "@/lib/validation/authSchemas";
 import { authApi } from "@/services";
+import { setAuthToken } from "@/lib/auth-token";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys } from "@/lib/query-keys";
 import AuthCard from "@/components/auth/AuthCard";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { Button, Input } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
+
 export default function SignupPage() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [serverError, setServerError] = useState<string | null>(null);
   const { shakeControls, shake } = useShake();
 
@@ -31,12 +49,14 @@ export default function SignupPage() {
     async (data: SignupFormData) => {
       setServerError(null);
       try {
-        await authApi.signup({
+        const res = await authApi.signup({
           name: data.name,
           email: data.email,
           password: data.password,
         });
-        router.push("/login");
+        setAuthToken(res.data.token);
+        queryClient.setQueryData(queryKeys.auth.me(), res.data.user);
+        router.push("/dashboard");
       } catch (err: unknown) {
         const message =
           err instanceof Error ? err.message : "Signup failed. Please try again.";
@@ -44,52 +64,59 @@ export default function SignupPage() {
         shake();
       }
     },
-    [router, shake]
+    [queryClient, router, shake]
   );
 
   return (
     <AuthCard screenKey="signup" className="w-full">
       <div className="px-6 py-8 sm:px-8">
-        <div>
-          <div>
-            <h2 className="text-4xl text-foreground mb-1.5">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
+        >
+          <motion.div variants={itemVariants}>
+            <h2 className="text-h2 font-bold text-text-primary mb-1.5">
               Create your account
             </h2>
-            <p className="text-sm text-muted-foreground mb-6">
+            <p className="text-body-sm text-text-muted mb-6">
               Start splitting expenses with friends
             </p>
-          </div>
+          </motion.div>
 
-          <div className="mb-6">
+          <motion.div variants={itemVariants} className="mb-6">
             <SocialLogin />
-          </div>
+          </motion.div>
 
-          <div className="mb-5">
+          <motion.div variants={itemVariants} className="mb-5">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border" />
+                <div className="w-full border-t border-border-default" />
               </div>
-              <div className="relative flex justify-center text-xs text-muted-foreground">
-                <span className="bg-background px-3">or continue with email</span>
+              <div className="relative flex justify-center text-caption text-text-muted">
+                <span className="bg-surface px-3">or continue with email</span>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          <form
+          <motion.form
             onSubmit={handleSubmit(onSubmit, () => shake())}
+            animate={shakeControls}
             noValidate
           >
             <div className="flex flex-col gap-4">
               {serverError && (
-                <div
-                  className="bg-danger-muted border border-danger/20 px-4 py-3 text-sm text-danger"
+                <motion.div
+                  initial={{ opacity: 0, y: -4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="rounded-radius-md bg-danger-100 border border-danger-500/20 px-4 py-3 text-body-sm text-danger-500"
                   role="alert"
                 >
                   {serverError}
-                </div>
+                </motion.div>
               )}
 
-              <div>
+              <motion.div variants={itemVariants}>
                 <Input
                   label="Full name"
                   type="text"
@@ -98,9 +125,9 @@ export default function SignupPage() {
                   error={errors.name?.message}
                   {...register("name")}
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div variants={itemVariants}>
                 <Input
                   label="Email"
                   type="email"
@@ -109,9 +136,9 @@ export default function SignupPage() {
                   error={errors.email?.message}
                   {...register("email")}
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div variants={itemVariants}>
                 <Input
                   label="Password"
                   type="password"
@@ -120,9 +147,9 @@ export default function SignupPage() {
                   error={errors.password?.message}
                   {...register("password")}
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div variants={itemVariants}>
                 <Input
                   label="Confirm password"
                   type="password"
@@ -131,9 +158,9 @@ export default function SignupPage() {
                   error={errors.confirmPassword?.message}
                   {...register("confirmPassword")}
                 />
-              </div>
+              </motion.div>
 
-              <div>
+              <motion.div variants={itemVariants}>
                 <Button
                   type="submit"
                   fullWidth
@@ -144,20 +171,23 @@ export default function SignupPage() {
                 >
                   Create account
                 </Button>
-              </div>
+              </motion.div>
 
-              <p className="text-sm text-muted-foreground text-center mt-1">
+              <motion.p
+                variants={itemVariants}
+                className="text-body-sm text-text-muted text-center mt-1"
+              >
                 Already have an account?{" "}
                 <Link
                   href="/login"
-                  className="text-foreground hover:opacity-70 transition-opacity"
+                  className="text-primary-500 font-semibold hover:text-primary-600 transition-colors"
                 >
                   Sign in
                 </Link>
-              </p>
+              </motion.p>
             </div>
-          </form>
-        </div>
+          </motion.form>
+        </motion.div>
       </div>
     </AuthCard>
   );
