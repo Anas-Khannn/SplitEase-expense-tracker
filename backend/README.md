@@ -82,3 +82,41 @@ Response:
   "message": "SplitEase API is running"
 }
 ```
+
+## Database Setup & Seeding
+
+Apply the migrations and seed the development data:
+
+```bash
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+```
+
+### Development Seeded Accounts (LOCAL DEVELOPMENT / TEST ONLY)
+
+The seeders create a few test users for local development. These credentials are
+**not** production credentials and must never be used in a real deployment.
+
+| Email             | Name       | Password     |
+| ----------------- | ---------- | ------------ |
+| `bob@example.com` | Bob Smith  | `Password123!` |
+| `alice@example.com` | Alice Johnson | `Password123!` |
+| `charlie@example.com` | Charlie Davis | `Password123!` |
+
+All seeded users share the same simple test password (`Password123!`) so they are
+easy to use while working locally. The password is stored **only** as a bcrypt
+hash (via the project's hashing utility); the raw password is never persisted
+and must never be entered anywhere except the login form when testing.
+
+> **Repairing an existing local database.** If your local database was seeded
+> before this fix (i.e. the seeded users have a placeholder/invalid password
+> hash), simply re-run the seeding once to replace the invalid hashes:
+>
+> ```bash
+> npx sequelize-cli db:seed:all
+> ```
+>
+> The user seeder is idempotent — re-running it updates an existing seeded user's
+> password hash in place instead of duplicating it or wiping related data. A
+> fresh database is also fully supported by the same command. No destructive
+> reset is required in either case.
