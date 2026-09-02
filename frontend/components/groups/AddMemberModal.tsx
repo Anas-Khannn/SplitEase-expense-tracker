@@ -70,7 +70,7 @@ export function AddMemberModal({
           />
 
           {addMember.isError && (
-            <p className="text-body-sm text-danger-500" role="alert">
+            <p className="text-sm text-danger-500" role="alert">
               {addMember.error instanceof Error
                 ? addMember.error.message
                 : "Failed to add member. Please try again."}

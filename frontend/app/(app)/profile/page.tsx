@@ -36,8 +36,8 @@ export default function ProfilePage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-h2 font-bold text-text-primary">Profile</h2>
-        <p className="mt-1 text-body-sm text-text-muted">
+        <h2 className="text-2xl text-foreground">Profile</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
           Your account details.
         </p>
       </div>
@@ -63,13 +63,13 @@ export default function ProfilePage() {
               <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
                 <Avatar name={user.name} alt={user.name} size="xl" />
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-h3 font-semibold text-text-primary">
+                  <h3 className="text-lg text-foreground">
                     {user.name}
                   </h3>
-                  <p className="mt-1 text-body-sm text-text-muted break-words">
+                  <p className="mt-1 text-sm text-muted-foreground break-words">
                     {user.email}
                   </p>
-                  <p className="mt-1 text-caption text-text-muted break-all">
+                  <p className="mt-1 text-xs text-muted-foreground break-all">
                     User ID: {user.user_id}
                   </p>
                 </div>
@@ -79,21 +79,21 @@ export default function ProfilePage() {
 
           <Card>
             <CardHeader>
-              <h3 className="text-h3 font-semibold text-text-primary">
+              <h3 className="text-lg text-foreground">
                 Account
               </h3>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-radius-md bg-primary-100">
-                    <Users className="h-5 w-5 text-primary-500" aria-hidden="true" />
+                  <div className="flex h-10 w-10 items-center justify-center bg-surface">
+                    <Users className="h-5 w-5 text-foreground" aria-hidden="true" />
                   </div>
                   <div>
-                    <p className="text-body font-medium text-text-primary">
+                    <p className="text-sm text-foreground">
                       Groups
                     </p>
-                    <p className="text-caption text-text-muted">
+                    <p className="text-xs text-muted-foreground">
                       Groups you&apos;re a member of
                     </p>
                   </div>
@@ -101,7 +101,7 @@ export default function ProfilePage() {
                 {groupsLoading ? (
                   <Skeleton className="h-6 w-8" />
                 ) : (
-                  <span className="text-body font-semibold text-text-primary tabular-nums">
+                  <span className="text-sm text-foreground tabular-nums">
                     {groups?.length ?? 0}
                   </span>
                 )}
@@ -109,14 +109,14 @@ export default function ProfilePage() {
 
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p className="text-body font-medium text-text-primary">
+                  <p className="text-sm text-foreground">
                     Member since
                   </p>
-                  <p className="text-caption text-text-muted">
+                  <p className="text-xs text-muted-foreground">
                     Joined SplitEase
                   </p>
                 </div>
-                <p className="text-body font-semibold text-text-primary">
+                <p className="text-sm text-foreground">
                   {formatDate(user.created_at) || "—"}
                 </p>
               </div>

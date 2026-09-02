@@ -1,8 +1,8 @@
 "use client";
 
-import { forwardRef, useId, useState, type InputHTMLAttributes } from "react";
-import { motion } from "framer-motion";
+import { forwardRef, useId, type InputHTMLAttributes } from "react";
 import { cn } from "@/lib/utils/cn";
+import { Input as ShadcnInput } from "./primitives/input";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
@@ -20,8 +20,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       id: idProp,
       required,
       disabled,
-      onFocus,
-      onBlur,
       ...props
     },
     ref
@@ -30,67 +28,36 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const id = idProp ?? generatedId;
     const errorId = `${id}-error`;
     const helperId = `${id}-helper`;
-    const [isFocused, setIsFocused] = useState(false);
 
     return (
       <div className="flex flex-col gap-1.5">
         {label && (
-          <motion.label
-            htmlFor={id}
-            animate={{ color: isFocused ? "var(--color-primary-500)" : "var(--color-text-primary)" }}
-            transition={{ duration: 0.15 }}
-            className="text-body-sm font-medium"
-          >
+          <label htmlFor={id} className="text-sm text-muted-foreground">
             {label}
             {required && (
-              <span className="ml-0.5 text-danger-500" aria-hidden="true">
+              <span className="ml-0.5 text-destructive" aria-hidden="true">
                 *
               </span>
             )}
-          </motion.label>
+          </label>
         )}
-        <motion.div
-          animate={{ scale: isFocused ? 1.01 : 1 }}
-          transition={{ duration: 0.2, ease: "easeOut" }}
-        >
-          <input
-            ref={ref}
-            id={id}
-            required={required}
-            disabled={disabled}
-            onFocus={(e) => {
-              setIsFocused(true);
-              onFocus?.(e);
-            }}
-            onBlur={(e) => {
-              setIsFocused(false);
-              onBlur?.(e);
-            }}
-            aria-invalid={error ? true : undefined}
-            aria-describedby={
-              error ? errorId : helperText ? helperId : undefined
-            }
-            className={cn(
-              "h-10 w-full rounded-radius-md border bg-surface px-3 text-body",
-              "text-text-primary placeholder:text-text-muted",
-              "transition-colors duration-150",
-              "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus-ring",
-              "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-surface-alt",
-              error
-                ? "border-danger-500 focus-visible:outline-danger-500"
-                : "border-border-default hover:border-border-strong",
-              className
-            )}
-            {...props}
-          />
-        </motion.div>
+        <ShadcnInput
+          ref={ref}
+          id={id}
+          required={required}
+          disabled={disabled}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? errorId : helperText ? helperId : undefined}
+          className={cn(error && "border-destructive focus-visible:border-destructive", className)}
+          {...props}
+        />
         {error && (
-          <p id={errorId} className="text-caption text-danger-500" role="alert">
+          <p id={errorId} className="text-xs text-destructive" role="alert">
             {error}
           </p>
         )}
         {!error && helperText && (
-          <p id={helperId} className="text-caption text-text-muted">
+          <p id={helperId} className="text-xs text-muted-foreground">
             {helperText}
           </p>
         )}

@@ -35,20 +35,20 @@ export function GroupCard({
         <CardContent className="flex h-full flex-col gap-4 py-5">
           <div className="flex items-start gap-4">
             <span
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-radius-md bg-primary-100 text-h3"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-radius-md bg-primary-100 text-lg"
               aria-hidden="true"
             >
               {groupIcon(group.icon)}
             </span>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <h3 className="truncate text-body font-semibold text-text-primary">
+                <h3 className="truncate text-sm font-semibold text-text-primary">
                   {group.name}
                 </h3>
                 {isAdmin && <Badge variant="primary">Admin</Badge>}
               </div>
               {group.description && (
-                <p className="mt-1 text-body-sm text-text-secondary line-clamp-2">
+                <p className="mt-1 text-sm text-text-secondary line-clamp-2">
                   {group.description}
                 </p>
               )}
@@ -81,19 +81,19 @@ export function GroupCard({
                 </div>
               ) : (
                 <span
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-alt text-caption text-text-muted"
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-alt text-xs text-muted-foreground"
                   aria-hidden="true"
                 >
                   ?
                 </span>
               )}
-              <span className="shrink-0 text-caption text-text-muted">
+              <span className="shrink-0 text-xs text-muted-foreground">
                 {members.length} {members.length === 1 ? "member" : "members"}
               </span>
             </div>
 
             {balance === undefined ? (
-              <span className="shrink-0 text-caption text-text-muted">—</span>
+              <span className="shrink-0 text-xs text-muted-foreground">—</span>
             ) : isSettled ? (
               <Badge variant="success">Settled</Badge>
             ) : (

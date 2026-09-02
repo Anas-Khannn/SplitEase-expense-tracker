@@ -26,19 +26,19 @@ function ErrorState({
         className
       )}
     >
-      <div className="mb-4 text-danger-500 [&>svg]:size-12">
+      <div className="mb-4 text-destructive [&>svg]:size-12">
         {icon ?? <AlertCircle />}
       </div>
-      <h3 className="text-h3 font-semibold text-text-primary">{title}</h3>
+      <h3 className="text-2xl font-bold text-foreground">{title}</h3>
       {description && (
-        <p className="mt-2 max-w-sm text-body-sm text-text-secondary">
+        <p className="mt-2 max-w-sm text-sm text-muted-foreground">
           {description}
         </p>
       )}
       {onRetry && (
         <button
           onClick={onRetry}
-          className="mt-5 px-4 py-2 text-button font-semibold text-primary-500 rounded-radius-md hover:bg-primary-100 transition-colors duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+          className="mt-5 px-4 py-2 text-sm text-foreground hover:opacity-80 transition-opacity duration-150 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-foreground"
         >
           {retryLabel}
         </button>

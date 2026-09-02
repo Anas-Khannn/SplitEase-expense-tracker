@@ -32,16 +32,16 @@ function GroupBalanceCard({
       <CardHeader>
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex min-w-0 items-center gap-2">
-            <span className="text-h3" aria-hidden="true">
+            <span className="text-lg" aria-hidden="true">
               {group.icon ?? "📁"}
             </span>
-            <h3 className="truncate text-body font-semibold text-text-primary">
+            <h3 className="truncate text-sm  text-foreground">
               {group.name}
             </h3>
           </div>
           <Link
             href={`/groups/${group.group_id}/balances`}
-            className="inline-flex items-center gap-1 rounded-radius-sm text-body-sm font-medium text-primary-500 transition-colors duration-150 hover:text-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+            className="inline-flex items-center gap-1  text-sm  text-foreground transition-colors duration-150 hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
           >
             View balances
             <ArrowRight aria-hidden="true" size={16} />
@@ -65,8 +65,8 @@ function GroupBalanceCard({
         )}
 
         {query.isError && (
-          <div className="flex flex-wrap items-center justify-between gap-3 rounded-radius-md bg-danger-100/40 px-4 py-3">
-            <p className="text-body-sm text-danger-500">
+          <div className="flex flex-wrap items-center justify-between gap-3  bg-danger-muted/40 px-4 py-3">
+            <p className="text-sm text-danger">
               Failed to load balances for this group.
             </p>
             <Button variant="secondary" size="sm" onClick={() => query.refetch()}>
@@ -79,7 +79,7 @@ function GroupBalanceCard({
           !query.isError &&
           query.data &&
           query.data.length === 0 && (
-            <p className="text-body-sm text-text-muted">
+            <p className="text-sm text-muted-foreground">
               No outstanding balances in this group.
             </p>
           )}
@@ -119,8 +119,8 @@ export default function BalancesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-h2 font-bold text-text-primary">Balances</h2>
-        <p className="mt-1 text-body-sm text-text-muted">
+        <h2 className="text-2xl  text-foreground">Balances</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
           Your balances across all groups.
         </p>
       </div>
@@ -170,7 +170,7 @@ export default function BalancesPage() {
           action={
             <Link
               href="/groups"
-              className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-radius-md bg-primary-500 px-4 text-button font-semibold text-white transition-colors duration-150 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
+              className="inline-flex h-10 w-full items-center justify-center gap-2  bg-primary px-4 text-sm  text-white transition-colors duration-150 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
             >
               <Plus aria-hidden="true" />
               Browse groups

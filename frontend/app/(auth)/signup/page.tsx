@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { signupSchema, type SignupFormData } from "@/lib/validation/authSchemas";
 import { authApi } from "@/services";
@@ -13,19 +12,6 @@ import AuthCard from "@/components/auth/AuthCard";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { Button, Input } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-};
 
 export default function SignupPage() {
   const router = useRouter();
@@ -64,53 +50,46 @@ export default function SignupPage() {
   return (
     <AuthCard screenKey="signup" className="w-full">
       <div className="px-6 py-8 sm:px-8">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          <motion.div variants={itemVariants}>
-            <h2 className="text-h2 font-bold text-text-primary mb-1.5">
+        <div>
+          <div>
+            <h2 className="text-4xl text-foreground mb-1.5">
               Create your account
             </h2>
-            <p className="text-body-sm text-text-muted mb-6">
+            <p className="text-sm text-muted-foreground mb-6">
               Start splitting expenses with friends
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className="mb-6">
+          <div className="mb-6">
             <SocialLogin />
-          </motion.div>
+          </div>
 
-          <motion.div variants={itemVariants} className="mb-5">
+          <div className="mb-5">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border-default" />
+                <div className="w-full border-t border-border" />
               </div>
-              <div className="relative flex justify-center text-caption text-text-muted">
-                <span className="bg-surface px-3">or continue with email</span>
+              <div className="relative flex justify-center text-xs text-muted-foreground">
+                <span className="bg-background px-3">or continue with email</span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.form
+          <form
             onSubmit={handleSubmit(onSubmit, () => shake())}
-            animate={shakeControls}
             noValidate
           >
             <div className="flex flex-col gap-4">
               {serverError && (
-                <motion.div
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="rounded-radius-md bg-danger-100 border border-danger-500/20 px-4 py-3 text-body-sm text-danger-500"
+                <div
+                  className="bg-danger-muted border border-danger/20 px-4 py-3 text-sm text-danger"
                   role="alert"
                 >
                   {serverError}
-                </motion.div>
+                </div>
               )}
 
-              <motion.div variants={itemVariants}>
+              <div>
                 <Input
                   label="Full name"
                   type="text"
@@ -119,9 +98,9 @@ export default function SignupPage() {
                   error={errors.name?.message}
                   {...register("name")}
                 />
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants}>
+              <div>
                 <Input
                   label="Email"
                   type="email"
@@ -130,9 +109,9 @@ export default function SignupPage() {
                   error={errors.email?.message}
                   {...register("email")}
                 />
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants}>
+              <div>
                 <Input
                   label="Password"
                   type="password"
@@ -141,9 +120,9 @@ export default function SignupPage() {
                   error={errors.password?.message}
                   {...register("password")}
                 />
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants}>
+              <div>
                 <Input
                   label="Confirm password"
                   type="password"
@@ -152,9 +131,9 @@ export default function SignupPage() {
                   error={errors.confirmPassword?.message}
                   {...register("confirmPassword")}
                 />
-              </motion.div>
+              </div>
 
-              <motion.div variants={itemVariants}>
+              <div>
                 <Button
                   type="submit"
                   fullWidth
@@ -165,23 +144,20 @@ export default function SignupPage() {
                 >
                   Create account
                 </Button>
-              </motion.div>
+              </div>
 
-              <motion.p
-                variants={itemVariants}
-                className="text-body-sm text-text-muted text-center mt-1"
-              >
+              <p className="text-sm text-muted-foreground text-center mt-1">
                 Already have an account?{" "}
                 <Link
                   href="/login"
-                  className="text-primary-500 font-semibold hover:text-primary-600 transition-colors"
+                  className="text-foreground hover:opacity-70 transition-opacity"
                 >
                   Sign in
                 </Link>
-              </motion.p>
+              </p>
             </div>
-          </motion.form>
-        </motion.div>
+          </form>
+        </div>
       </div>
     </AuthCard>
   );

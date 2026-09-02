@@ -1,5 +1,6 @@
 import { type HTMLAttributes } from "react";
 import { cn } from "@/lib/utils/cn";
+import { Badge as ShadcnBadge } from "./primitives/badge";
 
 type BadgeVariant = "success" | "danger" | "warning" | "neutral" | "primary";
 
@@ -8,18 +9,18 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantStyles: Record<BadgeVariant, string> = {
-  success: "bg-success-100 text-success-500",
-  danger: "bg-danger-100 text-danger-500",
-  warning: "bg-warning-100 text-warning-500",
-  neutral: "bg-surface-alt text-text-secondary",
-  primary: "bg-primary-100 text-primary-600",
+  success: "bg-success-muted text-success",
+  danger: "bg-danger-muted text-danger",
+  warning: "bg-warning-muted text-warning",
+  neutral: "bg-muted text-muted-foreground",
+  primary: "bg-primary text-primary-foreground",
 };
 
 function Badge({ className, variant = "neutral", ...props }: BadgeProps) {
   return (
-    <span
+    <ShadcnBadge
       className={cn(
-        "inline-flex items-center rounded-radius-full px-2.5 py-0.5 text-caption font-medium leading-none",
+        "h-auto rounded-full px-2.5 py-0.5 text-xs",
         variantStyles[variant],
         className
       )}

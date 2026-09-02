@@ -54,16 +54,16 @@ function SummaryChartTooltip({ active, payload, label }: TooltipContentProps) {
   const memberName = label !== undefined ? String(label) : undefined;
 
   return (
-    <div className="rounded-radius-md border border-border-default bg-surface px-3 py-2 shadow-md">
+    <div className="rounded-md border border-border-default bg-card px-3 py-2 shadow-md">
       {memberName && (
-        <p className="text-caption font-semibold text-text-primary">
+        <p className="text-xs font-semibold text-text-primary">
           {memberName}
         </p>
       )}
-      <p className="text-body-sm font-semibold text-primary-500 tabular-nums">
+      <p className="text-sm font-semibold text-primary tabular-nums">
         {formatCurrency(amount)}
       </p>
-      <p className="text-caption text-text-muted">Total paid</p>
+      <p className="text-xs text-muted-foreground">Total paid</p>
     </div>
   );
 }
@@ -83,10 +83,10 @@ export function SummaryChart({
   return (
     <Card className="min-w-0">
       <CardContent className="pb-2">
-        <h3 className="text-h3 font-semibold text-text-primary">
+        <h3 className="text-lg font-semibold text-text-primary">
           Contributions by member
         </h3>
-        <p className="text-body-sm text-text-muted mt-1">
+        <p className="text-sm text-muted-foreground mt-1">
           Amount each member has paid toward the group&apos;s total spending.
         </p>
 

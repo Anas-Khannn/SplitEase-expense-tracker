@@ -105,7 +105,7 @@ export function CreateGroupModal({ open, onClose }: CreateGroupModalProps) {
           />
 
           <fieldset disabled={createGroup.isPending}>
-            <legend className="mb-2 text-body-sm font-medium text-text-primary">
+            <legend className="mb-2 text-sm font-medium text-text-primary">
               Choose an icon
             </legend>
             <div className="flex flex-wrap gap-2">
@@ -119,11 +119,11 @@ export function CreateGroupModal({ open, onClose }: CreateGroupModalProps) {
                     aria-pressed={selected}
                     aria-label={`Select ${icon} icon`}
                     className={cn(
-                      "flex h-11 w-11 items-center justify-center rounded-radius-md border text-h3 transition-colors duration-150",
+                      "flex h-11 w-11 items-center justify-center rounded-md border text-lg transition-colors duration-150",
                       "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500",
                       selected
-                        ? "border-primary-500 bg-primary-100"
-                        : "border-border-default bg-surface-alt hover:border-primary-300"
+                        ? "border-primary bg-primary-100"
+                        : "border-border-default bg-surface-alt hover:border-primary/40"
                     )}
                   >
                     <span aria-hidden="true">{groupIcon(icon)}</span>
@@ -131,7 +131,7 @@ export function CreateGroupModal({ open, onClose }: CreateGroupModalProps) {
                 );
               })}
             </div>
-            <div className="mt-2 flex items-center gap-2 text-caption text-text-muted">
+            <div className="mt-2 flex items-center gap-2 text-xs text-muted-foreground">
               <span aria-hidden="true">{groupIcon(selectedIcon)}</span>
               <span>
                 {iconPreview
@@ -151,7 +151,7 @@ export function CreateGroupModal({ open, onClose }: CreateGroupModalProps) {
           />
 
           {createGroup.isError && (
-            <p className="text-body-sm text-danger-500" role="alert">
+            <p className="text-sm text-danger-500" role="alert">
               {createGroup.error?.message ?? "Failed to create group. Please try again."}
             </p>
           )}

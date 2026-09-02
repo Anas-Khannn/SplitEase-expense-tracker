@@ -34,7 +34,7 @@ function statusLabel(status: Balance["status"]): string {
 
 export function BalanceList({ balances, currentUserId }: BalanceListProps) {
   return (
-    <ul className="divide-y divide-border-default overflow-hidden rounded-radius-lg border border-border-default bg-surface shadow-xs">
+    <ul className="divide-y divide-border-default overflow-hidden rounded-radius-lg border border-border-default bg-card shadow-xs">
       {balances.map((balance) => {
         const isSelf = balance.user_id === currentUserId;
         const positive = balance.balance > 0;
@@ -56,7 +56,7 @@ export function BalanceList({ balances, currentUserId }: BalanceListProps) {
 
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
-                <p className="truncate text-body font-medium text-text-primary">
+                <p className="truncate text-sm font-medium text-text-primary">
                   {balance.name || balance.user_id}
                 </p>
                 {isSelf && <Badge variant="primary">You</Badge>}
@@ -72,16 +72,16 @@ export function BalanceList({ balances, currentUserId }: BalanceListProps) {
                   {statusLabel(balance.status)}
                 </Badge>
               </div>
-              <p className="truncate text-caption text-text-muted">
+              <p className="truncate text-xs text-muted-foreground">
                 {balance.user_id}
               </p>
             </div>
 
             <div
               className={cn(
-                "shrink-0 text-body font-semibold tabular-nums",
+                "shrink-0 text-sm font-semibold tabular-nums",
                 settled
-                  ? "text-text-muted"
+                  ? "text-muted-foreground"
                   : positive
                     ? "text-success-500"
                     : "text-danger-500"

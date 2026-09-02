@@ -43,7 +43,7 @@ export function GroupHeader({ groupId }: GroupHeaderProps) {
             <Skeleton className="h-4 w-80 max-w-full" />
             <Skeleton className="h-4 w-32" />
           </div>
-          <div className="h-10 rounded-radius-md bg-surface-alt animate-pulse" />
+          <div className="h-10 rounded-md bg-background-alt animate-pulse" />
         </div>
       )}
 
@@ -60,15 +60,15 @@ export function GroupHeader({ groupId }: GroupHeaderProps) {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
               <div className="flex items-center gap-3">
-                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-radius-md bg-primary-100 text-h3" aria-hidden="true">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-card text-lg" aria-hidden="true">
                   {groupIcon(group.icon)}
                 </span>
-                <h2 className="truncate text-h2 font-bold text-text-primary">
+                <h2 className="truncate text-2xl font-bold text-foreground">
                   {group.name}
                 </h2>
               </div>
               {group.description && (
-                <p className="mt-2 text-body-sm text-text-secondary line-clamp-2">
+                <p className="mt-2 text-sm text-muted-foreground line-clamp-2">
                   {group.description}
                 </p>
               )}
@@ -84,7 +84,7 @@ export function GroupHeader({ groupId }: GroupHeaderProps) {
                     />
                   ))}
                 </div>
-                <span className="text-body-sm text-text-muted">
+                <span className="text-sm text-muted-foreground">
                   {group.members.length}{" "}
                   {group.members.length === 1 ? "member" : "members"}
                 </span>
@@ -96,7 +96,7 @@ export function GroupHeader({ groupId }: GroupHeaderProps) {
             aria-label="Group sections"
             className="-mx-1 overflow-x-auto pb-1"
           >
-            <div className="inline-flex min-w-max items-center gap-1 rounded-radius-md bg-surface-alt p-1">
+            <div className="inline-flex min-w-max items-center gap-1 rounded-radius-md bg-background-alt p-1">
               {TABS.map((tab) => {
                 const isActive = activeTab === tab.key;
                 return (
@@ -105,11 +105,11 @@ export function GroupHeader({ groupId }: GroupHeaderProps) {
                     href={`/groups/${groupId}/${tab.key}`}
                     aria-current={isActive ? "page" : undefined}
                     className={cn(
-                      "inline-flex items-center gap-2 px-3 py-1.5 text-body-sm font-medium rounded-radius-sm transition-colors duration-150",
+                      "inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-radius-sm transition-colors duration-150",
                       "focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-focus-ring",
                       isActive
-                        ? "bg-surface text-primary-500 shadow-xs"
-                        : "text-text-secondary hover:text-text-primary"
+                        ? "bg-background text-foreground shadow-xs"
+                        : "text-muted-foreground hover:text-foreground"
                     )}
                   >
                     <tab.icon className="h-4 w-4 shrink-0" aria-hidden="true" />

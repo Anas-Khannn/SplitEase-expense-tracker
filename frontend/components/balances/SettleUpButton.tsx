@@ -77,7 +77,7 @@ export function SettleUpButton({
   };
 
   const selectClass =
-    "h-10 w-full rounded-radius-md border border-border-default bg-surface px-3 text-body text-text-primary focus-visible:outline-2 focus-visible:outline-focus-ring disabled:opacity-50";
+    "h-10 w-full rounded-md border border-border-default bg-card px-3 text-sm text-text-primary focus-visible:outline-2 focus-visible:outline-focus-ring disabled:opacity-50";
 
   return (
     <>
@@ -101,7 +101,7 @@ export function SettleUpButton({
             <div className="flex flex-col gap-1.5">
               <label
                 htmlFor="settle-paid-to"
-                className="text-body-sm font-medium text-text-primary"
+                className="text-sm font-medium text-text-primary"
               >
                 Paid to
               </label>
@@ -119,7 +119,7 @@ export function SettleUpButton({
                 ))}
               </select>
               {errors.paid_to && (
-                <p className="text-caption text-danger-500" role="alert">
+                <p className="text-xs text-danger-500" role="alert">
                   {errors.paid_to.message}
                 </p>
               )}
@@ -140,8 +140,8 @@ export function SettleUpButton({
               <div className="flex flex-col gap-1.5">
                 <label
                   htmlFor="settle-date"
-                  className="text-body-sm font-medium text-text-primary"
-                >
+                className="text-sm font-medium text-text-primary"
+              >
                   Payment date
                 </label>
                 <input
@@ -152,8 +152,8 @@ export function SettleUpButton({
                   {...register("payment_date")}
                 />
                 {errors.payment_date && (
-                  <p className="text-caption text-danger-500" role="alert">
-                    {errors.payment_date.message}
+                <p className="text-xs text-danger-500" role="alert">
+                  {errors.payment_date.message}
                   </p>
                 )}
               </div>
@@ -168,7 +168,7 @@ export function SettleUpButton({
             />
 
             {createPayment.isError && (
-              <p className="text-body-sm text-danger-500" role="alert">
+              <p className="text-sm text-danger-500" role="alert">
                 {createPayment.error instanceof Error
                   ? createPayment.error.message
                   : "Failed to record payment. Please try again."}

@@ -35,8 +35,8 @@ export default function BalancesPage({ params }: BalancesPageProps) {
     <div className="space-y-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h3 className="text-h3 font-semibold text-text-primary">Balances</h3>
-          <p className="text-body-sm text-text-muted mt-1">
+          <h3 className="text-2xl text-foreground">Balances</h3>
+          <p className="text-sm text-muted-foreground mt-1">
             Current balances owed between members and the group.
           </p>
         </div>

@@ -77,8 +77,8 @@ export default function GroupsPage() {
     <div className="space-y-6">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-h2 font-bold text-text-primary">Your Groups</h1>
-          <p className="mt-1 text-body-sm text-text-muted">
+          <h1 className="text-2xl  text-foreground">Your Groups</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
             Manage your shared expenses and groups.
           </p>
         </div>
@@ -106,8 +106,8 @@ export default function GroupsPage() {
       )}
 
       {summaryCardsFailed && (
-        <div className="flex flex-wrap items-center justify-between gap-3 rounded-radius-md bg-danger-100/40 px-4 py-3">
-          <p className="text-body-sm text-danger-500">
+        <div className="flex flex-wrap items-center justify-between gap-3  bg-danger-muted/40 px-4 py-3">
+          <p className="text-sm text-danger">
             Failed to load balance summary.
           </p>
           <Button variant="secondary" size="sm" onClick={() => refetchSummary()}>
@@ -121,12 +121,12 @@ export default function GroupsPage() {
           <Card>
             <CardContent className="py-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-radius-md bg-primary-100">
-                  <Wallet className="h-5 w-5 text-primary-500" aria-hidden="true" />
+                <div className="flex h-10 w-10 items-center justify-center  bg-card">
+                  <Wallet className="h-5 w-5 text-foreground" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-caption text-text-muted">Total balance</p>
-                  <p className="text-h3 font-bold text-text-primary">
+                  <p className="text-xs text-muted-foreground">Total balance</p>
+                  <p className="text-lg  text-foreground">
                     ${summary.net_balance.toFixed(2)}
                   </p>
                 </div>
@@ -136,12 +136,12 @@ export default function GroupsPage() {
           <Card>
             <CardContent className="py-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-radius-md bg-danger-100">
-                  <TrendingDown className="h-5 w-5 text-danger-500" aria-hidden="true" />
+                <div className="flex h-10 w-10 items-center justify-center  bg-danger-muted">
+                  <TrendingDown className="h-5 w-5 text-danger" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-caption text-text-muted">You owe</p>
-                  <p className="text-h3 font-bold text-danger-500">
+                  <p className="text-xs text-muted-foreground">You owe</p>
+                  <p className="text-lg  text-danger">
                     ${summary.total_owe.toFixed(2)}
                   </p>
                 </div>
@@ -151,12 +151,12 @@ export default function GroupsPage() {
           <Card>
             <CardContent className="py-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-radius-md bg-success-100">
-                  <TrendingUp className="h-5 w-5 text-success-500" aria-hidden="true" />
+                <div className="flex h-10 w-10 items-center justify-center  bg-success-muted">
+                  <TrendingUp className="h-5 w-5 text-success" aria-hidden="true" />
                 </div>
                 <div>
-                  <p className="text-caption text-text-muted">You are owed</p>
-                  <p className="text-h3 font-bold text-success-500">
+                  <p className="text-xs text-muted-foreground">You are owed</p>
+                  <p className="text-lg  text-success">
                     ${summary.total_owed.toFixed(2)}
                   </p>
                 </div>
@@ -172,13 +172,13 @@ export default function GroupsPage() {
             <Card key={i} className="h-full">
               <CardContent className="space-y-4 py-5">
                 <div className="flex items-start gap-4">
-                  <Skeleton variant="rect" className="h-12 w-12 shrink-0 rounded-radius-md" />
+                  <Skeleton variant="rect" className="h-12 w-12 shrink-0 " />
                   <div className="flex-1 space-y-2">
                     <Skeleton className="h-4 w-3/4" />
                     <Skeleton className="h-3 w-1/2" />
                   </div>
                 </div>
-                <div className="flex items-center justify-between border-t border-border-default pt-4">
+                <div className="flex items-center justify-between border-t border-border pt-4">
                   <Skeleton variant="circle" className="h-8 w-8" />
                   <Skeleton className="h-5 w-20 rounded-radius-full" />
                 </div>
@@ -223,22 +223,6 @@ export default function GroupsPage() {
         groups.length > 0 && (
           <div className="space-y-4">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div className="relative w-full sm:max-w-xs">
-                <Search
-                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted"
-                  aria-hidden="true"
-                />
-                <Input
-                  id="group-search"
-                  type="search"
-                  placeholder="Search groups"
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  className="pl-9"
-                  aria-label="Search groups"
-                />
-              </div>
-
               <Tabs
                 defaultValue="all"
                 value={tab}
@@ -256,6 +240,22 @@ export default function GroupsPage() {
                   ))}
                 </TabsList>
               </Tabs>
+
+              <div className="relative w-full sm:max-w-xs sm:ml-auto">
+                <Search
+                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                  aria-hidden="true"
+                />
+                <Input
+                  id="group-search"
+                  type="search"
+                  placeholder="Search groups"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  className="pl-9"
+                  aria-label="Search groups"
+                />
+              </div>
             </div>
 
             {filteredGroups.length === 0 ? (

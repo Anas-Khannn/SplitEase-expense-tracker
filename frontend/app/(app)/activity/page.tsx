@@ -60,8 +60,8 @@ export default function ActivityPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-h2 font-bold text-text-primary">Activity</h2>
-        <p className="mt-1 text-body-sm text-text-muted">
+        <h2 className="text-2xl  text-foreground">Activity</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
           Recent activity across all your groups — expenses, payments, and
           member changes.
         </p>
@@ -101,7 +101,7 @@ export default function ActivityPage() {
             (groups?.length ?? 0) === 0 ? (
               <Link
                 href="/groups"
-                className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-radius-md bg-primary-500 px-4 text-button font-semibold text-white transition-colors duration-150 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
+                className="inline-flex h-10 w-full items-center justify-center gap-2  bg-primary px-4 text-sm  text-white transition-colors duration-150 hover:bg-primary-600 focus-visible:outline-2 focus-visible:outline-offset-2 [&>svg]:size-[1em]"
               >
                 <Plus aria-hidden="true" />
                 Browse groups

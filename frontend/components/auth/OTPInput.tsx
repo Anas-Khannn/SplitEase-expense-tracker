@@ -103,7 +103,7 @@ export default function OTPInput({
 
   return (
     <div>
-      <label className="text-body-sm font-medium text-text-primary mb-2 block">
+      <label className="text-sm text-muted-foreground mb-2 block">
         {ariaLabel}
       </label>
       <div
@@ -128,20 +128,20 @@ export default function OTPInput({
             onFocus={(e) => e.target.select()}
             aria-label={`Digit ${i + 1} of ${length}`}
             className={cn(
-              "w-11 h-12 text-center text-h3 font-semibold",
-              "rounded-radius-md border bg-surface",
+              "w-11 h-12 text-center text-lg",
+              "border bg-background",
               "transition-colors duration-150",
-              "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-focus-ring",
+              "focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-foreground",
               "disabled:cursor-not-allowed disabled:opacity-50",
               error
-                ? "border-danger-500 focus-visible:outline-danger-500"
-                : "border-border-default hover:border-border-strong"
+                ? "border-danger focus-visible:outline-danger"
+                : "border-border hover:border-foreground/30"
             )}
           />
         ))}
       </div>
       {error && (
-        <p className="text-caption text-danger-500 mt-1.5" role="alert">
+        <p className="text-xs text-danger mt-1.5" role="alert">
           {error}
         </p>
       )}

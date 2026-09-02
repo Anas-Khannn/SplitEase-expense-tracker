@@ -10,7 +10,7 @@ interface ActivityFeedProps {
 
 export function ActivityFeed({ activities, groupNames }: ActivityFeedProps) {
   return (
-    <ol className="space-y-5 rounded-radius-lg border border-border-default bg-surface px-4 py-5 shadow-xs">
+    <ol className="space-y-5 rounded-radius-lg border border-border-default bg-card px-4 py-5 shadow-xs">
       {activities.map((activity, index) => (
         <li key={activity.activity_id} className="relative">
           {index < activities.length - 1 && (

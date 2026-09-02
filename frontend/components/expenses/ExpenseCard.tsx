@@ -73,7 +73,7 @@ function ExpenseReactions({
             aria-pressed={active}
           >
             <span aria-hidden="true">{reaction}</span>
-            {count > 0 && <span className="text-caption">{count}</span>}
+            {count > 0 && <span className="text-xs">{count}</span>}
           </Button>
         );
       })}
@@ -129,7 +129,7 @@ export function ExpenseCard({
       <CardContent className="py-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="text-body font-semibold text-text-primary">
+            <span className="text-sm font-semibold text-text-primary">
               {formatCurrency(expense.amount)}
             </span>
             <Badge variant="neutral">
@@ -153,10 +153,10 @@ export function ExpenseCard({
           </div>
         </div>
 
-        <p className="mt-2 text-body font-medium text-text-primary">
+        <p className="mt-2 text-sm font-medium text-text-primary">
           {expense.description || "Untitled expense"}
         </p>
-        <p className="mt-1 text-caption text-text-muted">
+        <p className="mt-1 text-xs text-muted-foreground">
           Paid by {expense.payer?.name ?? "Unknown"} · {getSplitLabel(expense)}
         </p>
 
@@ -187,24 +187,24 @@ export function ExpenseTableRow({
   return (
     <tr className="transition-colors duration-150 hover:bg-surface-alt/60 focus-within:bg-surface-alt/60">
       <td className="min-w-44 px-4 py-3">
-        <p className="truncate text-body font-medium text-text-primary max-w-48">
+          <p className="truncate text-sm font-medium text-text-primary max-w-48">
           {expense.description || "Untitled expense"}
         </p>
       </td>
       <td className="px-4 py-3">
-        <span className="whitespace-nowrap text-body font-semibold text-text-primary">
-          {formatCurrency(expense.amount)}
+        <span className="whitespace-nowrap text-sm text-text-secondary">
+          {expense.payer?.name ?? "Unknown"}
         </span>
       </td>
-      <td className="whitespace-nowrap px-4 py-3 text-body-sm text-text-secondary">
+      <td className="whitespace-nowrap px-4 py-3 text-sm text-text-secondary">
         {expense.payer?.name ?? "Unknown"}
       </td>
-      <td className="whitespace-nowrap px-4 py-3 text-body-sm text-text-secondary">
+      <td className="whitespace-nowrap px-4 py-3 text-sm text-text-secondary">
         {formatDate(expense.expense_date) || "No date"}
       </td>
       <td className="min-w-40 max-w-56 px-4 py-3">
         <p
-          className="truncate text-body-sm text-text-secondary"
+          className="truncate text-sm text-text-secondary"
           title={splitLabel}
         >
           {splitLabel}

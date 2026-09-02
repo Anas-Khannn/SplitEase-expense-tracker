@@ -39,8 +39,8 @@ export default function MembersPage({ params }: MembersPageProps) {
     <div className="space-y-5">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h3 className="text-h3 font-semibold text-text-primary">Members</h3>
-          <p className="text-body-sm text-text-muted mt-1">
+          <h3 className="text-2xl text-foreground">Members</h3>
+          <p className="text-sm text-muted-foreground mt-1">
             {isLoading
               ? "Loading members…"
               : `${count} ${count === 1 ? "member" : "members"}`}

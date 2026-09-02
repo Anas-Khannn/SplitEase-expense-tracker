@@ -49,8 +49,8 @@ export default function SummaryPage({ params }: SummaryPageProps) {
   return (
     <div className="space-y-5">
       <div>
-        <h3 className="text-h3 font-semibold text-text-primary">Group Summary</h3>
-        <p className="text-body-sm text-text-muted mt-1">
+        <h3 className="text-2xl text-foreground">Group Summary</h3>
+        <p className="text-sm text-muted-foreground mt-1">
           An overview of this group&apos;s spending and what each member has
           paid.
         </p>
@@ -103,12 +103,12 @@ export default function SummaryPage({ params }: SummaryPageProps) {
           <Card>
             <CardContent className="py-5">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-radius-md bg-primary-100">
-                  <Wallet className="h-5 w-5 text-primary-500" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center bg-card">
+                  <Wallet className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
-                  <p className="text-caption text-text-muted">Total spending</p>
-                  <p className="text-h3 font-bold text-text-primary tabular-nums">
+                  <p className="text-xs text-muted-foreground">Total spending</p>
+                  <p className="text-2xl text-foreground tabular-nums">
                     {formatCurrency(summary.total_spending)}
                   </p>
                 </div>
@@ -124,10 +124,10 @@ export default function SummaryPage({ params }: SummaryPageProps) {
 
             <Card className="min-w-0">
               <CardHeader>
-                <h3 className="text-h3 font-semibold text-text-primary">
+                <h3 className="text-2xl text-foreground">
                   Contributions
                 </h3>
-                <p className="text-body-sm text-text-muted mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   Amount each member has paid.
                 </p>
               </CardHeader>
@@ -143,11 +143,11 @@ export default function SummaryPage({ params }: SummaryPageProps) {
                       size="md"
                     />
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-body font-medium text-text-primary">
+                      <p className="truncate text-sm text-foreground">
                         {contribution.name}
                       </p>
                     </div>
-                    <span className="shrink-0 text-body font-semibold text-text-primary tabular-nums">
+                    <span className="shrink-0 text-sm text-foreground tabular-nums">
                       {formatCurrency(contribution.amount)}
                     </span>
                   </li>

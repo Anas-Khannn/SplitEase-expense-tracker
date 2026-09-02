@@ -16,7 +16,7 @@ interface ExpenseListProps {
 }
 
 const TH_CLASS =
-  "px-4 py-3 text-caption font-medium uppercase tracking-wide text-text-muted";
+  "px-4 py-3 text-xs font-medium uppercase tracking-wide text-muted-foreground";
 
 export function ExpenseList({
   expenses,
@@ -72,7 +72,7 @@ export function ExpenseList({
   return (
     <>
       <div className="hidden sm:block">
-        <div className="overflow-x-auto rounded-radius-lg border border-border-default bg-surface shadow-xs">
+        <div className="overflow-x-auto rounded-radius-lg border border-border-default bg-card shadow-xs">
           <table className="w-full border-collapse text-left">
             <thead>
               <tr className="border-b border-border-default bg-surface-alt/60">
