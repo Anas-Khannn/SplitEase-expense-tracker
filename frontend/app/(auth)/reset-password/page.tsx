@@ -88,7 +88,7 @@ function ResetPasswordContent() {
   });
 
   const onSubmit = useCallback(
-    async (_data: ResetPasswordFormData) => {
+    async () => {
       setServerError(null);
       try {
         // TODO: POST /api/auth/reset-password with { token/otp, newPassword }
