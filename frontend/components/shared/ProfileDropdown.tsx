@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { LogOutIcon, SettingsIcon, UserIcon, MoonStarIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -9,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback } from "@/components/ui/base/primitives/avatar";
 import { Button } from "@/components/ui/base/primitives/button";
 import { Switch } from "@/components/ui/base/primitives/switch";
+import { LogoutConfirmationDialog } from "./LogoutConfirmationDialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +27,8 @@ const ProfileDropdown = () => {
   const router = useRouter();
   const { setTheme, resolvedTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
+
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const handleThemeChange = (checked: boolean) => {
     setTheme(checked ? "dark" : "light");
@@ -115,12 +119,26 @@ const ProfileDropdown = () => {
         <DropdownMenuSeparator />
 
         <DropdownMenuGroup>
-          <DropdownMenuItem variant="destructive" onClick={handleLogout}>
+          <DropdownMenuItem
+            variant="destructive"
+            onClick={() => {
+              setLogoutOpen(true);
+            }}
+          >
             <LogOutIcon />
             <span>Sign out</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
+      <LogoutConfirmationDialog
+        open={logoutOpen}
+        onClose={() => {
+          if (logout.isPending) return;
+          setLogoutOpen(false);
+        }}
+        onConfirm={handleLogout}
+        loading={logout.isPending}
+      />
     </DropdownMenu>
   );
 };

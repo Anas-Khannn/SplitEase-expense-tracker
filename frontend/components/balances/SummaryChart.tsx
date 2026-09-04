@@ -133,7 +133,7 @@ export function SummaryChart({
               <Bar
                 dataKey="amount"
                 name="Total paid"
-                fill="#6C5CE0"
+                fill="var(--brand)"
                 radius={[0, 6, 6, 0]}
                 maxBarSize={28}
               />

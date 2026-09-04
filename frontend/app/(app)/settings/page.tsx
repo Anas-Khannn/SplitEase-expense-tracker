@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useTheme } from "next-themes";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useLogout } from "@/hooks/mutations/useLogout";
+import { LogoutConfirmationDialog } from "@/components/shared/LogoutConfirmationDialog";
 import {
   Avatar,
   Badge,
@@ -88,6 +90,8 @@ function AppearancesSection() {
 export default function SettingsPage() {
   const { user, isLoading } = useAuth();
   const logout = useLogout();
+
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const handleLogout = () => {
     logout.mutate();
@@ -197,13 +201,22 @@ export default function SettingsPage() {
                 variant="danger"
                 size="md"
                 icon={<LogOut />}
-                onClick={handleLogout}
-                loading={logout.isPending}
+                onClick={() => setLogoutOpen(true)}
               >
                 Log out
               </Button>
             </CardFooter>
           </Card>
+
+          <LogoutConfirmationDialog
+            open={logoutOpen}
+            onClose={() => {
+              if (logout.isPending) return;
+              setLogoutOpen(false);
+            }}
+            onConfirm={handleLogout}
+            loading={logout.isPending}
+          />
         </>
       )}
     </div>

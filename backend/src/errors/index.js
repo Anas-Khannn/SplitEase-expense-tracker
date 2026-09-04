@@ -1,9 +1,9 @@
-const AppError = require("./AppError");
-const BadRequestError = require("./BadRequestError");
-const UnauthorizedError = require("./UnauthorizedError");
-const ForbiddenError = require("./ForbiddenError");
-const NotFoundError = require("./NotFoundError");
-const ConflictError = require("./ConflictError");
+const AppError = require("./app.error");
+const BadRequestError = require("./bad-request.error");
+const UnauthorizedError = require("./unauthorized.error");
+const ForbiddenError = require("./forbidden.error");
+const NotFoundError = require("./not-found.error");
+const ConflictError = require("./conflict.error");
 
 module.exports = {
   AppError,

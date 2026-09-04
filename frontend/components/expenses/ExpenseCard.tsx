@@ -12,7 +12,7 @@ import {
   useAddExpenseReaction,
   useRemoveExpenseReaction,
 } from "@/hooks/mutations";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Eye } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import type { Expense, ReactionType } from "@/types";
 
@@ -69,7 +69,10 @@ function ExpenseReactions({
             size="sm"
             disabled={busy}
             onClick={() => handleReaction(reaction)}
-            className={cn("gap-1", active && "bg-primary-100 text-primary-600")}
+            className={cn(
+              "gap-1",
+              active && "bg-brand/15 text-brand hover:bg-brand/25 dark:text-brand-light"
+            )}
             aria-pressed={active}
           >
             <span aria-hidden="true">{reaction}</span>
@@ -116,13 +119,17 @@ interface ExpenseCardProps {
   currentUserId?: string;
   onEdit: () => void;
   onDelete: () => void;
+  onView: () => void;
 }
+
+export { ExpenseReactions };
 
 export function ExpenseCard({
   expense,
   currentUserId,
   onEdit,
   onDelete,
+  onView,
 }: ExpenseCardProps) {
   return (
     <Card>
@@ -137,6 +144,12 @@ export function ExpenseCard({
             </Badge>
           </div>
           <div className="flex shrink-0 items-center gap-1">
+            <IconButton
+              icon={<Eye />}
+              aria-label={`View expense ${expense.description}`}
+              size="sm"
+              onClick={onView}
+            />
             <IconButton
               icon={<Pencil />}
               aria-label={`Edit expense ${expense.description}`}
@@ -174,6 +187,7 @@ interface ExpenseTableRowProps {
   currentUserId?: string;
   onEdit: () => void;
   onDelete: () => void;
+  onView: () => void;
 }
 
 export function ExpenseTableRow({
@@ -181,6 +195,7 @@ export function ExpenseTableRow({
   currentUserId,
   onEdit,
   onDelete,
+  onView,
 }: ExpenseTableRowProps) {
   const splitLabel = getSplitLabel(expense);
 
@@ -219,6 +234,12 @@ export function ExpenseTableRow({
       </td>
       <td className="px-4 py-3">
         <div className="flex items-center justify-end gap-1">
+          <IconButton
+            icon={<Eye />}
+            aria-label={`View expense ${expense.description}`}
+            size="sm"
+            onClick={onView}
+          />
           <IconButton
             icon={<Pencil />}
             aria-label={`Edit expense ${expense.description}`}

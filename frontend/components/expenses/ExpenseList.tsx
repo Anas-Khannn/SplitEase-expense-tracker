@@ -11,6 +11,7 @@ interface ExpenseListProps {
   onAddExpense: () => void;
   onEdit: (expense: Expense) => void;
   onDelete: (expense: Expense) => void;
+  onView: (expense: Expense) => void;
   isFiltered?: boolean;
   onClearFilters?: () => void;
 }
@@ -24,6 +25,7 @@ export function ExpenseList({
   onAddExpense,
   onEdit,
   onDelete,
+  onView,
   isFiltered = false,
   onClearFilters,
 }: ExpenseListProps) {
@@ -110,6 +112,7 @@ export function ExpenseList({
                   currentUserId={currentUserId}
                   onEdit={() => onEdit(expense)}
                   onDelete={() => onDelete(expense)}
+                  onView={() => onView(expense)}
                 />
               ))}
             </tbody>
@@ -125,6 +128,7 @@ export function ExpenseList({
             currentUserId={currentUserId}
             onEdit={() => onEdit(expense)}
             onDelete={() => onDelete(expense)}
+            onView={() => onView(expense)}
           />
         ))}
       </div>

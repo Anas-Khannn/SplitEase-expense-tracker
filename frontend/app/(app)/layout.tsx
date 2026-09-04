@@ -6,8 +6,21 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
-import { SidebarInset } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarMenuSkeleton } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
+
+function SidebarSkeleton() {
+  return (
+    <div className="flex h-full flex-col gap-2 border-r border-sidebar-border p-2">
+      <SidebarMenuSkeleton showIcon className="h-12 py-2" />
+      <SidebarMenuSkeleton showIcon />
+      <SidebarMenuSkeleton showIcon />
+      <SidebarMenuSkeleton showIcon />
+      <SidebarMenuSkeleton showIcon />
+      <SidebarMenuSkeleton showIcon />
+    </div>
+  );
+}
 
 export default function AppLayout({
   children,
@@ -26,8 +39,8 @@ export default function AppLayout({
   if (status === "initializing") {
     return (
       <div className="flex min-h-dvh items-center justify-center bg-background">
-        <div className="flex flex-col items-center gap-3">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        <div className="flex flex-col items-center gap-3" role="status" aria-label="Loading application">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand border-t-transparent" />
           <p className="text-sm text-muted-foreground">Loading...</p>
         </div>
       </div>
@@ -40,7 +53,7 @@ export default function AppLayout({
 
   return (
     <div className="flex h-full w-full min-w-0">
-      <Suspense>
+      <Suspense fallback={<SidebarSkeleton />}>
         <Sidebar />
       </Suspense>
       <SidebarInset className="flex flex-1 flex-col">

@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useLogout } from "@/hooks/mutations/useLogout";
 import { useGroups } from "@/hooks/useGroups";
+import { LogoutConfirmationDialog } from "@/components/shared/LogoutConfirmationDialog";
 import {
   Avatar,
   Button,
@@ -28,6 +30,8 @@ export default function ProfilePage() {
   const { user } = useAuth();
   const logout = useLogout();
   const { data: groups, isLoading: groupsLoading } = useGroups();
+
+  const [logoutOpen, setLogoutOpen] = useState(false);
 
   const handleLogout = () => {
     logout.mutate();
@@ -126,13 +130,22 @@ export default function ProfilePage() {
                 variant="danger"
                 size="md"
                 icon={<LogOut />}
-                onClick={handleLogout}
-                loading={logout.isPending}
+                onClick={() => setLogoutOpen(true)}
               >
                 Log out
               </Button>
             </CardFooter>
           </Card>
+
+          <LogoutConfirmationDialog
+            open={logoutOpen}
+            onClose={() => {
+              if (logout.isPending) return;
+              setLogoutOpen(false);
+            }}
+            onConfirm={handleLogout}
+            loading={logout.isPending}
+          />
         </>
       )}
     </div>

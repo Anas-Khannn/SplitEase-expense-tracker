@@ -1,5 +1,5 @@
 const HTTP_STATUSES = require("../constants/http-statuses");
-const AppError = require("./AppError");
+const AppError = require("./app.error");
 
 class ForbiddenError extends AppError {
   constructor(message = "Forbidden") {

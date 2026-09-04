@@ -208,7 +208,7 @@ export default function DashboardPage() {
 
             <Card className="border border-border bg-card shadow-xs rounded-xl">
               <CardContent className="p-5">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand/10 text-brand">
                   <DollarSign className="h-5 w-5" />
                 </div>
                 <p
@@ -268,7 +268,7 @@ export default function DashboardPage() {
                         className="flex items-center justify-between gap-4 p-3 rounded-lg border border-border/60 bg-background hover:bg-muted/50 transition-all duration-150 group"
                       >
                         <div className="flex items-center gap-3 min-w-0">
-                          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary text-lg group-hover:scale-105 transition-transform">
+                          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand text-lg group-hover:scale-105 transition-transform">
                             {groupIcon(group.icon)}
                           </span>
                           <div className="min-w-0">
@@ -423,7 +423,7 @@ export default function DashboardPage() {
                       className="flex items-center justify-between gap-4 border-b border-border/60 px-2 py-3 last:border-0 hover:bg-muted/40 transition-colors rounded-lg"
                     >
                       <div className="flex items-center gap-3 min-w-0">
-                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary text-lg">
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand text-lg">
                           {groupIcon(
                             groups?.find((g) => g.group_id === expense.group_id)?.icon ?? "users"
                           )}

@@ -9,6 +9,7 @@ import { ExpenseList } from "@/components/expenses/ExpenseList";
 import { ExpenseFilters } from "@/components/expenses/ExpenseFilters";
 import { CreateExpenseModal } from "@/components/expenses/CreateExpenseModal";
 import { EditExpenseModal } from "@/components/expenses/EditExpenseModal";
+import { ViewExpenseModal } from "@/components/expenses/ViewExpenseModal";
 import {
   Button,
   Card,
@@ -56,6 +57,7 @@ export default function ExpensesPage({ params }: ExpensesPageProps) {
 
   const [createOpen, setCreateOpen] = useState(false);
   const [editing, setEditing] = useState<Expense | null>(null);
+  const [viewing, setViewing] = useState<Expense | null>(null);
   const [deleting, setDeleting] = useState<Expense | null>(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
 
@@ -171,6 +173,7 @@ export default function ExpensesPage({ params }: ExpensesPageProps) {
             onAddExpense={() => setCreateOpen(true)}
             onEdit={setEditing}
             onDelete={setDeleting}
+            onView={setViewing}
             isFiltered={activeFilterCount > 0}
             onClearFilters={handleClearFilters}
           />
@@ -229,6 +232,13 @@ export default function ExpensesPage({ params }: ExpensesPageProps) {
         onClose={() => setEditing(null)}
         groupId={groupId}
         expense={editing}
+      />
+
+      <ViewExpenseModal
+        open={viewing !== null}
+        onClose={() => setViewing(null)}
+        groupId={groupId}
+        expense={viewing}
       />
 
       <ConfirmDialog

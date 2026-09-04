@@ -40,7 +40,7 @@ const SidebarMenuItemComponent = ({
         tooltip={item.label}
         render={<Link href={item.href ?? "/dashboard"} />}
         isActive={isActive}
-        className="data-[active=true]:bg-primary/10!"
+        className="data-[active=true]:bg-brand/10! data-[active=true]:text-brand!"
       >
         {Tag && <Tag />}
         <span className="min-w-0 flex-1 truncate">{item.label}</span>
@@ -62,7 +62,7 @@ const SidebarLayout = () => {
               className="gap-2.5 bg-transparent!"
               render={<Link href={themeConfig.homePageUrl} />}
             >
-              <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
+              <div className="flex size-8 items-center justify-center rounded-lg bg-brand text-sm font-bold text-white shadow-sm">
                 SE
               </div>
               <div className="flex flex-col items-start">
