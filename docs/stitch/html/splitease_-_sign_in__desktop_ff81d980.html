@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-white text-zinc-900 antialiased" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign In • SplitEase</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {},
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Inter", "sans-serif"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+  </style>
+</head>
+<body class="min-h-full flex flex-col font-body bg-white text-zinc-900">
+<!-- Top Navigation Bar (Derived from Shared Components JSON) -->
+<header class="flex justify-between items-center h-14 px-6 w-full border-b border-zinc-200 bg-white sticky top-0 z-40">
+<div class="flex items-center gap-6">
+<a class="flex items-center gap-2 group" href="#">
+<div class="relative flex items-center justify-center w-7 h-7">
+<div class="w-4 h-4 rounded-full bg-zinc-900 opacity-90 absolute -left-0.5"></div>
+<div class="w-4 h-4 rounded-full border-2 border-zinc-900 absolute left-2 bg-transparent"></div>
+</div>
+<span class="font-headline text-base font-semibold tracking-tight text-zinc-900">SplitEase</span>
+</a>
+<div class="hidden md:flex items-center gap-5 text-sm font-medium">
+<a class="text-zinc-500 hover:text-zinc-900 transition-colors" href="#">Features</a>
+<a class="text-zinc-500 hover:text-zinc-900 transition-colors" href="#">Pricing</a>
+<a class="text-zinc-500 hover:text-zinc-900 transition-colors" href="#">Docs</a>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<a class="text-xs font-medium text-zinc-500 hover:text-zinc-900 px-2.5 py-1.5 rounded-lg hover:bg-zinc-100 transition-colors flex items-center gap-1.5" href="#">
+<span class="material-symbols-outlined text-[16px]">help</span>
+<span>Support</span>
+</a>
+<div class="h-3.5 w-[1px] bg-zinc-200"></div>
+<a class="text-xs font-medium text-zinc-700 hover:text-zinc-900 px-3 py-1.5 rounded-lg border border-zinc-200 hover:bg-zinc-50 transition-colors" href="#">
+        Sign Up
+      </a>
+</div>
+</header>
+<!-- Main Canvas Container -->
+<main class="flex-1 flex flex-col lg:flex-row w-full max-w-[1440px] mx-auto">
+<!-- Left Area: Centered Authentication Form (65% width approx) -->
+<section class="flex-1 lg:w-[62%] flex items-center justify-center px-6 py-10 lg:py-16">
+<div class="w-full max-w-[400px] flex flex-col items-stretch">
+<!-- Status Pills Header -->
+<div class="flex items-center gap-2 mb-6">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-zinc-100 text-zinc-700 border border-zinc-200/80">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            v2.4 Live Sync
+          </span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs text-zinc-500 bg-zinc-50 border border-zinc-200">
+<span class="material-symbols-outlined text-[13px] text-zinc-400">lock</span>
+            End-to-End Encrypted
+          </span>
+</div>
+<!-- Headline & Subtext -->
+<div class="mb-8">
+<h1 class="font-headline font-bold text-3xl tracking-tight text-zinc-900">Welcome back</h1>
+<p class="text-sm text-zinc-500 mt-1.5">Sign in to manage your shared expenses.</p>
+</div>
+<!-- Form Card -->
+<form class="space-y-4" onsubmit="event.preventDefault();">
+<!-- Email Field -->
+<div class="space-y-1.5">
+<label class="block text-xs font-medium text-zinc-700 tracking-tight" for="email">Email address</label>
+<div class="relative">
+<input class="w-full h-10 px-3 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:border-zinc-950 transition duration-150" id="email" placeholder="name@example.com" required="" type="email" value="charlotte.wang@berkeley.edu"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="block text-xs font-medium text-zinc-700 tracking-tight" for="password">Password</label>
+<a class="text-xs font-medium text-zinc-500 hover:text-zinc-900 transition-colors" href="#">Forgot password?</a>
+</div>
+<div class="relative">
+<input class="w-full h-10 pl-3 pr-10 py-2 text-sm text-zinc-900 placeholder:text-zinc-400 bg-white border border-zinc-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:border-zinc-950 transition duration-150 tracking-wider" id="password" placeholder="Enter your password" required="" type="password" value="••••••••••••"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 transition-colors p-1 flex items-center" id="togglePassword" type="button">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Checkbox -->
+<div class="flex items-center gap-2.5 pt-0.5">
+<input checked="" class="w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-950 focus:ring-offset-0 focus:ring-1 transition cursor-pointer" id="remember" type="checkbox"/>
+<label class="text-xs text-zinc-600 cursor-pointer select-none" for="remember">
+              Remember this device for 30 days
+            </label>
+</div>
+<!-- Primary CTA Button -->
+<button class="w-full h-10 mt-2 bg-zinc-900 text-zinc-50 hover:bg-zinc-800 font-medium text-sm rounded-lg flex items-center justify-center gap-2 shadow-sm transition duration-150 focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:ring-offset-2" type="submit">
+<span>Sign in</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative my-6">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-zinc-200"></div>
+</div>
+<div class="relative flex justify-center text-center">
+<span class="bg-white px-3 text-[11px] font-medium tracking-wider text-zinc-400 uppercase">OR CONTINUE WITH</span>
+</div>
+</div>
+<!-- Social & Alternative Login -->
+<div class="grid grid-cols-2 gap-3">
+<button class="h-10 px-3 border border-zinc-200 hover:bg-zinc-50 rounded-lg flex items-center justify-center gap-2 text-xs font-medium text-zinc-700 transition duration-150" type="button">
+<svg class="w-4 h-4" viewbox="0 0 24 24">
+<path d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" fill="#4285F4"></path>
+<path d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" fill="#34A853"></path>
+<path d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.02 0 12s.45 3.82 1.25 5.42l4.03-3.15z" fill="#FBBC05"></path>
+<path d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" fill="#EA4335"></path>
+</svg>
+<span>Google</span>
+</button>
+<button class="h-10 px-3 border border-zinc-200 hover:bg-zinc-50 rounded-lg flex items-center justify-center gap-1.5 text-xs font-medium text-zinc-700 transition duration-150" type="button">
+<span class="material-symbols-outlined text-[16px] text-zinc-600">passkey</span>
+<span>Passkey</span>
+</button>
+</div>
+<!-- Footer Sign-up Link -->
+<p class="text-center text-xs text-zinc-500 mt-6">
+          Don't have an account? 
+          <a class="font-medium text-zinc-900 hover:underline" href="#">Sign up</a>
+</p>
+<!-- Trust & Security Stamp -->
+<div class="mt-10 pt-4 border-t border-zinc-100 flex items-center justify-center gap-2 text-zinc-400 text-[11px]">
+<span class="material-symbols-outlined text-[15px] text-zinc-400">verified_user</span>
+<span>SOC-2 Type II Certified Financial Encryption</span>
+</div>
+</div>
+</section>
+<!-- Right Area: Muted Gray Workspace & Dashboard Preview (38% width approx) -->
+<section class="lg:w-[38%] bg-zinc-50/90 border-t lg:border-t-0 lg:border-l border-zinc-200 p-8 lg:p-12 flex flex-col justify-between">
+<div class="space-y-6 max-w-md mx-auto w-full">
+<!-- Top Status Tag -->
+<div class="flex items-center justify-between text-xs text-zinc-500">
+<div class="flex items-center gap-1.5 font-medium text-zinc-700">
+<span class="material-symbols-outlined text-[16px] text-zinc-500">sync_saved_locally</span>
+<span>Live Workspace</span>
+</div>
+<span class="text-zinc-400 text-[11px]">Synced just now</span>
+</div>
+<!-- Mini Dashboard Preview Card -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 shadow-sm space-y-4">
+<!-- Group Header -->
+<div class="flex items-center justify-between pb-3 border-b border-zinc-100">
+<div>
+<div class="text-[11px] font-semibold text-zinc-400 tracking-wider uppercase">Active Group</div>
+<div class="font-semibold text-sm text-zinc-900 mt-0.5">Apartment 4B &amp; Trips</div>
+</div>
+<!-- Avatar Stack -->
+<div class="flex items-center -space-x-2">
+<div class="w-7 h-7 rounded-full bg-blue-100 border-2 border-white flex items-center justify-center text-[10px] font-semibold text-blue-800" title="Charlotte W.">CW</div>
+<div class="w-7 h-7 rounded-full bg-emerald-100 border-2 border-white flex items-center justify-center text-[10px] font-semibold text-emerald-800" title="Daniel L.">DL</div>
+<div class="w-7 h-7 rounded-full bg-purple-100 border-2 border-white flex items-center justify-center text-[10px] font-semibold text-purple-800" title="Maya P.">MP</div>
+<div class="w-7 h-7 rounded-full bg-zinc-100 border-2 border-white flex items-center justify-center text-[10px] font-medium text-zinc-600">+1</div>
+</div>
+</div>
+<!-- Net Balance Callout -->
+<div class="bg-zinc-50/70 rounded-lg p-3.5 border border-zinc-100 flex items-center justify-between">
+<div>
+<span class="text-[10px] font-semibold tracking-wider uppercase text-zinc-400">Your Net Balance</span>
+<div class="text-2xl font-bold tracking-tight text-emerald-600 tabular-nums mt-0.5">+$120.50</div>
+</div>
+<div class="text-right">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+<span class="material-symbols-outlined text-[13px]">trending_up</span>
+                Owed to you
+              </span>
+</div>
+</div>
+<!-- Roommate Balances List -->
+<div class="space-y-2 pt-1">
+<div class="text-[11px] font-medium text-zinc-400 uppercase tracking-wider">Member Breakdown</div>
+<div class="space-y-1.5 text-xs">
+<div class="flex items-center justify-between py-1.5 px-2 rounded-md hover:bg-zinc-50 transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-medium text-zinc-800">Charlotte Wang</span>
+</div>
+<span class="font-semibold text-emerald-600 tabular-nums">+$44.20</span>
+</div>
+<div class="flex items-center justify-between py-1.5 px-2 rounded-md hover:bg-zinc-50 transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span>
+<span class="font-medium text-zinc-800">Daniel Lewis</span>
+</div>
+<span class="font-semibold text-rose-600 tabular-nums">-$20.00</span>
+</div>
+<div class="flex items-center justify-between py-1.5 px-2 rounded-md hover:bg-zinc-50 transition-colors">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="font-medium text-zinc-800">Maya Patel</span>
+</div>
+<span class="font-semibold text-emerald-600 tabular-nums">+$96.30</span>
+</div>
+</div>
+</div>
+<!-- Billing Cycle Progress -->
+<div class="space-y-1.5 pt-2 border-t border-zinc-100">
+<div class="flex items-center justify-between text-xs text-zinc-500">
+<span class="text-[11px] text-zinc-600 font-medium">Settled this billing cycle</span>
+<span class="font-semibold text-zinc-900 tabular-nums text-xs">78%</span>
+</div>
+<div class="w-full bg-zinc-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-zinc-900 h-1.5 rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<!-- Recent Settlement Item -->
+<div class="pt-2">
+<div class="flex items-center gap-2 text-xs bg-emerald-50/50 border border-emerald-100 rounded-lg p-2.5 text-zinc-700">
+<span class="material-symbols-outlined text-[16px] text-emerald-600">check_circle</span>
+<span class="truncate">Charlotte settled <strong class="text-zinc-900 tabular-nums font-semibold">$35.00</strong> via Venmo</span>
+</div>
+</div>
+</div>
+<!-- Social Proof & Testimonial Section -->
+<div class="pt-4 space-y-3">
+<div class="flex items-center gap-1.5">
+<div class="flex text-amber-500">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="text-xs font-semibold text-zinc-800 tabular-nums">4.9 / 5</span>
+</div>
+<p class="text-sm font-medium text-zinc-800 italic">
+            “Keep every shared expense square.”
+          </p>
+<p class="text-xs text-zinc-500 leading-relaxed">
+            Trusted by over 80,000 roommates and travel squads worldwide to eliminate awkward money conversations with automatic debt simplification.
+          </p>
+</div>
+</div>
+<!-- Bottom Badges -->
+<div class="pt-8 border-t border-zinc-200/80 mt-6 flex items-center justify-between text-xs text-zinc-400 max-w-md mx-auto w-full">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">file_download_done</span>
+          Splitwise Import Ready
+        </span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+          256-bit TLS Secure
+        </span>
+</div>
+</section>
+</main>
+<!-- Bottom Full-Width Hairline Footer (Derived from Shared Components JSON) -->
+<footer class="flex justify-between items-center h-12 px-6 w-full border-t border-zinc-200 bg-white text-zinc-500 text-xs font-body">
+<div class="font-headline text-xs font-semibold text-zinc-700">
+      © 2025 SplitEase Inc. All rights reserved.
+    </div>
+<div class="flex items-center gap-4 text-xs text-zinc-500">
+<a class="hover:text-zinc-900 transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-zinc-900 transition-colors" href="#">Terms of Service</a>
+<a class="hover:text-zinc-900 transition-colors" href="#">Security</a>
+<a class="hover:text-zinc-900 transition-colors hidden sm:inline" href="#">System Status</a>
+</div>
+</footer>
+<!-- Micro-Interactions Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('togglePassword');
+      const passwordInput = document.getElementById('password');
+      
+      if (toggleBtn && passwordInput) {
+        toggleBtn.addEventListener('click', () => {
+          const isPassword = passwordInput.getAttribute('type') === 'password';
+          passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+          const iconSpan = toggleBtn.querySelector('.material-symbols-outlined');
+          if (iconSpan) {
+            iconSpan.textContent = isPassword ? 'visibility_off' : 'visibility';
+          }
+        });
+      }
+    });
+  </script>
+</body></html>

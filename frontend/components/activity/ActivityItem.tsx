@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { Badge } from "@/components/ui";
+import { formatTime, formatTimestamp } from "@/lib/selectors";
 import type { Activity, ActivityAction } from "@/types";
 
 const actionPresentation: Record<
@@ -64,25 +65,6 @@ const fallbackPresentation = {
 interface ActivityItemProps {
   activity: Activity;
   groupName?: string;
-}
-
-function formatTimestamp(iso: string): string {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
-}
-
-function formatTime(iso: string): string {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleTimeString(undefined, {
-    hour: "numeric",
-    minute: "2-digit",
-  });
 }
 
 export function ActivityItem({ activity, groupName }: ActivityItemProps) {

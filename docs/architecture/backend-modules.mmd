@@ -1,0 +1,254 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1f2937'}}}%%
+graph LR
+    subgraph Controllers["🎮 Controllers"]
+        controllers_activity_controller["controllers.activity.controller"]
+        controllers_auth_controller["controllers.auth.controller"]
+        controllers_balance_controller["controllers.balance.controller"]
+        controllers_dashboard_controller["controllers.dashboard.controller"]
+        controllers_expense_controller["controllers.expense.controller"]
+        controllers_group_controller["controllers.group.controller"]
+        controllers_payment_controller["controllers.payment.controller"]
+        controllers_reaction_controller["controllers.reaction.controller"]
+        controllers_summary_controller["controllers.summary.controller"]
+    end
+
+    subgraph Services["🔧 Services"]
+        services_activity_service["services.activity.service"]
+        services_auth_service["services.auth.service"]
+        services_balance_service["services.balance.service"]
+        services_dashboard_service["services.dashboard.service"]
+        services_expense_service["services.expense.service"]
+        services_group_service["services.group.service"]
+        services_payment_service["services.payment.service"]
+        services_reaction_service["services.reaction.service"]
+        services_summary_service["services.summary.service"]
+    end
+
+    subgraph Models["🗄️ Models"]
+        database_models_index["database.models.index"]
+        database_models_activity-log["database.models.activity-log"]
+        database_models_expense["database.models.expense"]
+        database_models_expense-reaction["database.models.expense-reaction"]
+        database_models_expense-split["database.models.expense-split"]
+        database_models_group["database.models.group"]
+        database_models_group-member["database.models.group-member"]
+        database_models_payment["database.models.payment"]
+        database_models_user["database.models.user"]
+    end
+
+    subgraph Routes["🛣️ Routes"]
+        routes_index["routes.index"]
+        routes_activity_routes["routes.activity.routes"]
+        routes_auth_routes["routes.auth.routes"]
+        routes_balance_routes["routes.balance.routes"]
+        routes_dashboard_routes["routes.dashboard.routes"]
+        routes_expense_routes["routes.expense.routes"]
+        routes_group_routes["routes.group.routes"]
+        routes_payment_routes["routes.payment.routes"]
+        routes_reaction_routes["routes.reaction.routes"]
+        routes_summary_routes["routes.summary.routes"]
+        routes_debug_routes["routes.debug.routes"]
+    end
+
+    subgraph Middlewares["🛡️ Middlewares"]
+        middlewares_error_middleware["middlewares.error.middleware"]
+        middlewares_async-handler_middleware["middlewares.async-handler.middleware"]
+        middlewares_auth_middleware["middlewares.auth.middleware"]
+        middlewares_group_middleware["middlewares.group.middleware"]
+        middlewares_validate_middleware["middlewares.validate.middleware"]
+    end
+
+    subgraph Validators["✅ Validators"]
+        validators_auth_validation["validators.auth.validation"]
+        validators_expense_validation["validators.expense.validation"]
+        validators_group_validation["validators.group.validation"]
+        validators_payment_validation["validators.payment.validation"]
+        validators_reaction_validation["validators.reaction.validation"]
+        validators_summary_validation["validators.summary.validation"]
+    end
+
+    subgraph Utils["🛠️ Utils"]
+        utils_activity_utils["utils.activity.utils"]
+        utils_pagination_utils["utils.pagination.utils"]
+        utils_jwt["utils.jwt"]
+        utils_password["utils.password"]
+        utils_user_utils["utils.user.utils"]
+        utils_expense_utils["utils.expense.utils"]
+        utils_payment_utils["utils.payment.utils"]
+        utils_reaction_utils["utils.reaction.utils"]
+        utils_service-registry["utils.service-registry"]
+    end
+
+    app --> config_env
+    app --> constants_http-statuses
+    app --> middlewares_error_middleware
+    app --> routes_index
+    app --> routes_debug_routes
+    middlewares_error_middleware --> constants_http-statuses
+    middlewares_error_middleware --> errors_index
+    errors_index --> errors_AppError
+    errors_index --> errors_BadRequestError
+    errors_index --> errors_ConflictError
+    errors_index --> errors_ForbiddenError
+    errors_index --> errors_NotFoundError
+    errors_index --> errors_UnauthorizedError
+    errors_AppError --> constants_http-statuses
+    errors_BadRequestError --> constants_http-statuses
+    errors_BadRequestError --> errors_AppError
+    errors_ConflictError --> constants_http-statuses
+    errors_ConflictError --> errors_AppError
+    errors_ForbiddenError --> constants_http-statuses
+    errors_ForbiddenError --> errors_AppError
+    errors_NotFoundError --> constants_http-statuses
+    errors_NotFoundError --> errors_AppError
+    errors_UnauthorizedError --> constants_http-statuses
+    errors_UnauthorizedError --> errors_AppError
+    routes_index --> routes_activity_routes
+    routes_index --> routes_auth_routes
+    routes_index --> routes_balance_routes
+    routes_index --> routes_dashboard_routes
+    routes_index --> routes_expense_routes
+    routes_index --> routes_group_routes
+    routes_index --> routes_payment_routes
+    routes_index --> routes_reaction_routes
+    routes_index --> routes_summary_routes
+    routes_activity_routes --> controllers_activity_controller
+    routes_activity_routes --> middlewares_auth_middleware
+    routes_activity_routes --> middlewares_group_middleware
+    controllers_activity_controller --> constants_http-statuses
+    controllers_activity_controller --> middlewares_async-handler_middleware
+    controllers_activity_controller --> services_activity_service
+    controllers_activity_controller --> utils_pagination_utils
+    services_activity_service --> database_models_index
+    services_activity_service --> utils_activity_utils
+    database_models_index --> config_database
+    database_models_index --> database_models_activity-log
+    database_models_index --> database_models_expense
+    database_models_index --> database_models_expense-reaction
+    database_models_index --> database_models_expense-split
+    database_models_index --> database_models_group
+    database_models_index --> database_models_group-member
+    database_models_index --> database_models_payment
+    database_models_index --> database_models_user
+    config_database --> config_env
+    middlewares_auth_middleware --> constants_http-statuses
+    middlewares_auth_middleware --> database_models_index
+    middlewares_auth_middleware --> utils_jwt
+    utils_jwt --> config_env
+    middlewares_group_middleware --> database_models_index
+    middlewares_group_middleware --> errors_index
+    routes_auth_routes --> controllers_auth_controller
+    routes_auth_routes --> middlewares_auth_middleware
+    routes_auth_routes --> middlewares_validate_middleware
+    routes_auth_routes --> validators_auth_validation
+    controllers_auth_controller --> constants_http-statuses
+    controllers_auth_controller --> middlewares_async-handler_middleware
+    controllers_auth_controller --> services_auth_service
+    services_auth_service --> database_models_index
+    services_auth_service --> errors_index
+    services_auth_service --> utils_jwt
+    services_auth_service --> utils_password
+    services_auth_service --> utils_user_utils
+    middlewares_validate_middleware --> constants_http-statuses
+    routes_balance_routes --> controllers_balance_controller
+    routes_balance_routes --> middlewares_auth_middleware
+    routes_balance_routes --> middlewares_group_middleware
+    controllers_balance_controller --> constants_http-statuses
+    controllers_balance_controller --> middlewares_async-handler_middleware
+    controllers_balance_controller --> services_balance_service
+    services_balance_service --> database_models_index
+    services_balance_service --> errors_index
+    routes_dashboard_routes --> controllers_dashboard_controller
+    routes_dashboard_routes --> middlewares_auth_middleware
+    controllers_dashboard_controller --> constants_http-statuses
+    controllers_dashboard_controller --> middlewares_async-handler_middleware
+    controllers_dashboard_controller --> services_dashboard_service
+    services_dashboard_service --> database_models_index
+    services_dashboard_service --> services_balance_service
+    routes_expense_routes --> controllers_expense_controller
+    routes_expense_routes --> middlewares_auth_middleware
+    routes_expense_routes --> middlewares_group_middleware
+    routes_expense_routes --> middlewares_validate_middleware
+    routes_expense_routes --> validators_expense_validation
+    controllers_expense_controller --> constants_http-statuses
+    controllers_expense_controller --> middlewares_async-handler_middleware
+    controllers_expense_controller --> services_expense_service
+    services_expense_service --> constants_activity-types
+    services_expense_service --> database_models_index
+    services_expense_service --> errors_index
+    services_expense_service --> utils_expense_utils
+    services_expense_service --> services_activity_service
+    routes_group_routes --> controllers_group_controller
+    routes_group_routes --> middlewares_auth_middleware
+    routes_group_routes --> middlewares_group_middleware
+    routes_group_routes --> middlewares_validate_middleware
+    routes_group_routes --> validators_group_validation
+    controllers_group_controller --> constants_http-statuses
+    controllers_group_controller --> middlewares_async-handler_middleware
+    controllers_group_controller --> services_group_service
+    services_group_service --> constants_activity-types
+    services_group_service --> database_models_index
+    services_group_service --> errors_index
+    services_group_service --> services_activity_service
+    routes_payment_routes --> controllers_payment_controller
+    routes_payment_routes --> middlewares_auth_middleware
+    routes_payment_routes --> middlewares_group_middleware
+    routes_payment_routes --> middlewares_validate_middleware
+    routes_payment_routes --> validators_payment_validation
+    controllers_payment_controller --> constants_http-statuses
+    controllers_payment_controller --> middlewares_async-handler_middleware
+    controllers_payment_controller --> services_payment_service
+    services_payment_service --> constants_activity-types
+    services_payment_service --> database_models_index
+    services_payment_service --> errors_index
+    services_payment_service --> utils_payment_utils
+    services_payment_service --> services_activity_service
+    services_payment_service --> services_balance_service
+    routes_reaction_routes --> controllers_reaction_controller
+    routes_reaction_routes --> middlewares_auth_middleware
+    routes_reaction_routes --> middlewares_validate_middleware
+    routes_reaction_routes --> validators_reaction_validation
+    controllers_reaction_controller --> constants_http-statuses
+    controllers_reaction_controller --> middlewares_async-handler_middleware
+    controllers_reaction_controller --> services_reaction_service
+    services_reaction_service --> database_models_index
+    services_reaction_service --> errors_index
+    services_reaction_service --> utils_reaction_utils
+    validators_reaction_validation --> constants_reaction-types
+    validators_reaction_validation --> validators_expense_validation
+    routes_summary_routes --> controllers_summary_controller
+    routes_summary_routes --> middlewares_auth_middleware
+    routes_summary_routes --> middlewares_group_middleware
+    routes_summary_routes --> middlewares_validate_middleware
+    routes_summary_routes --> validators_summary_validation
+    controllers_summary_controller --> constants_http-statuses
+    controllers_summary_controller --> middlewares_async-handler_middleware
+    controllers_summary_controller --> services_summary_service
+    services_summary_service --> database_models_index
+    routes_debug_routes --> constants_http-statuses
+    routes_debug_routes --> utils_service-registry
+    utils_service-registry --> services_activity_service
+    utils_service-registry --> services_auth_service
+    utils_service-registry --> services_balance_service
+    utils_service-registry --> services_dashboard_service
+    utils_service-registry --> services_expense_service
+    utils_service-registry --> services_group_service
+    utils_service-registry --> services_payment_service
+    utils_service-registry --> services_reaction_service
+    utils_service-registry --> services_summary_service
+
+    classDef ctrl fill:#3b82f6,color:#fff,stroke:#1e40af;
+    classDef svc fill:#8b5cf6,color:#fff,stroke:#5b21b6;
+    classDef mod fill:#10b981,color:#fff,stroke:#047857;
+    classDef rt fill:#f59e0b,color:#fff,stroke:#b45309;
+    classDef mw fill:#ec4899,color:#fff,stroke:#9d174d;
+    classDef val fill:#ef4444,color:#fff,stroke:#991b1b;
+    classDef util fill:#6b7280,color:#fff,stroke:#374151;
+
+    class controllers_activity_controller,controllers_auth_controller,controllers_balance_controller,controllers_dashboard_controller,controllers_expense_controller,controllers_group_controller,controllers_payment_controller,controllers_reaction_controller,controllers_summary_controller ctrl;
+    class services_activity_service,services_auth_service,services_balance_service,services_dashboard_service,services_expense_service,services_group_service,services_payment_service,services_reaction_service,services_summary_service svc;
+    class database_models_index,database_models_activity-log,database_models_expense,database_models_expense-reaction,database_models_expense-split,database_models_group,database_models_group-member,database_models_payment,database_models_user mod;
+    class routes_index,routes_activity_routes,routes_auth_routes,routes_balance_routes,routes_dashboard_routes,routes_expense_routes,routes_group_routes,routes_payment_routes,routes_reaction_routes,routes_summary_routes,routes_debug_routes rt;
+    class middlewares_error_middleware,middlewares_async-handler_middleware,middlewares_auth_middleware,middlewares_group_middleware,middlewares_validate_middleware mw;
+    class validators_auth_validation,validators_expense_validation,validators_group_validation,validators_payment_validation,validators_reaction_validation,validators_summary_validation val;
+    class utils_activity_utils,utils_pagination_utils,utils_jwt,utils_password,utils_user_utils,utils_expense_utils,utils_payment_utils,utils_reaction_utils,utils_service-registry util;

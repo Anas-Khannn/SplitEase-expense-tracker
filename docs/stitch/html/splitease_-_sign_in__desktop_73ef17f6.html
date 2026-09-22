@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sign in to SplitEase</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Inter & Geist Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {},
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {},
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Geist", "sans-serif"]
+          },
+          fontSize: {}
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .num-tabular {
+      font-feature-settings: "tnum" 1, "cv05" 1;
+    }
+    .dot-pattern {
+      background-image: radial-gradient(#e4e4e7 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+<body class="h-full bg-white text-zinc-900 font-body antialiased flex flex-col justify-between selection:bg-zinc-200">
+<!-- TopNavBar (Shared Component JSON anchor) -->
+<header class="bg-white/80 dark:bg-zinc-950/80 backdrop-blur-sm text-zinc-900 dark:text-zinc-50 docked full-width top-0 sticky z-50 border-b border-zinc-200 dark:border-zinc-800">
+<div class="flex justify-between items-center w-full px-6 md:px-12 py-3.5 max-w-7xl mx-auto">
+<!-- Brand Logo -->
+<a class="flex items-center gap-2.5 font-headline text-lg font-bold tracking-tight text-zinc-900 dark:text-zinc-50 group" href="#">
+<span class="flex items-center justify-center relative w-7 h-7">
+<span class="absolute left-0 w-4 h-4 rounded-full bg-zinc-900 opacity-90 transition-transform group-hover:-translate-x-0.5"></span>
+<span class="absolute right-0 w-4 h-4 rounded-full bg-zinc-400 opacity-80 mix-blend-multiply transition-transform group-hover:translate-x-0.5"></span>
+</span>
+<span class="tracking-tight text-base font-semibold">SplitEase</span>
+</a>
+<!-- Right secondary/primary actions -->
+<div class="flex items-center gap-3">
+<a class="text-xs font-label text-zinc-500 hover:text-zinc-900 transition-colors duration-150 px-3 py-1.5 rounded-lg hover:bg-zinc-100 hidden sm:inline-flex items-center gap-1.5" href="#">
+<span class="material-symbols-outlined text-[16px]">help</span>
+          Help Center
+        </a>
+<div class="h-4 w-[1px] bg-zinc-200 hidden sm:block"></div>
+<span class="text-xs font-label text-zinc-500">Need an account?</span>
+<a class="text-xs font-label font-medium bg-zinc-900 hover:bg-zinc-800 text-zinc-50 px-3.5 py-1.5 rounded-lg transition-colors duration-150 shadow-sm inline-flex items-center gap-1" href="#">
+          Create account
+        </a>
+</div>
+</div>
+</header>
+<!-- Main Canvas (Split View) -->
+<main class="flex-1 flex flex-col lg:flex-row w-full max-w-[1440px] mx-auto min-h-[calc(100vh-122px)]">
+<!-- Left Column: Authentication Form Canvas (approx 65% on desktop) -->
+<section class="flex-1 relative flex items-center justify-center px-6 py-10 lg:py-16 dot-pattern">
+<!-- Soft ambient gradient mask over dot pattern -->
+<div class="absolute inset-0 bg-gradient-to-b from-white via-white/90 to-white pointer-events-none"></div>
+<div class="relative w-full max-w-[410px] z-10 flex flex-col">
+<!-- Brand Badges and Context -->
+<div class="flex items-center justify-between gap-2 mb-6">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 border border-zinc-200 text-[11px] font-label font-medium text-zinc-600">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            v2.4 Live Sync
+          </div>
+<div class="inline-flex items-center gap-1 text-[11px] font-label text-zinc-500">
+<span class="material-symbols-outlined text-[15px] text-zinc-400">lock</span>
+            End-to-End Encrypted
+          </div>
+</div>
+<!-- Headline Block -->
+<div class="mb-6">
+<h1 class="text-2xl font-bold tracking-tight text-zinc-900 font-headline">Welcome back</h1>
+<p class="text-sm text-zinc-500 mt-1.5">Sign in to manage your shared expenses.</p>
+</div>
+<!-- Sign-in Form -->
+<form class="space-y-4" onsubmit="event.preventDefault();">
+<!-- Email Input -->
+<div class="space-y-1.5">
+<label class="block text-xs font-medium text-zinc-700 font-label" for="email">
+              Email address
+            </label>
+<div class="relative">
+<input autocomplete="email" class="w-full h-10 px-3 text-sm bg-white border border-zinc-200 rounded-lg text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all shadow-sm" id="email" name="email" placeholder="name@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="space-y-1.5">
+<div class="flex items-center justify-between">
+<label class="block text-xs font-medium text-zinc-700 font-label" for="password">
+                Password
+              </label>
+<a class="text-xs font-medium text-zinc-500 hover:text-zinc-900 underline-offset-4 hover:underline transition-colors font-label" href="#">
+                Forgot password?
+              </a>
+</div>
+<div class="relative">
+<input autocomplete="current-password" class="w-full h-10 px-3 pr-10 text-sm bg-white border border-zinc-200 rounded-lg text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-900 focus:border-transparent transition-all shadow-sm" id="password" name="password" placeholder="••••••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-700 p-1 flex items-center justify-center transition-colors focus:outline-none" id="togglePassword" type="button">
+<span class="material-symbols-outlined text-[18px]" id="eyeIcon">visibility</span>
+</button>
+</div>
+</div>
+<!-- Remember me checkbox -->
+<div class="flex items-center pt-0.5">
+<label class="flex items-center gap-2 cursor-pointer select-none group">
+<input checked="" class="w-4 h-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 focus:ring-offset-0 transition" type="checkbox"/>
+<span class="text-xs text-zinc-600 group-hover:text-zinc-900 transition-colors font-label">
+                Remember this device for 30 days
+              </span>
+</label>
+</div>
+<!-- Submit CTA -->
+<button class="w-full h-10 bg-zinc-900 text-zinc-50 hover:bg-zinc-800 font-medium text-sm py-2.5 rounded-lg shadow-sm transition-colors duration-150 flex items-center justify-center gap-1.5 group" type="submit">
+<span>Sign in</span>
+<span class="transition-transform group-hover:translate-x-0.5">→</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative my-5">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-zinc-200"></div>
+</div>
+<div class="relative flex justify-center text-[11px] uppercase tracking-wider">
+<span class="bg-white px-3 text-zinc-400 font-medium font-label">Or continue with</span>
+</div>
+</div>
+<!-- Alternative Providers -->
+<div class="grid grid-cols-2 gap-3">
+<!-- Google Button -->
+<button class="h-10 px-3 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-medium font-label transition-colors duration-150 flex items-center justify-center gap-2 shadow-sm" type="button">
+<svg class="w-4 h-4 shrink-0" viewbox="0 0 24 24">
+<path d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" fill="#4285F4"></path>
+<path d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z" fill="#34A853"></path>
+<path d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 10.03 0 12s.45 3.82 1.25 5.42l4.03-3.15z" fill="#FBBC05"></path>
+<path d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" fill="#EA4335"></path>
+</svg>
+<span>Google</span>
+</button>
+<!-- Passkey Button -->
+<button class="h-10 px-3 bg-white border border-zinc-200 hover:bg-zinc-50 text-zinc-700 rounded-lg text-xs font-medium font-label transition-colors duration-150 flex items-center justify-center gap-2 shadow-sm" type="button">
+<span class="material-symbols-outlined text-[17px] text-zinc-700">key</span>
+<span>Passkey</span>
+</button>
+</div>
+<!-- Trust and Security Footnote -->
+<div class="mt-8 pt-6 border-t border-zinc-100 flex items-center justify-center gap-2 text-zinc-400 text-xs">
+<span class="material-symbols-outlined text-[16px] text-zinc-400">verified_user</span>
+<span class="text-[11px] font-label">SOC-2 Type II Certified Financial Encryption</span>
+</div>
+</div>
+</section>
+<!-- Right Column: Live App Workspace Preview & Proof (35% panel) -->
+<aside class="w-full lg:w-[480px] xl:w-[500px] bg-zinc-50/75 border-t lg:border-t-0 lg:border-l border-zinc-200 p-6 lg:p-10 flex flex-col justify-between">
+<div class="space-y-6">
+<!-- Live Workspace Header Badge -->
+<div class="flex items-center justify-between">
+<div class="inline-flex items-center gap-2 px-2.5 py-1 bg-white border border-zinc-200 rounded-full text-xs font-label text-zinc-700 shadow-sm">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+</span>
+<span class="font-medium">Live Workspace</span>
+<span class="text-zinc-300">•</span>
+<span class="text-zinc-400">Synced just now</span>
+</div>
+<span class="text-[11px] font-label uppercase tracking-wider text-zinc-400 font-medium">Demo preview</span>
+</div>
+<!-- Mini App Dashboard Card (shadcn UI card format) -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 shadow-sm space-y-4">
+<!-- Card Header: Active Group & Avatar Stack -->
+<div class="flex items-center justify-between pb-3 border-b border-zinc-100">
+<div>
+<div class="text-[11px] font-label uppercase tracking-wider text-zinc-400 font-medium">Active group</div>
+<h3 class="text-sm font-semibold text-zinc-900 font-headline flex items-center gap-1.5 mt-0.5">
+                Apartment 4B &amp; Trips
+                <span class="material-symbols-outlined text-[15px] text-zinc-400">verified</span>
+</h3>
+</div>
+<!-- Avatar stack -->
+<div class="flex -space-x-1.5 overflow-hidden">
+<span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-amber-100 text-amber-800 text-[10px] font-medium ring-2 ring-white">CW</span>
+<span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 text-blue-800 text-[10px] font-medium ring-2 ring-white">DL</span>
+<span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-medium ring-2 ring-white">MP</span>
+<span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-zinc-200 text-zinc-700 text-[9px] font-medium ring-2 ring-white">+1</span>
+</div>
+</div>
+<!-- Balance Indicator (shadcn metric pattern) -->
+<div class="bg-zinc-50/80 rounded-lg p-3.5 border border-zinc-100 flex items-center justify-between">
+<div>
+<div class="text-[11px] font-label font-medium uppercase tracking-wider text-zinc-500">Your net balance</div>
+<div class="text-2xl font-bold tracking-tight text-emerald-600 font-headline num-tabular mt-0.5">
+                +$120.50
+              </div>
+</div>
+<div class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-emerald-50 border border-emerald-200 text-[11px] font-medium text-emerald-700 font-label">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+              Owed to you
+            </div>
+</div>
+<!-- Roommate Breakdown Rows -->
+<div class="space-y-2">
+<div class="text-[11px] font-label font-medium uppercase tracking-wider text-zinc-400 mb-1">Roommates</div>
+<!-- Person 1 -->
+<div class="flex items-center justify-between text-xs py-1.5 px-2 rounded-md hover:bg-zinc-50 transition-colors">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-amber-100 text-amber-800 flex items-center justify-center text-[10px] font-medium">CW</span>
+<div>
+<div class="font-medium text-zinc-900">Charlotte Wang</div>
+<div class="text-[10px] text-zinc-400 font-label">Whole Foods &amp; Wi-Fi</div>
+</div>
+</div>
+<div class="text-right">
+<span class="font-semibold text-emerald-600 num-tabular">+$44.20</span>
+</div>
+</div>
+<!-- Person 2 -->
+<div class="flex items-center justify-between text-xs py-1.5 px-2 rounded-md hover:bg-zinc-50 transition-colors">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-blue-100 text-blue-800 flex items-center justify-center text-[10px] font-medium">DL</span>
+<div>
+<div class="font-medium text-zinc-900">Daniel Lewis</div>
+<div class="text-[10px] text-zinc-400 font-label">Coffee Pods Subscription</div>
+</div>
+</div>
+<div class="text-right">
+<span class="font-semibold text-rose-600 num-tabular">-$20.00</span>
+</div>
+</div>
+<!-- Person 3 -->
+<div class="flex items-center justify-between text-xs py-1.5 px-2 rounded-md hover:bg-zinc-50 transition-colors">
+<div class="flex items-center gap-2.5">
+<span class="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-[10px] font-medium">MP</span>
+<div>
+<div class="font-medium text-zinc-900">Maya Patel</div>
+<div class="text-[10px] text-zinc-400 font-label">Electric Bill ConEd</div>
+</div>
+</div>
+<div class="text-right">
+<span class="font-semibold text-emerald-600 num-tabular">+$96.30</span>
+</div>
+</div>
+</div>
+<!-- Micro Progress & Status -->
+<div class="pt-2 border-t border-zinc-100 space-y-1.5">
+<div class="flex items-center justify-between text-[11px] font-label text-zinc-500">
+<span>Settled this billing cycle</span>
+<span class="font-semibold text-zinc-800 num-tabular">78%</span>
+</div>
+<div class="w-full bg-zinc-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-zinc-900 h-1.5 rounded-full" style="width: 78%"></div>
+</div>
+</div>
+<!-- Toast pill settlement -->
+<div class="bg-zinc-50 border border-zinc-200/80 rounded-lg p-2.5 flex items-center gap-2.5 text-[11px] font-label text-zinc-600">
+<span class="material-symbols-outlined text-[16px] text-emerald-600 shrink-0">check_circle</span>
+<div class="truncate">
+<span class="font-medium text-zinc-900">Charlotte</span> settled $35.00 via Venmo • 12m ago
+            </div>
+</div>
+</div>
+</div>
+<!-- Bottom Testimonial / Social Proof Block -->
+<div class="mt-8 pt-6 border-t border-zinc-200 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex text-amber-500 text-xs">
+            ★★★★★
+            <span class="ml-1.5 text-zinc-800 font-semibold font-label text-xs">4.9 / 5</span>
+</div>
+<span class="inline-flex items-center gap-1 text-[11px] font-label text-zinc-500 bg-white px-2 py-0.5 rounded border border-zinc-200">
+<span class="material-symbols-outlined text-[13px] text-zinc-500">sync_alt</span>
+            Splitwise Import Ready
+          </span>
+</div>
+<blockquote class="text-sm font-medium text-zinc-800 leading-snug">
+          “Keep every shared expense square without ever sending an awkward text.”
+        </blockquote>
+<p class="text-xs text-zinc-500 font-label leading-relaxed">
+          Trusted by over 80,000 roommates and travel groups worldwide to balance living costs with zero drama.
+        </p>
+</div>
+</aside>
+</main>
+<!-- Footer (Shared Component JSON anchor) -->
+<footer class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 docked full-width bottom-0 border-t border-zinc-200 dark:border-zinc-800">
+<div class="flex flex-col sm:flex-row justify-between items-center w-full px-6 md:px-12 py-4 max-w-7xl mx-auto gap-4">
+<div class="flex items-center gap-2">
+<span class="font-headline text-sm font-semibold text-zinc-900 dark:text-zinc-50">SplitEase</span>
+<span class="text-zinc-300">•</span>
+<span class="font-label text-xs text-zinc-500 dark:text-zinc-400">© 2025 SplitEase Inc. All rights reserved.</span>
+</div>
+<nav class="flex items-center gap-6">
+<a class="font-label text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" href="#">Privacy Policy</a>
+<a class="font-label text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" href="#">Terms of Service</a>
+<a class="font-label text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" href="#">Security</a>
+<a class="font-label text-xs text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 transition-colors" href="#">Help Center</a>
+</nav>
+</div>
+</footer>
+<!-- Inline password toggle interaction script -->
+<script>
+    const passwordInput = document.getElementById('password');
+    const toggleButton = document.getElementById('togglePassword');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    if (toggleButton && passwordInput && eyeIcon) {
+      toggleButton.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        eyeIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
+      });
+    }
+  </script>
+</body></html>

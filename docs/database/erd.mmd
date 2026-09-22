@@ -1,0 +1,106 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1f2937', 'er': {'diagramPadding': 20}}}}%%
+erDiagram
+    USER {
+        uuid user_id PK, NOT NULL
+        varchar name NOT NULL
+        varchar email NOT NULL, UNIQUE
+        varchar password_hash NOT NULL
+    }
+
+    GROUP {
+        uuid group_id PK, NOT NULL
+        uuid created_by NOT NULL
+        varchar name NOT NULL
+        varchar icon 
+        varchar description 
+    }
+
+    GROUPMEMBER {
+        uuid group_member_id PK, NOT NULL
+        uuid group_id FK, NOT NULL
+        uuid user_id FK, NOT NULL
+        enum role NOT NULL
+        timestamp joined_at NOT NULL
+    }
+
+    EXPENSE {
+        uuid expense_id PK, NOT NULL
+        uuid group_id FK, NOT NULL
+        uuid paid_by NOT NULL
+        varchar description NOT NULL
+        decimal amount NOT NULL
+        date expense_date NOT NULL
+    }
+
+    EXPENSESPLIT {
+        uuid expense_split_id PK, NOT NULL
+        uuid expense_id FK, NOT NULL
+        uuid user_id FK, NOT NULL
+        decimal share_amount NOT NULL
+    }
+
+    PAYMENT {
+        uuid payment_id PK, NOT NULL
+        uuid group_id FK, NOT NULL
+        uuid paid_by NOT NULL
+        uuid paid_to NOT NULL
+        decimal amount NOT NULL
+        date payment_date NOT NULL
+        varchar note 
+    }
+
+    EXPENSEREACTION {
+        uuid reaction_id PK, NOT NULL
+        uuid expense_id FK, NOT NULL
+        uuid user_id FK, NOT NULL
+        varchar reaction NOT NULL
+    }
+
+    ACTIVITYLOG {
+        uuid activity_id PK, NOT NULL
+        uuid group_id FK, NOT NULL
+        uuid user_id FK, NOT NULL
+        varchar action NOT NULL
+        text description NOT NULL
+    }
+
+    USER ||--o{ GROUP : "created_by" "createdGroups"
+    USER ||--o{ GROUPMEMBER : "user_id" "groupMemberships"
+    GROUP ||--o{ GROUPMEMBER : "group_id" "members"
+    GROUP ||--o{ EXPENSE : "group_id" "expenses"
+    USER ||--o{ EXPENSE : "paid_by" "paidExpenses"
+    EXPENSE ||--o{ EXPENSESPLIT : "expense_id" "splits"
+    USER ||--o{ EXPENSESPLIT : "user_id" "expenseSplits"
+    GROUP ||--o{ PAYMENT : "group_id" "payments"
+    USER ||--o{ PAYMENT : "paid_by" "sentPayments"
+    USER ||--o{ PAYMENT : "paid_to" "receivedPayments"
+    EXPENSE ||--o{ EXPENSEREACTION : "expense_id" "reactions"
+    USER ||--o{ EXPENSEREACTION : "user_id" "expenseReactions"
+    GROUP ||--o{ ACTIVITYLOG : "group_id" "activities"
+    USER ||--o{ ACTIVITYLOG : "user_id" "activities"
+    GROUP }o--|| USER : "created_by" "creator"
+    GROUPMEMBER }o--|| USER : "user_id" "user"
+    GROUPMEMBER }o--|| GROUP : "group_id" "group"
+    EXPENSE }o--|| GROUP : "group_id" "group"
+    EXPENSE }o--|| USER : "paid_by" "payer"
+    EXPENSESPLIT }o--|| EXPENSE : "expense_id" "expense"
+    EXPENSESPLIT }o--|| USER : "user_id" "user"
+    PAYMENT }o--|| GROUP : "group_id" "group"
+    PAYMENT }o--|| USER : "paid_by" "payer"
+    PAYMENT }o--|| USER : "paid_to" "receiver"
+    EXPENSEREACTION }o--|| EXPENSE : "expense_id" "expense"
+    EXPENSEREACTION }o--|| USER : "user_id" "user"
+    ACTIVITYLOG }o--|| GROUP : "group_id" "group"
+    ACTIVITYLOG }o--|| USER : "user_id" "user"
+    USER }o--o{ GROUPMEMBER : "groups"
+    GROUPMEMBER }o--|| GROUP : ""
+    GROUP }o--o{ GROUPMEMBER : "groupUsers"
+    GROUPMEMBER }o--|| USER : ""
+    USER }o--o{ EXPENSESPLIT : "splitExpenses"
+    EXPENSESPLIT }o--|| EXPENSE : ""
+    EXPENSE }o--o{ EXPENSESPLIT : "splitWithUsers"
+    EXPENSESPLIT }o--|| USER : ""
+    USER }o--o{ EXPENSEREACTION : "reactedExpenses"
+    EXPENSEREACTION }o--|| EXPENSE : ""
+    EXPENSE }o--o{ EXPENSEREACTION : "reactors"
+    EXPENSEREACTION }o--|| USER : ""

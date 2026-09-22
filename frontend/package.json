@@ -6,7 +6,11 @@
     "dev": "next dev --webpack",
     "build": "next build --webpack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:arch": "vitest run arch-tests/",
+    "harness:dump": "vitest run --reporter=basic harness/dump.test.tsx"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
@@ -36,22 +40,31 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "^4.63.4",
     "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.185.4",
+    "@vitejs/plugin-react": "^5.2.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.3",
+    "jsdom": "^26.1.0",
     "shadcn": "^4.19.1",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "ts-arch-test": "^0.1.11",
+    "typescript": "^5",
+    "vitest": "^3.2.7"
   },
   "allowScripts": {
     "radix-ui": true,
     "tw-animate-css": true,
     "shadcn": true,
     "class-variance-authority": true,
-    "@swc/core": true
+    "@swc/core": true,
+    "esbuild": true,
+    "unrs-resolver": true
   }
 }

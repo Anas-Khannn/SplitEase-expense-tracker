@@ -11,37 +11,18 @@ import {
   type TooltipContentProps,
 } from "recharts";
 import { Card, CardContent } from "@/components/ui";
+import { SummaryChartSkeleton } from "@/components/skeletons";
+import {
+  formatCompactCurrency,
+  formatCurrency,
+  truncateName,
+} from "@/lib/selectors";
 import type { Contribution } from "@/types";
 
 interface SummaryChartProps {
   contributions: Contribution[];
   totalSpending: number;
-}
-
-function formatCurrency(value: number): string {
-  if (!Number.isFinite(value)) return "—";
-  return value.toLocaleString(undefined, {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-}
-
-function formatCompactCurrency(value: number): string {
-  if (!Number.isFinite(value)) return "";
-  return value.toLocaleString(undefined, {
-    style: "currency",
-    currency: "USD",
-    notation: "compact",
-    maximumFractionDigits: 1,
-  });
-}
-
-function truncateName(value: string, maxLength = 18): string {
-  return value.length > maxLength
-    ? `${value.slice(0, maxLength - 1)}…`
-    : value;
+  isLoading?: boolean;
 }
 
 function SummaryChartTooltip({ active, payload, label }: TooltipContentProps) {
@@ -71,7 +52,12 @@ function SummaryChartTooltip({ active, payload, label }: TooltipContentProps) {
 export function SummaryChart({
   contributions,
   totalSpending,
+  isLoading = false,
 }: SummaryChartProps) {
+  if (isLoading) {
+    return <SummaryChartSkeleton />;
+  }
+
   const chartHeight = Math.min(380, Math.max(200, contributions.length * 44));
 
   const data = contributions.map((contribution) => ({

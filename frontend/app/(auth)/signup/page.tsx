@@ -3,60 +3,48 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { signupSchema, type SignupFormData } from "@/lib/validation/authSchemas";
 import { authApi } from "@/services";
-import { setAuthToken } from "@/lib/auth-token";
-import { useQueryClient } from "@tanstack/react-query";
-import { queryKeys } from "@/lib/query-keys";
-import AuthCard from "@/components/auth/AuthCard";
-import SocialLogin from "@/components/auth/SocialLogin";
+import { SplitEaseLogo } from "@/components/auth/SplitEaseLogo";
+import { DotPattern } from "@/components/auth/DotPattern";
+import { PasswordField } from "@/components/auth/PasswordField";
+import { PasswordStrength } from "@/components/auth/PasswordStrength";
+import { Checkbox } from "@/components/auth/Checkbox";
+import { GoogleButton } from "@/components/auth/SocialLogin";
+import { SignupShowcase } from "@/components/auth/SignupShowcase";
 import { Button, Input } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-};
-
 export default function SignupPage() {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const [serverError, setServerError] = useState<string | null>(null);
-  const { shakeControls, shake } = useShake();
+  const { shake } = useShake();
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
     mode: "onTouched",
   });
 
+  const password = useWatch({ control, name: "password" }) ?? "";
+
   const onSubmit = useCallback(
     async (data: SignupFormData) => {
       setServerError(null);
       try {
-        const res = await authApi.signup({
+        await authApi.signup({
           name: data.name,
           email: data.email,
           password: data.password,
         });
-        setAuthToken(res.data.token);
-        queryClient.setQueryData(queryKeys.auth.me(), res.data.user);
-        router.push("/dashboard");
+        router.push("/login");
       } catch (err: unknown) {
         const message =
           err instanceof Error ? err.message : "Signup failed. Please try again.";
@@ -64,131 +52,158 @@ export default function SignupPage() {
         shake();
       }
     },
-    [queryClient, router, shake]
+    [router, shake]
   );
 
   return (
-    <AuthCard screenKey="signup" className="w-full">
-      <div className="px-6 py-8 sm:px-8">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          <motion.div variants={itemVariants}>
-            <h2 className="text-h2 font-bold text-text-primary mb-1.5">
+    <main className="relative flex flex-1 flex-col bg-background lg:flex-row">
+      <section className="relative flex flex-col px-6 py-8 sm:px-10 lg:w-[min(60%,980px)] lg:px-16 lg:py-10">
+        <div className="flex items-center justify-between">
+          <SplitEaseLogo variant="tile" />
+          <Link
+            href="/help"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Help & Support
+          </Link>
+        </div>
+
+        <div className="flex flex-1 items-center justify-center">
+          <div className="w-full max-w-[420px]">
+            <h1 className="text-4xl font-bold tracking-tight text-foreground">
               Create your account
-            </h2>
-            <p className="text-body-sm text-text-muted mb-6">
-              Start splitting expenses with friends
+            </h1>
+            <p className="mt-2 text-base text-muted-foreground">
+              Start splitting expenses effortlessly
             </p>
-          </motion.div>
 
-          <motion.div variants={itemVariants} className="mb-6">
-            <SocialLogin />
-          </motion.div>
+            <div className="mt-8">
+              <GoogleButton className="w-full" />
+            </div>
 
-          <motion.div variants={itemVariants} className="mb-5">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border-default" />
-              </div>
-              <div className="relative flex justify-center text-caption text-text-muted">
-                <span className="bg-surface px-3">or continue with email</span>
+            <div className="my-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-border" />
+                </div>
+                <div className="relative flex justify-center text-xs text-muted-foreground">
+                  <span className="bg-background px-3">OR CONTINUE WITH</span>
+                </div>
               </div>
             </div>
-          </motion.div>
 
-          <motion.form
-            onSubmit={handleSubmit(onSubmit, () => shake())}
-            animate={shakeControls}
-            noValidate
-          >
-            <div className="flex flex-col gap-4">
+            <form
+              onSubmit={handleSubmit(onSubmit, () => shake())}
+              noValidate
+              className="space-y-4"
+            >
               {serverError && (
-                <motion.div
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="rounded-radius-md bg-danger-100 border border-danger-500/20 px-4 py-3 text-body-sm text-danger-500"
+                <div
+                  className="rounded-lg bg-danger-muted border border-danger/20 px-4 py-3 text-sm text-danger"
                   role="alert"
                 >
                   {serverError}
-                </motion.div>
+                </div>
               )}
 
-              <motion.div variants={itemVariants}>
-                <Input
-                  label="Full name"
-                  type="text"
-                  placeholder="Your name"
-                  autoComplete="name"
-                  error={errors.name?.message}
-                  {...register("name")}
-                />
-              </motion.div>
+              <Input
+                label="Full name"
+                type="text"
+                placeholder="Your name"
+                autoComplete="name"
+                className="h-11"
+                error={errors.name?.message}
+                {...register("name")}
+              />
 
-              <motion.div variants={itemVariants}>
-                <Input
-                  label="Email"
-                  type="email"
-                  placeholder="you@example.com"
-                  autoComplete="email"
-                  error={errors.email?.message}
-                  {...register("email")}
-                />
-              </motion.div>
+              <Input
+                label="Email"
+                type="email"
+                placeholder="you@example.com"
+                autoComplete="email"
+                className="h-11"
+                error={errors.email?.message}
+                {...register("email")}
+              />
 
-              <motion.div variants={itemVariants}>
-                <Input
-                  label="Password"
-                  type="password"
-                  placeholder="Min. 8 characters"
-                  autoComplete="new-password"
-                  error={errors.password?.message}
-                  {...register("password")}
-                />
-              </motion.div>
+              <PasswordField
+                label="Password"
+                placeholder="Min. 8 characters"
+                autoComplete="new-password"
+                error={errors.password?.message}
+                {...register("password")}
+              />
+              <PasswordStrength password={password} className="-mt-1" />
 
-              <motion.div variants={itemVariants}>
-                <Input
-                  label="Confirm password"
-                  type="password"
-                  placeholder="Re-enter your password"
-                  autoComplete="new-password"
-                  error={errors.confirmPassword?.message}
-                  {...register("confirmPassword")}
-                />
-              </motion.div>
+              <PasswordField
+                label="Confirm password"
+                placeholder="Re-enter your password"
+                autoComplete="new-password"
+                error={errors.confirmPassword?.message}
+                {...register("confirmPassword")}
+              />
 
-              <motion.div variants={itemVariants}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  size="lg"
-                  loading={isSubmitting}
-                  icon={<ArrowRight />}
-                  iconPosition="right"
-                >
-                  Create account
-                </Button>
-              </motion.div>
+              <label className="flex cursor-pointer items-center gap-2.5 text-sm text-muted-foreground">
+                <Checkbox defaultChecked />
+                <span>
+                  I agree to the{" "}
+                  <Link
+                    href="/terms"
+                    className="text-foreground underline underline-offset-2"
+                  >
+                    Terms & Privacy Policy
+                  </Link>
+                </span>
+              </label>
 
-              <motion.p
-                variants={itemVariants}
-                className="text-body-sm text-text-muted text-center mt-1"
+              <Button
+                type="submit"
+                fullWidth
+                size="lg"
+                loading={isSubmitting}
+                icon={<ArrowRight />}
+                iconPosition="right"
+                className="rounded-lg"
               >
+                Create account
+              </Button>
+
+              <p className="text-center text-sm text-muted-foreground">
                 Already have an account?{" "}
                 <Link
                   href="/login"
-                  className="text-primary-500 font-semibold hover:text-primary-600 transition-colors"
+                  className="font-medium text-foreground transition-opacity hover:opacity-70"
                 >
-                  Sign in
+                  Log in
                 </Link>
-              </motion.p>
-            </div>
-          </motion.form>
-        </motion.div>
-      </div>
-    </AuthCard>
+              </p>
+            </form>
+          </div>
+        </div>
+
+        <div className="mt-8 border-t border-border pt-4 text-center text-xs text-muted-foreground">
+          <p>
+            © 2025 SplitEase Inc.{" "}
+            <span className="mx-1" aria-hidden="true">
+              •
+            </span>
+            <a href="/privacy" className="underline underline-offset-2 hover:text-foreground">
+              Privacy
+            </a>
+            <span className="mx-1" aria-hidden="true">
+              •
+            </span>
+            <a href="/terms" className="underline underline-offset-2 hover:text-foreground">
+              Security
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <aside className="relative hidden overflow-hidden border-l border-border bg-zinc-50 dark:bg-zinc-900/40 lg:flex lg:w-[min(40%,640px)] lg:flex-col">
+        <DotPattern className="opacity-60" />
+        <SignupShowcase className="relative z-10" />
+      </aside>
+    </main>
   );
 }

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>SplitEase - Apartment Expenses</title>
+<!-- Material Symbols Outlined font -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts: Inter & Geist via Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {},
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {},
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Geist", "sans-serif"]
+          },
+          fontSize: {}
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    /* Tabular figures for precise currency align */
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    /* Hide scrollbars while maintaining scroll functionality */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-body antialiased min-h-screen flex justify-center selection:bg-zinc-200">
+<!-- Mobile Screen Shell Container (App Native constraint) -->
+<div class="w-full max-w-md bg-white dark:bg-zinc-950 min-h-screen flex flex-col relative pb-20 shadow-sm">
+<!-- TopAppBar from Shared Components Specification -->
+<header class="sticky top-0 z-40 w-full flex items-center justify-between px-4 h-14 bg-white/95 dark:bg-zinc-950/95 backdrop-blur border-b border-zinc-200 dark:border-zinc-800">
+<div class="flex items-center gap-2">
+<button aria-label="Back" class="w-9 h-9 flex items-center justify-center -ml-1.5 rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[22px]">arrow_back</span>
+</button>
+<h1 class="font-headline font-bold text-lg text-zinc-900 dark:text-zinc-100 tracking-tight">
+          Apartment
+        </h1>
+</div>
+<!-- Trailing Action: Add expense button -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 font-headline font-semibold text-xs tracking-tight shadow-sm hover:bg-zinc-800 dark:hover:bg-zinc-200 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add expense</span>
+</button>
+</header>
+<!-- Sub-Header Navigation Tabs -->
+<div class="w-full bg-white dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 px-4 overflow-x-auto no-scrollbar">
+<nav aria-label="Tabs" class="flex space-x-6 min-w-max">
+<a class="py-3 px-0.5 text-xs font-medium text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 whitespace-nowrap transition-colors" href="#">
+          Summary
+        </a>
+<!-- Active tab: Expenses -->
+<a class="py-3 px-0.5 text-xs font-semibold text-zinc-900 dark:text-zinc-100 border-b-2 border-zinc-900 dark:border-zinc-100 whitespace-nowrap flex items-center gap-1.5" href="#">
+<span>Expenses</span>
+<span class="text-[10px] bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 font-semibold px-1.5 py-0.2 rounded-full tabular-nums">24</span>
+</a>
+<a class="py-3 px-0.5 text-xs font-medium text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 whitespace-nowrap transition-colors" href="#">
+          Balances
+        </a>
+<a class="py-3 px-0.5 text-xs font-medium text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 whitespace-nowrap transition-colors" href="#">
+          Members
+        </a>
+<a class="py-3 px-0.5 text-xs font-medium text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 whitespace-nowrap transition-colors" href="#">
+          Activity
+        </a>
+</nav>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 px-4 pt-3.5 space-y-4">
+<!-- Group Overview Card / Quick Stat Banner -->
+<section class="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 p-3.5 space-y-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span>
+<span class="text-[11px] font-label font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">Monthly Outlook</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-7 h-7 flex items-center justify-center rounded-md text-zinc-600 hover:bg-zinc-200/60 dark:text-zinc-300 dark:hover:bg-zinc-800 transition-colors" title="Search expenses">
+<span class="material-symbols-outlined text-[18px]">search</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center rounded-md text-zinc-600 hover:bg-zinc-200/60 dark:text-zinc-300 dark:hover:bg-zinc-800 transition-colors" title="Filter expenses">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-3 pt-0.5">
+<div class="bg-white dark:bg-zinc-900 p-2.5 rounded-lg border border-zinc-200/80 dark:border-zinc-800">
+<p class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 leading-tight">Total group spend</p>
+<p class="text-base font-bold tracking-tight text-zinc-900 dark:text-zinc-100 mt-1 tabular-nums">$984.59</p>
+<p class="text-[10px] text-zinc-400 mt-0.5">4 active roommates</p>
+</div>
+<div class="bg-white dark:bg-zinc-900 p-2.5 rounded-lg border border-zinc-200/80 dark:border-zinc-800">
+<p class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 leading-tight">Your share status</p>
+<p class="text-base font-bold tracking-tight text-rose-600 dark:text-rose-500 mt-1 tabular-nums">You owe $320.39</p>
+<p class="text-[10px] text-zinc-400 mt-0.5">Net balance</p>
+</div>
+</div>
+</section>
+<!-- Monthly Grouped Expense List -->
+<section class="space-y-4 pt-1">
+<!-- GROUP 1: September 2026 -->
+<div class="space-y-1.5">
+<!-- Section Header 1 -->
+<div class="flex items-center justify-between px-0.5 py-1">
+<div class="flex items-center gap-1.5">
+<span class="text-xs font-semibold text-zinc-900 dark:text-zinc-100 tracking-tight">September 2026</span>
+<span class="text-[10px] text-zinc-400 font-label font-medium bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">4 entries</span>
+</div>
+<span class="text-xs font-medium text-zinc-500 dark:text-zinc-400 tabular-nums">Total $984.59</span>
+</div>
+<!-- Expense List Items in Container -->
+<div class="rounded-xl border border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-100 dark:divide-zinc-800/80 overflow-hidden bg-white dark:bg-zinc-950">
+<!-- Item 1: Rent -->
+<div class="p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors flex items-center justify-between gap-3 cursor-pointer">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0 text-zinc-800 dark:text-zinc-200 border border-zinc-200/50 dark:border-zinc-700/50">
+<span class="material-symbols-outlined text-[20px]">apartment</span>
+</div>
+<div class="min-w-0">
+<p class="font-headline font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate">Rent September</p>
+<div class="flex items-center gap-1.5 mt-0.5 text-xs">
+<span class="text-zinc-500 dark:text-zinc-400 text-[11px] truncate">Paid by Alex · Sep 1</span>
+<span class="inline-flex items-center text-[11px] font-medium text-rose-600 dark:text-rose-500 tabular-nums">
+                      • You owe $300.00
+                    </span>
+</div>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 tabular-nums">$900.00</span>
+<span class="block text-[10px] text-zinc-400">Equal split</span>
+</div>
+</div>
+<!-- Item 2: Internet -->
+<div class="p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors flex items-center justify-between gap-3 cursor-pointer">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0 text-zinc-800 dark:text-zinc-200 border border-zinc-200/50 dark:border-zinc-700/50">
+<span class="material-symbols-outlined text-[20px]">wifi</span>
+</div>
+<div class="min-w-0">
+<p class="font-headline font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate">Internet bill</p>
+<div class="flex items-center gap-1.5 mt-0.5 text-xs">
+<span class="text-zinc-500 dark:text-zinc-400 text-[11px] truncate">Paid by Maya · Sep 12</span>
+<span class="inline-flex items-center text-[11px] font-medium text-rose-600 dark:text-rose-500 tabular-nums">
+                      • You owe $15.06
+                    </span>
+</div>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 tabular-nums">$45.20</span>
+<span class="block text-[10px] text-zinc-400">Split 3 ways</span>
+</div>
+</div>
+<!-- Item 3: Groceries -->
+<div class="p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors flex items-center justify-between gap-3 cursor-pointer">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0 text-zinc-800 dark:text-zinc-200 border border-zinc-200/50 dark:border-zinc-700/50">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+</div>
+<div class="min-w-0">
+<p class="font-headline font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate">Groceries</p>
+<div class="flex items-center gap-1.5 mt-0.5 text-xs">
+<span class="text-zinc-500 dark:text-zinc-400 text-[11px] truncate">Paid by You · Sep 18</span>
+<span class="inline-flex items-center text-[11px] font-medium text-emerald-600 dark:text-emerald-500 tabular-nums">
+                      • You get back $15.60
+                    </span>
+</div>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 tabular-nums">$23.40</span>
+<span class="block text-[10px] text-emerald-600 dark:text-emerald-500 font-medium">You paid</span>
+</div>
+</div>
+<!-- Item 4: Netflix -->
+<div class="p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors flex items-center justify-between gap-3 cursor-pointer">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0 text-zinc-800 dark:text-zinc-200 border border-zinc-200/50 dark:border-zinc-700/50">
+<span class="material-symbols-outlined text-[20px]">tv</span>
+</div>
+<div class="min-w-0">
+<p class="font-headline font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate">Netflix</p>
+<div class="flex items-center gap-1.5 mt-0.5 text-xs">
+<span class="text-zinc-500 dark:text-zinc-400 text-[11px] truncate">Paid by Jordan · Sep 22</span>
+<span class="inline-flex items-center text-[11px] font-medium text-rose-600 dark:text-rose-500 tabular-nums">
+                      • You owe $5.33
+                    </span>
+</div>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 tabular-nums">$15.99</span>
+<span class="block text-[10px] text-zinc-400">Equal split</span>
+</div>
+</div>
+</div>
+</div>
+<!-- GROUP 2: August 2026 -->
+<div class="space-y-1.5 pt-2">
+<!-- Section Header 2 -->
+<div class="flex items-center justify-between px-0.5 py-1">
+<div class="flex items-center gap-1.5">
+<span class="text-xs font-semibold text-zinc-900 dark:text-zinc-100 tracking-tight">August 2026</span>
+<span class="text-[10px] text-zinc-400 font-label font-medium bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded">2 entries</span>
+</div>
+<span class="text-xs font-medium text-zinc-500 dark:text-zinc-400 tabular-nums">Total $964.10</span>
+</div>
+<!-- Expense List Items in Container -->
+<div class="rounded-xl border border-zinc-200 dark:border-zinc-800 divide-y divide-zinc-100 dark:divide-zinc-800/80 overflow-hidden bg-white dark:bg-zinc-950">
+<!-- Item 5: Electricity & Gas -->
+<div class="p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors flex items-center justify-between gap-3 cursor-pointer">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0 text-zinc-800 dark:text-zinc-200 border border-zinc-200/50 dark:border-zinc-700/50">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+</div>
+<div class="min-w-0">
+<p class="font-headline font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate">Electricity &amp; Gas</p>
+<div class="flex items-center gap-1.5 mt-0.5 text-xs">
+<span class="text-zinc-500 dark:text-zinc-400 text-[11px] truncate">Paid by You · Aug 28</span>
+<span class="inline-flex items-center text-[11px] font-medium text-emerald-600 dark:text-emerald-500 tabular-nums">
+                      • You get back $42.73
+                    </span>
+</div>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 tabular-nums">$64.10</span>
+<span class="block text-[10px] text-emerald-600 dark:text-emerald-500 font-medium">You paid</span>
+</div>
+</div>
+<!-- Item 6: Rent August -->
+<div class="p-3 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors flex items-center justify-between gap-3 cursor-pointer">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center flex-shrink-0 text-zinc-800 dark:text-zinc-200 border border-zinc-200/50 dark:border-zinc-700/50">
+<span class="material-symbols-outlined text-[20px]">apartment</span>
+</div>
+<div class="min-w-0">
+<p class="font-headline font-semibold text-sm text-zinc-900 dark:text-zinc-100 truncate">Rent August</p>
+<div class="flex items-center gap-1.5 mt-0.5 text-xs">
+<span class="text-zinc-500 dark:text-zinc-400 text-[11px] truncate">Paid by Alex · Aug 1</span>
+<span class="inline-flex items-center text-[11px] font-medium text-rose-600 dark:text-rose-500 tabular-nums">
+                      • You owe $300.00
+                    </span>
+</div>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-bold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 tabular-nums">$900.00</span>
+<span class="block text-[10px] text-zinc-400">Settled</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Group Settled Banner / Micro note -->
+<div class="text-center py-4">
+<p class="text-xs text-zinc-400 font-label">All earlier expenses in 2026 are settled</p>
+</div>
+</section>
+</main>
+<!-- BottomNavBar from Shared Components Specification -->
+<!-- Docked, fixed at bottom-0, mapped strictly to label_texts & icons -->
+<nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-2 pb-safe bg-white dark:bg-zinc-950 border-t border-zinc-200 dark:border-zinc-800 max-w-md mx-auto right-0">
+<!-- 1. Dashboard -->
+<a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 active:scale-95 transition-transform flex-1 py-1" href="#">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="font-body text-xs font-medium tracking-tight mt-0.5">Dashboard</span>
+</a>
+<!-- 2. Expenses (Active Navigation state per logic & page intent) -->
+<a class="flex flex-col items-center justify-center text-zinc-900 dark:text-zinc-100 font-semibold active:scale-95 transition-transform flex-1 py-1" href="#">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">receipt_long</span>
+<span class="font-body text-xs font-semibold tracking-tight mt-0.5">Expenses</span>
+</a>
+<!-- 3. Balances -->
+<a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 active:scale-95 transition-transform flex-1 py-1" href="#">
+<span class="material-symbols-outlined text-[22px]">account_balance_wallet</span>
+<span class="font-body text-xs font-medium tracking-tight mt-0.5">Balances</span>
+</a>
+<!-- 4. Activity -->
+<a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300 active:scale-95 transition-transform flex-1 py-1" href="#">
+<span class="material-symbols-outlined text-[22px]">history</span>
+<span class="font-body text-xs font-medium tracking-tight mt-0.5">Activity</span>
+</a>
+</nav>
+</div>
+</body></html>

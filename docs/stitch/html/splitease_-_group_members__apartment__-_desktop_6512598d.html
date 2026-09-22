@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-white" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apartment - Members | SplitEase</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {},
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {},
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Geist", "sans-serif"]
+          },
+          fontSize: {}
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      line-height: 1;
+    }
+    .material-symbols-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
+</head>
+<body class="h-full font-body text-zinc-900 antialiased bg-white selection:bg-zinc-100 selection:text-zinc-900">
+<div class="min-h-full flex">
+<!-- LEFT SIDEBAR NAVIGATION (SideNavBar as per JSON Anchor) -->
+<aside class="fixed left-0 top-0 bottom-0 z-30 flex flex-col justify-between p-3 h-screen w-64 flex-shrink-0 bg-white dark:bg-zinc-950 border-r border-zinc-200 dark:border-zinc-800">
+<!-- Top Section: Logo & Primary Nav -->
+<div class="flex flex-col gap-5">
+<!-- Brand Header -->
+<div class="flex items-center gap-3 px-3 py-2">
+<div class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-white shadow-sm flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]">call_split</span>
+</div>
+<div class="flex flex-col">
+<span class="font-display font-semibold text-base tracking-tight text-zinc-900 dark:text-zinc-50 leading-tight">SplitEase</span>
+<span class="font-label text-xs tracking-tight text-zinc-500 dark:text-zinc-400">Personal Workspace</span>
+</div>
+</div>
+<!-- Quick Primary Action -->
+<div class="px-2">
+<button class="w-full bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs rounded-lg px-3 py-2.5 flex items-center justify-center gap-2 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>Add Expense</span>
+</button>
+</div>
+<!-- Primary Navigation Links -->
+<nav class="flex flex-col gap-0.5 px-1 font-label text-xs">
+<!-- Dashboard -->
+<a class="text-zinc-500 dark:text-zinc-400 font-normal rounded-lg px-3 py-2 flex items-center gap-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">dashboard</span>
+<span class="text-xs">Dashboard</span>
+</a>
+<!-- Expenses -->
+<a class="text-zinc-500 dark:text-zinc-400 font-normal rounded-lg px-3 py-2 flex items-center gap-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+<span class="text-xs">Expenses</span>
+</a>
+<!-- Balances -->
+<a class="text-zinc-500 dark:text-zinc-400 font-normal rounded-lg px-3 py-2 flex items-center gap-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">account_balance_wallet</span>
+<span class="text-xs">Balances</span>
+</a>
+<!-- Groups (Active: contextual mapping for Apartment Group) -->
+<a class="bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 font-medium rounded-lg px-3 py-2 flex items-center gap-3" href="#">
+<span class="material-symbols-outlined text-[18px] text-zinc-900 dark:text-zinc-100">group</span>
+<span class="text-xs">Groups</span>
+<span class="ml-auto inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-zinc-200 text-zinc-800">4</span>
+</a>
+<!-- Activity -->
+<a class="text-zinc-500 dark:text-zinc-400 font-normal rounded-lg px-3 py-2 flex items-center gap-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">history</span>
+<span class="text-xs">Activity</span>
+</a>
+<!-- Settings -->
+<a class="text-zinc-500 dark:text-zinc-400 font-normal rounded-lg px-3 py-2 flex items-center gap-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 transition-colors" href="#">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+<span class="text-xs">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Section: Help & User Profile -->
+<div class="flex flex-col gap-2 pt-3 border-t border-zinc-100">
+<!-- Footer link from JSON -->
+<a class="text-zinc-500 dark:text-zinc-400 font-normal rounded-lg px-3 py-2 flex items-center gap-3 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 transition-colors font-label text-xs" href="#">
+<span class="material-symbols-outlined text-[18px]">help_outline</span>
+<span>Help &amp; Support</span>
+</a>
+<!-- Current User Account Widget -->
+<div class="flex items-center gap-3 px-3 py-2.5 rounded-lg border border-zinc-200 hover:bg-zinc-50 transition-colors cursor-pointer bg-zinc-50/50">
+<div class="w-8 h-8 rounded-full bg-zinc-900 text-white flex items-center justify-center font-medium text-xs flex-shrink-0">
+            AL
+          </div>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="text-xs font-semibold text-zinc-900 truncate">Alex Lee</span>
+<span class="text-[11px] text-zinc-500 truncate">alex.lee@example.com</span>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-sm">unfold_more</span>
+</div>
+</div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<div class="flex-1 ml-64 flex flex-col min-h-screen bg-white">
+<!-- Top Header Navigation Bar (matches JSON TopNavBar) -->
+<header class="sticky top-0 z-20 flex items-center justify-between px-8 h-14 bg-white border-b border-zinc-200">
+<!-- Breadcrumbs Navigation -->
+<nav class="flex items-center gap-2 text-xs font-label">
+<a class="text-zinc-500 hover:text-zinc-900 transition-colors flex items-center gap-1" href="#">
+<span>Groups</span>
+</a>
+<span class="material-symbols-outlined text-zinc-400 text-xs">chevron_right</span>
+<span class="text-zinc-900 font-medium flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+            Apartment
+          </span>
+</nav>
+<!-- Right Side: Search & Global Actions -->
+<div class="flex items-center gap-3">
+<!-- Search input bar -->
+<div class="relative w-64">
+<span class="material-symbols-outlined text-zinc-400 text-[18px] absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none">search</span>
+<input class="w-full bg-zinc-50 border border-zinc-200 rounded-md pl-8 pr-12 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:bg-white transition-all font-body" placeholder="Search members, bills..." type="text"/>
+<kbd class="absolute right-2 top-1/2 -translate-y-1/2 bg-white border border-zinc-200 text-[10px] text-zinc-400 rounded px-1 py-0.2 font-mono shadow-xs">⌘K</kbd>
+</div>
+<div class="h-4 w-[1px] bg-zinc-200 mx-1"></div>
+<!-- Notification action button -->
+<button class="relative p-2 text-zinc-500 hover:text-zinc-900 rounded-md hover:bg-zinc-100 transition-colors" title="Notifications">
+<span class="material-symbols-outlined text-[19px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 bg-rose-500 rounded-full"></span>
+</button>
+<!-- Group Quick Actions -->
+<button class="text-xs font-medium text-zinc-700 hover:text-zinc-900 bg-white border border-zinc-200 hover:bg-zinc-50 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-2xs">
+<span class="material-symbols-outlined text-sm">handshake</span>
+<span>Settle Up</span>
+</button>
+<button class="text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 px-3 py-1.5 rounded-md transition-colors flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>Add Expense</span>
+</button>
+</div>
+</header>
+<!-- Sub-Content Canvas (Group Container) -->
+<main class="flex-1 px-8 py-7 max-w-7xl w-full mx-auto space-y-7">
+<!-- Group Hero Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-2">
+<div class="flex items-start gap-4">
+<div class="w-16 h-16 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-800 flex-shrink-0 shadow-2xs">
+<span class="material-symbols-outlined text-3xl">apartment</span>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2.5">
+<h1 class="font-headline text-2xl font-bold tracking-tight text-zinc-900">Apartment</h1>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  Active
+                </span>
+<span class="text-zinc-400 text-xs flex items-center" title="Verified workspace group">
+<span class="material-symbols-outlined text-[17px] text-zinc-400 material-symbols-fill">verified</span>
+</span>
+</div>
+<p class="text-xs text-zinc-500 max-w-2xl font-normal leading-relaxed">
+                Monthly rent, gigabit wifi, electric utilities, and household supplies split evenly across all roommates.
+              </p>
+</div>
+</div>
+<!-- Hero Trailing Action Buttons -->
+<div class="flex items-center gap-2.5 self-start md:self-auto">
+<button class="inline-flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium text-zinc-700 bg-white border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors shadow-2xs">
+<span class="material-symbols-outlined text-base text-zinc-500">settings</span>
+<span>Group Settings</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-lg transition-colors shadow-sm">
+<span class="material-symbols-outlined text-base">person_add</span>
+<span>Invite</span>
+</button>
+</div>
+</div>
+<!-- Group Navigation Tabs -->
+<div class="border-b border-zinc-200">
+<nav class="flex gap-8 -mb-px text-xs font-label">
+<a class="py-3 px-1 border-b-2 border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 font-medium transition-colors" href="#">
+              Summary
+            </a>
+<a class="py-3 px-1 border-b-2 border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 font-medium transition-colors inline-flex items-center gap-1.5" href="#">
+<span>Expenses</span>
+<span class="px-1.5 py-0.2 text-[10px] rounded-full bg-zinc-100 text-zinc-600">24</span>
+</a>
+<a class="py-3 px-1 border-b-2 border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 font-medium transition-colors" href="#">
+              Balances
+            </a>
+<a class="py-3 px-1 border-b-2 border-zinc-900 text-zinc-900 font-semibold inline-flex items-center gap-1.5 transition-colors" href="#">
+<span>Members</span>
+<span class="px-1.5 py-0.2 text-[10px] rounded-full bg-zinc-900 text-white font-medium">6</span>
+</a>
+<a class="py-3 px-1 border-b-2 border-transparent text-zinc-500 hover:text-zinc-700 hover:border-zinc-300 font-medium transition-colors" href="#">
+              Activity
+            </a>
+</nav>
+</div>
+<!-- Info Summary Strip / Key Metrics Banner -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 rounded-lg bg-zinc-50/80 border border-zinc-200">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-600 shadow-2xs">
+<span class="material-symbols-outlined text-[20px]">group</span>
+</div>
+<div>
+<p class="text-[11px] text-zinc-500 uppercase tracking-wider font-semibold font-label">Group Size</p>
+<p class="text-sm font-semibold text-zinc-900">6 Members</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-600 shadow-2xs">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<div>
+<p class="text-[11px] text-zinc-500 uppercase tracking-wider font-semibold font-label">Total Spent</p>
+<p class="text-sm font-semibold text-zinc-900 tabular-nums">$1,240.00</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-zinc-600 shadow-2xs">
+<span class="material-symbols-outlined text-[20px]">pie_chart</span>
+</div>
+<div>
+<p class="text-[11px] text-zinc-500 uppercase tracking-wider font-semibold font-label">Split Policy</p>
+<p class="text-sm font-semibold text-zinc-900">Equal split (16.6% each)</p>
+</div>
+</div>
+<div class="flex items-center justify-between gap-2 border-t sm:border-t-0 pt-2 sm:pt-0 sm:pl-2">
+<div>
+<p class="text-[11px] text-zinc-500 uppercase tracking-wider font-semibold font-label">Settlement</p>
+<p class="text-sm font-semibold text-zinc-900">4 of 6 Settled</p>
+</div>
+<a class="text-xs font-medium text-zinc-900 underline hover:text-zinc-600 font-label" href="#">Manage rules</a>
+</div>
+</div>
+<!-- Members Table Ledger Section -->
+<div class="bg-white rounded-lg border border-zinc-200 shadow-2xs overflow-hidden">
+<!-- Table Controls Header -->
+<div class="p-4 flex flex-col sm:flex-row items-center justify-between gap-3 border-b border-zinc-200 bg-white">
+<div class="relative w-full sm:w-72">
+<span class="material-symbols-outlined text-zinc-400 text-sm absolute left-3 top-1/2 -translate-y-1/2">search</span>
+<input class="w-full bg-zinc-50 border border-zinc-200 rounded-md pl-9 pr-3 py-1.5 text-xs text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-400 focus:bg-white font-body" placeholder="Filter members by name or email..." type="text"/>
+</div>
+<div class="flex items-center gap-2 w-full sm:w-auto justify-end">
+<div class="flex items-center gap-1.5 text-xs text-zinc-500">
+<span class="font-label">Sort:</span>
+<select class="bg-zinc-50 border border-zinc-200 text-xs text-zinc-800 rounded-md px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-zinc-400 font-body">
+<option>Spending (High to Low)</option>
+<option>Name (A-Z)</option>
+<option>Balance Status</option>
+<option>Recently Joined</option>
+</select>
+</div>
+<button class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-zinc-700 bg-white border border-zinc-200 rounded-md hover:bg-zinc-50 transition-colors">
+<span class="material-symbols-outlined text-sm">file_download</span>
+<span>Export</span>
+</button>
+<button class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-white bg-zinc-900 hover:bg-zinc-800 rounded-md transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+<span>Add Member</span>
+</button>
+</div>
+</div>
+<!-- Structured Member List Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs">
+<thead>
+<tr class="bg-zinc-50/75 border-b border-zinc-200 text-zinc-500 font-label">
+<th class="py-3 px-5 font-medium tracking-wide">Member</th>
+<th class="py-3 px-4 font-medium tracking-wide">Role</th>
+<th class="py-3 px-4 font-medium tracking-wide text-right">Total Contributed</th>
+<th class="py-3 px-4 font-medium tracking-wide text-right">Current Balance</th>
+<th class="py-3 px-4 font-medium tracking-wide">Joined</th>
+<th class="py-3 px-4 text-center font-medium tracking-wide w-12"><span class="sr-only">Actions</span></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-zinc-100 font-body">
+<!-- Member 1: Alex Lee (You) -->
+<tr class="hover:bg-zinc-50/60 transition-colors group">
+<td class="py-3.5 px-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-semibold tracking-tight shadow-xs">
+                        AL
+                      </div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-medium text-zinc-900 text-xs">Alex Lee</span>
+<span class="px-1.5 py-0.2 rounded text-[10px] font-medium bg-zinc-100 text-zinc-700 border border-zinc-200">You</span>
+</div>
+<p class="text-[11px] text-zinc-500">alex.lee@example.com</p>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-zinc-100 text-zinc-800">
+                      Admin
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">
+                    $480.00
+                  </td>
+<td class="py-3.5 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-emerald-600 font-medium tabular-nums text-xs">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+                      +$48.50 owed
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-zinc-500 font-label">
+                    Aug 12, 2024
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Member 2: Sarah Chen -->
+<tr class="hover:bg-zinc-50/60 transition-colors group">
+<td class="py-3.5 px-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-amber-100 text-amber-800 border border-amber-200 flex items-center justify-center text-xs font-semibold tracking-tight">
+                        SC
+                      </div>
+<div>
+<span class="font-medium text-zinc-900 text-xs">Sarah Chen</span>
+<p class="text-[11px] text-zinc-500">sarah.c@gmail.com</p>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-zinc-100 text-zinc-800">
+                      Admin
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">
+                    $360.00
+                  </td>
+<td class="py-3.5 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-emerald-600 font-medium tabular-nums text-xs">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+                      +$18.40 owed
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-zinc-500 font-label">
+                    Aug 14, 2024
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Member 3: Jane Doe -->
+<tr class="hover:bg-zinc-50/60 transition-colors group">
+<td class="py-3.5 px-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-indigo-100 text-indigo-800 border border-indigo-200 flex items-center justify-center text-xs font-semibold tracking-tight">
+                        JD
+                      </div>
+<div>
+<span class="font-medium text-zinc-900 text-xs">Jane Doe</span>
+<p class="text-[11px] text-zinc-500">jane.doe@work.com</p>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-zinc-50 text-zinc-600 border border-zinc-200">
+                      Member
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">
+                    $180.00
+                  </td>
+<td class="py-3.5 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-zinc-500 font-normal tabular-nums text-xs">
+<span class="material-symbols-outlined text-[14px] text-zinc-400">check_circle</span>
+                      Settled $0.00
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-zinc-500 font-label">
+                    Sep 01, 2024
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Member 4: Marc Dupont -->
+<tr class="hover:bg-zinc-50/60 transition-colors group">
+<td class="py-3.5 px-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200 flex items-center justify-center text-xs font-semibold tracking-tight">
+                        MD
+                      </div>
+<div>
+<span class="font-medium text-zinc-900 text-xs">Marc Dupont</span>
+<p class="text-[11px] text-zinc-500">marc.d@outlook.com</p>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-zinc-50 text-zinc-600 border border-zinc-200">
+                      Member
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">
+                    $120.00
+                  </td>
+<td class="py-3.5 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-rose-600 font-medium tabular-nums text-xs">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+                      -$22.80 owes
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-zinc-500 font-label">
+                    Sep 05, 2024
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Member 5: Sam Wilson -->
+<tr class="hover:bg-zinc-50/60 transition-colors group">
+<td class="py-3.5 px-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-rose-100 text-rose-800 border border-rose-200 flex items-center justify-center text-xs font-semibold tracking-tight">
+                        SW
+                      </div>
+<div>
+<span class="font-medium text-zinc-900 text-xs">Sam Wilson</span>
+<p class="text-[11px] text-zinc-500">sam.w@icloud.com</p>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-zinc-50 text-zinc-600 border border-zinc-200">
+                      Member
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">
+                    $60.00
+                  </td>
+<td class="py-3.5 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-rose-600 font-medium tabular-nums text-xs">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>
+                      -$17.00 owes
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-zinc-500 font-label">
+                    Oct 01, 2024
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Member 6: Taylor Wong -->
+<tr class="hover:bg-zinc-50/60 transition-colors group">
+<td class="py-3.5 px-5">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-full bg-sky-100 text-sky-800 border border-sky-200 flex items-center justify-center text-xs font-semibold tracking-tight">
+                        TW
+                      </div>
+<div>
+<span class="font-medium text-zinc-900 text-xs">Taylor Wong</span>
+<p class="text-[11px] text-zinc-500">t.w@example.com</p>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-zinc-50 text-zinc-600 border border-zinc-200">
+                      Member
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">
+                    $40.00
+                  </td>
+<td class="py-3.5 px-4 text-right">
+<span class="inline-flex items-center gap-1 text-zinc-500 font-normal tabular-nums text-xs">
+<span class="material-symbols-outlined text-[14px] text-zinc-400">check_circle</span>
+                      Settled $0.00
+                    </span>
+</td>
+<td class="py-3.5 px-4 text-zinc-500 font-label">
+                    Oct 10, 2024
+                  </td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Bottom Summary Bar -->
+<div class="p-3.5 bg-zinc-50/50 border-t border-zinc-200 flex items-center justify-between text-xs text-zinc-500">
+<span class="font-label">Showing 6 active members</span>
+<div class="flex items-center gap-4">
+<span>Total balance: <strong class="text-zinc-900 font-medium tabular-nums">$0.00 (Balanced)</strong></span>
+</div>
+</div>
+</div>
+<!-- Pending Invites & Shareable Invite Link Bento Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Pending Invites List (8 Cols) -->
+<div class="lg:col-span-7 bg-white rounded-lg border border-zinc-200 p-5 shadow-2xs space-y-4">
+<div class="flex items-center justify-between pb-3 border-b border-zinc-100">
+<div>
+<h2 class="text-sm font-semibold text-zinc-900">Pending Invites (2)</h2>
+<p class="text-xs text-zinc-500">People invited to Apartment who haven't accepted their invitation yet.</p>
+</div>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-zinc-100 text-zinc-600">
+                Awaiting
+              </span>
+</div>
+<!-- Invites List -->
+<div class="divide-y divide-zinc-100">
+<!-- Invite 1: Chloe Miller -->
+<div class="py-3.5 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-500 flex-shrink-0">
+<span class="material-symbols-outlined text-base">mail</span>
+</div>
+<div class="truncate">
+<p class="text-xs font-medium text-zinc-900 truncate">chloe.miller@domain.com</p>
+<p class="text-[11px] text-zinc-400 font-label">Invited 2 days ago by Sarah</p>
+</div>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<button class="px-2.5 py-1 text-xs font-medium text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-md transition-colors">
+                    Resend
+                  </button>
+<button class="p-1 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 rounded transition-colors" title="Revoke invite">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+<!-- Invite 2: Kevin Park -->
+<div class="py-3.5 flex items-center justify-between gap-4">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center text-zinc-500 flex-shrink-0">
+<span class="material-symbols-outlined text-base">mail</span>
+</div>
+<div class="truncate">
+<p class="text-xs font-medium text-zinc-900 truncate">kevin.park@domain.com</p>
+<p class="text-[11px] text-zinc-400 font-label">Invited yesterday by Alex (You)</p>
+</div>
+</div>
+<div class="flex items-center gap-2 flex-shrink-0">
+<button class="px-2.5 py-1 text-xs font-medium text-zinc-700 bg-white border border-zinc-200 hover:bg-zinc-50 rounded-md transition-colors">
+                    Resend
+                  </button>
+<button class="p-1 text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 rounded transition-colors" title="Revoke invite">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Shareable Group Link Card (5 Cols) -->
+<div class="lg:col-span-5 bg-zinc-50/50 rounded-lg border border-zinc-200 p-5 flex flex-col justify-between space-y-4">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-zinc-700 text-lg">link</span>
+<h3 class="text-sm font-semibold text-zinc-900">Invite via shareable link</h3>
+</div>
+<p class="text-xs text-zinc-500">Anyone with this unique link can join this group as a member.</p>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-2">
+<div class="relative flex-1">
+<input class="w-full bg-white border border-zinc-200 rounded-md px-3 py-2 text-xs font-mono text-zinc-800 select-all focus:outline-none focus:ring-1 focus:ring-zinc-400" id="shareLinkInput" readonly="" type="text" value="splitease.app/join/apt-9824"/>
+</div>
+<button class="px-3.5 py-2 bg-zinc-900 hover:bg-zinc-800 text-white rounded-md text-xs font-medium flex items-center gap-1.5 transition-colors shadow-2xs whitespace-nowrap" id="copyBtn" onclick="copyInviteLink()">
+<span class="material-symbols-outlined text-sm" id="copyIcon">content_copy</span>
+<span id="copyText">Copy Link</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-2 text-[11px] text-zinc-400 border-t border-zinc-200/60 font-label">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">qr_code_2</span>
+                  QR Code available
+                </span>
+<a class="text-zinc-600 hover:underline" href="#">Regenerate Link</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Minimal Sub-Footer -->
+<footer class="mt-auto px-8 py-4 border-t border-zinc-200 text-center text-xs text-zinc-400 flex items-center justify-between font-label">
+<span>SplitEase © 2024. All rights reserved.</span>
+<div class="flex items-center gap-4">
+<a class="hover:text-zinc-600 transition-colors" href="#">Privacy</a>
+<a class="hover:text-zinc-600 transition-colors" href="#">Terms</a>
+<a class="hover:text-zinc-600 transition-colors" href="#">Changelog</a>
+</div>
+</footer>
+</div>
+</div>
+<!-- Interactive JavaScript -->
+<script>
+    function copyInviteLink() {
+      const input = document.getElementById('shareLinkInput');
+      input.select();
+      navigator.clipboard.writeText(input.value).then(() => {
+        const copyText = document.getElementById('copyText');
+        const copyIcon = document.getElementById('copyIcon');
+        copyText.innerText = 'Copied!';
+        copyIcon.innerText = 'check';
+        setTimeout(() => {
+          copyText.innerText = 'Copy Link';
+          copyIcon.innerText = 'content_copy';
+        }, 2000);
+      });
+    }
+  </script>
+</body></html>

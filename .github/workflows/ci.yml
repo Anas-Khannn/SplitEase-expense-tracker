@@ -1,66 +1,347 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop]
   pull_request:
-    branches: [main]
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: '22'
+  POSTGRES_VERSION: '15'
 
 jobs:
-  backend:
-    name: Backend
+  # ============================================================
+  # LINT & TYPE CHECK
+  # ============================================================
+  lint-and-typecheck:
+    name: Lint & TypeCheck
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./backend
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: ./backend/package-lock.json
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
-      - name: Install backend dependencies
+      - name: Install dependencies
         run: npm ci
 
       - name: Check backend formatting
-        run: npm run format:check
+        run: npm run format:check --workspace=backend
 
-      - name: Lint backend
+      - name: Run lint (root)
         run: npm run lint
 
-      - name: Run backend tests
-        env:
-          NODE_ENV: test
-          JWT_SECRET: test-secret-for-ci-only
-        run: npm test
+      - name: Run lint (backend)
+        run: npm run lint:backend
 
-  frontend:
-    name: Frontend
-    runs-on: ubuntu-latest
-    defaults:
-      run:
+      - name: Run lint (frontend)
+        run: npm run lint:frontend
+
+      - name: TypeCheck (frontend)
+        run: npx tsc --noEmit
         working-directory: ./frontend
+
+  # ============================================================
+  # ARCHITECTURE VALIDATION
+  # ============================================================
+  architecture:
+    name: Architecture Validation
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 22
-          cache: npm
-          cache-dependency-path: ./frontend/package-lock.json
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
 
-      - name: Install frontend dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Lint frontend
-        run: npm run lint
+      - name: Validate backend architecture
+        run: npm run arch:validate
+
+      - name: Validate frontend architecture
+        run: npm run test:arch
+
+      - name: Generate architecture docs
+        run: npm run docs:generate
+
+      - name: Upload architecture diagrams
+        uses: actions/upload-artifact@v4
+        with:
+          name: architecture-diagrams
+          path: |
+            docs/architecture/*.mmd
+            docs/architecture/*.md
+            docs/architecture/*.json
+
+  # ============================================================
+  # BACKEND TESTS
+  # ============================================================
+  backend-tests:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:${{ env.POSTGRES_VERSION }}
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: test
+          POSTGRES_DB: splitease_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Wait for PostgreSQL
+        run: |
+          for i in {1..30}; do
+            if pg_isready -h localhost -p 5432 -U test; then
+              echo "PostgreSQL is ready"
+              break
+            fi
+            sleep 1
+          done
+
+      - name: Run backend tests
+        run: npm run test:backend
+        env:
+          NODE_ENV: test
+          JWT_SECRET: test-secret-for-ci-only
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USERNAME: test
+          DB_PASSWORD: test
+          DB_NAME: splitease_test
+
+      - name: Generate coverage report
+        run: npm run test:backend -- --coverage
+        env:
+          NODE_ENV: test
+          JWT_SECRET: test-secret-for-ci-only
+          DB_HOST: localhost
+          DB_PORT: 5432
+          DB_USERNAME: test
+          DB_PASSWORD: test
+          DB_NAME: splitease_test
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage
+          path: backend/coverage/
+
+  # ============================================================
+  # FRONTEND TESTS
+  # ============================================================
+  frontend-tests:
+    name: Frontend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run frontend tests
+        run: npm run test:frontend
+        working-directory: ./frontend
+
+      - name: Generate coverage report
+        run: npm run test:run -- --coverage
+        working-directory: ./frontend
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-coverage
+          path: frontend/coverage/
+
+  # ============================================================
+  # DOCUMENTATION GENERATION
+  # ============================================================
+  docs:
+    name: Generate Documentation
+    runs-on: ubuntu-latest
+    needs: [architecture]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate API docs (backend)
+        run: npm run docs:api
+
+      - name: Generate ERD (backend)
+        run: npm run docs:erd
+
+      - name: Generate architecture docs
+        run: npm run arch:docs
+
+      - name: Upload all documentation
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation
+          path: |
+            docs/api/
+            docs/database/
+            docs/architecture/
+          retention-days: 30
+
+  # ============================================================
+  # BUILD
+  # ============================================================
+  build:
+    name: Build Applications
+    runs-on: ubuntu-latest
+    needs: [lint-and-typecheck, backend-tests, frontend-tests, architecture]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build backend
+        run: npm run build:backend
 
       - name: Build frontend
-        run: npm run build
+        run: npm run build:frontend
+
+      - name: Upload backend build
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-build
+          path: backend/dist/
+          retention-days: 7
+
+      - name: Upload frontend build
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-build
+          path: frontend/.next/
+          retention-days: 7
+
+  # ============================================================
+  # DEPLOY (only on main branch)
+  # ============================================================
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [build, docs]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to production
+        run: |
+          echo "Deploying to production..."
+          # Add your deployment commands here
+          # e.g., Docker build/push, Kubernetes deploy, Vercel deploy, etc.
+
+      - name: Notify deployment
+        run: |
+          echo "Deployment completed successfully!"
+          # Add notification (Slack, Discord, email, etc.)
+
+  # ============================================================
+  # DEPENDENCY REVIEW
+  # ============================================================
+  dependency-review:
+    name: Dependency Review
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Review dependencies
+        uses: actions/dependency-review-action@v4
+        with:
+          config-file: '.github/dependency-review-config.yml'
+          fail-on-severity: high
+
+  # ============================================================
+  # SECURITY SCAN
+  # ============================================================
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run npm audit
+        run: npm audit --audit-level=high
+
+      - name: Run Snyk security scan
+        uses: snyk/actions/node@master
+        if: env.SNYK_TOKEN != ''
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          args: --severity-threshold=high

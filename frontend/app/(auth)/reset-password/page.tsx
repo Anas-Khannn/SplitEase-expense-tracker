@@ -2,36 +2,33 @@
 
 import { Suspense, useState, useCallback, useEffect } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, CheckCircle2, KeyRound, Lock } from "lucide-react";
 import {
   resetPasswordSchema,
   type ResetPasswordFormData,
 } from "@/lib/validation/authSchemas";
 import OTPInput from "@/components/auth/OTPInput";
-import AuthCard from "@/components/auth/AuthCard";
-import { Button, Input } from "@/components/ui";
+import { SplitEaseLogo } from "@/components/auth/SplitEaseLogo";
+import { AuthHeader } from "@/components/auth/AuthHeader";
+import { AuthFooter, FooterLink } from "@/components/auth/AuthFooter";
+import { PasswordField } from "@/components/auth/PasswordField";
+import {
+  PasswordStrength,
+  PasswordRequirements,
+  SecurityNotice,
+} from "@/components/auth/PasswordStrength";
+import { WorkspacePreview } from "@/components/auth/WorkspacePreview";
+import { Button } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-};
 
 const RESEND_COOLDOWN = 30;
 
 function ResetPasswordContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const phone = searchParams.get("phone");
@@ -45,7 +42,7 @@ function ResetPasswordContent() {
   const [success, setSuccess] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
   const [cooldown, setCooldown] = useState(0);
-  const { shakeControls, shake } = useShake();
+  const { shake } = useShake();
 
   useEffect(() => {
     if (cooldown <= 0) return;
@@ -81,17 +78,22 @@ function ResetPasswordContent() {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<ResetPasswordFormData>({
     resolver: zodResolver(resetPasswordSchema),
     mode: "onTouched",
   });
 
+  const newPassword = useWatch({ control, name: "newPassword" }) ?? "";
+  const confirmPassword = useWatch({ control, name: "confirmPassword" }) ?? "";
+  const passwordsMatch =
+    newPassword.length > 0 && confirmPassword.length > 0 && newPassword === confirmPassword;
+
   const onSubmit = useCallback(
     async () => {
       setServerError(null);
       try {
-        // TODO: POST /api/auth/reset-password with { token/otp, newPassword }
         setSuccess(true);
       } catch (err: unknown) {
         const message =
@@ -106,142 +108,170 @@ function ResetPasswordContent() {
   );
 
   return (
-    <AuthCard screenKey="resetPassword" className="w-full">
-      <div className="px-6 py-8 sm:px-8">
-        <AnimatePresence mode="wait">
-          {success ? (
-            <motion.div
-              key="success"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.3 }}
-              className="text-center py-4"
+    <>
+      <AuthHeader
+        left={
+          <div className="flex items-center gap-3">
+            <SplitEaseLogo variant="circles" />
+            <span className="hidden items-center gap-2 rounded-full bg-zinc-100 px-3 py-1 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300 sm:inline-flex">
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+              </span>
+              v2.4 Live Sync
+            </span>
+          </div>
+        }
+        right={
+          <>
+            <span className="hidden text-sm text-muted-foreground lg:block">
+              Need help?
+            </span>
+            <Button
+              variant="secondary"
+              size="sm"
+              className="rounded-lg"
+              onClick={() => router.push("/login")}
             >
-              <CheckCircle2
-                size={48}
-                className="mx-auto mb-4 text-success-500"
-              />
-              <h2 className="text-h2 font-bold text-text-primary mb-2">
-                Password reset successful
-              </h2>
-              <p className="text-body-sm text-text-muted mb-6">
-                Your password has been updated. Redirecting to login...
-              </p>
-              <Link href="/login">
-                <Button variant="primary" fullWidth icon={<ArrowRight />} iconPosition="right">
-                  Go to login
-                </Button>
-              </Link>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="form"
-              initial="hidden"
-              animate="visible"
-              exit={{ opacity: 0 }}
-              variants={containerVariants}
-            >
-              <motion.div variants={itemVariants}>
-                <Link
-                  href="/forgot-password"
-                  className="inline-flex items-center gap-1 text-body-sm text-text-muted hover:text-text-primary transition-colors mb-5"
-                >
-                  <ArrowLeft size={14} />
-                  Back to forgot password
-                </Link>
-              </motion.div>
+              Sign In
+            </Button>
+          </>
+        }
+      />
 
-              <motion.div variants={itemVariants}>
-                <h2 className="text-h2 font-bold text-text-primary mb-1.5">
-                  {isTokenFlow
-                    ? "Set new password"
-                    : otpVerified
-                      ? "Set new password"
-                      : "Enter verification code"}
-                </h2>
-                <p className="text-body-sm text-text-muted mb-6">
-                  {isTokenFlow
-                    ? "Choose a strong new password for your account."
-                    : otpVerified
-                      ? "Choose a strong new password for your account."
-                      : `Enter the 6-digit code sent to ${phone}`}
-                </p>
-              </motion.div>
-
-              {isOTPFlow && !otpVerified && (
-                <motion.div variants={itemVariants} className="mb-6">
-                  <OTPInput
-                    value={otp}
-                    onChange={handleOTPComplete}
-                    error={otpError ?? undefined}
-                  />
-                  <div className="mt-3 text-center">
-                    <button
-                      type="button"
-                      onClick={handleResendOTP}
-                      disabled={cooldown > 0}
-                      className="text-body-sm text-primary-500 hover:text-primary-600 transition-colors disabled:text-text-muted disabled:cursor-not-allowed"
-                    >
-                      {cooldown > 0
-                        ? `Resend code in ${cooldown}s`
-                        : "Resend code"}
-                    </button>
-                  </div>
-                </motion.div>
-              )}
-
-              {showNewPassword && (
+      <main className="flex flex-1 flex-col lg:flex-row">
+        <section className="flex flex-1 items-center justify-center px-6 py-12 lg:py-16">
+          <div className="w-full max-w-[460px]">
+            <AnimatePresence mode="wait">
+              {success ? (
                 <motion.div
-                  key="new-password"
+                  key="success"
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
                   transition={{ duration: 0.3 }}
+                  className="text-center py-4"
                 >
-                  <motion.form
-                    onSubmit={handleSubmit(onSubmit, () => shake())}
-                    animate={shakeControls}
-                    noValidate
+                  <CheckCircle2 size={48} className="mx-auto mb-4 text-success" />
+                  <h2 className="text-3xl font-bold tracking-tight text-foreground mb-2">
+                    Password reset successful
+                  </h2>
+                  <p className="text-sm text-muted-foreground mb-6">
+                    Your password has been updated. Redirecting to login...
+                  </p>
+                  <Button
+                    fullWidth
+                    className="rounded-lg"
+                    onClick={() => router.push("/login")}
                   >
-                    <div className="flex flex-col gap-4">
-                      {serverError && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -4 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="rounded-radius-md bg-danger-100 border border-danger-500/20 px-4 py-3 text-body-sm text-danger-500"
-                          role="alert"
+                    Go to login
+                    <ArrowRight aria-hidden="true" />
+                  </Button>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key="form"
+                  initial="hidden"
+                  animate="visible"
+                  exit={{ opacity: 0 }}
+                >
+                  <div className="mb-6 inline-flex size-12 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800">
+                    <KeyRound className="size-6 text-foreground" aria-hidden="true" />
+                  </div>
+
+                  <h1 className="text-3xl font-bold tracking-tight text-foreground">
+                    {isTokenFlow || otpVerified
+                      ? "Set a new password"
+                      : "Enter verification code"}
+                  </h1>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {isTokenFlow || otpVerified
+                      ? "Choose a strong password you haven't used before."
+                      : `Enter the 6-digit code sent to ${phone}`}
+                  </p>
+
+                  {isOTPFlow && !otpVerified && (
+                    <div className="mt-8">
+                      <OTPInput
+                        value={otp}
+                        onChange={handleOTPComplete}
+                        error={otpError ?? undefined}
+                      />
+                      <div className="mt-3 text-center">
+                        <button
+                          type="button"
+                          onClick={handleResendOTP}
+                          disabled={cooldown > 0}
+                          className="text-sm text-foreground hover:opacity-70 transition-opacity disabled:text-muted-foreground disabled:cursor-not-allowed"
                         >
-                          {serverError}
-                        </motion.div>
-                      )}
+                          {cooldown > 0
+                            ? `Resend code in ${cooldown}s`
+                            : "Resend code"}
+                        </button>
+                      </div>
+                    </div>
+                  )}
 
-                      {isOTPFlow && (
-                        <input type="hidden" {...register("otp")} value={otp} />
-                      )}
+                  {showNewPassword && (
+                    <div key="new-password" className="mt-8">
+                      <form
+                        onSubmit={handleSubmit(onSubmit, () => shake())}
+                        noValidate
+                        className="space-y-4"
+                      >
+                        {serverError && (
+                          <div
+                            className="rounded-lg bg-danger-muted border border-danger/20 px-4 py-3 text-sm text-danger"
+                            role="alert"
+                          >
+                            {serverError}
+                          </div>
+                        )}
 
-                      <motion.div variants={itemVariants}>
-                        <Input
-                          label="New password"
-                          type="password"
-                          placeholder="Min. 8 characters"
-                          autoComplete="new-password"
-                          error={errors.newPassword?.message}
-                          {...register("newPassword")}
-                        />
-                      </motion.div>
+                        {isOTPFlow && (
+                          <input type="hidden" {...register("otp")} value={otp} />
+                        )}
 
-                      <motion.div variants={itemVariants}>
-                        <Input
-                          label="Confirm new password"
-                          type="password"
+                        <div>
+                          <PasswordField
+                            label="New password"
+                            placeholder="Min. 8 characters"
+                            autoComplete="new-password"
+                            error={errors.newPassword?.message}
+                            {...register("newPassword")}
+                          />
+                          <PasswordStrength
+                            password={newPassword}
+                            caption="Password strength"
+                            className="mt-3"
+                          />
+                          <PasswordRequirements
+                            password={newPassword}
+                            className="mt-3"
+                          />
+                        </div>
+
+                        <PasswordField
+                          label="Confirm password"
                           placeholder="Re-enter your password"
                           autoComplete="new-password"
                           error={errors.confirmPassword?.message}
+                          rightLabel={
+                            passwordsMatch ? (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400">
+                                <CheckCircle2 className="size-3.5" aria-hidden="true" />
+                                Passwords match
+                              </span>
+                            ) : undefined
+                          }
                           {...register("confirmPassword")}
                         />
-                      </motion.div>
 
-                      <motion.div variants={itemVariants}>
+                        <SecurityNotice>
+                          Never share your password. SplitEase support will never ask
+                          for it.
+                        </SecurityNotice>
+
                         <Button
                           type="submit"
                           fullWidth
@@ -249,19 +279,50 @@ function ResetPasswordContent() {
                           loading={isSubmitting}
                           icon={<ArrowRight />}
                           iconPosition="right"
+                          className="rounded-lg"
                         >
                           Reset password
                         </Button>
-                      </motion.div>
+                      </form>
                     </div>
-                  </motion.form>
+                  )}
+
+                  <Link
+                    href="/login"
+                    className="mt-8 inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <ArrowLeft className="size-4" aria-hidden="true" />
+                    Back to sign in
+                  </Link>
                 </motion.div>
               )}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </AuthCard>
+            </AnimatePresence>
+          </div>
+        </section>
+
+        <aside className="hidden w-full border-l border-border bg-zinc-50/75 dark:bg-zinc-900/40 lg:block lg:w-[480px] xl:w-[520px]">
+          <WorkspacePreview variant="reset" />
+        </aside>
+      </main>
+
+      <AuthFooter
+        center={
+          <>
+            <Lock className="size-3.5" aria-hidden="true" />
+            <span>Encrypted with 256-bit zero-knowledge keys.</span>
+          </>
+        }
+        right={
+          <>
+            <FooterLink href="/privacy">Privacy</FooterLink>
+            <FooterLink href="/terms">Terms</FooterLink>
+            <FooterLink href="/security">Security</FooterLink>
+            <FooterLink href="/security">Status</FooterLink>
+            <span className="text-muted-foreground">© 2025</span>
+          </>
+        }
+      />
+    </>
   );
 }
 
@@ -270,7 +331,7 @@ export default function ResetPasswordPage() {
     <Suspense
       fallback={
         <div className="flex items-center justify-center py-8">
-          <div className="animate-pulse text-text-muted text-body-sm">Loading...</div>
+          <div className="animate-pulse text-muted-foreground text-sm">Loading...</div>
         </div>
       }
     >

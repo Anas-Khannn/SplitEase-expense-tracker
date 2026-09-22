@@ -1,0 +1,42 @@
+{
+  "name": "splitease-expense-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "build": "npm run build --workspaces",
+    "build:backend": "npm run build --workspace=backend",
+    "build:frontend": "npm run build --workspace=frontend",
+    "lint": "npm run lint --workspaces",
+    "lint:backend": "npm run lint --workspace=backend",
+    "lint:frontend": "npm run lint --workspace=frontend",
+    "test": "npm run test --workspaces",
+    "test:backend": "npm run test --workspace=backend",
+    "test:frontend": "npm run test --workspace=frontend",
+    "test:arch": "npm run test:arch --workspace=frontend",
+    "arch:cruise": "npx depcruise -c .dependency-cruiser.js --output-type json --exclude \"^(node_modules|\\.next|dist|build|coverage|\\.git)$\" --do-not-follow \"^node_modules$\" --output-to docs/architecture/dependency-report.json backend/src",
+    "arch:cruise:frontend": "npx depcruise -c .dependency-cruiser.js --ts-config frontend/tsconfig.json --output-type json --exclude \"^(node_modules|\\.next|dist|build|coverage|\\.git)$\" --do-not-follow \"^node_modules$\" --output-to docs/architecture/dependency-report-frontend.json frontend",
+    "arch:validate": "npx depcruise -c .dependency-cruiser.js --validate --exclude \"^(node_modules|\\.next|dist|build|coverage|\\.git)$\" --do-not-follow \"^node_modules$\" backend/src",
+    "arch:validate:full": "npm run arch:validate && npm run test:arch",
+    "arch:docs": "node scripts/generate-architecture-docs.js",
+    "arch:report": "npx depcruise -c .dependency-cruiser.js --output-type html --exclude \"^(node_modules|\\.next|dist|build|coverage|\\.git)$\" --do-not-follow \"^node_modules$\" --output-to docs/architecture/dependency-report.html backend/src",
+    "arch:mermaid": "npx depcruise -c .dependency-cruiser.js --output-type mermaid --exclude \"^(node_modules|\\.next|dist|build|coverage|\\.git)$\" --do-not-follow \"^node_modules$\" --output-to docs/architecture/dependency-graph.mmd backend/src",
+    "docs:generate": "npm run arch:cruise && npm run arch:docs",
+    "docs:api": "npm run docs:api --workspace=backend",
+    "docs:erd": "npm run docs:erd --workspace=backend",
+    "docs:all": "npm run docs:generate && npm run docs:api && npm run docs:erd",
+    "ci:check": "npm run lint && npm run arch:validate:full && npm run test",
+    "ci:build": "npm run build",
+    "ci:docs": "npm run docs:all"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.1",
+    "dependency-cruiser": "^18.3.1"
+  }
+}

@@ -5,36 +5,38 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BadgeCheck, ShieldCheck } from "lucide-react";
 import { loginSchema, type LoginFormData } from "@/lib/validation/authSchemas";
 import { authApi } from "@/services";
-import { setAuthToken } from "@/lib/auth-token";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query-keys";
-import AuthCard from "@/components/auth/AuthCard";
+import { AuthHeader } from "@/components/auth/AuthHeader";
+import { AuthFooter, FooterLink } from "@/components/auth/AuthFooter";
+import { DotPattern } from "@/components/auth/DotPattern";
+import { PasswordField } from "@/components/auth/PasswordField";
+import { Checkbox } from "@/components/auth/Checkbox";
 import SocialLogin from "@/components/auth/SocialLogin";
+import { WorkspacePreview } from "@/components/auth/WorkspacePreview";
 import { Button, Input } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-};
+function LiveSyncPill() {
+  return (
+    <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400">
+      <span className="relative flex size-2">
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+        <span className="relative inline-flex size-2 rounded-full bg-emerald-500" />
+      </span>
+      v2.4 Live Sync
+    </span>
+  );
+}
 
 export default function LoginPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const [serverError, setServerError] = useState<string | null>(null);
-  const { shakeControls, shake } = useShake();
+  const { shake } = useShake();
 
   const {
     register,
@@ -53,7 +55,7 @@ export default function LoginPage() {
           email: data.email,
           password: data.password,
         });
-        setAuthToken(res.data.token);
+        localStorage.setItem("token", res.data.token);
         queryClient.setQueryData(queryKeys.auth.me(), res.data.user);
         router.push("/dashboard");
       } catch (err: unknown) {
@@ -67,114 +69,151 @@ export default function LoginPage() {
   );
 
   return (
-    <AuthCard screenKey="login" className="w-full">
-      <div className="px-6 py-8 sm:px-8">
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={containerVariants}
-        >
-          <motion.div variants={itemVariants}>
-            <h2 className="text-h2 font-bold text-text-primary mb-1.5">
+    <>
+      <AuthHeader
+        right={
+          <>
+            <Link
+              href="/help"
+              className="hidden text-sm font-medium text-muted-foreground transition-colors hover:text-foreground sm:block"
+            >
+              Help Center
+            </Link>
+            <span className="hidden h-4 w-px bg-border sm:block" />
+            <span className="hidden text-sm text-muted-foreground lg:block">
+              Need an account?
+            </span>
+            <Button
+              size="sm"
+              className="rounded-lg"
+              onClick={() => router.push("/signup")}
+            >
+              Create account
+            </Button>
+          </>
+        }
+      />
+
+      <main className="flex flex-1 flex-col lg:flex-row">
+        <section className="relative flex items-center justify-center overflow-hidden px-6 py-12 lg:flex-1 lg:py-16">
+          <DotPattern className="opacity-50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background" />
+          <div className="relative z-10 w-full max-w-[400px]">
+            <div className="mb-6 flex flex-wrap items-center gap-2">
+              <LiveSyncPill />
+              <span className="inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-medium text-muted-foreground">
+                <ShieldCheck className="size-3.5 text-emerald-500" aria-hidden="true" />
+                End-to-End Encrypted
+              </span>
+            </div>
+
+            <h1 className="text-4xl font-bold tracking-tight text-foreground">
               Welcome back
-            </h2>
-            <p className="text-body-sm text-text-muted mb-6">
+            </h1>
+            <p className="mt-2 text-base text-muted-foreground">
               Sign in to continue to SplitEase
             </p>
-          </motion.div>
 
-          <motion.div variants={itemVariants} className="mb-6">
-            <SocialLogin />
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="mb-5">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-border-default" />
-              </div>
-              <div className="relative flex justify-center text-caption text-text-muted">
-                <span className="bg-surface px-3">or continue with email</span>
-              </div>
-            </div>
-          </motion.div>
-
-          <motion.form
-            onSubmit={handleSubmit(onSubmit, () => shake())}
-            animate={shakeControls}
-            noValidate
-          >
-            <div className="flex flex-col gap-4">
+            <form
+              onSubmit={handleSubmit(onSubmit, () => shake())}
+              noValidate
+              className="mt-8 space-y-4"
+            >
               {serverError && (
-                <motion.div
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="rounded-radius-md bg-danger-100 border border-danger-500/20 px-4 py-3 text-body-sm text-danger-500"
+                <div
+                  className="rounded-lg bg-danger-muted border border-danger/20 px-4 py-3 text-sm text-danger"
                   role="alert"
                 >
                   {serverError}
-                </motion.div>
+                </div>
               )}
 
-              <motion.div variants={itemVariants}>
-                <Input
-                  label="Email"
-                  type="email"
-                  placeholder="you@example.com"
-                  autoComplete="email"
-                  error={errors.email?.message}
-                  {...register("email")}
-                />
-              </motion.div>
+              <Input
+                label="Email"
+                type="email"
+                placeholder="you@example.com"
+                autoComplete="email"
+                className="h-11"
+                error={errors.email?.message}
+                {...register("email")}
+              />
 
-              <motion.div variants={itemVariants}>
-                <Input
-                  label="Password"
-                  type="password"
-                  placeholder="Enter your password"
-                  autoComplete="current-password"
-                  error={errors.password?.message}
-                  {...register("password")}
-                />
-              </motion.div>
+              <PasswordField
+                label="Password"
+                placeholder="Enter your password"
+                autoComplete="current-password"
+                error={errors.password?.message}
+                rightLabel={
+                  <Link
+                    href="/forgot-password"
+                    className="text-sm text-foreground transition-opacity hover:opacity-70"
+                  >
+                    Forgot password?
+                  </Link>
+                }
+                {...register("password")}
+              />
 
-              <motion.div variants={itemVariants} className="flex justify-end">
-                <Link
-                  href="/forgot-password"
-                  className="text-body-sm text-primary-500 hover:text-primary-600 transition-colors"
-                >
-                  Forgot password?
-                </Link>
-              </motion.div>
+              <label className="flex cursor-pointer items-center gap-2.5 text-sm text-muted-foreground">
+                <Checkbox defaultChecked />
+                <span>Remember this device for 30 days</span>
+              </label>
 
-              <motion.div variants={itemVariants}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  size="lg"
-                  loading={isSubmitting}
-                  icon={<ArrowRight />}
-                  iconPosition="right"
-                >
-                  Sign in
-                </Button>
-              </motion.div>
-
-              <motion.p
-                variants={itemVariants}
-                className="text-body-sm text-text-muted text-center mt-1"
+              <Button
+                type="submit"
+                fullWidth
+                size="lg"
+                loading={isSubmitting}
+                icon={<ArrowRight />}
+                iconPosition="right"
+                className="rounded-lg"
               >
-                Don&apos;t have an account?{" "}
-                <Link
-                  href="/signup"
-                  className="text-primary-500 font-semibold hover:text-primary-600 transition-colors"
-                >
-                  Create account
-                </Link>
-              </motion.p>
+                Sign in
+              </Button>
+            </form>
+
+            <div className="my-6">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-border" />
+                </div>
+                <div className="relative flex justify-center text-xs text-muted-foreground">
+                  <span className="bg-background px-3">Or continue with</span>
+                </div>
+              </div>
             </div>
-          </motion.form>
-        </motion.div>
-      </div>
-    </AuthCard>
+
+            <div className="mb-4">
+              <SocialLogin variant="split" />
+            </div>
+
+            <p className="flex items-center justify-center gap-1.5 text-center text-xs text-muted-foreground">
+              <BadgeCheck className="size-3.5" aria-hidden="true" />
+              Trusted by 1M+ users · SOC-2 Type II
+            </p>
+          </div>
+        </section>
+
+        <aside className="hidden w-full border-l border-border bg-zinc-50/75 dark:bg-zinc-900/40 lg:block lg:w-[480px] xl:w-[520px]">
+          <WorkspacePreview variant="home" />
+        </aside>
+      </main>
+
+      <AuthFooter
+        left={
+          <span>
+            SplitEase <span aria-hidden="true">•</span> © 2025
+          </span>
+        }
+        right={
+          <>
+            <FooterLink href="/privacy">Privacy Policy</FooterLink>
+            <FooterLink href="/terms">Terms of Service</FooterLink>
+            <FooterLink href="/security">Security</FooterLink>
+            <FooterLink href="/help">Help Center</FooterLink>
+          </>
+        }
+      />
+    </>
   );
 }

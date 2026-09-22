@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-zinc-50/50" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Groups | SplitEase - Expense Sharing</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {},
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Geist", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 20px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .num-tabular {
+      font-feature-settings: 'tnum' on, 'lnum' on;
+    }
+  </style>
+</head>
+<body class="h-full font-body text-zinc-900 bg-zinc-50 antialiased selection:bg-zinc-900 selection:text-white">
+<!-- Left Sidebar Shell (Shared Component Blueprint) -->
+<aside class="fixed inset-y-0 left-0 w-64 h-full bg-white border-r border-zinc-200 z-40 flex flex-col justify-between p-4 select-none">
+<div class="flex flex-col gap-5">
+<!-- Brand & Header -->
+<div class="flex items-center justify-between px-2 pt-1 pb-1">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-white shadow-sm ring-1 ring-zinc-900/10">
+<span class="material-symbols-outlined text-white" data-icon="account_balance_wallet" style="font-size: 19px;">account_balance_wallet</span>
+</div>
+<div>
+<div class="flex items-center gap-1.5">
+<span class="font-headline font-semibold text-base text-zinc-900 tracking-tight leading-none">SplitEase</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium bg-zinc-100 text-zinc-600 font-label border border-zinc-200/80">v2.4</span>
+</div>
+<p class="text-xs text-zinc-500 font-normal leading-tight mt-0.5">Expense Sharing</p>
+</div>
+</div>
+</div>
+<!-- Add Expense Action -->
+<button class="w-full flex items-center justify-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-sm py-2 px-3 rounded-lg shadow-sm transition-colors duration-150 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-zinc-300" data-icon="add" style="font-size: 18px;">add</span>
+<span>Add Expense</span>
+</button>
+<!-- Primary Navigation -->
+<nav class="flex flex-col gap-1">
+<span class="px-2 text-[11px] font-medium font-label uppercase tracking-wider text-zinc-400 mb-1">Menu</span>
+<!-- Dashboard (Inactive) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-colors duration-150 text-sm font-normal" href="#">
+<span class="material-symbols-outlined text-zinc-500" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Groups (Active Match) -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-zinc-100 text-zinc-900 font-medium transition-colors duration-150 text-sm" href="#">
+<span class="material-symbols-outlined text-zinc-900" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="flex-1">Groups</span>
+<span class="w-1.5 h-1.5 rounded-full bg-zinc-900"></span>
+</a>
+<!-- Expenses -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-colors duration-150 text-sm font-normal" href="#">
+<span class="material-symbols-outlined text-zinc-500" data-icon="receipt_long">receipt_long</span>
+<span>Expenses</span>
+</a>
+<!-- Balances -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-colors duration-150 text-sm font-normal" href="#">
+<span class="material-symbols-outlined text-zinc-500" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span>Balances</span>
+</a>
+<!-- Activity Feed -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-colors duration-150 text-sm font-normal" href="#">
+<span class="material-symbols-outlined text-zinc-500" data-icon="history">history</span>
+<span>Activity</span>
+</a>
+<!-- Settings -->
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 transition-colors duration-150 text-sm font-normal" href="#">
+<span class="material-symbols-outlined text-zinc-500" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</nav>
+<!-- Pinned Groups Segment -->
+<div class="flex flex-col gap-1 pt-2 border-t border-zinc-100">
+<div class="flex items-center justify-between px-2 mb-1">
+<span class="text-[11px] font-medium font-label uppercase tracking-wider text-zinc-400">Pinned Groups</span>
+<span class="text-xs text-zinc-400 cursor-pointer hover:text-zinc-600">Edit</span>
+</div>
+<a class="flex items-center justify-between px-3 py-1.5 rounded-lg text-xs text-zinc-600 hover:bg-zinc-50 transition-colors" href="#">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="truncate font-medium">Apartment</span>
+</div>
+<span class="text-[11px] text-emerald-600 font-semibold num-tabular">+$24.20</span>
+</a>
+<a class="flex items-center justify-between px-3 py-1.5 rounded-lg text-xs text-zinc-600 hover:bg-zinc-50 transition-colors" href="#">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span>
+<span class="truncate font-medium">Trip to Paris</span>
+</div>
+<span class="text-[11px] text-rose-600 font-semibold num-tabular">-$31.00</span>
+</a>
+<a class="flex items-center justify-between px-3 py-1.5 rounded-lg text-xs text-zinc-600 hover:bg-zinc-50 transition-colors" href="#">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="truncate font-medium">Ski Weekend</span>
+</div>
+<span class="text-[11px] text-emerald-600 font-semibold num-tabular">+$68.00</span>
+</a>
+</div>
+</div>
+<!-- Footer Navigation & User Card -->
+<div class="flex flex-col gap-2 pt-3 border-t border-zinc-200/80">
+<div class="flex flex-col gap-0.5">
+<a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-zinc-400" data-icon="help" style="font-size: 18px;">help</span>
+<span>Help &amp; Support</span>
+</a>
+<a class="flex items-center gap-2.5 px-3 py-1.5 rounded-lg text-xs text-zinc-500 hover:bg-zinc-100 hover:text-zinc-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-zinc-400" data-icon="logout" style="font-size: 18px;">logout</span>
+<span>Log out</span>
+</a>
+</div>
+<!-- User Profile Card -->
+<div class="mt-1 flex items-center justify-between p-2 rounded-lg border border-zinc-200/90 bg-white hover:bg-zinc-50/80 transition-colors cursor-pointer">
+<div class="flex items-center gap-2.5 overflow-hidden">
+<div class="w-8 h-8 rounded-full bg-zinc-900 text-white flex items-center justify-center text-xs font-semibold shrink-0 ring-2 ring-white">
+            AM
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="text-xs font-medium text-zinc-900 truncate">Alex Morgan</span>
+<span class="text-[11px] text-zinc-500 truncate">alex@example.com</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-zinc-400" data-icon="more_vert" style="font-size: 18px;">more_vert</span>
+</div>
+</div>
+</aside>
+<!-- Desktop Main Content Area -->
+<div class="pl-64 min-h-screen flex flex-col bg-zinc-50/60">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 right-0 h-14 bg-white/90 backdrop-blur-md border-b border-zinc-200 z-30 flex items-center justify-between px-8">
+<!-- Left: Breadcrumb / Context & Global Search -->
+<div class="flex items-center gap-4 w-96">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400 pointer-events-none" data-icon="search" style="font-size: 18px;">search</span>
+<input class="w-full pl-9 pr-12 py-1.5 text-xs bg-zinc-100/80 hover:bg-zinc-100 focus:bg-white border-transparent focus:border-zinc-300 rounded-lg text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-900 transition-all font-body" placeholder="Search expenses, groups, contacts..." type="text"/>
+<div class="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-0.5 pointer-events-none">
+<kbd class="px-1.5 py-0.5 text-[10px] font-medium font-label text-zinc-500 bg-white border border-zinc-200 rounded shadow-[0_1px_1px_rgba(0,0,0,0.05)]">⌘K</kbd>
+</div>
+</div>
+</div>
+<!-- Right Action Cluster -->
+<div class="flex items-center gap-3">
+<!-- Secondary Settle Up action -->
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-100 text-zinc-700 text-xs font-medium transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-zinc-500" data-icon="handshake" style="font-size: 16px;">handshake</span>
+<span>Settle Up</span>
+</button>
+<!-- Notification Bell -->
+<button class="relative p-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="notifications" style="font-size: 20px;">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+</button>
+<div class="h-4 w-px bg-zinc-200"></div>
+<!-- Create Group Primary Action -->
+<button class="inline-flex items-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-xs px-3.5 py-1.5 rounded-lg shadow-sm transition-colors active:scale-95" type="button">
+<span class="material-symbols-outlined" data-icon="add" style="font-size: 16px;">add</span>
+<span>Create Group</span>
+</button>
+</div>
+</header>
+<!-- Page Content Container (1440px desktop frame container) -->
+<main class="flex-1 px-8 py-7 max-w-[1440px] w-full mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-center md:justify-between pb-6 border-b border-zinc-200/80 gap-4">
+<div>
+<h1 class="text-2xl font-bold tracking-tight text-zinc-900 font-headline">Your Groups</h1>
+<p class="text-sm text-zinc-500 mt-0.5">Manage your shared expenses, track settlements, and split costs seamlessly.</p>
+</div>
+<div class="flex items-center gap-2">
+<button class="inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-white font-medium px-4 py-2 rounded-lg text-sm shadow-sm transition-colors active:scale-95" type="button">
+<span class="material-symbols-outlined" data-icon="group_add" style="font-size: 18px;">group_add</span>
+<span>Create group</span>
+</button>
+</div>
+</div>
+<!-- 3 Summary / Stat Cards Row -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-6">
+<!-- Card 1: Total balance -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs flex flex-col justify-between hover:border-zinc-300 transition-all">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-zinc-500 font-label tracking-wide uppercase">Total balance</span>
+<div class="w-8 h-8 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-700">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet" style="font-size: 18px;">account_balance_wallet</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-2xl font-bold text-zinc-900 tracking-tight num-tabular">+$75.50</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/80 font-label">
+<span class="material-symbols-outlined text-emerald-600" data-icon="trending_up" style="font-size: 13px;">trending_up</span>
+                Net ahead
+              </span>
+<span class="text-xs text-zinc-500">across 6 active groups</span>
+</div>
+</div>
+</div>
+<!-- Card 2: You owe -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs flex flex-col justify-between hover:border-zinc-300 transition-all">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-zinc-500 font-label tracking-wide uppercase">You owe</span>
+<div class="w-8 h-8 rounded-lg bg-rose-50 flex items-center justify-center text-rose-600">
+<span class="material-symbols-outlined" data-icon="trending_down" style="font-size: 18px;">trending_down</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-2xl font-bold text-rose-600 tracking-tight num-tabular">-$45.00</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="inline-flex items-center text-[11px] font-semibold px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200/80 font-label">
+                2 pending payments
+              </span>
+<span class="text-xs text-zinc-500 truncate">Trip to Paris &amp; Office Lunch</span>
+</div>
+</div>
+</div>
+<!-- Card 3: You're owed -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 shadow-xs flex flex-col justify-between hover:border-zinc-300 transition-all">
+<div class="flex items-center justify-between">
+<span class="text-xs font-medium text-zinc-500 font-label tracking-wide uppercase">You're owed</span>
+<div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+<span class="material-symbols-outlined" data-icon="trending_up" style="font-size: 18px;">trending_up</span>
+</div>
+</div>
+<div class="mt-3">
+<div class="text-2xl font-bold text-emerald-600 tracking-tight num-tabular">+$120.50</div>
+<div class="flex items-center gap-2 mt-2">
+<span class="inline-flex items-center text-[11px] font-semibold px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/80 font-label">
+                3 friends owe you
+              </span>
+<span class="text-xs text-zinc-500 truncate">Apartment &amp; Ski Weekend</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Filter & Search Toolbar -->
+<section class="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+<!-- Segmented Tab Pill Navigation -->
+<div class="flex items-center p-1 bg-zinc-200/60 rounded-lg border border-zinc-200/70 text-xs font-medium font-body w-full sm:w-auto">
+<button class="px-3 py-1.5 rounded-md bg-white text-zinc-900 shadow-xs font-semibold transition-all" type="button">
+            All Groups (6)
+          </button>
+<button class="px-3 py-1.5 rounded-md text-zinc-600 hover:text-zinc-900 transition-colors" type="button">
+            Outstanding (4)
+          </button>
+<button class="px-3 py-1.5 rounded-md text-zinc-600 hover:text-zinc-900 transition-colors" type="button">
+            Settled (2)
+          </button>
+</div>
+<!-- Right Tooling Cluster -->
+<div class="flex items-center gap-2.5 w-full sm:w-auto justify-end">
+<div class="relative w-56">
+<span class="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-zinc-400 text-sm pointer-events-none" data-icon="search" style="font-size: 16px;">search</span>
+<input class="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-zinc-200 rounded-lg placeholder:text-zinc-400 text-zinc-900 focus:outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400" placeholder="Search groups..." type="text"/>
+</div>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-medium transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-zinc-500" data-icon="filter_list" style="font-size: 16px;">filter_list</span>
+<span>Filter</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-medium transition-colors shadow-xs" type="button">
+<span class="material-symbols-outlined text-zinc-500" data-icon="sort" style="font-size: 16px;">sort</span>
+<span>Sort: Recent</span>
+</button>
+</div>
+</section>
+<!-- Group Cards Grid (3 Columns) -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
+<!-- Group 1: Apartment -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-zinc-300 hover:shadow-xs transition-all flex flex-col justify-between group cursor-pointer">
+<div>
+<!-- Top Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-800 ring-1 ring-zinc-200/60 group-hover:bg-zinc-900 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="apartment" style="font-size: 22px;">apartment</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-semibold text-zinc-900 text-sm tracking-tight font-headline">Apartment</h3>
+<span class="w-2 h-2 rounded-full bg-emerald-500" title="Active cycle"></span>
+</div>
+<p class="text-xs text-zinc-500 mt-0.5">4 members • Active cycle</p>
+</div>
+</div>
+<button class="text-zinc-400 hover:text-zinc-600 p-1 -mr-1 rounded-md hover:bg-zinc-100 transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="more_vert" style="font-size: 18px;">more_vert</span>
+</button>
+</div>
+<!-- Description -->
+<p class="text-xs text-zinc-600 line-clamp-2 mt-3.5 leading-relaxed">Rent, utilities, wifi &amp; household supplies split evenly across roommates.</p>
+</div>
+<!-- Card Footer -->
+<div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between">
+<!-- Overlapping Member Avatars -->
+<div class="flex -space-x-1.5 overflow-hidden items-center">
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-blue-100 text-blue-700 text-[10px] font-semibold">AL</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-purple-100 text-purple-700 text-[10px] font-semibold">SC</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-amber-100 text-amber-700 text-[10px] font-semibold">SV</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-zinc-100 text-zinc-600 text-[9px] font-medium">+1</div>
+</div>
+<!-- Balance Pill -->
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 num-tabular">
+              +$24.20 you are owed
+            </span>
+</div>
+</div>
+<!-- Group 2: Trip to Paris -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-zinc-300 hover:shadow-xs transition-all flex flex-col justify-between group cursor-pointer">
+<div>
+<!-- Top Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-800 ring-1 ring-zinc-200/60 group-hover:bg-zinc-900 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="flight" style="font-size: 22px;">flight</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-semibold text-zinc-900 text-sm tracking-tight font-headline">Trip to Paris</h3>
+<span class="w-2 h-2 rounded-full bg-rose-500" title="Settling"></span>
+</div>
+<p class="text-xs text-zinc-500 mt-0.5">5 members • Settling</p>
+</div>
+</div>
+<button class="text-zinc-400 hover:text-zinc-600 p-1 -mr-1 rounded-md hover:bg-zinc-100 transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="more_vert" style="font-size: 18px;">more_vert</span>
+</button>
+</div>
+<!-- Description -->
+<p class="text-xs text-zinc-600 line-clamp-2 mt-3.5 leading-relaxed">Flights, Airbnb booking, dinners &amp; museum passes for summer holiday.</p>
+</div>
+<!-- Card Footer -->
+<div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between">
+<!-- Overlapping Member Avatars -->
+<div class="flex -space-x-1.5 overflow-hidden items-center">
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-indigo-100 text-indigo-700 text-[10px] font-semibold">MD</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-pink-100 text-pink-700 text-[10px] font-semibold">JD</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-emerald-100 text-emerald-700 text-[10px] font-semibold">TV</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-zinc-100 text-zinc-600 text-[9px] font-medium">+2</div>
+</div>
+<!-- Balance Pill -->
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 num-tabular">
+              -$31.00 you owe
+            </span>
+</div>
+</div>
+<!-- Group 3: Groceries -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-zinc-300 hover:shadow-xs transition-all flex flex-col justify-between group cursor-pointer">
+<div>
+<!-- Top Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-800 ring-1 ring-zinc-200/60 group-hover:bg-zinc-900 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="shopping_cart" style="font-size: 22px;">shopping_cart</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-semibold text-zinc-900 text-sm tracking-tight font-headline">Groceries</h3>
+<span class="w-2 h-2 rounded-full bg-zinc-300" title="Settled"></span>
+</div>
+<p class="text-xs text-zinc-500 mt-0.5">3 members • Settled</p>
+</div>
+</div>
+<button class="text-zinc-400 hover:text-zinc-600 p-1 -mr-1 rounded-md hover:bg-zinc-100 transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="more_vert" style="font-size: 18px;">more_vert</span>
+</button>
+</div>
+<!-- Description -->
+<p class="text-xs text-zinc-600 line-clamp-2 mt-3.5 leading-relaxed">Weekly shared grocery runs, pantry staples &amp; household provisions.</p>
+</div>
+<!-- Card Footer -->
+<div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between">
+<!-- Overlapping Member Avatars -->
+<div class="flex -space-x-1.5 overflow-hidden items-center">
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-blue-100 text-blue-700 text-[10px] font-semibold">AL</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-purple-100 text-purple-700 text-[10px] font-semibold">SC</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-teal-100 text-teal-700 text-[10px] font-semibold">MY</div>
+</div>
+<!-- Balance Pill -->
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-600 border border-zinc-200 num-tabular">
+              $0.00 Settled
+            </span>
+</div>
+</div>
+<!-- Group 4: Ski Weekend -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-zinc-300 hover:shadow-xs transition-all flex flex-col justify-between group cursor-pointer">
+<div>
+<!-- Top Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-800 ring-1 ring-zinc-200/60 group-hover:bg-zinc-900 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="downhill_skiing" style="font-size: 22px;">downhill_skiing</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-semibold text-zinc-900 text-sm tracking-tight font-headline">Ski Weekend</h3>
+<span class="w-2 h-2 rounded-full bg-emerald-500" title="Upcoming"></span>
+</div>
+<p class="text-xs text-zinc-500 mt-0.5">6 members • Upcoming</p>
+</div>
+</div>
+<button class="text-zinc-400 hover:text-zinc-600 p-1 -mr-1 rounded-md hover:bg-zinc-100 transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="more_vert" style="font-size: 18px;">more_vert</span>
+</button>
+</div>
+<!-- Description -->
+<p class="text-xs text-zinc-600 line-clamp-2 mt-3.5 leading-relaxed">Cabin rental, lift tickets, gas split &amp; grocery pool for Lake Tahoe trip.</p>
+</div>
+<!-- Card Footer -->
+<div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between">
+<!-- Overlapping Member Avatars -->
+<div class="flex -space-x-1.5 overflow-hidden items-center">
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-zinc-800 text-white text-[10px] font-semibold">AM</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-orange-100 text-orange-700 text-[10px] font-semibold">CL</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-sky-100 text-sky-700 text-[10px] font-semibold">EK</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-zinc-100 text-zinc-600 text-[9px] font-medium">+3</div>
+</div>
+<!-- Balance Pill -->
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 num-tabular">
+              +$68.00 you are owed
+            </span>
+</div>
+</div>
+<!-- Group 5: Office Lunch -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-zinc-300 hover:shadow-xs transition-all flex flex-col justify-between group cursor-pointer">
+<div>
+<!-- Top Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-800 ring-1 ring-zinc-200/60 group-hover:bg-zinc-900 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="restaurant" style="font-size: 22px;">restaurant</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-semibold text-zinc-900 text-sm tracking-tight font-headline">Office Lunch</h3>
+<span class="w-2 h-2 rounded-full bg-rose-500" title="Weekly"></span>
+</div>
+<p class="text-xs text-zinc-500 mt-0.5">8 members • Weekly</p>
+</div>
+</div>
+<button class="text-zinc-400 hover:text-zinc-600 p-1 -mr-1 rounded-md hover:bg-zinc-100 transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="more_vert" style="font-size: 18px;">more_vert</span>
+</button>
+</div>
+<!-- Description -->
+<p class="text-xs text-zinc-600 line-clamp-2 mt-3.5 leading-relaxed">Friday team takeout lunches, catering orders &amp; coffee runs at work.</p>
+</div>
+<!-- Card Footer -->
+<div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between">
+<!-- Overlapping Member Avatars -->
+<div class="flex -space-x-1.5 overflow-hidden items-center">
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-pink-100 text-pink-700 text-[10px] font-semibold">JD</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-amber-100 text-amber-700 text-[10px] font-semibold">SV</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-emerald-100 text-emerald-700 text-[10px] font-semibold">TV</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-zinc-100 text-zinc-600 text-[9px] font-medium">+5</div>
+</div>
+<!-- Balance Pill -->
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-200 num-tabular">
+              -$14.00 you owe
+            </span>
+</div>
+</div>
+<!-- Group 6: Book Club -->
+<div class="bg-white border border-zinc-200 rounded-xl p-5 hover:border-zinc-300 hover:shadow-xs transition-all flex flex-col justify-between group cursor-pointer">
+<div>
+<!-- Top Card Header -->
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 flex items-center justify-center text-zinc-800 ring-1 ring-zinc-200/60 group-hover:bg-zinc-900 group-hover:text-white transition-colors">
+<span class="material-symbols-outlined" data-icon="menu_book" style="font-size: 22px;">menu_book</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-semibold text-zinc-900 text-sm tracking-tight font-headline">Book Club</h3>
+<span class="w-2 h-2 rounded-full bg-zinc-300" title="All clear"></span>
+</div>
+<p class="text-xs text-zinc-500 mt-0.5">4 members • All clear</p>
+</div>
+</div>
+<button class="text-zinc-400 hover:text-zinc-600 p-1 -mr-1 rounded-md hover:bg-zinc-100 transition-colors" type="button">
+<span class="material-symbols-outlined" data-icon="more_vert" style="font-size: 18px;">more_vert</span>
+</button>
+</div>
+<!-- Description -->
+<p class="text-xs text-zinc-600 line-clamp-2 mt-3.5 leading-relaxed">Monthly reads, snacks, wine &amp; venue reservations for literature club.</p>
+</div>
+<!-- Card Footer -->
+<div class="mt-6 pt-4 border-t border-zinc-100 flex items-center justify-between">
+<!-- Overlapping Member Avatars -->
+<div class="flex -space-x-1.5 overflow-hidden items-center">
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-purple-100 text-purple-700 text-[10px] font-semibold">SC</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-teal-100 text-teal-700 text-[10px] font-semibold">MY</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-sky-100 text-sky-700 text-[10px] font-semibold">EK</div>
+<div class="inline-flex items-center justify-center w-6 h-6 rounded-full ring-2 ring-white bg-zinc-100 text-zinc-600 text-[9px] font-medium">+1</div>
+</div>
+<!-- Balance Pill -->
+<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-600 border border-zinc-200 num-tabular">
+              $0.00 Settled
+            </span>
+</div>
+</div>
+</section>
+<!-- Bottom Quick Summary / Settlement Banner -->
+<section class="mt-8 bg-zinc-100/70 border border-zinc-200/90 rounded-xl p-4 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-700 shrink-0">
+<span class="material-symbols-outlined" data-icon="lightbulb" style="font-size: 18px;">lightbulb</span>
+</div>
+<div>
+<span class="text-xs font-semibold text-zinc-900">Simplify settlements with Debt Simplification</span>
+<p class="text-xs text-zinc-500">SplitEase calculated 3 transaction paths across all your groups to settle balances in 2 transfers.</p>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<button class="px-3 py-1.5 text-xs font-medium text-zinc-600 hover:text-zinc-900 transition-colors" type="button">Dismiss</button>
+<button class="px-3.5 py-1.5 text-xs font-medium bg-zinc-900 hover:bg-zinc-800 text-white rounded-lg transition-colors" type="button">Review Suggested Transfers</button>
+</div>
+</section>
+</main>
+</div>
+</body></html>

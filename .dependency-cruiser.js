@@ -1,0 +1,60 @@
+module.exports = {
+  forbidden: [
+    {
+      name: "no-frontend-importing-backend",
+      comment: "Frontend must not import backend internals",
+      severity: "error",
+      from: { path: "^frontend" },
+      to: { path: "^backend/src" },
+    },
+    {
+      name: "no-backend-importing-frontend",
+      comment: "Backend must not import frontend code",
+      severity: "error",
+      from: { path: "^backend/src" },
+      to: { path: "^frontend" },
+    },
+    {
+      name: "backend-layered-architecture",
+      comment: "Backend follows Clean Architecture: controllers -> services -> models",
+      severity: "error",
+      from: { path: "^backend/src/controllers" },
+      to: { pathNot: "^backend/src/(services|models|utils|middlewares|errors|validators|constants|config)" },
+    },
+    {
+      name: "services-use-valid-deps",
+      comment: "Services should only depend on models, utils, services, constants, errors (sequelize allowed for transactions)",
+      severity: "error",
+      from: { path: "^backend/src/services" },
+      to: { pathNot: "^backend/src/(models|utils|services|constants|errors|database/models)|node_modules/sequelize" },
+    },
+    {
+      name: "models-are-leaves",
+      comment: "Models (database) should not depend on other backend layers",
+      severity: "error",
+      from: { path: "^backend/src/database/models" },
+      to: { path: "^backend/src/(controllers|services|routes|middlewares|validators)" },
+    },
+    {
+      name: "utils-are-independent",
+      comment: "Utils should not depend on business logic layers (except service-registry)",
+      severity: "error",
+      from: { path: "^backend/src/utils/(?!service-registry)" },
+      to: { path: "^backend/src/(controllers|services|models|routes|middlewares|validators)" },
+    },
+    {
+      name: "frontend-feature-modules",
+      comment: "Frontend features should be self-contained",
+      severity: "warn",
+      from: { path: "^frontend/app/\\(app\\)" },
+      to: { pathNot: "^frontend/(app/\\(app\\)|components|lib|hooks|services|types)" },
+    },
+    {
+      name: "no-circular-dependencies-in-src",
+      comment: "No circular dependencies allowed in source code",
+      severity: "error",
+      from: { path: "^(backend/src|frontend)" },
+      to: { path: "^(backend/src|frontend)", circular: true },
+    },
+  ],
+};

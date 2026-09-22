@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SplitEase - Create Account</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {},
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Inter", "sans-serif"]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-zinc-100 min-h-screen font-body text-zinc-900 antialiased flex justify-center items-center sm:py-8">
+<!-- Mobile Viewport Container mimicking an app-native shell -->
+<main class="w-full max-w-md bg-white min-h-screen sm:min-h-[844px] sm:rounded-3xl sm:shadow-xl sm:border sm:border-zinc-200/80 flex flex-col justify-between overflow-hidden relative">
+<!-- Top App Bar (Shared Component Anchor) -->
+<header class="border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 sticky top-0 z-20">
+<div class="flex justify-between items-center w-full px-4 h-14 max-w-md mx-auto">
+<!-- Leading Action: Back button -->
+<button aria-label="Go back" class="w-9 h-9 rounded-lg flex items-center justify-center text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors duration-150 active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<!-- Brand Headline with subtle icon mark -->
+<div class="flex items-center gap-1.5">
+<div class="w-5 h-5 rounded-md bg-zinc-900 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[14px]" data-icon="call_split">call_split</span>
+</div>
+<span class="font-headline text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">SplitEase</span>
+</div>
+<!-- Trailing Action: Help -->
+<button class="text-sm font-medium text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 px-2.5 py-1.5 rounded-md transition-colors duration-150 active:scale-[0.98]" type="button">
+          Help
+        </button>
+</div>
+</header>
+<!-- Main Scrollable Body Content -->
+<section class="flex-1 overflow-y-auto px-6 pt-6 pb-4">
+<!-- Content Header -->
+<div class="flex flex-col items-start mb-7">
+<div class="w-12 h-12 rounded-xl bg-zinc-900 text-white flex items-center justify-center mb-4 shadow-sm">
+<span class="material-symbols-outlined text-[26px]" data-icon="receipt_long">receipt_long</span>
+</div>
+<h1 class="font-headline text-2xl font-bold tracking-tight text-zinc-900">Create your account</h1>
+<p class="text-sm text-zinc-500 mt-1">Start splitting expenses in minutes.</p>
+</div>
+<!-- Registration Form -->
+<form class="space-y-4" onsubmit="event.preventDefault();">
+<!-- Full Name Field -->
+<div class="space-y-1.5">
+<label class="block text-xs font-semibold uppercase tracking-wider text-zinc-600" for="full-name">Full name</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 text-sm bg-white border border-zinc-200 rounded-lg text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:border-transparent transition-all" id="full-name" name="name" placeholder="Jane Doe" required="" type="text"/>
+</div>
+</div>
+<!-- Email Field -->
+<div class="space-y-1.5">
+<label class="block text-xs font-semibold uppercase tracking-wider text-zinc-600" for="email">Email</label>
+<div class="relative">
+<input class="w-full h-11 px-3.5 text-sm bg-white border border-zinc-200 rounded-lg text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:border-transparent transition-all" id="email" name="email" placeholder="name@example.com" required="" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-1.5">
+<div class="flex justify-between items-center">
+<label class="block text-xs font-semibold uppercase tracking-wider text-zinc-600" for="password">Password</label>
+</div>
+<div class="relative">
+<input class="w-full h-11 pl-3.5 pr-10 text-sm bg-white border border-zinc-200 rounded-lg text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-zinc-950 focus:border-transparent transition-all" id="password" name="password" placeholder="••••••••" required="" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 p-1 flex items-center justify-center transition-colors" id="toggle-password" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="visibility">visibility</span>
+</button>
+</div>
+<!-- Dynamic Password Strength Indicator (shadcn/ui style segments) -->
+<div class="pt-1.5 space-y-1.5">
+<div class="grid grid-cols-4 gap-1.5 h-1.5 w-full">
+<div class="h-full rounded-full bg-emerald-600 transition-colors" id="bar-1"></div>
+<div class="h-full rounded-full bg-emerald-600 transition-colors" id="bar-2"></div>
+<div class="h-full rounded-full bg-emerald-600 transition-colors" id="bar-3"></div>
+<div class="h-full rounded-full bg-zinc-200 transition-colors" id="bar-4"></div>
+</div>
+<p class="text-[11px] text-zinc-500 font-medium">Must be at least 8 characters with numbers and symbols</p>
+</div>
+</div>
+<!-- Primary Action -->
+<div class="pt-2">
+<button class="w-full h-12 bg-zinc-900 text-white font-medium rounded-lg hover:bg-zinc-800 active:scale-[0.99] transition duration-150 flex items-center justify-center shadow-sm" type="submit">
+            Create account
+          </button>
+</div>
+<!-- Terms and Privacy Disclaimer -->
+<p class="text-center text-[12px] text-zinc-500 leading-relaxed px-2">
+          By signing up, you agree to our 
+          <a class="underline hover:text-zinc-800 text-zinc-600" href="#">Terms of Service</a> and 
+          <a class="underline hover:text-zinc-800 text-zinc-600" href="#">Privacy Policy</a>.
+        </p>
+<!-- Or continue with divider -->
+<div class="relative py-2 flex items-center justify-center">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-zinc-200"></div>
+</div>
+<span class="relative bg-white px-3 text-[11px] font-semibold text-zinc-400 uppercase tracking-wider">
+            OR CONTINUE WITH
+          </span>
+</div>
+<!-- Social Sign-in Button -->
+<button class="w-full h-12 border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 font-medium rounded-lg flex items-center justify-center gap-2.5 transition active:scale-[0.99]" type="button">
+<svg aria-hidden="true" class="w-4 h-4" viewbox="0 0 24 24">
+<path d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" fill="#4285F4"></path>
+<path d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.34 24 12 24z" fill="#34A853"></path>
+<path d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.98 0 12s.45 3.82 1.25 5.42l4.03-3.15z" fill="#FBBC05"></path>
+<path d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.34 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z" fill="#EA4335"></path>
+</svg>
+<span class="text-sm">Continue with Google</span>
+</button>
+</form>
+</section>
+<!-- Bottom Footer Navigation & Home Indicator Area -->
+<footer class="p-4 border-t border-zinc-100 flex flex-col items-center bg-white space-y-3">
+<p class="text-xs text-zinc-600">
+        Already have an account? 
+        <a class="font-bold underline text-zinc-900 hover:text-zinc-700" href="#">Log in</a>
+</p>
+<!-- Native Mobile Home Indicator bar -->
+<div class="w-32 h-1 bg-zinc-200 rounded-full"></div>
+</footer>
+</main>
+<!-- Interactive script for password toggle and micro-interactions -->
+<script>
+    const passwordInput = document.getElementById('password');
+    const toggleButton = document.getElementById('toggle-password');
+    
+    if (toggleButton && passwordInput) {
+      toggleButton.addEventListener('click', () => {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        const iconSpan = toggleButton.querySelector('.material-symbols-outlined');
+        if (iconSpan) {
+          iconSpan.textContent = isPassword ? 'visibility_off' : 'visibility';
+        }
+      });
+    }
+  </script>
+</body></html>

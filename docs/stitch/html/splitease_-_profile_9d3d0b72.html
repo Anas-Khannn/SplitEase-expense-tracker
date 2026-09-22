@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>SplitEase - Profile</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Google Fonts: Inter & Geist -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {},
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {},
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Geist", "sans-serif"]
+          },
+          fontSize: {}
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Tabular numbers for financial balance clarity */
+    .tabular-nums {
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
+    }
+    /* Smooth native touch tap highlight removal */
+    * {
+      -webkit-tap-highlight-color: transparent;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-zinc-50 text-zinc-900 antialiased font-body min-h-screen flex flex-col justify-between selection:bg-zinc-200">
+<!-- Mobile Screen Container -->
+<div class="w-full max-w-md mx-auto min-h-screen flex flex-col bg-zinc-50 relative pb-24 shadow-sm border-x border-zinc-200/50">
+<!-- TopAppBar Component (from JSON specification) -->
+<header class="sticky top-0 z-40 flex items-center justify-between px-4 h-14 w-full bg-white/80 backdrop-blur-md transition-colors duration-150 border-b border-zinc-200">
+<button aria-label="Go back" class="p-2 -ml-2 rounded-md text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-150 active:scale-95 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[22px]" data-icon="arrow_back">arrow_back</span>
+</button>
+<h1 class="font-headline font-semibold text-base tracking-tight text-zinc-900">Profile</h1>
+<button aria-label="Settings" class="p-2 -mr-2 rounded-md text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 transition-colors duration-150 active:scale-95 flex items-center justify-center" type="button">
+<span class="material-symbols-outlined text-[20px]" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Main Scrollable Canvas Content -->
+<main class="flex-1 px-4 pt-5 pb-8 space-y-5">
+<!-- User Card (Centered Profile Hero) -->
+<section class="bg-white rounded-lg border border-zinc-200 p-5 shadow-xs flex flex-col items-center text-center relative overflow-hidden">
+<!-- Subtle gradient decorative hint behind avatar -->
+<div class="relative mb-3">
+<div class="w-20 h-20 rounded-full bg-indigo-50 border border-indigo-100 flex items-center justify-center shadow-xs">
+<span class="font-headline font-bold text-2xl text-indigo-700 tracking-tight">AM</span>
+</div>
+<button aria-label="Edit Profile Avatar" class="absolute bottom-0 right-0 p-1.5 bg-zinc-900 text-white rounded-full shadow-sm hover:bg-zinc-800 transition-transform active:scale-90 flex items-center justify-center border-2 border-white" type="button">
+<span class="material-symbols-outlined text-[14px]" data-icon="edit">edit</span>
+</button>
+</div>
+<h2 class="font-headline font-bold text-lg text-zinc-900 tracking-tight">Alex Morgan</h2>
+<p class="text-xs text-zinc-500 font-normal mt-0.5 font-label">alex@example.com</p>
+<!-- Edit Profile Pill CTA -->
+<div class="mt-4 w-full flex justify-center">
+<button class="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-zinc-100 hover:bg-zinc-200/80 text-zinc-800 text-xs font-medium font-label rounded-full border border-zinc-200 transition-colors duration-150 active:scale-95" type="button">
+<span class="material-symbols-outlined text-[14px] text-zinc-600" data-icon="edit">edit</span>
+<span>Edit profile</span>
+</button>
+</div>
+</section>
+<!-- Stats Row (3 Mini Stat Cards) -->
+<section class="grid grid-cols-3 gap-2.5">
+<!-- Stat 1: Owed to you -->
+<div class="bg-white rounded-lg border border-zinc-200 p-3 flex flex-col justify-between">
+<div class="flex items-center gap-1 text-zinc-500 mb-1">
+<span class="material-symbols-outlined text-[15px] text-emerald-600" data-icon="trending_up">trending_up</span>
+<span class="text-[11px] font-medium font-label text-zinc-500 truncate">You're owed</span>
+</div>
+<p class="text-sm font-semibold text-emerald-600 tabular-nums font-headline tracking-tight">+$120.50</p>
+</div>
+<!-- Stat 2: You owe -->
+<div class="bg-white rounded-lg border border-zinc-200 p-3 flex flex-col justify-between">
+<div class="flex items-center gap-1 text-zinc-500 mb-1">
+<span class="material-symbols-outlined text-[15px] text-rose-600" data-icon="trending_down">trending_down</span>
+<span class="text-[11px] font-medium font-label text-zinc-500 truncate">You owe</span>
+</div>
+<p class="text-sm font-semibold text-rose-600 tabular-nums font-headline tracking-tight">-$45.00</p>
+</div>
+<!-- Stat 3: Active Groups -->
+<div class="bg-white rounded-lg border border-zinc-200 p-3 flex flex-col justify-between">
+<div class="flex items-center gap-1 text-zinc-500 mb-1">
+<span class="material-symbols-outlined text-[15px] text-zinc-600" data-icon="group">group</span>
+<span class="text-[11px] font-medium font-label text-zinc-500 truncate">Groups</span>
+</div>
+<p class="text-sm font-semibold text-zinc-900 tabular-nums font-headline tracking-tight">6</p>
+</div>
+</section>
+<!-- Settings List Grouped -->
+<section class="space-y-4">
+<!-- Section 1: Account -->
+<div>
+<h3 class="text-[11px] font-semibold uppercase tracking-wider text-zinc-500 px-1 mb-1.5 font-label">Account</h3>
+<div class="bg-white rounded-lg border border-zinc-200 divide-y divide-zinc-100 overflow-hidden shadow-xs">
+<!-- Row 1: Profile details -->
+<button class="w-full flex items-center justify-between px-3.5 h-[52px] hover:bg-zinc-50/80 active:bg-zinc-100 transition-colors text-left group" type="button">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700 group-hover:bg-zinc-200/80 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="person">person</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">Profile details</span>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-[18px] group-hover:translate-x-0.5 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Row 2: Notification preferences -->
+<button class="w-full flex items-center justify-between px-3.5 h-[52px] hover:bg-zinc-50/80 active:bg-zinc-100 transition-colors text-left group" type="button">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700 group-hover:bg-zinc-200/80 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="notifications">notifications</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">Notification preferences</span>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-[18px] group-hover:translate-x-0.5 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Row 3: Security & password -->
+<button class="w-full flex items-center justify-between px-3.5 h-[52px] hover:bg-zinc-50/80 active:bg-zinc-100 transition-colors text-left group" type="button">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700 group-hover:bg-zinc-200/80 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="lock">lock</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">Security &amp; password</span>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-[18px] group-hover:translate-x-0.5 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Section 2: Preferences -->
+<div>
+<h3 class="text-[11px] font-semibold uppercase tracking-wider text-zinc-500 px-1 mb-1.5 font-label">Preferences</h3>
+<div class="bg-white rounded-lg border border-zinc-200 divide-y divide-zinc-100 overflow-hidden shadow-xs">
+<!-- Row 1: Currency -->
+<button class="w-full flex items-center justify-between px-3.5 h-[52px] hover:bg-zinc-50/80 active:bg-zinc-100 transition-colors text-left group" type="button">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700 group-hover:bg-zinc-200/80 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="payments">payments</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">Currency</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs text-zinc-500 font-medium font-label">USD ($)</span>
+<span class="material-symbols-outlined text-zinc-400 text-[18px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</button>
+<!-- Row 2: Language -->
+<button class="w-full flex items-center justify-between px-3.5 h-[52px] hover:bg-zinc-50/80 active:bg-zinc-100 transition-colors text-left group" type="button">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700 group-hover:bg-zinc-200/80 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="language">language</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">Language</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="text-xs text-zinc-500 font-medium font-label">English</span>
+<span class="material-symbols-outlined text-zinc-400 text-[18px]" data-icon="chevron_right">chevron_right</span>
+</div>
+</button>
+<!-- Row 3: Theme -->
+<div class="w-full flex items-center justify-between px-3.5 h-[52px] text-left">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700">
+<span class="material-symbols-outlined text-[18px]" data-icon="palette">palette</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">Theme</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-xs text-zinc-500 font-label">System</span>
+<button aria-checked="false" aria-label="Toggle theme preference" class="w-10 h-5 bg-zinc-200 rounded-full relative transition-colors duration-200 focus:outline-none cursor-pointer" id="theme-toggle" role="switch" type="button">
+<span class="block w-4 h-4 rounded-full bg-white shadow-sm transform transition-transform duration-200 translate-x-0.5 mt-0.5"></span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: About -->
+<div>
+<h3 class="text-[11px] font-semibold uppercase tracking-wider text-zinc-500 px-1 mb-1.5 font-label">About</h3>
+<div class="bg-white rounded-lg border border-zinc-200 divide-y divide-zinc-100 overflow-hidden shadow-xs">
+<!-- Row 1: Help center -->
+<button class="w-full flex items-center justify-between px-3.5 h-[52px] hover:bg-zinc-50/80 active:bg-zinc-100 transition-colors text-left group" type="button">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700 group-hover:bg-zinc-200/80 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="help_outline">help_outline</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">Help center</span>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-[18px] group-hover:translate-x-0.5 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Row 2: Terms of service -->
+<button class="w-full flex items-center justify-between px-3.5 h-[52px] hover:bg-zinc-50/80 active:bg-zinc-100 transition-colors text-left group" type="button">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700 group-hover:bg-zinc-200/80 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="description">description</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">Terms of service</span>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-[18px] group-hover:translate-x-0.5 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Row 3: Privacy policy -->
+<button class="w-full flex items-center justify-between px-3.5 h-[52px] hover:bg-zinc-50/80 active:bg-zinc-100 transition-colors text-left group" type="button">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700 group-hover:bg-zinc-200/80 transition-colors">
+<span class="material-symbols-outlined text-[18px]" data-icon="privacy_tip">privacy_tip</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">Privacy policy</span>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-[18px] group-hover:translate-x-0.5 transition-transform" data-icon="chevron_right">chevron_right</span>
+</button>
+<!-- Row 4: App version -->
+<div class="w-full flex items-center justify-between px-3.5 h-[52px] text-left">
+<div class="flex items-center gap-3">
+<span class="p-1.5 rounded-md bg-zinc-100 text-zinc-700">
+<span class="material-symbols-outlined text-[18px]" data-icon="info">info</span>
+</span>
+<span class="text-sm font-normal text-zinc-900 font-label">App version</span>
+</div>
+<span class="text-xs font-mono text-zinc-400 tabular-nums">1.4.0</span>
+</div>
+</div>
+</div>
+<!-- Log Out Action Button -->
+<div class="pt-2">
+<button class="w-full flex items-center justify-center gap-2 py-3 bg-white border border-zinc-200 rounded-lg text-rose-600 font-medium text-sm hover:bg-rose-50/50 active:scale-[0.98] transition-all shadow-xs" type="button">
+<span class="material-symbols-outlined text-[18px]" data-icon="logout">logout</span>
+<span>Log out</span>
+</button>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Component (Exact JSON Anchor implementation) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-2 bg-white pb-safe border-t border-zinc-200">
+<!-- 1: Dashboard -->
+<a class="flex flex-col items-center justify-center text-zinc-500 py-1.5 px-3 transition-colors duration-150 active:scale-95 hover:text-zinc-900" href="#dashboard">
+<span class="material-symbols-outlined text-[20px] mb-1" data-icon="dashboard">dashboard</span>
+<span class="font-label text-xs font-medium">Dashboard</span>
+</a>
+<!-- 2: Expenses -->
+<a class="flex flex-col items-center justify-center text-zinc-500 py-1.5 px-3 transition-colors duration-150 active:scale-95 hover:text-zinc-900" href="#expenses">
+<span class="material-symbols-outlined text-[20px] mb-1" data-icon="receipt_long">receipt_long</span>
+<span class="font-label text-xs font-medium">Expenses</span>
+</a>
+<!-- 3: Balances -->
+<a class="flex flex-col items-center justify-center text-zinc-500 py-1.5 px-3 transition-colors duration-150 active:scale-95 hover:text-zinc-900" href="#balances">
+<span class="material-symbols-outlined text-[20px] mb-1" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span class="font-label text-xs font-medium">Balances</span>
+</a>
+<!-- 4: Activity (semantic active item mapped from nav labels) -->
+<a class="flex flex-col items-center justify-center text-zinc-900 py-1.5 px-3 transition-colors duration-150 active:scale-95 font-medium" href="#activity">
+<span class="material-symbols-outlined text-[20px] mb-1 fill" data-icon="history" data-weight="fill" style="font-variation-settings: 'FILL' 1;">history</span>
+<span class="font-label text-xs font-medium">Activity</span>
+</a>
+</nav>
+</div>
+<!-- Interactive micro-interaction script for shadcn switch -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggle = document.getElementById('theme-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', () => {
+          const isChecked = toggle.getAttribute('aria-checked') === 'true';
+          toggle.setAttribute('aria-checked', !isChecked);
+          const thumb = toggle.querySelector('span');
+          if (!isChecked) {
+            toggle.classList.remove('bg-zinc-200');
+            toggle.classList.add('bg-zinc-900');
+            thumb.classList.remove('translate-x-0.5');
+            thumb.classList.add('translate-x-[22px]');
+          } else {
+            toggle.classList.remove('bg-zinc-900');
+            toggle.classList.add('bg-zinc-200');
+            thumb.classList.remove('translate-x-[22px]');
+            thumb.classList.add('translate-x-0.5');
+          }
+        });
+      }
+    });
+  </script>
+</body></html>

@@ -12,6 +12,8 @@ import {
   Button,
   ConfirmDialog,
 } from "@/components/ui";
+import { MemberListSkeleton } from "@/components/skeletons";
+import { formatDate } from "@/lib/selectors";
 import { UserMinus } from "lucide-react";
 import type { GroupMemberRecord } from "@/types";
 
@@ -20,16 +22,8 @@ interface MemberListProps {
   members: GroupMemberRecord[];
   currentUserId?: string;
   currentUserName?: string;
-}
-
-function formatDate(iso: string): string {
-  const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleDateString(undefined, {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  });
+  isLoading?: boolean;
+  skeletonCount?: number;
 }
 
 export function MemberList({
@@ -37,6 +31,8 @@ export function MemberList({
   members,
   currentUserId,
   currentUserName,
+  isLoading = false,
+  skeletonCount = 3,
 }: MemberListProps) {
   const removeMember = useRemoveGroupMember();
   const updateRole = useUpdateMemberRole();
@@ -44,6 +40,10 @@ export function MemberList({
   const [memberToRemove, setMemberToRemove] =
     useState<GroupMemberRecord | null>(null);
   const [actionError, setActionError] = useState<string | null>(null);
+
+  if (isLoading) {
+    return <MemberListSkeleton count={skeletonCount} />;
+  }
 
   const currentMember = members.find((m) => m.user_id === currentUserId);
   const canManage = currentMember?.role === "admin";

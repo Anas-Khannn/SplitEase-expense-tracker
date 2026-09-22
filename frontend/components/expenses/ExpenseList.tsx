@@ -1,6 +1,7 @@
 "use client";
 
 import { ExpenseCard, ExpenseTableRow } from "./ExpenseCard";
+import { ExpenseListSkeleton } from "@/components/skeletons";
 import { EmptyState, Button } from "@/components/ui";
 import { ReceiptText, Plus, FilterX, X } from "lucide-react";
 import type { Expense } from "@/types";
@@ -11,9 +12,11 @@ interface ExpenseListProps {
   onAddExpense: () => void;
   onEdit: (expense: Expense) => void;
   onDelete: (expense: Expense) => void;
-  onView: (expense: Expense) => void;
+  onView?: (expense: Expense) => void;
   isFiltered?: boolean;
   onClearFilters?: () => void;
+  isLoading?: boolean;
+  skeletonCount?: number;
 }
 
 const TH_CLASS =
@@ -28,7 +31,13 @@ export function ExpenseList({
   onView,
   isFiltered = false,
   onClearFilters,
+  isLoading = false,
+  skeletonCount = 3,
 }: ExpenseListProps) {
+  if (isLoading) {
+    return <ExpenseListSkeleton count={skeletonCount} />;
+  }
+
   if (expenses.length === 0) {
     if (isFiltered) {
       return (
@@ -112,7 +121,7 @@ export function ExpenseList({
                   currentUserId={currentUserId}
                   onEdit={() => onEdit(expense)}
                   onDelete={() => onDelete(expense)}
-                  onView={() => onView(expense)}
+                  onView={onView ? () => onView(expense) : undefined}
                 />
               ))}
             </tbody>
@@ -128,7 +137,7 @@ export function ExpenseList({
             currentUserId={currentUserId}
             onEdit={() => onEdit(expense)}
             onDelete={() => onDelete(expense)}
-            onView={() => onView(expense)}
+            onView={onView ? () => onView(expense) : undefined}
           />
         ))}
       </div>

@@ -1,14 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { KeyRound } from "lucide-react";
 import { useOAuthLogin } from "@/hooks/useOAuthLogin";
 import { Button } from "@/components/ui/primitives/button";
-
-const providers = [
-  { key: "google" as const, label: "Continue with Google", Icon: GoogleIcon },
-  { key: "github" as const, label: "Continue with GitHub", Icon: GitHubIcon },
-  { key: "facebook" as const, label: "Continue with Facebook", Icon: FacebookIcon },
-];
+import { cn } from "@/lib/utils/cn";
 
 function GoogleIcon() {
   return (
@@ -21,48 +17,92 @@ function GoogleIcon() {
   );
 }
 
-function GitHubIcon() {
+function Spinner() {
   return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true">
-      <path fillRule="evenodd" clipRule="evenodd" d="M9 0C4.03 0 0 4.03 0 9c0 3.977 2.579 7.35 6.154 8.541.45.083.615-.195.615-.43 0-.212-.008-.775-.012-1.52-2.504.544-3.032-1.207-3.032-1.207-.41-1.037-1-1.31-1-1.31-.816-.558.062-.546.062-.546.903.063 1.378.927 1.378.927.803 1.376 2.105.978 2.62.748.081-.581.314-.978.571-1.203-1.998-.227-4.107-.999-4.107-4.45 0-.983.352-1.784.927-2.412-.093-.228-.402-1.14.088-2.375 0 0 .757-.242 2.475.922A8.64 8.64 0 019 4.37a8.64 8.64 0 012.25.303c1.717-1.164 2.473-.922 2.473-.922.491 1.235.182 2.147.089 2.375.576.628.926 1.429.926 2.412 0 3.459-2.112 4.218-4.116 4.442.324.278.613.826.613 1.664 0 1.203-.011 2.175-.011 2.471 0 .237.164.517.62.43C15.424 16.345 18 12.972 18 9c0-4.97-4.03-9-9-9z"/>
-    </svg>
+    <span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
   );
 }
 
-function FacebookIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 18 18" fill="#1877F2" aria-hidden="true">
-      <path d="M18 9c0-4.97-4.03-9-9-9S0 4.03 0 9c0 4.492 3.29 8.213 7.594 8.891v-6.29H5.309V9h2.285V7.017c0-2.255 1.343-3.502 3.4-3.502.984 0 2.014.176 2.014.176v2.215h-1.135c-1.118 0-1.467.693-1.467 1.4V9h2.496l-.399 2.602h-2.097v6.289C14.71 17.213 18 13.492 18 9z"/>
-    </svg>
-  );
-}
-
-export default function SocialLogin() {
+export function GoogleButton({
+  className,
+  label,
+}: {
+  className?: string;
+  label?: string;
+}) {
   const { mutate: oauthLogin, isPending } = useOAuthLogin();
-  const [pendingKey, setPendingKey] = useState<string | null>(null);
+  const [pending, setPending] = useState(false);
 
   return (
-    <div className="flex flex-col space-y-3 w-full">
-      {providers.map((p) => (
-        <Button
-          key={p.key}
-          type="button"
-          variant="outline"
-          disabled={isPending}
-          onClick={() => {
-            setPendingKey(p.key);
-            oauthLogin(p.key);
-          }}
-          className="w-full font-sans text-sm h-11 px-6 transition-colors disabled:opacity-50"
-        >
-          {pendingKey === p.key && isPending ? (
-            <span className="size-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-          ) : (
-            <p.Icon />
-          )}
-          <span>{p.label}</span>
-        </Button>
-      ))}
+    <Button
+      type="button"
+      variant="outline"
+      disabled={isPending}
+      onClick={() => {
+        setPending(true);
+        oauthLogin("google");
+      }}
+      className={cn(
+        "h-11 rounded-lg px-6 font-sans text-sm transition-all disabled:opacity-50",
+        className
+      )}
+    >
+      {pending && isPending ? (
+        <Spinner />
+      ) : (
+        <GoogleIcon />
+      )}
+      <span>{label ?? "Continue with Google"}</span>
+    </Button>
+  );
+}
+
+export function PasskeyButton({
+  className,
+  label = "Continue with Passkey",
+}: {
+  className?: string;
+  label?: string;
+}) {
+  return (
+    <Button
+      type="button"
+      variant="outline"
+      onClick={() => {
+        // Passkey auth is not wired up yet; keep the button decorative.
+      }}
+      className={cn(
+        "h-11 rounded-lg px-6 font-sans text-sm transition-all",
+        className
+      )}
+    >
+      <KeyRound className="size-4" aria-hidden="true" />
+      <span>{label}</span>
+    </Button>
+  );
+}
+
+interface SocialLoginProps {
+  variant?: "split" | "stack";
+  className?: string;
+}
+
+export default function SocialLogin({
+  variant = "stack",
+  className,
+}: SocialLoginProps) {
+  if (variant === "split") {
+    return (
+      <div className={cn("grid grid-cols-2 gap-3 w-full", className)}>
+        <GoogleButton label="Google" />
+        <PasskeyButton label="Passkey" />
+      </div>
+    );
+  }
+
+  return (
+    <div className={cn("flex flex-col space-y-3 w-full", className)}>
+      <GoogleButton />
     </div>
   );
 }

@@ -8,8 +8,14 @@
     "dev": "nodemon src/app.js",
     "test": "cross-env NODE_ENV=test jest --runInBand --forceExit",
     "lint": "eslint src __tests__ config",
+    "lint:fix": "eslint src __tests__ config --fix",
     "format": "prettier --write \"src/**/*.js\" \"__tests__/**/*.js\" \"config/**/*.js\" \"eslint.config.js\" \"prettier.config.js\"",
-    "format:check": "prettier --check \"src/**/*.js\" \"__tests__/**/*.js\" \"config/**/*.js\" \"eslint.config.js\" \"prettier.config.js\""
+    "format:check": "prettier --check \"src/**/*.js\" \"__tests__/**/*.js\" \"config/**/*.js\" \"eslint.config.js\" \"prettier.config.js\"",
+    "docs:openapi": "node -e \"require('./src/docs/openapi').generateOpenApiSpec()\"",
+    "docs:sequence": "node -e \"const spec = require('./src/docs/openapi').swaggerSpec; require('./src/docs/mermaid-sequence').generateAll(spec)\"",
+    "docs:api": "npm run docs:openapi && npm run docs:sequence",
+    "docs:erd": "node src/docs/generate-erd.js",
+    "docs:all": "npm run docs:api && npm run docs:erd"
   },
   "keywords": [
     "splitease",
@@ -36,11 +42,14 @@
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.12.0",
     "jest": "^30.4.2",
+    "js-yaml": "^4.3.2",
     "nodemon": "^3.1.14",
     "prettier": "^3.9.6",
     "sequelize-cli": "^6.6.5",
     "sqlite3": "^6.0.1",
-    "supertest": "^7.2.2"
+    "supertest": "^7.2.2",
+    "swagger-jsdoc": "^6.3.0",
+    "swagger-ui-express": "^5.0.1"
   },
   "jest": {
     "testEnvironment": "node",

@@ -1,0 +1,68 @@
+# Dependency Review Configuration
+# Used by actions/dependency-review-action
+
+# Severity levels to fail on
+fail-on-severity: high
+
+# Allow list for known safe packages
+allow-list:
+  # Development tools
+  - "@types/node"
+  - "@types/react"
+  - "@types/react-dom"
+  - "@types/three"
+  - "typescript"
+  - "vitest"
+  - "eslint"
+  - "eslint-config-next"
+  - "jest"
+  - "ts-arch-test"
+  - "dependency-cruiser"
+  - "concurrently"
+  - "nodemon"
+  - "cross-env"
+  - "supertest"
+  - "sqlite3"
+  - "sequelize-cli"
+  - "swagger-jsdoc"
+  - "swagger-ui-express"
+  - "js-yaml"
+
+  # Build tools
+  - "@vitejs/plugin-react"
+  - "tailwindcss"
+  - "postcss"
+  - "autoprefixer"
+  - "shadcn"
+  - "class-variance-authority"
+  - "clsx"
+  - "tailwind-merge"
+  - "tw-animate-css"
+
+# Deny list for packages with known vulnerabilities
+deny-list:
+  # Example: packages with known issues
+  # - "package-with-cve"
+
+# License allow list
+license-allow-list:
+  - MIT
+  - Apache-2.0
+  - BSD-2-Clause
+  - BSD-3-Clause
+  - ISC
+  - CC0-1.0
+  - Unlicense
+  - Zlib
+
+# License deny list
+license-deny-list:
+  - GPL-2.0
+  - GPL-3.0
+  - AGPL-3.0
+  - LGPL-2.1
+  - LGPL-3.0
+
+# Scope allow list (for private packages)
+scope-allow-list:
+  - "@splitease"

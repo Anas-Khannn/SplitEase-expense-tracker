@@ -25,6 +25,13 @@ const GROUP_ICON_MAP: Record<string, string> = {
   family: "👨‍👩‍👧",
   friends: "🤝",
   rent: "🏘️",
+  apartment: "🏢",
+  hotel: "🏨",
+  flight: "✈️",
+  ski: "🎿",
+  beach: "🏖️",
+  game: "🎮",
+  shopping: "🛍️",
 };
 
 export function groupIcon(

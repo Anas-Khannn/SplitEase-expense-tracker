@@ -21,6 +21,11 @@ app.get("/api/health", (req, res) => {
   });
 });
 
+if (env.nodeEnv !== "production") {
+  const debugRoutes = require("./routes/debug.routes");
+  app.use("/api/debug", debugRoutes);
+}
+
 app.use("/api", routes);
 
 app.use(errorHandler);

@@ -1,0 +1,625 @@
+{
+  "models": [
+    {
+      "modelName": "user",
+      "tableName": "users",
+      "columns": [
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "DataTypes.UUIDV4"
+        },
+        {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "email",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": true,
+          "defaultValue": null
+        },
+        {
+          "name": "password_hash",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        }
+      ]
+    },
+    {
+      "modelName": "group",
+      "tableName": "groups",
+      "columns": [
+        {
+          "name": "group_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "DataTypes.UUIDV4"
+        },
+        {
+          "name": "created_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "icon",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": true,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": true,
+          "unique": false,
+          "defaultValue": null
+        }
+      ]
+    },
+    {
+      "modelName": "groupmember",
+      "tableName": "group_members",
+      "columns": [
+        {
+          "name": "group_member_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "DataTypes.UUIDV4"
+        },
+        {
+          "name": "group_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "role",
+          "type": "enum",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "\"member\""
+        },
+        {
+          "name": "joined_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "DataTypes.NOW"
+        }
+      ]
+    },
+    {
+      "modelName": "expense",
+      "tableName": "expenses",
+      "columns": [
+        {
+          "name": "expense_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "DataTypes.UUIDV4"
+        },
+        {
+          "name": "group_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "paid_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "description",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "amount",
+          "type": "decimal",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "expense_date",
+          "type": "date",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        }
+      ]
+    },
+    {
+      "modelName": "expensesplit",
+      "tableName": "expense_splits",
+      "columns": [
+        {
+          "name": "expense_split_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "DataTypes.UUIDV4"
+        },
+        {
+          "name": "expense_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "share_amount",
+          "type": "decimal",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        }
+      ]
+    },
+    {
+      "modelName": "payment",
+      "tableName": "payments",
+      "columns": [
+        {
+          "name": "payment_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "DataTypes.UUIDV4"
+        },
+        {
+          "name": "group_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "paid_by",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "paid_to",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "amount",
+          "type": "decimal",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "payment_date",
+          "type": "date",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "note",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": true,
+          "unique": false,
+          "defaultValue": null
+        }
+      ]
+    },
+    {
+      "modelName": "expensereaction",
+      "tableName": "expense_reactions",
+      "columns": [
+        {
+          "name": "reaction_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "DataTypes.UUIDV4"
+        },
+        {
+          "name": "expense_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "reaction",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        }
+      ]
+    },
+    {
+      "modelName": "activitylog",
+      "tableName": "activity_logs",
+      "columns": [
+        {
+          "name": "activity_id",
+          "type": "uuid",
+          "primaryKey": true,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "DataTypes.UUIDV4"
+        },
+        {
+          "name": "group_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "user_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "action",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        }
+      ]
+    }
+  ],
+  "associations": [
+    {
+      "type": "one-to-many",
+      "source": "User",
+      "target": "Group",
+      "foreignKey": "created_by",
+      "alias": "createdGroups"
+    },
+    {
+      "type": "one-to-many",
+      "source": "User",
+      "target": "GroupMember",
+      "foreignKey": "user_id",
+      "alias": "groupMemberships"
+    },
+    {
+      "type": "one-to-many",
+      "source": "Group",
+      "target": "GroupMember",
+      "foreignKey": "group_id",
+      "alias": "members"
+    },
+    {
+      "type": "one-to-many",
+      "source": "Group",
+      "target": "Expense",
+      "foreignKey": "group_id",
+      "alias": "expenses"
+    },
+    {
+      "type": "one-to-many",
+      "source": "User",
+      "target": "Expense",
+      "foreignKey": "paid_by",
+      "alias": "paidExpenses"
+    },
+    {
+      "type": "one-to-many",
+      "source": "Expense",
+      "target": "ExpenseSplit",
+      "foreignKey": "expense_id",
+      "alias": "splits"
+    },
+    {
+      "type": "one-to-many",
+      "source": "User",
+      "target": "ExpenseSplit",
+      "foreignKey": "user_id",
+      "alias": "expenseSplits"
+    },
+    {
+      "type": "one-to-many",
+      "source": "Group",
+      "target": "Payment",
+      "foreignKey": "group_id",
+      "alias": "payments"
+    },
+    {
+      "type": "one-to-many",
+      "source": "User",
+      "target": "Payment",
+      "foreignKey": "paid_by",
+      "alias": "sentPayments"
+    },
+    {
+      "type": "one-to-many",
+      "source": "User",
+      "target": "Payment",
+      "foreignKey": "paid_to",
+      "alias": "receivedPayments"
+    },
+    {
+      "type": "one-to-many",
+      "source": "Expense",
+      "target": "ExpenseReaction",
+      "foreignKey": "expense_id",
+      "alias": "reactions"
+    },
+    {
+      "type": "one-to-many",
+      "source": "User",
+      "target": "ExpenseReaction",
+      "foreignKey": "user_id",
+      "alias": "expenseReactions"
+    },
+    {
+      "type": "one-to-many",
+      "source": "Group",
+      "target": "ActivityLog",
+      "foreignKey": "group_id",
+      "alias": "activities"
+    },
+    {
+      "type": "one-to-many",
+      "source": "User",
+      "target": "ActivityLog",
+      "foreignKey": "user_id",
+      "alias": "activities"
+    },
+    {
+      "type": "many-to-one",
+      "source": "Group",
+      "target": "User",
+      "foreignKey": "created_by",
+      "alias": "creator"
+    },
+    {
+      "type": "many-to-one",
+      "source": "GroupMember",
+      "target": "User",
+      "foreignKey": "user_id",
+      "alias": "user"
+    },
+    {
+      "type": "many-to-one",
+      "source": "GroupMember",
+      "target": "Group",
+      "foreignKey": "group_id",
+      "alias": "group"
+    },
+    {
+      "type": "many-to-one",
+      "source": "Expense",
+      "target": "Group",
+      "foreignKey": "group_id",
+      "alias": "group"
+    },
+    {
+      "type": "many-to-one",
+      "source": "Expense",
+      "target": "User",
+      "foreignKey": "paid_by",
+      "alias": "payer"
+    },
+    {
+      "type": "many-to-one",
+      "source": "ExpenseSplit",
+      "target": "Expense",
+      "foreignKey": "expense_id",
+      "alias": "expense"
+    },
+    {
+      "type": "many-to-one",
+      "source": "ExpenseSplit",
+      "target": "User",
+      "foreignKey": "user_id",
+      "alias": "user"
+    },
+    {
+      "type": "many-to-one",
+      "source": "Payment",
+      "target": "Group",
+      "foreignKey": "group_id",
+      "alias": "group"
+    },
+    {
+      "type": "many-to-one",
+      "source": "Payment",
+      "target": "User",
+      "foreignKey": "paid_by",
+      "alias": "payer"
+    },
+    {
+      "type": "many-to-one",
+      "source": "Payment",
+      "target": "User",
+      "foreignKey": "paid_to",
+      "alias": "receiver"
+    },
+    {
+      "type": "many-to-one",
+      "source": "ExpenseReaction",
+      "target": "Expense",
+      "foreignKey": "expense_id",
+      "alias": "expense"
+    },
+    {
+      "type": "many-to-one",
+      "source": "ExpenseReaction",
+      "target": "User",
+      "foreignKey": "user_id",
+      "alias": "user"
+    },
+    {
+      "type": "many-to-one",
+      "source": "ActivityLog",
+      "target": "Group",
+      "foreignKey": "group_id",
+      "alias": "group"
+    },
+    {
+      "type": "many-to-one",
+      "source": "ActivityLog",
+      "target": "User",
+      "foreignKey": "user_id",
+      "alias": "user"
+    },
+    {
+      "type": "many-to-many",
+      "source": "User",
+      "target": "Group",
+      "through": "GroupMember",
+      "foreignKey": "user_id",
+      "otherKey": "group_id",
+      "alias": "groups"
+    },
+    {
+      "type": "many-to-many",
+      "source": "Group",
+      "target": "User",
+      "through": "GroupMember",
+      "foreignKey": "group_id",
+      "otherKey": "user_id",
+      "alias": "groupUsers"
+    },
+    {
+      "type": "many-to-many",
+      "source": "User",
+      "target": "Expense",
+      "through": "ExpenseSplit",
+      "foreignKey": "user_id",
+      "otherKey": "expense_id",
+      "alias": "splitExpenses"
+    },
+    {
+      "type": "many-to-many",
+      "source": "Expense",
+      "target": "User",
+      "through": "ExpenseSplit",
+      "foreignKey": "expense_id",
+      "otherKey": "user_id",
+      "alias": "splitWithUsers"
+    },
+    {
+      "type": "many-to-many",
+      "source": "User",
+      "target": "Expense",
+      "through": "ExpenseReaction",
+      "foreignKey": "user_id",
+      "otherKey": "expense_id",
+      "alias": "reactedExpenses"
+    },
+    {
+      "type": "many-to-many",
+      "source": "Expense",
+      "target": "User",
+      "through": "ExpenseReaction",
+      "foreignKey": "expense_id",
+      "otherKey": "user_id",
+      "alias": "reactors"
+    }
+  ],
+  "generatedAt": "2026-09-20T12:47:39.371Z"
+}

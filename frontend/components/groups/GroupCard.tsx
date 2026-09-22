@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Card, CardContent, Badge, Avatar, Skeleton } from "@/components/ui";
 import { groupIcon } from "@/lib/utils/group-icons";
+import { formatCurrency } from "@/lib/selectors";
 import type { GroupListItem, GroupMemberRecord } from "@/types";
+import { Receipt, ArrowRight } from "lucide-react";
 
 interface GroupCardProps {
   group: GroupListItem;
@@ -12,15 +13,10 @@ interface GroupCardProps {
   membersLoading?: boolean;
 }
 
-function formatBalance(value: number): string {
-  return `$${value.toFixed(2)}`;
-}
-
 export function GroupCard({
   group,
   balance,
   members = [],
-  membersLoading = false,
 }: GroupCardProps) {
   const isAdmin = group.role === "admin";
   const isSettled = balance === 0;
@@ -29,82 +25,72 @@ export function GroupCard({
   return (
     <Link
       href={`/groups/${group.group_id}/expenses`}
-      className="block rounded-radius-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus-ring"
+      className="block group outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 rounded-xl"
     >
-      <Card variant="interactive" className="h-full">
-        <CardContent className="flex h-full flex-col gap-4 py-5">
-          <div className="flex items-start gap-4">
-            <span
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-radius-md bg-primary-100 text-lg"
-              aria-hidden="true"
-            >
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-6 shadow-xs hover:border-zinc-300 dark:hover:border-zinc-700 hover:shadow-sm transition-all flex flex-col justify-between h-full">
+        <div>
+          {/* Top Card Header */}
+          <div className="flex items-start justify-between">
+            <div className="size-11 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-800 dark:text-zinc-200 shrink-0 group-hover:bg-zinc-900 group-hover:text-white dark:group-hover:bg-zinc-100 dark:group-hover:text-zinc-900 transition-colors duration-200">
               {groupIcon(group.icon)}
-            </span>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <h3 className="truncate text-sm font-semibold text-text-primary">
-                  {group.name}
-                </h3>
-                {isAdmin && <Badge variant="primary">Admin</Badge>}
-              </div>
-              {group.description && (
-                <p className="mt-1 text-sm text-text-secondary line-clamp-2">
-                  {group.description}
-                </p>
-              )}
             </div>
-          </div>
-
-          <div className="mt-auto flex items-center justify-between gap-3 border-t border-border-default pt-4">
-            <div className="flex min-w-0 items-center gap-2">
-              {membersLoading ? (
-                <div className="flex -space-x-2">
-                  {[1, 2, 3].map((i) => (
-                    <Skeleton
-                      key={i}
-                      variant="circle"
-                      className="h-8 w-8 border-2 border-surface"
-                    />
-                  ))}
-                </div>
-              ) : members.length > 0 ? (
-                <div className="flex -space-x-2">
-                  {members.slice(0, 3).map((member) => (
-                    <Avatar
-                      key={member.user_id}
-                      name={member.name ?? member.user_id}
-                      alt={member.name ?? "Group member"}
-                      size="sm"
-                      className="border-2 border-surface"
-                    />
-                  ))}
-                </div>
+            <div className="flex items-center gap-1.5">
+              {balance !== undefined && isSettled ? (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700">
+                  <span className="size-1.5 rounded-full bg-zinc-400" /> Settled
+                </span>
               ) : (
-                <span
-                  className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-alt text-xs text-muted-foreground"
-                  aria-hidden="true"
-                >
-                  ?
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200/60 dark:bg-emerald-950/40 dark:text-emerald-400 dark:border-emerald-800">
+                  <span className="size-1.5 rounded-full bg-emerald-500" /> Active
                 </span>
               )}
-              <span className="shrink-0 text-xs text-muted-foreground">
-                {members.length} {members.length === 1 ? "member" : "members"}
+              <span className="text-xs text-zinc-400">•</span>
+              <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium">
+                {members.length > 0 ? `${members.length} members` : isAdmin ? "Admin" : "Member"}
               </span>
             </div>
+          </div>
 
+          {/* Group Details */}
+          <h3 className="font-headline font-semibold text-base text-zinc-900 dark:text-zinc-50 mt-4 group-hover:text-zinc-700 dark:group-hover:text-zinc-300 transition-colors truncate">
+            {group.name}
+          </h3>
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1.5 leading-relaxed line-clamp-2">
+            {group.description || "Shared group expenses, rent, utilities, and dining split evenly."}
+          </p>
+        </div>
+
+        {/* Balance & Footer Link */}
+        <div className="mt-6 pt-4 border-t border-zinc-100 dark:border-zinc-800">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-xs text-zinc-500 dark:text-zinc-400">Your status</span>
             {balance === undefined ? (
-              <span className="shrink-0 text-xs text-muted-foreground">—</span>
+              <span className="text-xs text-zinc-400">—</span>
             ) : isSettled ? (
-              <Badge variant="success">Settled</Badge>
+              <span className="text-sm font-medium text-zinc-600 dark:text-zinc-400 tabular-nums">
+                All settled ($0.00)
+              </span>
+            ) : isOwed ? (
+              <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-400 tabular-nums">
+                You are owed +{formatCurrency(balance)}
+              </span>
             ) : (
-              <Badge variant={isOwed ? "success" : "danger"}>
-                {isOwed ? "You're owed " : "You owe "}
-                {formatBalance(Math.abs(balance))}
-              </Badge>
+              <span className="text-sm font-semibold text-rose-600 dark:text-rose-400 tabular-nums">
+                You owe -{formatCurrency(Math.abs(balance))}
+              </span>
             )}
           </div>
-        </CardContent>
-      </Card>
+          <div className="flex items-center justify-between text-xs text-zinc-500 dark:text-zinc-400">
+            <div className="flex items-center gap-1.5">
+              <Receipt className="size-3.5 text-zinc-400" />
+              <span>Tracked expenses</span>
+            </div>
+            <span className="font-medium text-zinc-900 dark:text-zinc-100 inline-flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+              Open <ArrowRight className="size-3" />
+            </span>
+          </div>
+        </div>
+      </div>
     </Link>
   );
 }

@@ -6,6 +6,7 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import Sidebar from "@/components/layout/Sidebar";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { SidebarInset, SidebarMenuSkeleton } from "@/components/ui/sidebar";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -56,13 +57,14 @@ export default function AppLayout({
       <Suspense fallback={<SidebarSkeleton />}>
         <Sidebar />
       </Suspense>
-      <SidebarInset className="flex flex-1 flex-col">
+      <SidebarInset className="flex flex-1 flex-col bg-zinc-50 dark:bg-zinc-950">
         <Header />
-        <main className="mx-auto size-full max-w-360 flex-1 px-4 py-6 sm:px-6">
+        <main className="mx-auto size-full max-w-7xl flex-1 px-4 pt-6 pb-20 sm:px-8 sm:pt-8 md:pb-8">
           {children}
         </main>
         <Toaster />
         <Footer />
+        <MobileBottomNav />
       </SidebarInset>
     </div>
   );

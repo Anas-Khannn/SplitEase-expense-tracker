@@ -5,29 +5,19 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowRight, CheckCircle2 } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowLeft, ArrowRight, CheckCircle2, KeyRound, Lock } from "lucide-react";
 import {
   forgotPasswordSchema,
   type ForgotPasswordFormData,
 } from "@/lib/validation/authSchemas";
-import AuthCard from "@/components/auth/AuthCard";
+import { SplitEaseLogo } from "@/components/auth/SplitEaseLogo";
+import { AuthHeader } from "@/components/auth/AuthHeader";
+import { AuthFooter, FooterLink } from "@/components/auth/AuthFooter";
+import { GridPattern } from "@/components/auth/DotPattern";
 import AuthMethodToggle from "@/components/auth/AuthMethodToggle";
 import { Button, Input } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.06, delayChildren: 0.1 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 8 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-};
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
@@ -35,7 +25,7 @@ export default function ForgotPasswordPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
   const [serverError, setServerError] = useState<string | null>(null);
-  const { shakeControls, shake } = useShake();
+  const { shake } = useShake();
 
   const {
     register,
@@ -60,14 +50,10 @@ export default function ForgotPasswordPage() {
     async (data: ForgotPasswordFormData) => {
       setServerError(null);
       try {
-        // TODO: POST /api/auth/forgot-password (backend endpoint not implemented yet)
-        // For now, simulate success for email flow
         if (data.method === "email" && data.email) {
           setSubmittedEmail(data.email);
           setSubmitted(true);
         } else if (data.method === "phone" && data.phone) {
-          // TODO: POST /api/auth/forgot-password with phone
-          // Navigate to OTP entry
           router.push(`/reset-password?phone=${encodeURIComponent(data.phone)}`);
         }
       } catch (err: unknown) {
@@ -83,146 +69,171 @@ export default function ForgotPasswordPage() {
   );
 
   return (
-    <AuthCard screenKey="forgotPassword" className="w-full">
-      <div className="px-6 py-8 sm:px-8">
-        <AnimatePresence mode="wait">
-          {submitted ? (
-            <motion.div
-              key="success"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.3 }}
-              className="text-center py-4"
-            >
-              <CheckCircle2
-                size={48}
-                className="mx-auto mb-4 text-success-500"
-              />
-              <h2 className="text-h2 font-bold text-text-primary mb-2">
-                Check your email
-              </h2>
-              <p className="text-body-sm text-text-muted mb-6">
-                We&apos;ve sent a password reset link to{" "}
-                <span className="font-medium text-text-primary">
-                  {submittedEmail}
-                </span>
-                . Please check your inbox.
-              </p>
-              <Link href="/login">
-                <Button variant="secondary" fullWidth icon={<ArrowLeft />}>
+    <>
+      <AuthHeader
+        left={
+          <Link
+            href="/login"
+            className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            <ArrowLeft className="size-4" aria-hidden="true" />
+            Back to login
+          </Link>
+        }
+        center={<SplitEaseLogo variant="tile" />}
+        right={
+          <Link
+            href="/help"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Help & FAQ
+          </Link>
+        }
+      />
+
+      <main className="relative flex flex-1 items-center justify-center overflow-hidden bg-zinc-50 px-6 py-12 dark:bg-zinc-900/40">
+        <GridPattern className="opacity-60" />
+        <div className="relative z-10 w-full max-w-[400px] rounded-xl border border-border bg-background p-8 shadow-sm">
+          <AnimatePresence mode="wait">
+            {submitted ? (
+              <motion.div
+                key="success"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.3 }}
+                className="text-center py-4"
+              >
+                <CheckCircle2 size={48} className="mx-auto mb-4 text-success" />
+                <h2 className="text-2xl font-bold tracking-tight text-foreground mb-2">
+                  Check your email
+                </h2>
+                <p className="text-sm text-muted-foreground mb-6">
+                  We&apos;ve sent a password reset link to{" "}
+                  <span className="font-medium text-foreground">
+                    {submittedEmail}
+                  </span>
+                  . Please check your inbox.
+                </p>
+                <Button
+                  fullWidth
+                  className="rounded-lg"
+                  onClick={() => router.push("/login")}
+                >
                   Back to login
                 </Button>
-              </Link>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="form"
-              initial="hidden"
-              animate="visible"
-              exit={{ opacity: 0 }}
-              variants={containerVariants}
-            >
-              <motion.div variants={itemVariants}>
-                <Link
-                  href="/login"
-                  className="inline-flex items-center gap-1 text-body-sm text-text-muted hover:text-text-primary transition-colors mb-5"
-                >
-                  <ArrowLeft size={14} />
-                  Back to login
-                </Link>
               </motion.div>
-
-              <motion.div variants={itemVariants}>
-                <h2 className="text-h2 font-bold text-text-primary mb-1.5">
-                  Reset your password
-                </h2>
-                <p className="text-body-sm text-text-muted mb-6">
-                  Choose how you&apos;d like to reset your password
-                </p>
-              </motion.div>
-
-              <motion.div variants={itemVariants} className="mb-5">
-                <AuthMethodToggle
-                  value={method}
-                  onChange={handleMethodChange}
-                  disabled={isSubmitting}
-                />
-              </motion.div>
-
-              <motion.form
-                onSubmit={handleSubmit(onSubmit, () => shake())}
-                animate={shakeControls}
-                noValidate
+            ) : (
+              <motion.div
+                key="form"
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0 }}
               >
-                <div className="flex flex-col gap-4">
+                <div className="mb-6 inline-flex size-12 items-center justify-center rounded-full bg-zinc-100 dark:bg-zinc-800">
+                  <KeyRound className="size-6 text-foreground" aria-hidden="true" />
+                </div>
+
+                <h1 className="text-2xl font-bold tracking-tight text-foreground">
+                  Reset password
+                </h1>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  We&apos;ll email you a link to reset your password
+                </p>
+
+                <form
+                  onSubmit={handleSubmit(onSubmit, () => shake())}
+                  noValidate
+                  className="mt-6 space-y-4"
+                >
                   {serverError && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -4 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="rounded-radius-md bg-danger-100 border border-danger-500/20 px-4 py-3 text-body-sm text-danger-500"
+                    <div
+                      className="rounded-lg bg-danger-muted border border-danger/20 px-4 py-3 text-sm text-danger"
                       role="alert"
                     >
                       {serverError}
-                    </motion.div>
+                    </div>
                   )}
+
+                  <AuthMethodToggle
+                    value={method}
+                    onChange={handleMethodChange}
+                    disabled={isSubmitting}
+                  />
 
                   <input type="hidden" {...register("method")} value={method} />
 
                   {method === "email" ? (
-                    <motion.div
-                      key="email"
-                      variants={itemVariants}
-                      initial={{ opacity: 0, x: -12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
+                    <div key="email">
                       <Input
                         label="Email address"
                         type="email"
                         placeholder="you@example.com"
                         autoComplete="email"
+                        className="h-11"
                         error={errors.email?.message}
                         {...register("email")}
                       />
-                    </motion.div>
+                    </div>
                   ) : (
-                    <motion.div
-                      key="phone"
-                      variants={itemVariants}
-                      initial={{ opacity: 0, x: 12 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.2 }}
-                    >
+                    <div key="phone">
                       <Input
                         label="Phone number"
                         type="tel"
                         placeholder="+14155552671"
                         autoComplete="tel"
+                        className="h-11"
                         error={errors.phone?.message}
                         {...register("phone")}
                       />
-                    </motion.div>
+                    </div>
                   )}
 
-                  <motion.div variants={itemVariants}>
-                    <Button
-                      type="submit"
-                      fullWidth
-                      size="lg"
-                      loading={isSubmitting}
-                      icon={<ArrowRight />}
-                      iconPosition="right"
-                    >
-                      {method === "email" ? "Send reset link" : "Send OTP"}
-                    </Button>
-                  </motion.div>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    size="lg"
+                    loading={isSubmitting}
+                    icon={<ArrowRight />}
+                    iconPosition="right"
+                    className="rounded-lg"
+                  >
+                    {method === "email" ? "Send reset link" : "Send OTP"}
+                  </Button>
+                </form>
+
+                <div className="mt-6 flex items-center gap-2 text-xs text-muted-foreground">
+                  <Lock className="size-3.5 shrink-0" aria-hidden="true" />
+                  <span>Secured with end-to-end encryption</span>
                 </div>
-              </motion.form>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </AuthCard>
+
+                <div className="mt-4 flex justify-center">
+                  <Link
+                    href="/login"
+                    className="inline-flex items-center gap-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <ArrowLeft className="size-4" aria-hidden="true" />
+                    Back to login
+                  </Link>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </main>
+
+      <AuthFooter
+        center={<span>© 2024 SplitEase Inc.</span>}
+        right={
+          <>
+            <FooterLink href="/privacy">Privacy</FooterLink>
+            <FooterLink href="/terms">Terms of Service</FooterLink>
+            <FooterLink href="/security">Security</FooterLink>
+            <FooterLink href="/security">Status</FooterLink>
+            <FooterLink href="/help">Support</FooterLink>
+          </>
+        }
+      />
+    </>
   );
 }

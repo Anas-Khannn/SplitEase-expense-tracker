@@ -1,0 +1,322 @@
+[
+  {
+    "id": "edcbc4e5576d44b7a8c91e6644c90bc6",
+    "title": "SplitEase - Apartment Group Activity (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_apartment_group_activity__desktop_edcbc4e5.html",
+    "screenshot_file": "screenshots/splitease_-_apartment_group_activity__desktop_edcbc4e5.png",
+    "prompt": ""
+  },
+  {
+    "id": "db28bdb9da864ac790b2d978d99fad47",
+    "title": "SplitEase - Sign Up",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_sign_up_db28bdb9.html",
+    "screenshot_file": "screenshots/splitease_-_sign_up_db28bdb9.png",
+    "prompt": ""
+  },
+  {
+    "id": "8f99ee2dca9341f095f44e05e2e4d543",
+    "title": "Forgot Password - SplitEase",
+    "device": "MOBILE",
+    "html_file": "html/forgot_password_-_splitease_8f99ee2d.html",
+    "screenshot_file": "screenshots/forgot_password_-_splitease_8f99ee2d.png",
+    "prompt": ""
+  },
+  {
+    "id": "7875289dd921428c95e8b0d4aecd3070",
+    "title": "SplitEase - Apartment Group Expenses",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_apartment_group_expenses_7875289d.html",
+    "screenshot_file": "screenshots/splitease_-_apartment_group_expenses_7875289d.png",
+    "prompt": ""
+  },
+  {
+    "id": "80515169014c4e0d97dde8feb39004c4",
+    "title": "SplitEase - Settings (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_settings__desktop_80515169.html",
+    "screenshot_file": "screenshots/splitease_-_settings__desktop_80515169.png",
+    "prompt": ""
+  },
+  {
+    "id": "83da16185c484517a3aaa177d887e020",
+    "title": "SplitEase - Apartment Group Activity",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_apartment_group_activity_83da1618.html",
+    "screenshot_file": "screenshots/splitease_-_apartment_group_activity_83da1618.png",
+    "prompt": ""
+  },
+  {
+    "id": "9ef7466cc52046c3b10d843d59951ba1",
+    "title": "SplitEase - Balances",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_balances_9ef7466c.html",
+    "screenshot_file": "screenshots/splitease_-_balances_9ef7466c.png",
+    "prompt": ""
+  },
+  {
+    "id": "22cb8e223e1e4229b440159feff083e7",
+    "title": "SplitEase - Profile (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_profile__desktop_22cb8e22.html",
+    "screenshot_file": "screenshots/splitease_-_profile__desktop_22cb8e22.png",
+    "prompt": ""
+  },
+  {
+    "id": "5aae4501b893492dbf89e961232ddfe0",
+    "title": "SplitEase - Balances (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_balances__desktop_5aae4501.html",
+    "screenshot_file": "screenshots/splitease_-_balances__desktop_5aae4501.png",
+    "prompt": ""
+  },
+  {
+    "id": "dcd0263939e14d818e49f862b451a852",
+    "title": "SplitEase - Apartment Expenses",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_apartment_expenses_dcd02639.html",
+    "screenshot_file": "screenshots/splitease_-_apartment_expenses_dcd02639.png",
+    "prompt": ""
+  },
+  {
+    "id": "c586749466ef49ee808d9f6c3940679f",
+    "title": "SplitEase - Expenses (Choose Group)",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_expenses__choose_group_c5867494.html",
+    "screenshot_file": "screenshots/splitease_-_expenses__choose_group_c5867494.png",
+    "prompt": ""
+  },
+  {
+    "id": "34f0b68697664dada8f30c2d490b27c4",
+    "title": "SplitEase - Reset Password",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_reset_password_34f0b686.html",
+    "screenshot_file": "screenshots/splitease_-_reset_password_34f0b686.png",
+    "prompt": ""
+  },
+  {
+    "id": "4da78d0f91d84e16954539f61517b2fb",
+    "title": "SplitEase - Dashboard Overview (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_dashboard_overview__desktop_4da78d0f.html",
+    "screenshot_file": "screenshots/splitease_-_dashboard_overview__desktop_4da78d0f.png",
+    "prompt": ""
+  },
+  {
+    "id": "59c6ab2a15ae4ce5b6f89a9a01bf9109",
+    "title": "SplitEase - Apartment Group Balances (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_apartment_group_balances__desktop_59c6ab2a.html",
+    "screenshot_file": "screenshots/splitease_-_apartment_group_balances__desktop_59c6ab2a.png",
+    "prompt": ""
+  },
+  {
+    "id": "c7c65181e05e465caedb4388b91cf37d",
+    "title": "SplitEase - Apartment Group Summary (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_apartment_group_summary__desktop_c7c65181.html",
+    "screenshot_file": "screenshots/splitease_-_apartment_group_summary__desktop_c7c65181.png",
+    "prompt": ""
+  },
+  {
+    "id": "b19aaa9bea2e4e6b86481d5551b35c6a",
+    "title": "SplitEase - Forgot Password (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_forgot_password__desktop_b19aaa9b.html",
+    "screenshot_file": "screenshots/splitease_-_forgot_password__desktop_b19aaa9b.png",
+    "prompt": ""
+  },
+  {
+    "id": "16ab7fe7aa7c4c59a2ddbbfef89b28cb",
+    "title": "SplitEase - Sign In",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_sign_in_16ab7fe7.html",
+    "screenshot_file": "screenshots/splitease_-_sign_in_16ab7fe7.png",
+    "prompt": ""
+  },
+  {
+    "id": "41cc3d6b346347d7aa26b290980258c8",
+    "title": "SplitEase - Activity Feed (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_activity_feed__desktop_41cc3d6b.html",
+    "screenshot_file": "screenshots/splitease_-_activity_feed__desktop_41cc3d6b.png",
+    "prompt": ""
+  },
+  {
+    "id": "4ff88ce5656a4457945de80860a2c5ce",
+    "title": "SplitEase - Sign In (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_sign_in__desktop_4ff88ce5.html",
+    "screenshot_file": "screenshots/splitease_-_sign_in__desktop_4ff88ce5.png",
+    "prompt": ""
+  },
+  {
+    "id": "926e107f811a465da20974a3d44f51e0",
+    "title": "SplitEase - Dashboard Overview",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_dashboard_overview_926e107f.html",
+    "screenshot_file": "screenshots/splitease_-_dashboard_overview_926e107f.png",
+    "prompt": ""
+  },
+  {
+    "id": "6512598d6d30427b9196df3044680395",
+    "title": "SplitEase - Group Members (Apartment) - Desktop",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_group_members__apartment__-_desktop_6512598d.html",
+    "screenshot_file": "screenshots/splitease_-_group_members__apartment__-_desktop_6512598d.png",
+    "prompt": ""
+  },
+  {
+    "id": "2b1791ef71f846ba91447cb92096e01a",
+    "title": "SplitEase - Reset Password (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_reset_password__desktop_2b1791ef.html",
+    "screenshot_file": "screenshots/splitease_-_reset_password__desktop_2b1791ef.png",
+    "prompt": ""
+  },
+  {
+    "id": "b1afac91b1f04bf6ab23d96918be6780",
+    "title": "SplitEase - Sign Up (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_sign_up__desktop_b1afac91.html",
+    "screenshot_file": "screenshots/splitease_-_sign_up__desktop_b1afac91.png",
+    "prompt": ""
+  },
+  {
+    "id": "874f5dc7ebdb4354bbc0ec74466b6639",
+    "title": "SplitEase - Dashboard Overview (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_dashboard_overview__desktop_874f5dc7.html",
+    "screenshot_file": "screenshots/splitease_-_dashboard_overview__desktop_874f5dc7.png",
+    "prompt": ""
+  },
+  {
+    "id": "d158b75b3dfa46258c3ae898ae6a64bd",
+    "title": "SplitEase - Landing Page",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_landing_page_d158b75b.html",
+    "screenshot_file": "screenshots/splitease_-_landing_page_d158b75b.png",
+    "prompt": ""
+  },
+  {
+    "id": "9d3d0b729c674d48868533e1d78330a7",
+    "title": "SplitEase - Profile",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_profile_9d3d0b72.html",
+    "screenshot_file": "screenshots/splitease_-_profile_9d3d0b72.png",
+    "prompt": ""
+  },
+  {
+    "id": "3c9098abd5374ec7abb262707432daa7",
+    "title": "SplitEase - Settings",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_settings_3c9098ab.html",
+    "screenshot_file": "screenshots/splitease_-_settings_3c9098ab.png",
+    "prompt": ""
+  },
+  {
+    "id": "735a166d46a64b598fd7d11829db1686",
+    "title": "SplitEase - Groups",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_groups_735a166d.html",
+    "screenshot_file": "screenshots/splitease_-_groups_735a166d.png",
+    "prompt": ""
+  },
+  {
+    "id": "eb78afa6fdb24e1ea8dcb97a5ee95007",
+    "title": "SplitEase - Reset Password (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_reset_password__desktop_eb78afa6.html",
+    "screenshot_file": "screenshots/splitease_-_reset_password__desktop_eb78afa6.png",
+    "prompt": ""
+  },
+  {
+    "id": "ff81d980f96d48c5ad6fe7991bf1006e",
+    "title": "SplitEase - Sign In (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_sign_in__desktop_ff81d980.html",
+    "screenshot_file": "screenshots/splitease_-_sign_in__desktop_ff81d980.png",
+    "prompt": ""
+  },
+  {
+    "id": "e2a7f964d89b43349c81e50018849c90",
+    "title": "SplitEase - Desktop Landing Page",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_desktop_landing_page_e2a7f964.html",
+    "screenshot_file": "screenshots/splitease_-_desktop_landing_page_e2a7f964.png",
+    "prompt": ""
+  },
+  {
+    "id": "73ef17f64a7c4ee58344102afd183b4a",
+    "title": "SplitEase - Sign In (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_sign_in__desktop_73ef17f6.html",
+    "screenshot_file": "screenshots/splitease_-_sign_in__desktop_73ef17f6.png",
+    "prompt": ""
+  },
+  {
+    "id": "945a6d9dac644a349985ef29697dbbd0",
+    "title": "SplitEase - Apartment Balances",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_apartment_balances_945a6d9d.html",
+    "screenshot_file": "screenshots/splitease_-_apartment_balances_945a6d9d.png",
+    "prompt": ""
+  },
+  {
+    "id": "05947f57c95f4615b427d4f396e4a5b1",
+    "title": "SplitEase - Activity Feed",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_activity_feed_05947f57.html",
+    "screenshot_file": "screenshots/splitease_-_activity_feed_05947f57.png",
+    "prompt": ""
+  },
+  {
+    "id": "42d61b02303f40a8a2cbb279b57f1504",
+    "title": "SplitEase - Groups (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_groups__desktop_42d61b02.html",
+    "screenshot_file": "screenshots/splitease_-_groups__desktop_42d61b02.png",
+    "prompt": ""
+  },
+  {
+    "id": "1a130c59eb14411786beb82c4e551aff",
+    "title": "SplitEase - Group Members",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_group_members_1a130c59.html",
+    "screenshot_file": "screenshots/splitease_-_group_members_1a130c59.png",
+    "prompt": ""
+  },
+  {
+    "id": "c1eb12f5b51a4f468b85533c2feb5142",
+    "title": "SplitEase - Groups (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_groups__desktop_c1eb12f5.html",
+    "screenshot_file": "screenshots/splitease_-_groups__desktop_c1eb12f5.png",
+    "prompt": ""
+  },
+  {
+    "id": "f28a10cc7dcb4594910be55b1266a364",
+    "title": "SplitEase - Expenses (Choose a Group) - Desktop",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_expenses__choose_a_group__-_desktop_f28a10cc.html",
+    "screenshot_file": "screenshots/splitease_-_expenses__choose_a_group__-_desktop_f28a10cc.png",
+    "prompt": ""
+  },
+  {
+    "id": "67167ebd47584482a58fa3f4b3a70e46",
+    "title": "SplitEase - Reset Password (Desktop)",
+    "device": "DESKTOP",
+    "html_file": "html/splitease_-_reset_password__desktop_67167ebd.html",
+    "screenshot_file": "screenshots/splitease_-_reset_password__desktop_67167ebd.png",
+    "prompt": ""
+  },
+  {
+    "id": "ac34f9f1c79747acb02a72bd476d84c9",
+    "title": "SplitEase - Apartment Group Summary",
+    "device": "MOBILE",
+    "html_file": "html/splitease_-_apartment_group_summary_ac34f9f1.html",
+    "screenshot_file": "screenshots/splitease_-_apartment_group_summary_ac34f9f1.png",
+    "prompt": ""
+  }
+]

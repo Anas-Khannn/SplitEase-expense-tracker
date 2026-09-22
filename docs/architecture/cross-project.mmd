@@ -1,0 +1,39 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1f2937'}}}%%
+graph LR
+    subgraph FE["Frontend (Next.js/React)"]
+        direction TB
+        FE_APP["📱 App Routes"]
+        FE_COMP["🧩 Components"]
+        FE_SVC["⚙️ Services/API Client"]
+        FE_TYPES["📝 Shared Types"]
+    end
+
+    subgraph BE["Backend (Express/Node.js)"]
+        direction TB
+        BE_API["🌐 API Routes"]
+        BE_CTRL["🎮 Controllers"]
+        BE_SVC["🔧 Services"]
+        BE_MODELS["🗄️ Models"]
+    end
+
+    %% Frontend internal
+    FE_APP --> FE_COMP
+    FE_APP --> FE_SVC
+    FE_APP --> FE_TYPES
+    FE_COMP --> FE_TYPES
+    FE_SVC --> FE_TYPES
+
+    %% Backend internal (Clean Architecture)
+    BE_API --> BE_CTRL
+    BE_CTRL --> BE_SVC
+    BE_SVC --> BE_MODELS
+
+    %% API Boundary (the ONLY allowed cross-project dependency)
+    FE_SVC -.->|"HTTP/REST API"| BE_API
+
+    classDef fe fill:#3b82f6,color:#fff,stroke:#1e40af,stroke-width:2px;
+    classDef be fill:#10b981,color:#fff,stroke:#047857,stroke-width:2px;
+    classDef api fill:#f59e0b,color:#fff,stroke:#b45309,stroke-width:2px,stroke-dasharray: 5 5;
+
+    class FE_APP,FE_COMP,FE_SVC,FE_TYPES fe;
+    class BE_API,BE_CTRL,BE_SVC,BE_MODELS be;

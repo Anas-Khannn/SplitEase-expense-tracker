@@ -1,38 +1,28 @@
 "use client";
 
 import { Avatar, Badge } from "@/components/ui";
+import { BalanceListSkeleton } from "@/components/skeletons";
 import { cn } from "@/lib/utils/cn";
+import { formatCurrency, statusLabel } from "@/lib/selectors";
 import type { Balance } from "@/types";
 
 interface BalanceListProps {
   balances: Balance[];
   currentUserId?: string;
+  isLoading?: boolean;
+  skeletonCount?: number;
 }
 
-function formatCurrency(value: number): string {
-  if (Number.isNaN(value)) return "—";
-  return value.toLocaleString(undefined, {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  });
-}
-
-function statusLabel(status: Balance["status"]): string {
-  switch (status) {
-    case "OWED":
-      return "The group owes";
-    case "OWES":
-      return "Owes the group";
-    case "SETTLED":
-      return "All settled";
-    default:
-      return status;
+export function BalanceList({
+  balances,
+  currentUserId,
+  isLoading = false,
+  skeletonCount = 3,
+}: BalanceListProps) {
+  if (isLoading) {
+    return <BalanceListSkeleton count={skeletonCount} />;
   }
-}
 
-export function BalanceList({ balances, currentUserId }: BalanceListProps) {
   return (
     <ul className="divide-y divide-border-default overflow-hidden rounded-radius-lg border border-border-default bg-card shadow-xs">
       {balances.map((balance) => {

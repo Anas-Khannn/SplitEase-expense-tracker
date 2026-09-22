@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+<html class="h-full bg-zinc-50" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SplitEase - Expense Sharing Dashboard</title>
+<!-- Inter & Geist Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Theme Configuration -->
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {},
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {},
+          fontFamily: {
+            headline: ["Inter", "sans-serif"],
+            display: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"],
+            label: ["Geist", "sans-serif"]
+          },
+          fontSize: {}
+        },
+      },
+    }
+  </script>
+<style>
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+    .material-symbols-outlined {
+      font-size: 20px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+      user-select: none;
+    }
+  </style>
+</head>
+<body class="h-full font-body text-zinc-900 antialiased bg-zinc-50 flex">
+<!-- SideNavBar Component -->
+<aside class="fixed inset-y-0 left-0 w-64 flex flex-col justify-between border-r border-zinc-200 bg-white z-50">
+<div class="p-4 flex flex-col h-full justify-between">
+<!-- Top Section: Brand & Primary Nav -->
+<div>
+<!-- Brand Header -->
+<div class="flex items-center gap-3 px-2 py-2 mb-4">
+<div class="w-8 h-8 rounded-lg bg-zinc-900 flex items-center justify-center text-white shadow-sm flex-shrink-0">
+<span class="material-symbols-outlined text-white" style="font-size: 18px;">account_balance_wallet</span>
+</div>
+<div class="min-w-0 flex-1">
+<div class="flex items-center gap-1.5">
+<span class="font-headline text-base font-semibold tracking-tight text-zinc-900">SplitEase</span>
+<span class="text-[10px] font-label uppercase font-medium bg-zinc-100 text-zinc-600 px-1.5 py-0.5 rounded">v2.4</span>
+</div>
+<p class="text-xs text-zinc-500 truncate">Expense Sharing</p>
+</div>
+</div>
+<!-- Add Expense Primary Action Button -->
+<div class="mb-4">
+<button class="w-full h-9 bg-zinc-900 hover:bg-zinc-800 text-white text-sm font-medium rounded-md flex items-center justify-center gap-2 shadow-sm transition-colors duration-150">
+<span class="material-symbols-outlined" style="font-size: 18px;">add</span>
+<span>Add Expense</span>
+</button>
+</div>
+<!-- Main Navigation Links -->
+<nav class="space-y-1">
+<!-- Dashboard (Active) -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg bg-zinc-100 text-zinc-900 font-medium" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-zinc-900" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-sm">Dashboard</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-zinc-900"></span>
+</a>
+<!-- Expenses -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 transition-colors duration-150" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-sm font-medium">Expenses</span>
+</div>
+</a>
+<!-- Balances -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 transition-colors duration-150" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-sm font-medium">Balances</span>
+</div>
+</a>
+<!-- Activity with Count Badge -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 transition-colors duration-150" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm font-medium">Activity</span>
+</div>
+<span class="text-xs font-medium bg-zinc-100 text-zinc-600 px-2 py-0.5 rounded-full">3</span>
+</a>
+<!-- Groups with Count Badge -->
+<a class="flex items-center justify-between px-3 py-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 transition-colors duration-150" href="#">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium">Groups</span>
+</div>
+<span class="text-xs font-medium bg-zinc-100 text-zinc-600 px-2 py-0.5 rounded-full">4</span>
+</a>
+</nav>
+</div>
+<!-- Footer Pinned Navigation & User Profile -->
+<div class="pt-4 border-t border-zinc-200 space-y-2">
+<nav class="space-y-0.5">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-sm font-medium">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50 transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<!-- User Information Card -->
+<div class="mt-2 p-2 rounded-lg border border-zinc-200/80 bg-zinc-50/70 flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-zinc-200 text-zinc-800 text-xs font-semibold flex items-center justify-center flex-shrink-0">
+            AM
+          </div>
+<div class="min-w-0 flex-1">
+<p class="text-xs font-medium text-zinc-900 truncate">Alex Morgan</p>
+<p class="text-[11px] text-zinc-500 truncate">alex@example.com</p>
+</div>
+<button class="text-zinc-400 hover:text-zinc-700 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 16px;">unfold_more</span>
+</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas Area (Offset by 64 = 256px sidebar) -->
+<div class="pl-64 flex-1 flex flex-col min-h-screen">
+<!-- TopNavBar Component -->
+<header class="sticky top-0 z-40 w-full h-16 px-8 flex items-center justify-between border-b border-zinc-200 bg-white/95 backdrop-blur-sm">
+<!-- Left: Title & Sync Pill -->
+<div class="flex items-center gap-3">
+<h1 class="font-headline text-lg font-semibold tracking-tight text-zinc-900">Dashboard Overview</h1>
+<div class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+<span>Live Sync</span>
+</div>
+</div>
+<!-- Right: Search, Currency, Notifications & CTA -->
+<div class="flex items-center gap-3">
+<!-- Search with Shortcut -->
+<div class="relative w-64 hidden sm:block">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-400">
+<span class="material-symbols-outlined" style="font-size: 18px;">search</span>
+</div>
+<input class="w-full h-9 pl-9 pr-12 text-xs rounded-md border border-zinc-200 bg-zinc-50 focus:bg-white focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-colors text-zinc-800 placeholder-zinc-400" placeholder="Search expenses, groups..." type="text"/>
+<div class="absolute inset-y-0 right-0 pr-2 flex items-center pointer-events-none">
+<kbd class="text-[10px] font-label font-medium text-zinc-400 border border-zinc-200 bg-white px-1.5 py-0.5 rounded shadow-2xs">⌘K</kbd>
+</div>
+</div>
+<!-- Currency Selector -->
+<button class="h-9 px-3 rounded-md border border-zinc-200 text-xs font-medium text-zinc-700 bg-white hover:bg-zinc-50 flex items-center gap-1.5 transition-colors">
+<span>USD ($)</span>
+<span class="material-symbols-outlined text-zinc-400" style="font-size: 16px;">arrow_drop_down</span>
+</button>
+<!-- Notification Bell -->
+<button class="h-9 w-9 rounded-md border border-zinc-200 flex items-center justify-center text-zinc-600 hover:bg-zinc-50 relative transition-colors" title="Notifications">
+<span class="material-symbols-outlined" style="font-size: 18px;">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+</button>
+<div class="h-4 w-px bg-zinc-200 mx-0.5"></div>
+<!-- Trailing Primary Action -->
+<button class="h-9 px-3.5 bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-medium rounded-md flex items-center gap-1.5 shadow-sm transition-colors duration-150">
+<span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+<span>Add expense</span>
+</button>
+<!-- Top User Avatar Profile -->
+<div class="w-8 h-8 rounded-full bg-zinc-900 text-white text-xs font-medium flex items-center justify-center cursor-pointer ml-1 ring-1 ring-zinc-200">
+          AM
+        </div>
+</div>
+</header>
+<!-- Main Page Canvas Container (Max 1440px viewport design) -->
+<main class="flex-1 px-8 py-7 space-y-6 max-w-[1440px] w-full mx-auto">
+<!-- Top KPI Stat Cards (3 Grid Columns) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+<!-- Card 1: You're owed -->
+<div class="rounded-xl border border-zinc-200 bg-white p-5 shadow-xs flex flex-col justify-between hover:border-zinc-300 transition-colors">
+<div class="flex items-start justify-between">
+<div>
+<p class="text-xs font-medium uppercase tracking-wider text-zinc-500">You're owed</p>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-bold tracking-tight text-emerald-600 tabular-nums">+$120.50</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700 border border-emerald-200">
+<span class="material-symbols-outlined text-emerald-600" style="font-size: 14px;">trending_up</span>
+              +14.2%
+            </span>
+</div>
+<div class="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
+<span>3 friends owe you across 2 groups</span>
+<span class="material-symbols-outlined text-emerald-500" style="font-size: 18px;">arrow_forward</span>
+</div>
+</div>
+<!-- Card 2: You owe -->
+<div class="rounded-xl border border-zinc-200 bg-white p-5 shadow-xs flex flex-col justify-between hover:border-zinc-300 transition-colors">
+<div class="flex items-start justify-between">
+<div>
+<p class="text-xs font-medium uppercase tracking-wider text-zinc-500">You owe</p>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-bold tracking-tight text-rose-600 tabular-nums">-$45.00</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 rounded-full bg-rose-50 px-2 py-0.5 text-xs font-medium text-rose-700 border border-rose-200">
+<span class="material-symbols-outlined text-rose-600" style="font-size: 14px;">priority_high</span>
+              Action required
+            </span>
+</div>
+<div class="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between">
+<span class="text-xs text-zinc-500">2 pending payments due this week</span>
+<button class="text-xs font-medium text-rose-600 hover:text-rose-700 inline-flex items-center gap-1 hover:underline">
+              Pay back
+              <span class="material-symbols-outlined" style="font-size: 14px;">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Card 3: Net balance -->
+<div class="rounded-xl border border-zinc-200 bg-white p-5 shadow-xs flex flex-col justify-between hover:border-zinc-300 transition-colors">
+<div class="flex items-start justify-between">
+<div>
+<p class="text-xs font-medium uppercase tracking-wider text-zinc-500">Net balance</p>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-bold tracking-tight text-zinc-900 tabular-nums">+$75.50</span>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 rounded-full bg-zinc-100 px-2.5 py-0.5 text-xs font-medium text-zinc-700 border border-zinc-200">
+<span class="material-symbols-outlined text-zinc-700" style="font-size: 14px;">account_balance_wallet</span>
+              Overall positive
+            </span>
+</div>
+<div class="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between text-xs text-zinc-500">
+<span>Settled cleanly across 4 active groups</span>
+<span class="inline-flex items-center text-zinc-400">
+<span class="material-symbols-outlined" style="font-size: 16px;">done_all</span>
+</span>
+</div>
+</div>
+</section>
+<!-- Middle Two-Column Grid -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left Column: Your Groups (7 cols) -->
+<div class="lg:col-span-7 rounded-xl border border-zinc-200 bg-white shadow-xs p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-zinc-100">
+<div>
+<h2 class="text-sm font-semibold tracking-tight text-zinc-900">Your Groups</h2>
+<p class="text-xs text-zinc-500">Shared balances across shared house, travels and recurring expenses</p>
+</div>
+<a class="text-xs font-medium text-zinc-600 hover:text-zinc-900 flex items-center gap-1 hover:underline" href="#">
+                See all (4)
+                <span class="material-symbols-outlined" style="font-size: 14px;">arrow_forward</span>
+</a>
+</div>
+<!-- Groups List -->
+<div class="divide-y divide-zinc-100">
+<!-- Group 1: Apartment -->
+<div class="py-3.5 flex items-center justify-between hover:bg-zinc-50/70 -mx-2 px-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 border border-zinc-200/80 flex items-center justify-center text-zinc-700">
+<span class="material-symbols-outlined">apartment</span>
+</div>
+<div>
+<h3 class="text-sm font-medium text-zinc-900">Apartment</h3>
+<p class="text-xs text-zinc-500">4 members • monthly rent &amp; wifi</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-semibold text-emerald-600 tabular-nums">+$24.20</span>
+<p class="text-[11px] text-zinc-400">you are owed</p>
+</div>
+</div>
+<!-- Group 2: Trip to Paris -->
+<div class="py-3.5 flex items-center justify-between hover:bg-zinc-50/70 -mx-2 px-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 border border-zinc-200/80 flex items-center justify-center text-zinc-700">
+<span class="material-symbols-outlined">flight</span>
+</div>
+<div>
+<h3 class="text-sm font-medium text-zinc-900">Trip to Paris</h3>
+<p class="text-xs text-zinc-500">6 members • hotel &amp; eurostar</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-semibold text-rose-600 tabular-nums">-$31.00</span>
+<p class="text-[11px] text-zinc-400">you owe</p>
+</div>
+</div>
+<!-- Group 3: Groceries -->
+<div class="py-3.5 flex items-center justify-between hover:bg-zinc-50/70 -mx-2 px-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 border border-zinc-200/80 flex items-center justify-center text-zinc-700">
+<span class="material-symbols-outlined">shopping_cart</span>
+</div>
+<div>
+<h3 class="text-sm font-medium text-zinc-900">Groceries</h3>
+<p class="text-xs text-zinc-500">2 members • household provisions</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-medium text-zinc-500 tabular-nums">$0.00</span>
+<p class="text-[11px] text-zinc-400">Settled</p>
+</div>
+</div>
+<!-- Group 4: Ski Weekend -->
+<div class="py-3.5 flex items-center justify-between hover:bg-zinc-50/70 -mx-2 px-2 rounded-lg transition-colors">
+<div class="flex items-center gap-3.5">
+<div class="w-10 h-10 rounded-lg bg-zinc-100 border border-zinc-200/80 flex items-center justify-center text-zinc-700">
+<span class="material-symbols-outlined">downhill_skiing</span>
+</div>
+<div>
+<h3 class="text-sm font-medium text-zinc-900">Ski Weekend</h3>
+<p class="text-xs text-zinc-500">5 members • cabin rental &amp; lift</p>
+</div>
+</div>
+<div class="text-right">
+<span class="text-xs font-semibold text-emerald-600 tabular-nums">+$82.30</span>
+<p class="text-[11px] text-zinc-400">you are owed</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Create New Group Dashed Button -->
+<div class="mt-4 pt-3 border-t border-zinc-100">
+<button class="w-full py-2.5 rounded-lg border border-dashed border-zinc-300 hover:border-zinc-400 hover:bg-zinc-50 text-xs font-medium text-zinc-600 flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+<span>Create new group</span>
+</button>
+</div>
+</div>
+<!-- Right Column: Recent Activity (5 cols) -->
+<div class="lg:col-span-5 rounded-xl border border-zinc-200 bg-white shadow-xs p-6 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-4 border-b border-zinc-100">
+<h2 class="text-sm font-semibold tracking-tight text-zinc-900">Recent Activity</h2>
+<!-- Filter Pills -->
+<div class="inline-flex p-0.5 rounded-md bg-zinc-100 text-[11px] font-medium text-zinc-600">
+<button class="px-2.5 py-1 rounded bg-white text-zinc-900 shadow-2xs">All</button>
+<button class="px-2.5 py-1 rounded hover:text-zinc-900">Expenses</button>
+<button class="px-2.5 py-1 rounded hover:text-zinc-900">Settles</button>
+</div>
+</div>
+<!-- Activity Stream Items -->
+<div class="mt-4 space-y-4">
+<!-- Item 1: Alex Lee added expense -->
+<div class="flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-zinc-100 text-zinc-700 text-xs font-semibold flex items-center justify-center flex-shrink-0 mt-0.5 border border-zinc-200">
+                  AL
+                </div>
+<div class="min-w-0 flex-1">
+<p class="text-xs text-zinc-800">
+<span class="font-medium text-zinc-900">Alex Lee</span> added <span class="font-medium text-zinc-900">"Dinner at Le Bistro"</span> in <span class="text-zinc-500">Trip to Paris</span>
+</p>
+<div class="mt-1 flex items-center justify-between">
+<span class="text-[11px] text-zinc-400">20m ago</span>
+<span class="text-xs font-medium text-rose-600 tabular-nums">-$11.40 your share</span>
+</div>
+</div>
+</div>
+<!-- Item 2: Maya Patel settled -->
+<div class="flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold flex items-center justify-center flex-shrink-0 mt-0.5 border border-emerald-200">
+                  MP
+                </div>
+<div class="min-w-0 flex-1">
+<p class="text-xs text-zinc-800">
+<span class="font-medium text-zinc-900">Maya Patel</span> settled up with you via <span class="font-medium text-zinc-700">Venmo</span>
+</p>
+<div class="mt-1 flex items-center justify-between">
+<span class="text-[11px] text-zinc-400">2h ago</span>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 tabular-nums">
+                      +$15.00 Settled
+                    </span>
+</div>
+</div>
+</div>
+<!-- Item 3: Jordan Cruz joined -->
+<div class="flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-zinc-100 text-zinc-700 text-xs font-semibold flex items-center justify-center flex-shrink-0 mt-0.5 border border-zinc-200">
+                  JC
+                </div>
+<div class="min-w-0 flex-1">
+<p class="text-xs text-zinc-800">
+<span class="font-medium text-zinc-900">Jordan Cruz</span> joined group <span class="font-medium text-zinc-900">Trip to Paris</span>
+</p>
+<span class="text-[11px] text-zinc-400 mt-1 block">4h ago</span>
+</div>
+</div>
+<!-- Item 4: Created group -->
+<div class="flex items-start gap-3">
+<div class="w-7 h-7 rounded-full bg-zinc-900 text-white text-xs font-semibold flex items-center justify-center flex-shrink-0 mt-0.5">
+<span class="material-symbols-outlined" style="font-size: 14px;">group_add</span>
+</div>
+<div class="min-w-0 flex-1">
+<p class="text-xs text-zinc-800">
+                    You created the group <span class="font-medium text-zinc-900">Ski Weekend 2026</span>
+</p>
+<span class="text-[11px] text-zinc-400 mt-1 block">Yesterday at 6:15 PM</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Activity Footer Link -->
+<div class="mt-5 pt-3 border-t border-zinc-100 text-center">
+<a class="text-xs font-medium text-zinc-600 hover:text-zinc-900 inline-flex items-center gap-1 hover:underline" href="#">
+              View all activity logs
+              <span class="material-symbols-outlined" style="font-size: 14px;">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Bottom Full-Width: Recent Expenses Table -->
+<section class="rounded-xl border border-zinc-200 bg-white shadow-xs overflow-hidden">
+<!-- Table Control Toolbar -->
+<div class="p-5 border-b border-zinc-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div>
+<h2 class="text-sm font-semibold tracking-tight text-zinc-900">Recent Expenses</h2>
+<p class="text-xs text-zinc-500">Detailed breakdown of shared items and individual settlements</p>
+</div>
+<div class="flex items-center gap-2">
+<!-- Table Search Input -->
+<div class="relative w-52">
+<span class="material-symbols-outlined absolute left-2.5 top-2.5 text-zinc-400" style="font-size: 16px;">search</span>
+<input class="w-full h-8 pl-8 pr-3 text-xs rounded-md border border-zinc-200 bg-white focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 text-zinc-800 placeholder-zinc-400" placeholder="Filter description..." type="text"/>
+</div>
+<!-- Category Selector Dropdown -->
+<button class="h-8 px-2.5 rounded-md border border-zinc-200 text-xs font-medium text-zinc-700 bg-white hover:bg-zinc-50 flex items-center gap-1.5 transition-colors">
+<span>Category</span>
+<span class="material-symbols-outlined text-zinc-400" style="font-size: 16px;">expand_more</span>
+</button>
+<!-- Export CSV -->
+<button class="h-8 px-2.5 rounded-md border border-zinc-200 text-xs font-medium text-zinc-700 bg-white hover:bg-zinc-50 flex items-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-zinc-500" style="font-size: 16px;">download</span>
+<span>Export CSV</span>
+</button>
+</div>
+</div>
+<!-- Clean shadcn/ui Table Structure -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-xs">
+<thead>
+<tr class="border-b border-zinc-200 bg-zinc-50/60 text-zinc-500 font-medium font-label">
+<th class="py-3 px-5">Description</th>
+<th class="py-3 px-4">Group</th>
+<th class="py-3 px-4">Paid by</th>
+<th class="py-3 px-4">Date</th>
+<th class="py-3 px-4">Split Mode</th>
+<th class="py-3 px-4 text-right">Total Amount</th>
+<th class="py-3 px-4 text-right">Your Share</th>
+<th class="py-3 px-5 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-zinc-100 text-zinc-800 font-body">
+<!-- Row 1: Trader Joe's groceries -->
+<tr class="hover:bg-zinc-50/60 transition-colors">
+<td class="py-3.5 px-5 font-medium text-zinc-900">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Trader Joe's groceries</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-zinc-100 text-zinc-700">Groceries</span>
+</td>
+<td class="py-3.5 px-4 font-medium text-zinc-700">You</td>
+<td class="py-3.5 px-4 text-zinc-500">Oct 24</td>
+<td class="py-3.5 px-4 text-zinc-500">Equal 4-way</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">$42.50</td>
+<td class="py-3.5 px-4 text-right font-semibold text-emerald-600 tabular-nums">+$31.88 get back</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-zinc-400 hover:text-zinc-800 p-1 rounded hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 16px;">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Dinner at Le Bistro -->
+<tr class="hover:bg-zinc-50/60 transition-colors">
+<td class="py-3.5 px-5 font-medium text-zinc-900">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span>
+<span>Dinner at Le Bistro</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-zinc-100 text-zinc-700">Trip to Paris</span>
+</td>
+<td class="py-3.5 px-4 text-zinc-700">Marc Dupont</td>
+<td class="py-3.5 px-4 text-zinc-500">Oct 23</td>
+<td class="py-3.5 px-4 text-zinc-500">Equal 3-way</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">$84.00</td>
+<td class="py-3.5 px-4 text-right font-semibold text-rose-600 tabular-nums">-$28.00 you owe</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-zinc-400 hover:text-zinc-800 p-1 rounded hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 16px;">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Gigabit Internet bill -->
+<tr class="hover:bg-zinc-50/60 transition-colors">
+<td class="py-3.5 px-5 font-medium text-zinc-900">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Gigabit Internet bill</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-zinc-100 text-zinc-700">Apartment</span>
+</td>
+<td class="py-3.5 px-4 font-medium text-zinc-700">You</td>
+<td class="py-3.5 px-4 text-zinc-500">Oct 20</td>
+<td class="py-3.5 px-4 text-zinc-500">Equal 3-way</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">$45.20</td>
+<td class="py-3.5 px-4 text-right font-semibold text-emerald-600 tabular-nums">+$30.14 get back</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-zinc-400 hover:text-zinc-800 p-1 rounded hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 16px;">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Electricity & Utilities -->
+<tr class="hover:bg-zinc-50/60 transition-colors">
+<td class="py-3.5 px-5 font-medium text-zinc-900">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-rose-500"></span>
+<span>Electricity &amp; Utilities</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-zinc-100 text-zinc-700">Apartment</span>
+</td>
+<td class="py-3.5 px-4 text-zinc-700">Sarah Chen</td>
+<td class="py-3.5 px-4 text-zinc-500">Oct 18</td>
+<td class="py-3.5 px-4 text-zinc-500">Equal 3-way</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">$64.10</td>
+<td class="py-3.5 px-4 text-right font-semibold text-rose-600 tabular-nums">-$21.36 you owe</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-zinc-400 hover:text-zinc-800 p-1 rounded hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 16px;">more_horiz</span>
+</button>
+</td>
+</tr>
+<!-- Row 5: Subway passes & transit -->
+<tr class="hover:bg-zinc-50/60 transition-colors">
+<td class="py-3.5 px-5 font-medium text-zinc-900">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span>Subway passes &amp; transit</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-medium bg-zinc-100 text-zinc-700">Trip to Paris</span>
+</td>
+<td class="py-3.5 px-4 font-medium text-zinc-700">You</td>
+<td class="py-3.5 px-4 text-zinc-500">Oct 16</td>
+<td class="py-3.5 px-4 text-zinc-500">Custom 50/50</td>
+<td class="py-3.5 px-4 text-right font-medium text-zinc-900 tabular-nums">$32.00</td>
+<td class="py-3.5 px-4 text-right font-semibold text-emerald-600 tabular-nums">+$16.00 get back</td>
+<td class="py-3.5 px-5 text-right">
+<button class="text-zinc-400 hover:text-zinc-800 p-1 rounded hover:bg-zinc-100 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 16px;">more_horiz</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="px-5 py-3 border-t border-zinc-200 bg-zinc-50/50 flex items-center justify-between text-xs text-zinc-500">
+<span>Showing <strong class="font-medium text-zinc-800">5</strong> of <strong class="font-medium text-zinc-800">28</strong> total expenses</span>
+<div class="flex items-center gap-1.5">
+<button class="px-2.5 py-1 rounded border border-zinc-200 bg-white text-zinc-400 cursor-not-allowed font-medium shadow-2xs" disabled="">Previous</button>
+<button class="px-2.5 py-1 rounded border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 font-medium shadow-2xs transition-colors">Next</button>
+</div>
+</div>
+</section>
+</main>
+</div>
+</body></html>

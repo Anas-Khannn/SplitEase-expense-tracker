@@ -1,4 +1,5 @@
 import { GroupCard } from "./GroupCard";
+import { GroupListSkeleton } from "@/components/skeletons";
 import type { UseQueryResult } from "@tanstack/react-query";
 import type { GroupListItem, GroupMemberRecord } from "@/types";
 
@@ -6,13 +7,20 @@ interface GroupListProps {
   groups: GroupListItem[];
   balances?: Record<string, number>;
   memberQueries?: Array<UseQueryResult<GroupMemberRecord[], Error>>;
+  isLoading?: boolean;
+  skeletonCount?: number;
 }
 
 export function GroupList({
   groups,
   balances = {},
   memberQueries = [],
+  isLoading = false,
+  skeletonCount = 3,
 }: GroupListProps) {
+  if (isLoading) {
+    return <GroupListSkeleton count={skeletonCount} />;
+  }
   const queryByGroupId: Record<string, UseQueryResult<GroupMemberRecord[], Error>> = {};
   memberQueries.forEach((query, index) => {
     const group = groups[index];

@@ -1,0 +1,78 @@
+%%{init: {'theme': 'base', 'themeVariables': {'primaryColor': '#1f2937', 'edgeLabelBackground': '#f3f4f6'}}}%%
+graph TD
+    subgraph Frontend["Frontend (Next.js/React)"]
+        direction TB
+        FE_APP["📱 App Routes
+(frontend/app/(app))"]
+        FE_COMP["🧩 Components
+(frontend/components)"]
+        FE_LIB["📚 Lib/Utils
+(frontend/lib)"]
+        FE_HOOKS["🎣 Hooks
+(frontend/hooks)"]
+        FE_SVC["⚙️ Services
+(frontend/services)"]
+        FE_TYPES["📝 Types
+(frontend/types)"]
+    end
+
+    subgraph Backend["Backend (Express/Node.js)"]
+        direction TB
+        BE_CTRL["🎮 Controllers
+(backend/src/controllers)"]
+        BE_SVC["🔧 Services
+(backend/src/services)"]
+        BE_MODELS["🗄️ Models
+(backend/src/database/models)"]
+        BE_ROUTES["🛣️ Routes
+(backend/src/routes)"]
+        BE_MW["🛡️ Middlewares
+(backend/src/middlewares)"]
+        BE_VAL["✅ Validators
+(backend/src/validators)"]
+        BE_UTILS["🛠️ Utils
+(backend/src/utils)"]
+        BE_CONFIG["⚙️ Config
+(backend/src/config)"]
+        BE_CONST["📋 Constants
+(backend/src/constants)"]
+        BE_DB["💾 Database
+(backend/src/database)"]
+    end
+
+    %% Frontend internal dependencies
+    FE_APP --> FE_COMP
+    FE_APP --> FE_HOOKS
+    FE_APP --> FE_SVC
+    FE_APP --> FE_TYPES
+    FE_COMP --> FE_LIB
+    FE_COMP --> FE_TYPES
+    FE_HOOKS --> FE_SVC
+    FE_HOOKS --> FE_TYPES
+    FE_SVC --> FE_TYPES
+    FE_LIB --> FE_TYPES
+
+    %% Backend internal dependencies (Clean Architecture)
+    BE_ROUTES --> BE_CTRL
+    BE_CTRL --> BE_SVC
+    BE_CTRL --> BE_MW
+    BE_CTRL --> BE_VAL
+    BE_SVC --> BE_MODELS
+    BE_SVC --> BE_UTILS
+    BE_SVC --> BE_CONST
+    BE_MODELS --> BE_DB
+    BE_MW --> BE_UTILS
+    BE_VAL --> BE_UTILS
+    BE_UTILS --> BE_CONST
+    BE_CONFIG --> BE_CONST
+
+    %% Cross-layer boundaries (API boundary)
+    FE_SVC -.->|"HTTP/API"| BE_ROUTES
+
+    %% Styling
+    classDef frontend fill:#3b82f6,color:#fff,stroke:#1e40af,stroke-width:2px;
+    classDef backend fill:#10b981,color:#fff,stroke:#047857,stroke-width:2px;
+    classDef boundary fill:#f59e0b,color:#fff,stroke:#b45309,stroke-width:2px,stroke-dasharray: 5 5;
+
+    class FE_APP,FE_COMP,FE_LIB,FE_HOOKS,FE_SVC,FE_TYPES frontend;
+    class BE_CTRL,BE_SVC,BE_MODELS,BE_ROUTES,BE_MW,BE_VAL,BE_UTILS,BE_CONFIG,BE_CONST,BE_DB backend;

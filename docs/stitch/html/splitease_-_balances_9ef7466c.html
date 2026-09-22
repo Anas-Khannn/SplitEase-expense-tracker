@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Balances • SplitEase</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Geist:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {},
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {},
+          "fontFamily": {
+            "headline": ["Inter", "sans-serif"],
+            "display": ["Inter", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Geist", "sans-serif"]
+          },
+          "fontSize": {}
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    .material-symbols-outlined.fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+    }
+    /* Tabular figures for alignment of financial amounts */
+    .tabular-num {
+      font-feature-settings: 'tnum' on, 'lnum' on;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 min-h-screen font-body antialiased selection:bg-zinc-200">
+<!-- Mobile App Frame Container (docked centered max-w-lg) -->
+<div class="relative max-w-lg mx-auto min-h-screen flex flex-col bg-white dark:bg-zinc-950 pb-28 border-x border-zinc-200/80 dark:border-zinc-800/80 shadow-sm">
+<!-- TopAppBar Component (from Shared Components JSON) -->
+<header class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 docked full-width top-0 sticky z-40 border-b border-zinc-200 dark:border-zinc-800">
+<div class="flex flex-col w-full px-4 pt-3 pb-3 max-w-lg mx-auto">
+<div class="flex items-center justify-between gap-3">
+<div class="flex items-center gap-2 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center text-zinc-800 dark:text-zinc-200 border border-zinc-200/80 dark:border-zinc-800">
+<span class="material-symbols-outlined text-[19px]">account_balance_wallet</span>
+</div>
+<div>
+<h1 class="font-headline font-bold text-xl tracking-tight leading-tight text-zinc-900 dark:text-zinc-50">Balances</h1>
+<p class="font-body text-xs text-zinc-500 dark:text-zinc-400">Net balances across all your groups.</p>
+</div>
+</div>
+<!-- Trailing action defined in JSON: Settle up -->
+<button class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-xs font-medium bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 shadow-sm active:scale-[0.98] transition-all duration-150 shrink-0" type="button">
+<span class="material-symbols-outlined text-sm font-semibold">handshake</span>
+<span>Settle up</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-1 px-4 pt-4 space-y-6">
+<!-- Section 2: Three Summary Stat Cards -->
+<section aria-label="Balance Summary">
+<div class="grid grid-cols-3 gap-2.5">
+<!-- Card 1: You're owed -->
+<div class="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-3 shadow-[0_1px_2px_rgba(0,0,0,0.03)] flex flex-col justify-between hover:border-zinc-300 transition-colors">
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 font-label">You're owed</span>
+<span class="w-5 h-5 rounded-full bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+</span>
+</div>
+<div>
+<div class="text-sm font-semibold font-headline tracking-tight text-emerald-600 dark:text-emerald-500 tabular-num">+$120.50</div>
+<div class="text-[10px] text-zinc-400 dark:text-zinc-500 truncate mt-0.5 font-normal">3 friends owe</div>
+</div>
+</div>
+<!-- Card 2: You owe -->
+<div class="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 p-3 shadow-[0_1px_2px_rgba(0,0,0,0.03)] flex flex-col justify-between hover:border-zinc-300 transition-colors">
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-[11px] font-medium text-zinc-500 dark:text-zinc-400 font-label">You owe</span>
+<span class="w-5 h-5 rounded-full bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+<span class="material-symbols-outlined text-xs">trending_down</span>
+</span>
+</div>
+<div>
+<div class="text-sm font-semibold font-headline tracking-tight text-rose-600 dark:text-rose-500 tabular-num">-$45.00</div>
+<div class="text-[10px] text-zinc-400 dark:text-zinc-500 truncate mt-0.5 font-normal">1 pending</div>
+</div>
+</div>
+<!-- Card 3: Net Balance -->
+<div class="bg-zinc-900 dark:bg-zinc-900 text-white rounded-xl border border-zinc-900 dark:border-zinc-700 p-3 shadow-[0_1px_2px_rgba(0,0,0,0.06)] flex flex-col justify-between">
+<div class="flex items-center justify-between mb-1.5">
+<span class="text-[11px] font-medium text-zinc-300 dark:text-zinc-300 font-label">Total Net</span>
+<span class="inline-flex items-center text-[9px] px-1 py-0.2 rounded font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                Ahead
+              </span>
+</div>
+<div>
+<div class="text-sm font-bold font-headline tracking-tight text-white tabular-num">+$75.50</div>
+<div class="text-[10px] text-zinc-400 truncate mt-0.5 font-normal">Net positive</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: People Section -->
+<section aria-labelledby="people-heading">
+<div class="flex items-center justify-between mb-2.5">
+<div class="flex items-center gap-2">
+<h2 class="text-sm font-semibold font-headline text-zinc-900 dark:text-zinc-50" id="people-heading">People</h2>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[11px] font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200/80 dark:border-zinc-700">3</span>
+</div>
+<button aria-label="Filter or sort people" class="text-zinc-500 hover:text-zinc-800 dark:hover:text-zinc-200 p-1 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors flex items-center" type="button">
+<span class="material-symbols-outlined text-[18px]">swap_vert</span>
+</button>
+</div>
+<div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl divide-y divide-zinc-100 dark:divide-zinc-800 overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.02)]">
+<!-- Charlotte: owes you +$44.20 -->
+<div class="p-3.5 flex items-center justify-between gap-3 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200/70 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 flex items-center justify-center font-semibold text-xs shrink-0 tracking-tight">
+                CL
+              </div>
+<div class="min-w-0">
+<div class="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">Charlotte</div>
+<div class="text-xs text-zinc-500 dark:text-zinc-400 truncate">Apartment &amp; Groceries</div>
+</div>
+</div>
+<div class="flex items-center gap-2.5 shrink-0">
+<div class="text-right">
+<div class="text-sm font-semibold text-emerald-600 dark:text-emerald-500 tabular-num leading-tight">+$44.20</div>
+<div class="text-[10px] text-zinc-400 dark:text-zinc-500">owes you</div>
+</div>
+<button class="text-xs font-medium px-2.5 py-1 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:border-zinc-300 transition-all active:scale-95 shadow-none" type="button">
+                Remind
+              </button>
+</div>
+</div>
+<!-- Daniel: you owe -$20.00 -->
+<div class="p-3.5 flex items-center justify-between gap-3 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-full bg-sky-50 dark:bg-sky-950/60 border border-sky-200/70 dark:border-sky-800 text-sky-700 dark:text-sky-300 flex items-center justify-center font-semibold text-xs shrink-0 tracking-tight">
+                DA
+              </div>
+<div class="min-w-0">
+<div class="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">Daniel</div>
+<div class="text-xs text-zinc-500 dark:text-zinc-400 truncate">Trip to Paris</div>
+</div>
+</div>
+<div class="flex items-center gap-2.5 shrink-0">
+<div class="text-right">
+<div class="text-sm font-semibold text-rose-600 dark:text-rose-500 tabular-num leading-tight">-$20.00</div>
+<div class="text-[10px] text-zinc-400 dark:text-zinc-500">you owe</div>
+</div>
+<button class="text-xs font-medium px-3 py-1 rounded-lg bg-zinc-900 text-white dark:bg-zinc-50 dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-all active:scale-95 shadow-sm" type="button">
+                Pay
+              </button>
+</div>
+</div>
+<!-- Maya: settled $0.00 -->
+<div class="p-3.5 flex items-center justify-between gap-3 hover:bg-zinc-50/70 dark:hover:bg-zinc-800/40 transition-colors">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200/70 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 flex items-center justify-center font-semibold text-xs shrink-0 tracking-tight">
+                MY
+              </div>
+<div class="min-w-0">
+<div class="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">Maya</div>
+<div class="text-xs text-zinc-400 dark:text-zinc-500 truncate">All settled up</div>
+</div>
+</div>
+<div class="flex items-center gap-2 shrink-0">
+<div class="text-right">
+<div class="flex items-center justify-end gap-1 text-zinc-400 dark:text-zinc-500 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span class="tabular-num">$0.00</span>
+</div>
+<div class="text-[10px] text-zinc-400">Zero balance</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 4: By group Section -->
+<section aria-labelledby="groups-heading">
+<div class="flex items-center justify-between mb-2.5">
+<div class="flex items-center gap-2">
+<h2 class="text-sm font-semibold font-headline text-zinc-900 dark:text-zinc-50" id="groups-heading">By group</h2>
+<span class="inline-flex items-center px-1.5 py-0.5 rounded-full text-[11px] font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200/80 dark:border-zinc-700">3 active</span>
+</div>
+<button class="text-xs text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-300 font-medium transition-colors" type="button">
+            View archived
+          </button>
+</div>
+<div class="space-y-2">
+<!-- Group 1: Apartment -->
+<div class="w-full text-left bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-3.5 flex items-center justify-between gap-3 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all cursor-pointer shadow-[0_1px_2px_rgba(0,0,0,0.02)] active:scale-[0.99]" role="button" tabindex="0">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-300 shrink-0">
+<span class="material-symbols-outlined text-[18px]">apartment</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">Apartment</span>
+<span class="text-[10px] text-zinc-400 font-normal">· 3 members</span>
+</div>
+<p class="text-xs text-zinc-500 dark:text-zinc-400 truncate">Monthly rent &amp; wifi</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0">
+<div class="text-right">
+<div class="text-sm font-semibold text-emerald-600 dark:text-emerald-500 tabular-num">+$24.20</div>
+<div class="text-[10px] text-zinc-400">group net</div>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-[18px]">chevron_right</span>
+</div>
+</div>
+<!-- Group 2: Trip to Paris -->
+<div class="w-full text-left bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-3.5 flex items-center justify-between gap-3 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all cursor-pointer shadow-[0_1px_2px_rgba(0,0,0,0.02)] active:scale-[0.99]" role="button" tabindex="0">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-300 shrink-0">
+<span class="material-symbols-outlined text-[18px]">flight</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">Trip to Paris</span>
+<span class="text-[10px] text-zinc-400 font-normal">· 5 members</span>
+</div>
+<p class="text-xs text-zinc-500 dark:text-zinc-400 truncate">Flights &amp; Airbnb</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0">
+<div class="text-right">
+<div class="text-sm font-semibold text-rose-600 dark:text-rose-500 tabular-num">-$31.00</div>
+<div class="text-[10px] text-zinc-400">group net</div>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-[18px]">chevron_right</span>
+</div>
+</div>
+<!-- Group 3: Groceries -->
+<div class="w-full text-left bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-3.5 flex items-center justify-between gap-3 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all cursor-pointer shadow-[0_1px_2px_rgba(0,0,0,0.02)] active:scale-[0.99]" role="button" tabindex="0">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-9 h-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200/60 dark:border-zinc-700 flex items-center justify-center text-zinc-700 dark:text-zinc-300 shrink-0">
+<span class="material-symbols-outlined text-[18px]">shopping_cart</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="text-sm font-medium text-zinc-900 dark:text-zinc-100 truncate">Groceries</span>
+<span class="text-[10px] text-zinc-400 font-normal">· 4 members</span>
+</div>
+<p class="text-xs text-zinc-500 dark:text-zinc-400 truncate">Household pantry</p>
+</div>
+</div>
+<div class="flex items-center gap-1.5 shrink-0">
+<div class="text-right">
+<div class="text-sm font-medium text-zinc-400 tabular-num">$0.00</div>
+<div class="text-[10px] text-zinc-400">settled</div>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-[18px]">chevron_right</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Statement / Export Card -->
+<section aria-label="Statement Export">
+<button class="w-full border border-dashed border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 rounded-xl p-3 bg-zinc-50/50 dark:bg-zinc-900/40 flex items-center justify-between transition-colors group" type="button">
+<div class="flex items-center gap-2.5">
+<span class="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-200 transition-colors">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</span>
+<div class="text-left">
+<div class="text-xs font-medium text-zinc-800 dark:text-zinc-200">Download PDF Balance Statement</div>
+<div class="text-[10px] text-zinc-400">Itemized ledger for all current groups</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-zinc-400 text-sm">download</span>
+</button>
+</section>
+</main>
+<!-- BottomNavBar Component (Exact execution from Shared Components JSON) -->
+<nav aria-label="Bottom Navigation" class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-2 border-t border-zinc-200 dark:border-zinc-800 max-w-lg mx-auto inset-x-0 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md">
+<!-- Tab 1: Dashboard -->
+<a class="flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-400 font-normal gap-1 py-1 hover:text-zinc-900 dark:hover:text-zinc-50 active:scale-95 transition-transform duration-100" href="#dashboard">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-label text-xs tracking-tight">Dashboard</span>
+</a>
+<!-- Tab 2: Expenses -->
+<a class="flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-400 font-normal gap-1 py-1 hover:text-zinc-900 dark:hover:text-zinc-50 active:scale-95 transition-transform duration-100" href="#expenses">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+<span class="font-label text-xs tracking-tight">Expenses</span>
+</a>
+<!-- Tab 3: Balances (ACTIVE MATCH) -->
+<a class="flex flex-col items-center justify-center text-zinc-900 dark:text-zinc-50 font-semibold gap-1 py-1 active:scale-95 transition-transform duration-100" href="#balances">
+<div class="relative flex flex-col items-center">
+<span class="material-symbols-outlined text-[20px] fill" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+<!-- Active micro-indicator dot -->
+<span class="absolute -bottom-1 w-1 h-1 rounded-full bg-zinc-900 dark:bg-zinc-100"></span>
+</div>
+<span class="font-label text-xs tracking-tight text-zinc-900 dark:text-zinc-50 font-semibold">Balances</span>
+</a>
+<!-- Tab 4: Activity -->
+<a class="flex flex-col items-center justify-center text-zinc-500 dark:text-zinc-400 font-normal gap-1 py-1 hover:text-zinc-900 dark:hover:text-zinc-50 active:scale-95 transition-transform duration-100" href="#activity">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span class="font-label text-xs tracking-tight">Activity</span>
+</a>
+</nav>
+</div>
+</body></html>
