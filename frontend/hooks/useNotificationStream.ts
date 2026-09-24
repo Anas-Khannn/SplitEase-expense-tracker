@@ -43,6 +43,31 @@ export function useNotificationStream(enabled = true) {
           };
         }
       );
+
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.groups.all,
+      });
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.expenses.all,
+      });
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.balances.all,
+      });
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.payments.all,
+      });
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.activity.all,
+      });
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.summary.all,
+      });
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.dashboard.all,
+      });
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.reactions.all,
+      });
     };
 
     const connect = async () => {

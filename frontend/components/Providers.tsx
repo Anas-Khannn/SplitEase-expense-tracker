@@ -12,9 +12,14 @@ function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60 * 1000,
+        // Keep every mounted query in sync with other pages/users by polling
+        // periodically and refetching on navigation and window focus.
+        staleTime: 5 * 1000,
         gcTime: 5 * 60 * 1000,
-        refetchOnWindowFocus: false,
+        refetchInterval: 15 * 1000,
+        refetchIntervalInBackground: false,
+        refetchOnWindowFocus: true,
+        refetchOnMount: true,
         retry: 1,
       },
     },
