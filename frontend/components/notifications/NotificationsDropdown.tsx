@@ -6,7 +6,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -62,7 +61,9 @@ export function NotificationsDropdown() {
         className="w-[min(92vw,360px)]"
       >
         <div className="flex items-center justify-between px-2 pt-1.5 pb-1">
-          <DropdownMenuLabel className="p-0">Notifications</DropdownMenuLabel>
+          <span className="px-2 py-1.5 text-xs font-medium text-muted-foreground">
+            Notifications
+          </span>
           {notifications.some((n) => !n.is_read) && (
             <button
               type="button"
