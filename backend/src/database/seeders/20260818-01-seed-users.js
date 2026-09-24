@@ -49,6 +49,7 @@ module.exports = {
       email: user.email,
       username: user.username,
       password_hash,
+      email_verified: true,
     }));
 
     // bulkCreate with updateOnDuplicate makes the seeder safe to re-run: an
@@ -57,7 +58,13 @@ module.exports = {
     // a database that was previously seeded with an invalid placeholder hash
     // without dropping any related data.
     await User.bulkCreate(seedRows, {
-      updateOnDuplicate: ["name", "username", "password_hash", "updated_at"],
+      updateOnDuplicate: [
+        "name",
+        "username",
+        "password_hash",
+        "email_verified",
+        "updated_at",
+      ],
       validate: false,
     });
   },

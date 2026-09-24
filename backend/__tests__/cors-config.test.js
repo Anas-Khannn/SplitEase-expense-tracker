@@ -10,7 +10,7 @@ const ENV_PATH = path.join(__dirname, "..", "src", "config", "env.js");
 function loadEnvInFreshProcess({ nodeEnv, corsOrigin, jwtSecret = "ci-test-secret" }) {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "splitease-cors-"));
   try {
-    const env = { NODE_ENV: nodeEnv, JWT_SECRET: jwtSecret };
+    const env = { NODE_ENV: nodeEnv, JWT_SECRET: jwtSecret, RESEND_API_KEY: "re_test_key" };
     if (corsOrigin !== undefined) env.CORS_ORIGIN = corsOrigin;
 
     const res = spawnSync(process.execPath, ["-e", `require(${JSON.stringify(ENV_PATH)});`], {
@@ -33,7 +33,7 @@ function loadCorsOriginsInFreshProcess({ nodeEnv, corsOrigin }) {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "splitease-cors-"));
   const outputFile = path.join(cwd, "output.json");
   try {
-    const env = { NODE_ENV: nodeEnv, JWT_SECRET: "ci-test-secret" };
+    const env = { NODE_ENV: nodeEnv, JWT_SECRET: "ci-test-secret", RESEND_API_KEY: "re_test_key" };
     if (corsOrigin !== undefined) env.CORS_ORIGIN = corsOrigin;
 
     const script = `

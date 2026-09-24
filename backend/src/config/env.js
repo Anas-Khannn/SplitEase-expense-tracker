@@ -3,10 +3,17 @@ require("dotenv").config();
 const nodeEnv = process.env.NODE_ENV || "development";
 
 const jwtSecret = process.env.JWT_SECRET || "";
+const resendApiKey = process.env.RESEND_API_KEY || "";
 
 if (nodeEnv === "production" && !jwtSecret.trim()) {
   throw new Error(
     "JWT_SECRET is required in production. Set JWT_SECRET to a non-empty secret before starting the server.",
+  );
+}
+
+if (nodeEnv === "production" && !resendApiKey.trim()) {
+  throw new Error(
+    "RESEND_API_KEY is required in production to send verification emails. Set RESEND_API_KEY to a non-empty Resend API key before starting the server.",
   );
 }
 
@@ -42,6 +49,13 @@ const env = {
   jwt: {
     secret: jwtSecret,
     expiresIn: process.env.JWT_EXPIRES_IN || "7d",
+  },
+
+  email: {
+    resendApiKey,
+    fromEmail:
+      process.env.RESEND_FROM_EMAIL || "SplitEase <onboarding@resend.dev>",
+    otpTtlMinutes: parseInt(process.env.OTP_TTL_MINUTES, 10) || 10,
   },
 
   cors: {

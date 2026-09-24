@@ -45,7 +45,35 @@ const loginSchema = Joi.object({
   }),
 });
 
+const sendVerificationOtpSchema = Joi.object({
+  email: Joi.string().email().max(150).required().lowercase().messages({
+    "string.email": "Please provide a valid email address",
+    "any.required": "Email is required",
+    "string.empty": "Email is not allowed to be empty",
+  }),
+});
+
+const verifyEmailSchema = Joi.object({
+  email: Joi.string().email().max(150).required().lowercase().messages({
+    "string.email": "Please provide a valid email address",
+    "any.required": "Email is required",
+    "string.empty": "Email is not allowed to be empty",
+  }),
+  otp: Joi.string()
+    .length(6)
+    .pattern(/^\d{6}$/)
+    .required()
+    .messages({
+      "string.length": "Verification code must be exactly 6 digits",
+      "string.pattern.base": "Verification code must contain only digits",
+      "any.required": "Verification code is required",
+      "string.empty": "Verification code is not allowed to be empty",
+    }),
+});
+
 module.exports = {
   signupSchema,
   loginSchema,
+  sendVerificationOtpSchema,
+  verifyEmailSchema,
 };

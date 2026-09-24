@@ -18,6 +18,8 @@ import { SignupShowcase } from "@/components/auth/SignupShowcase";
 import { Button, Input } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
 
+const VERIFY_EMAIL_STORAGE_KEY = "splitease:verify_email";
+
 export default function SignupPage() {
   const router = useRouter();
   const [serverError, setServerError] = useState<string | null>(null);
@@ -45,7 +47,8 @@ export default function SignupPage() {
           password: data.password,
           username: data.username || undefined,
         });
-        router.push("/login");
+        window.sessionStorage.setItem(VERIFY_EMAIL_STORAGE_KEY, data.email);
+        router.push(`/verify-email?email=${encodeURIComponent(data.email)}`);
       } catch (err: unknown) {
         const message =
           err instanceof Error ? err.message : "Signup failed. Please try again.";

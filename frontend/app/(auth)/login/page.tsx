@@ -20,6 +20,8 @@ import { WorkspacePreview } from "@/components/auth/WorkspacePreview";
 import { Button, Input } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
 
+const VERIFY_EMAIL_STORAGE_KEY = "splitease:verify_email";
+
 function LiveSyncPill() {
   return (
     <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400">
@@ -55,6 +57,15 @@ export default function LoginPage() {
           email: data.email,
           password: data.password,
         });
+
+        if (res.data.user.email_verified === false) {
+          window.sessionStorage.setItem(VERIFY_EMAIL_STORAGE_KEY, data.email);
+          router.push(
+            `/verify-email?email=${encodeURIComponent(data.email)}`
+          );
+          return;
+        }
+
         localStorage.setItem("token", res.data.token);
         queryClient.setQueryData(queryKeys.auth.me(), res.data.user);
         router.push("/dashboard");

@@ -38,9 +38,31 @@ const logout = async (req, res) => {
   });
 };
 
+const sendVerificationOtp = asyncHandler(async (req, res) => {
+  const data = await authService.sendVerificationOtp(req.body);
+
+  return res.status(HTTP_STATUSES.OK).json({
+    success: true,
+    message: "Verification code sent",
+    data,
+  });
+});
+
+const verifyEmail = asyncHandler(async (req, res) => {
+  const data = await authService.verifyEmail(req.body);
+
+  return res.status(HTTP_STATUSES.OK).json({
+    success: true,
+    message: "Email verified successfully",
+    data,
+  });
+});
+
 module.exports = {
   signup,
   login,
   getMe,
   logout,
+  sendVerificationOtp,
+  verifyEmail,
 };

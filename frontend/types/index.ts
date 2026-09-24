@@ -17,6 +17,7 @@ export interface User {
   name: string;
   email: string;
   username?: string;
+  email_verified?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -32,6 +33,19 @@ export interface UserSummary {
 export interface AuthData {
   user: User;
   token: string;
+}
+
+export interface SendVerificationOtpRequest {
+  email: string;
+}
+
+export interface SendVerificationOtpResponse {
+  expires_in: number;
+}
+
+export interface VerifyEmailRequest {
+  email: string;
+  otp: string;
 }
 
 /* ── Group ── */

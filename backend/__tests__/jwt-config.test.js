@@ -10,7 +10,7 @@ const ENV_PATH = path.join(__dirname, "..", "src", "config", "env.js");
 function loadEnvInFreshProcess(nodeEnv, jwtSecret, corsOrigin = "https://app.example.com") {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "splitease-env-"));
   try {
-    const env = { NODE_ENV: nodeEnv, CORS_ORIGIN: corsOrigin };
+    const env = { NODE_ENV: nodeEnv, CORS_ORIGIN: corsOrigin, RESEND_API_KEY: "re_test_key" };
     if (jwtSecret !== undefined) env.JWT_SECRET = jwtSecret;
 
     const res = spawnSync(process.execPath, ["-e", `require(${JSON.stringify(ENV_PATH)});`], {

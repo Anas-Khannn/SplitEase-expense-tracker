@@ -53,6 +53,11 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Password is required"),
 });
 
+export const verifyEmailSchema = z.object({
+  email: emailField,
+  otp: otpField,
+});
+
 export const forgotPasswordSchema = z
   .object({
     method: z.enum(["email", "phone"]),

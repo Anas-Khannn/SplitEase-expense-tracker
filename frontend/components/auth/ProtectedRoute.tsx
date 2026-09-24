@@ -8,7 +8,13 @@ interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
-const AUTH_ROUTES = ["/login", "/signup", "/forgot-password", "/reset-password"];
+const AUTH_ROUTES = [
+  "/login",
+  "/signup",
+  "/forgot-password",
+  "/reset-password",
+  "/verify-email",
+];
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
   const { status } = useAuth();

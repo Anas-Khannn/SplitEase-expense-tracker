@@ -11,7 +11,6 @@ import {
   resetPasswordSchema,
   type ResetPasswordFormData,
 } from "@/lib/validation/authSchemas";
-import OTPInput from "@/components/auth/OTPInput";
 import { SplitEaseLogo } from "@/components/auth/SplitEaseLogo";
 import { AuthHeader } from "@/components/auth/AuthHeader";
 import { AuthFooter, FooterLink } from "@/components/auth/AuthFooter";
@@ -22,7 +21,7 @@ import {
   SecurityNotice,
 } from "@/components/auth/PasswordStrength";
 import { WorkspacePreview } from "@/components/auth/WorkspacePreview";
-import { Button } from "@/components/ui";
+import { Button, InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui";
 import { useShake } from "@/hooks/useShake";
 
 const RESEND_COOLDOWN = 30;
@@ -192,11 +191,30 @@ function ResetPasswordContent() {
 
                   {isOTPFlow && !otpVerified && (
                     <div className="mt-8">
-                      <OTPInput
+                      <label className="mb-2 block text-sm text-muted-foreground">
+                        Verification code
+                      </label>
+                      <InputOTP
+                        maxLength={6}
                         value={otp}
                         onChange={handleOTPComplete}
-                        error={otpError ?? undefined}
-                      />
+                      >
+                        <InputOTPGroup>
+                          {Array.from({ length: 6 }, (_, i) => (
+                            <InputOTPSlot
+                              key={i}
+                              index={i}
+                              data-invalid={otpError ? "true" : undefined}
+                              className="h-12 w-11 text-lg"
+                            />
+                          ))}
+                        </InputOTPGroup>
+                      </InputOTP>
+                      {otpError && (
+                        <p className="mt-2 text-sm text-danger" role="alert">
+                          {otpError}
+                        </p>
+                      )}
                       <div className="mt-3 text-center">
                         <button
                           type="button"
