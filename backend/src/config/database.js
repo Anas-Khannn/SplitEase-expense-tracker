@@ -14,6 +14,12 @@ if (process.env.NODE_ENV === "test") {
     host: env.db.host,
     port: env.db.port,
     dialect: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
     logging: env.nodeEnv === "development" ? console.log : false,
   });
 }
