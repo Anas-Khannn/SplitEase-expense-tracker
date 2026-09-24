@@ -6,6 +6,8 @@ const getGroupBalances = require("./balance.service").getGroupBalances;
 const ACTIVITY_TYPES = require("../constants/activity-types");
 const { formatPaymentResponse } = require("../utils/payment.utils");
 const { logActivity } = require("./activity.service");
+const eventBus = require("../events/event-bus");
+const EVENTS = require("../events/events");
 
 const createPayment = async (groupId, payerId, { paid_to, amount, note, payment_date }) => {
   const group = await Group.findByPk(groupId);
@@ -99,6 +101,23 @@ const createPayment = async (groupId, payerId, { paid_to, amount, note, payment_
         attributes: ["user_id", "name", "email"],
       },
     ],
+  });
+
+  const payerName = fullPayment.payer ? fullPayment.payer.name : "Someone";
+  const receiverName = fullPayment.receiver
+    ? fullPayment.receiver.name
+    : "someone";
+
+  eventBus.emit(EVENTS.PAYMENT_CREATED, {
+    targetUserId: paid_to,
+    actorUserId: payerId,
+    groupId,
+    title: `${payerName} made a payment`,
+    message: `${payerName} paid Rs. ${amount} to ${receiverName} in ${
+      group.name
+    }.`,
+    referenceType: "payment",
+    referenceId: fullPayment.payment_id,
   });
 
   return formatPaymentResponse(fullPayment);

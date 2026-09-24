@@ -40,9 +40,11 @@ const getGroupMembers = asyncHandler(async (req, res) => {
 });
 
 const addMember = asyncHandler(async (req, res) => {
+  const target = req.body.user_id || req.body.identifier;
+
   const result = await groupService.addMember(
     req.params.groupId,
-    req.body.user_id,
+    target,
     req.user.user_id,
   );
 
@@ -71,6 +73,7 @@ const updateMemberRole = asyncHandler(async (req, res) => {
     req.params.groupId,
     req.params.userId,
     req.body.role,
+    req.user.user_id,
   );
 
   return res.status(HTTP_STATUSES.OK).json({

@@ -16,6 +16,7 @@ export interface User {
   user_id: string;
   name: string;
   email: string;
+  username?: string;
   created_at: string;
   updated_at: string;
 }
@@ -24,6 +25,7 @@ export interface UserSummary {
   user_id: string;
   name: string;
   email: string;
+  username?: string;
 }
 
 /* ── Auth ── */
@@ -55,6 +57,7 @@ export interface GroupMember {
   user_id: string;
   name: string;
   email: string;
+  username?: string;
   role: "admin" | "member";
   joined_at: string;
 }
@@ -208,7 +211,7 @@ export interface CreateGroupRequest {
 }
 
 export interface AddMemberRequest {
-  user_id: string;
+  identifier: string;
 }
 
 export interface UpdateMemberRoleRequest {
@@ -245,4 +248,62 @@ export interface AddReactionRequest {
 export interface ActivityPagination {
   page?: number;
   limit?: number;
+}
+
+/* ── Notifications ── */
+export type NotificationType =
+  | "MEMBER_ADDED"
+  | "MEMBER_REMOVED"
+  | "MEMBER_ROLE_CHANGED"
+  | "EXPENSE_CREATED"
+  | "EXPENSE_UPDATED"
+  | "EXPENSE_DELETED"
+  | "PAYMENT_CREATED"
+  | "REACTION_ADDED";
+
+export interface AppNotification {
+  notification_id: string;
+  user_id: string;
+  type: NotificationType;
+  title: string;
+  message: string;
+  reference_type: string | null;
+  reference_id: string | null;
+  is_read: boolean;
+  created_at: string;
+}
+
+export interface NotificationPreferences {
+  expenses: boolean;
+  settlements: boolean;
+  members: boolean;
+  reactions: boolean;
+}
+
+export interface NotificationPreferencesRequest {
+  expenses?: boolean;
+  settlements?: boolean;
+  members?: boolean;
+  reactions?: boolean;
+}
+
+export interface NotificationListResponse {
+  notifications: AppNotification[];
+  pagination: Pagination;
+}
+
+/* ── User Search ── */
+export interface UserSearchResult {
+  user_id: string;
+  name: string;
+  email: string;
+  username?: string;
+}
+
+/* ── Auth ── */
+export interface SignupRequest {
+  name: string;
+  email: string;
+  password: string;
+  username?: string;
 }

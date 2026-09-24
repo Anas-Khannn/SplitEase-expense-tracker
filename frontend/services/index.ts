@@ -8,3 +8,5 @@ export { activityApi } from "./activity.service";
 export { summaryApi } from "./summary.service";
 export { reactionsApi } from "./reactions.service";
 export { dashboardApi } from "./dashboard.service";
+export { notificationsApi } from "./notifications.service";
+export { usersApi } from "./users.service";

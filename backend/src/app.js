@@ -4,8 +4,11 @@ const routes = require("./routes");
 const errorHandler = require("./middlewares/error.middleware");
 const HTTP_STATUSES = require("./constants/http-statuses");
 const env = require("./config/env");
+const { registerNotificationListeners } = require("./events/notification.listener");
 
 const app = express();
+
+registerNotificationListeners();
 
 app.use(express.json());
 app.use(

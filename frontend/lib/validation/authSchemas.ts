@@ -28,6 +28,18 @@ export const signupSchema = z
   .object({
     name: z.string().min(1, "Name is required"),
     email: emailField,
+    username: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .min(3, "Username must be at least 3 characters")
+      .max(30, "Username must be 30 characters or less")
+      .regex(
+        /^[a-z0-9._-]+$/,
+        "Username may only contain letters, numbers, dots, dashes, or underscores"
+      )
+      .optional()
+      .or(z.literal("")),
     password: passwordField,
     confirmPassword: z.string().min(1, "Please confirm your password"),
   })

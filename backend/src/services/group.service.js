@@ -3,6 +3,28 @@ const { sequelize } = require("../database/models");
 const { NotFoundError, ConflictError, BadRequestError } = require("../errors");
 const ACTIVITY_TYPES = require("../constants/activity-types");
 const { logActivity } = require("./activity.service");
+const eventBus = require("../events/event-bus");
+const EVENTS = require("../events/events");
+
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+const resolveTargetUser = async (identifierOrUserId) => {
+  if (!identifierOrUserId) return null;
+
+  const raw = String(identifierOrUserId).trim();
+
+  if (UUID_PATTERN.test(raw)) {
+    return User.findByPk(raw);
+  }
+
+  const normalized = raw.toLowerCase();
+
+  if (normalized.includes("@")) {
+    return User.findOne({ where: { email: normalized } });
+  }
+
+  return User.findOne({ where: { username: normalized } });
+};
 
 const createGroup = async (userId, { name, icon, description }) => {
   const result = await sequelize.transaction(async (t) => {
@@ -81,7 +103,7 @@ const getGroupById = async (groupId) => {
           {
             model: User,
             as: "user",
-            attributes: ["user_id", "name", "email"],
+            attributes: ["user_id", "name", "email", "username"],
           },
         ],
         attributes: ["role", "joined_at"],
@@ -110,6 +132,7 @@ const getGroupById = async (groupId) => {
       user_id: m.user.user_id,
       name: m.user.name,
       email: m.user.email,
+      username: m.user.username,
       role: m.role,
       joined_at: m.joined_at,
     })),
@@ -123,7 +146,7 @@ const getGroupMembers = async (groupId) => {
       {
         model: User,
         as: "user",
-        attributes: ["user_id", "name", "email"],
+        attributes: ["user_id", "name", "email", "username"],
       },
     ],
     attributes: ["role", "joined_at"],
@@ -133,16 +156,20 @@ const getGroupMembers = async (groupId) => {
     user_id: m.user.user_id,
     name: m.user.name,
     email: m.user.email,
+    username: m.user.username,
     role: m.role,
     joined_at: m.joined_at,
   }));
 };
 
-const addMember = async (groupId, targetUserId, actorUserId) => {
-  const targetUser = await User.findByPk(targetUserId);
+const addMember = async (groupId, identifierOrUserId, actorUserId) => {
+  const targetUser = await resolveTargetUser(identifierOrUserId);
+
   if (!targetUser) {
-    throw new NotFoundError("User not found");
+    throw new NotFoundError("User not found by that email or username");
   }
+
+  const targetUserId = targetUser.user_id;
 
   const existingMembership = await GroupMember.findOne({
     where: { group_id: groupId, user_id: targetUserId },
@@ -173,6 +200,18 @@ const addMember = async (groupId, targetUserId, actorUserId) => {
     );
 
     return membership;
+  });
+
+  const [group, actor] = await Promise.all([
+    Group.findByPk(groupId),
+    User.findByPk(actorUserId),
+  ]);
+
+  eventBus.emit(EVENTS.MEMBER_ADDED, {
+    targetUserId,
+    groupId,
+    groupName: group ? group.name : "the group",
+    actorName: actor ? actor.name : "Someone",
   });
 
   return {
@@ -219,10 +258,22 @@ const removeMember = async (groupId, targetUserId, actorUserId) => {
     );
   });
 
+  const [group, actor] = await Promise.all([
+    Group.findByPk(groupId),
+    User.findByPk(actorUserId),
+  ]);
+
+  eventBus.emit(EVENTS.MEMBER_REMOVED, {
+    targetUserId,
+    groupId,
+    groupName: group ? group.name : "the group",
+    actorName: actor ? actor.name : "Someone",
+  });
+
   return { message: "Member removed successfully" };
 };
 
-const updateMemberRole = async (groupId, targetUserId, newRole) => {
+const updateMemberRole = async (groupId, targetUserId, newRole, actorUserId) => {
   const targetMembership = await GroupMember.findOne({
     where: { group_id: groupId, user_id: targetUserId },
   });
@@ -246,6 +297,31 @@ const updateMemberRole = async (groupId, targetUserId, newRole) => {
   }
 
   await targetMembership.update({ role: newRole });
+
+  const [group, actor, targetUser] = await Promise.all([
+    Group.findByPk(groupId),
+    User.findByPk(actorUserId),
+    User.findByPk(targetUserId),
+  ]);
+
+  const actorName = actor ? actor.name : "Someone";
+
+  await logActivity(
+    groupId,
+    actorUserId,
+    ACTIVITY_TYPES.MEMBER_ROLE_CHANGED,
+    `${actorName} changed ${
+      targetUser ? targetUser.name : "a member"
+    }'s role to ${newRole}.`,
+  );
+
+  eventBus.emit(EVENTS.MEMBER_ROLE_CHANGED, {
+    targetUserId,
+    groupId,
+    groupName: group ? group.name : "the group",
+    actorName,
+    newRole,
+  });
 
   return {
     group_member_id: targetMembership.group_member_id,

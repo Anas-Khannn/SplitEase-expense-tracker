@@ -2,9 +2,23 @@ const { User } = require("../database/models");
 const { hashPassword, comparePassword } = require("../utils/password");
 const { generateToken } = require("../utils/jwt");
 const { formatUser } = require("../utils/user.utils");
+const { sanitizeUsername, usernameFromEmail } = require("../utils/username.utils");
 const { ConflictError, UnauthorizedError, NotFoundError } = require("../errors");
 
-const signup = async ({ name, email, password }) => {
+const resolveUniqueUsername = async (raw, email) => {
+  const base = raw ? sanitizeUsername(raw) : usernameFromEmail(email);
+  let candidate = base || "user";
+  let suffix = 1;
+
+  while (await User.findOne({ where: { username: candidate } })) {
+    candidate = `${base}_${suffix}`;
+    suffix += 1;
+  }
+
+  return candidate;
+};
+
+const signup = async ({ name, email, password, username }) => {
   const existingUser = await User.findOne({ where: { email } });
 
   if (existingUser) {
@@ -12,11 +26,13 @@ const signup = async ({ name, email, password }) => {
   }
 
   const passwordHash = await hashPassword(password);
+  const finalUsername = await resolveUniqueUsername(username, email);
 
   const user = await User.create({
     name,
     email,
     password_hash: passwordHash,
+    username: finalUsername,
   });
 
   const token = generateToken({ user_id: user.user_id });

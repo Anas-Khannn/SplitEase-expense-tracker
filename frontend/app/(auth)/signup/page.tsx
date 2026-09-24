@@ -43,6 +43,7 @@ export default function SignupPage() {
           name: data.name,
           email: data.email,
           password: data.password,
+          username: data.username || undefined,
         });
         router.push("/login");
       } catch (err: unknown) {
@@ -124,6 +125,16 @@ export default function SignupPage() {
                 className="h-11"
                 error={errors.email?.message}
                 {...register("email")}
+              />
+
+              <Input
+                label="Username (optional)"
+                type="text"
+                placeholder="Your public username, e.g. jane_doe"
+                autoComplete="username"
+                className="h-11"
+                error={errors.username?.message}
+                {...register("username")}
               />
 
               <PasswordField

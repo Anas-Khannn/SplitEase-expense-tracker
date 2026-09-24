@@ -16,10 +16,35 @@ const createGroupSchema = Joi.object({
 });
 
 const addMemberSchema = Joi.object({
-  user_id: Joi.string().uuid().required().messages({
+  user_id: Joi.string().uuid().messages({
     "string.uuid": "Please provide a valid user ID",
-    "any.required": "User ID is required",
   }),
+  identifier: Joi.string().trim().lowercase().min(3).max(150).messages({
+    "string.min": "Username or email must be at least 3 characters long",
+    "string.max": "Username or email must not exceed 150 characters",
+  }),
+}).custom((value, helpers) => {
+  if (value.user_id && value.identifier) {
+    return helpers.message("Provide either a user ID or an email/username, not both");
+  }
+
+  if (!value.user_id && !value.identifier) {
+    return helpers.message("Provide a user email or username");
+  }
+
+  if (value.identifier) {
+    if (value.identifier.includes("@")) {
+      if (Joi.string().email().validate(value.identifier).error) {
+        return helpers.message("Please provide a valid email address");
+      }
+    } else if (!/^[a-z0-9._-]{3,30}$/.test(value.identifier)) {
+      return helpers.message(
+        "Username must be 3-30 characters (letters, numbers, dots, dashes, or underscores)",
+      );
+    }
+  }
+
+  return value;
 });
 
 const updateMemberRoleSchema = Joi.object({

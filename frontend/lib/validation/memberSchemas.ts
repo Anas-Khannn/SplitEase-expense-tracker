@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 export const addMemberSchema = z.object({
-  userId: z
+  identifier: z
     .string()
     .trim()
-    .min(1, "User ID is required")
-    .max(100, "User ID must be 100 characters or less"),
+    .min(3, "Enter an email or username (at least 3 characters)")
+    .max(150, "Email or username must be 150 characters or less"),
 });
 
 export type AddMemberFormData = z.output<typeof addMemberSchema>;

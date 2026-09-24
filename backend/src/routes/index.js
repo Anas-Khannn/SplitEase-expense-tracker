@@ -10,6 +10,8 @@ const activityRoutes = require("./activity.routes");
 const reactionRoutes = require("./reaction.routes");
 const summaryRoutes = require("./summary.routes");
 const dashboardRoutes = require("./dashboard.routes");
+const userRoutes = require("./user.routes");
+const notificationRoutes = require("./notification.routes");
 
 router.use("/auth", authRoutes);
 router.use("/groups", groupRoutes);
@@ -20,5 +22,7 @@ router.use("/groups/:groupId/activity", activityRoutes);
 router.use("/groups/:groupId/summary", summaryRoutes);
 router.use("/expenses/:expenseId/reactions", reactionRoutes);
 router.use("/dashboard", dashboardRoutes);
+router.use("/users", userRoutes);
+router.use("/notifications", notificationRoutes);
 
 module.exports = router;

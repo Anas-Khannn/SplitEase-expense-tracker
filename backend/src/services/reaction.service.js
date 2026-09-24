@@ -1,6 +1,9 @@
 const { Expense, ExpenseReaction, GroupMember, User } = require("../database/models");
+const { Group } = require("../database/models");
 const { NotFoundError, ForbiddenError } = require("../errors");
 const { formatReactionResponse } = require("../utils/reaction.utils");
+const eventBus = require("../events/event-bus");
+const EVENTS = require("../events/events");
 
 const validateExpenseAndMembership = async (expenseId, userId) => {
   const expense = await Expense.findByPk(expenseId);
@@ -20,7 +23,7 @@ const validateExpenseAndMembership = async (expenseId, userId) => {
 };
 
 const addOrUpdateReaction = async (expenseId, userId, reaction) => {
-  await validateExpenseAndMembership(expenseId, userId);
+  const expense = await validateExpenseAndMembership(expenseId, userId);
 
   const existingReaction = await ExpenseReaction.findOne({
     where: { expense_id: expenseId, user_id: userId },
@@ -46,6 +49,25 @@ const addOrUpdateReaction = async (expenseId, userId, reaction) => {
       },
     ],
   });
+
+  if (expense.paid_by !== userId) {
+    const [group, actor] = await Promise.all([
+      Group.findByPk(expense.group_id),
+      User.findByPk(userId),
+    ]);
+
+    eventBus.emit(EVENTS.REACTION_ADDED, {
+      targetUserId: expense.paid_by,
+      actorUserId: userId,
+      groupId: expense.group_id,
+      title: `${actor ? actor.name : "Someone"} reacted to your expense`,
+      message: `${actor ? actor.name : "Someone"} reacted ${reaction} to ${
+        expense.description
+      } in ${group ? group.name : "the group"}.`,
+      referenceType: "expense",
+      referenceId: expenseId,
+    });
+  }
 
   return { reaction: formatReactionResponse(full), created: true };
 };

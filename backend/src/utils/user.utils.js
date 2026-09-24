@@ -1,4 +1,11 @@
-const safeUserFields = ["user_id", "name", "email", "created_at", "updated_at"];
+const safeUserFields = [
+  "user_id",
+  "name",
+  "email",
+  "username",
+  "created_at",
+  "updated_at",
+];
 
 const formatUser = (user) => {
   const data = user.toJSON ? user.toJSON() : user;

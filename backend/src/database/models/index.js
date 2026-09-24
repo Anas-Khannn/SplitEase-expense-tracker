@@ -9,6 +9,8 @@ const ExpenseSplit = require("./expense-split")(sequelize, DataTypes);
 const Payment = require("./payment")(sequelize, DataTypes);
 const ExpenseReaction = require("./expense-reaction")(sequelize, DataTypes);
 const ActivityLog = require("./activity-log")(sequelize, DataTypes);
+const Notification = require("./notification")(sequelize, DataTypes);
+const NotificationPreference = require("./notification-preference")(sequelize, DataTypes);
 
 // =====================================================
 // ONE-TO-MANY RELATIONSHIPS
@@ -69,6 +71,20 @@ ActivityLog.belongsTo(Group, { foreignKey: "group_id", as: "group" });
 // User → ActivityLog
 User.hasMany(ActivityLog, { foreignKey: "user_id", as: "activities" });
 ActivityLog.belongsTo(User, { foreignKey: "user_id", as: "user" });
+
+// User ↔ Notification
+User.hasMany(Notification, { foreignKey: "user_id", as: "notifications" });
+Notification.belongsTo(User, { foreignKey: "user_id", as: "user" });
+
+// User ↔ NotificationPreference
+User.hasOne(NotificationPreference, {
+  foreignKey: "user_id",
+  as: "notificationPreference",
+});
+NotificationPreference.belongsTo(User, {
+  foreignKey: "user_id",
+  as: "user",
+});
 
 // =====================================================
 // MANY-TO-MANY RELATIONSHIPS (belongsToMany)
@@ -141,4 +157,6 @@ module.exports = {
   Payment,
   ExpenseReaction,
   ActivityLog,
+  Notification,
+  NotificationPreference,
 };

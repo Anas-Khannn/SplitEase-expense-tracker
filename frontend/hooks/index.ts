@@ -8,3 +8,9 @@ export { useGroupActivity } from "./useActivity";
 export { useGroupSummary } from "./useSummary";
 export { useDashboardSummary } from "./useDashboard";
 export { useExpenseReactions } from "./useReactions";
+export {
+  useNotifications,
+  useUnreadCount,
+  useNotificationPreferences,
+} from "./useNotifications";
+export { useUserSearch } from "./useUserSearch";

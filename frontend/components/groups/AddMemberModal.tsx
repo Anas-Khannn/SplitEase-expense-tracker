@@ -4,10 +4,12 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Modal, Input, Button } from "@/components/ui";
 import { useAddGroupMember } from "@/hooks/mutations";
+import { useUserSearch } from "@/hooks";
 import {
   addMemberSchema,
   type AddMemberFormData,
 } from "@/lib/validation/memberSchemas";
+import { useWatch } from "react-hook-form";
 
 interface AddMemberModalProps {
   open: boolean;
@@ -26,15 +28,20 @@ export function AddMemberModal({
     register,
     handleSubmit,
     reset,
+    setValue,
+    control,
     formState: { errors },
   } = useForm<AddMemberFormData>({
     resolver: zodResolver(addMemberSchema),
-    defaultValues: { userId: "" },
+    defaultValues: { identifier: "" },
   });
+
+  const identifier = useWatch({ control, name: "identifier" }) ?? "";
+  const search = useUserSearch(identifier);
 
   const onSubmit = (data: AddMemberFormData) => {
     addMember.mutate(
-      { groupId, userId: data.userId },
+      { groupId, identifier: data.identifier },
       {
         onSuccess: () => {
           reset();
@@ -50,24 +57,76 @@ export function AddMemberModal({
     onClose();
   };
 
+  const selectedIdentifier =
+    identifier.includes("@") || !identifier
+      ? identifier
+      : undefined;
+
   return (
     <Modal
       open={open}
       onClose={handleClose}
       title="Add a member"
-      description="Enter the user ID of the person you want to add to this group."
+      description="Enter an email address or username to find and add someone to this group."
     >
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <div className="space-y-4">
-          <Input
-            label="User ID"
-            placeholder="e.g. 550e8400-e29b-41d4-a716-446655440000"
-            required
-            autoComplete="off"
-            disabled={addMember.isPending}
-            error={errors.userId?.message}
-            {...register("userId")}
-          />
+          <div className="relative">
+            <Input
+              label="Email or username"
+              placeholder="e.g. jane@example.com or jane_doe"
+              required
+              autoComplete="off"
+              disabled={addMember.isPending}
+              error={errors.identifier?.message}
+              {...register("identifier")}
+            />
+
+            {search.isSuccess &&
+              search.data.length > 0 &&
+              !identifier.includes("@") &&
+              !addMember.isPending && (
+                <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-lg border border-border bg-background shadow-md">
+                  {search.data.map((user) => (
+                    <li key={user.user_id}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setValue("identifier", user.username || user.email, {
+                            shouldValidate: true,
+                          });
+                        }}
+                        className="flex w-full items-center gap-3 px-3 py-2.5 text-left text-xs transition-colors hover:bg-muted"
+                      >
+                        <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[10px] font-semibold text-white dark:bg-zinc-100 dark:text-zinc-900">
+                          {user.name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .slice(0, 2)
+                            .join("")
+                            .toUpperCase()}
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block truncate font-medium text-foreground">
+                            {user.name}
+                          </span>
+                          <span className="block truncate text-muted-foreground">
+                            {user.username ? `@${user.username}` : user.email}
+                          </span>
+                        </span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+          </div>
+
+          {selectedIdentifier && search.isFetched && (
+            <p className="-mt-2 text-xs text-muted-foreground">
+              You can also pick from suggestions above (or enter{" "}
+              <span className="font-mono">@{selectedIdentifier}</span>).
+            </p>
+          )}
 
           {addMember.isError && (
             <p className="text-sm text-danger-500" role="alert">

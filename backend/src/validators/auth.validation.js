@@ -12,6 +12,19 @@ const signupSchema = Joi.object({
     "any.required": "Email is required",
     "string.empty": "Email is not allowed to be empty",
   }),
+  username: Joi.string()
+    .trim()
+    .lowercase()
+    .min(3)
+    .max(30)
+    .pattern(/^[a-z0-9._-]+$/)
+    .optional()
+    .messages({
+      "string.min": "Username must be at least 3 characters long",
+      "string.max": "Username must not exceed 30 characters",
+      "string.pattern.base":
+        "Username may only contain letters, numbers, dots, dashes, or underscores",
+    }),
   password: Joi.string().min(8).max(128).required().messages({
     "string.min": "Password must be at least 8 characters long",
     "string.max": "Password must not exceed 128 characters",

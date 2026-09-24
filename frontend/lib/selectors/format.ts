@@ -53,6 +53,30 @@ export function formatTime(iso: string): string {
   });
 }
 
+export function timeAgo(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  const diffSeconds = (Date.now() - date.getTime()) / 1000;
+
+  const thresholds: [number, number, string][] = [
+    [60, 1, "second"],
+    [3600, 60, "minute"],
+    [86400, 3600, "hour"],
+    [604800, 86400, "day"],
+    [2592000, 604800, "week"],
+  ];
+
+  for (const [cutoff, divisor, unit] of thresholds) {
+    if (diffSeconds < cutoff) {
+      const n = Math.max(1, Math.round(diffSeconds / divisor));
+      return `${n} ${unit}${n === 1 ? "" : "s"} ago`;
+    }
+  }
+
+  const months = Math.max(1, Math.round(diffSeconds / 2592000));
+  return `${months} month${months === 1 ? "" : "s"} ago`;
+}
+
 export function truncateName(value: string, maxLength = 18): string {
   return value.length > maxLength
     ? `${value.slice(0, maxLength - 1)}…`

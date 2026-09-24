@@ -54,4 +54,19 @@ export const queryKeys = {
     expense: (expenseId: string) =>
       [...queryKeys.reactions.all, expenseId] as const,
   },
+
+  notifications: {
+    all: ["notifications"] as const,
+    list: (params?: Record<string, unknown>) =>
+      [...queryKeys.notifications.all, "list", params ?? {}] as const,
+    unreadCount: () =>
+      [...queryKeys.notifications.all, "unread-count"] as const,
+    preferences: () =>
+      [...queryKeys.notifications.all, "preferences"] as const,
+  },
+
+  users: {
+    all: ["users"] as const,
+    search: (q: string) => [...queryKeys.users.all, "search", q] as const,
+  },
 } as const;

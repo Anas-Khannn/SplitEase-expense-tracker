@@ -8,6 +8,8 @@ import { useLogout } from "@/hooks/mutations/useLogout";
 import { LogoutConfirmationDialog } from "@/components/shared/LogoutConfirmationDialog";
 import { SettingsPageSkeleton } from "@/components/skeletons";
 import { Button } from "@/components/ui";
+import { useNotificationPreferences } from "@/hooks";
+import { useUpdateNotificationPreferences } from "@/hooks/mutations";
 import { cn } from "@/lib/utils/cn";
 import {
   User,
@@ -38,6 +40,8 @@ export default function SettingsPage() {
   const logout = useLogout();
   const router = useRouter();
   const { theme, setTheme } = useTheme();
+  const preferences = useNotificationPreferences();
+  const updatePreferences = useUpdateNotificationPreferences();
 
   const [activeTab, setActiveTab] = useState<SettingsTab>("account");
   const [copied, setCopied] = useState(false);
@@ -399,7 +403,11 @@ export default function SettingsPage() {
                   </div>
                   <input
                     type="checkbox"
-                    defaultChecked
+                    checked={preferences.data?.expenses ?? true}
+                    onChange={(e) =>
+                      updatePreferences.mutate({ expenses: e.target.checked })
+                    }
+                    disabled={updatePreferences.isPending}
                     aria-label="Toggle expense notifications"
                     className="size-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                   />
@@ -416,8 +424,54 @@ export default function SettingsPage() {
                   </div>
                   <input
                     type="checkbox"
-                    defaultChecked
+                    checked={preferences.data?.settlements ?? true}
+                    onChange={(e) =>
+                      updatePreferences.mutate({ settlements: e.target.checked })
+                    }
+                    disabled={updatePreferences.isPending}
                     aria-label="Toggle debt settlement alerts"
+                    className="size-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                  />
+                </div>
+
+                <div className="py-3 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xs font-semibold text-zinc-900 dark:text-zinc-100">
+                      Member activity
+                    </h3>
+                    <p className="text-[11px] text-zinc-500">
+                      Notify when members are added or removed by admins.
+                    </p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={preferences.data?.members ?? true}
+                    onChange={(e) =>
+                      updatePreferences.mutate({ members: e.target.checked })
+                    }
+                    disabled={updatePreferences.isPending}
+                    aria-label="Toggle member activity notifications"
+                    className="size-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                  />
+                </div>
+
+                <div className="py-3 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-xs font-semibold text-zinc-900 dark:text-zinc-100">
+                      Reaction alerts
+                    </h3>
+                    <p className="text-[11px] text-zinc-500">
+                      Notify when a group member reacts to an expense you paid.
+                    </p>
+                  </div>
+                  <input
+                    type="checkbox"
+                    checked={preferences.data?.reactions ?? true}
+                    onChange={(e) =>
+                      updatePreferences.mutate({ reactions: e.target.checked })
+                    }
+                    disabled={updatePreferences.isPending}
+                    aria-label="Toggle reaction alerts"
                     className="size-4 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                   />
                 </div>

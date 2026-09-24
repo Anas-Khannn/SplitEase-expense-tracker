@@ -22,16 +22,19 @@ const users = [
     user_id: "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
     name: "Alice Johnson",
     email: "alice@example.com",
+    username: "alice",
   },
   {
     user_id: "b2c3d4e5-f6a7-8901-bcde-f12345678901",
     name: "Bob Smith",
     email: "bob@example.com",
+    username: "bob",
   },
   {
     user_id: "c3d4e5f6-a7b8-9012-cdef-123456789012",
     name: "Charlie Davis",
     email: "charlie@example.com",
+    username: "charlie",
   },
 ];
 
@@ -44,6 +47,7 @@ module.exports = {
       user_id: user.user_id,
       name: user.name,
       email: user.email,
+      username: user.username,
       password_hash,
     }));
 
@@ -53,7 +57,7 @@ module.exports = {
     // a database that was previously seeded with an invalid placeholder hash
     // without dropping any related data.
     await User.bulkCreate(seedRows, {
-      updateOnDuplicate: ["name", "password_hash", "updated_at"],
+      updateOnDuplicate: ["name", "username", "password_hash", "updated_at"],
       validate: false,
     });
   },

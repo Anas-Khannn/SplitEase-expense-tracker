@@ -7,14 +7,17 @@ export function useAddGroupMember() {
   return useMutation({
     mutationFn: ({
       groupId,
-      userId,
+      identifier,
     }: {
       groupId: string;
-      userId: string;
-    }) => groupsApi.addMember(groupId, { user_id: userId }),
+      identifier: string;
+    }) => groupsApi.addMember(groupId, { identifier }),
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
         queryKey: queryKeys.groups.members(variables.groupId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: queryKeys.groups.detail(variables.groupId),
       });
     },
   });

@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const { Expense, ExpenseSplit, GroupMember, User } = require("../database/models");
+const { Expense, ExpenseSplit, GroupMember, Group, User } = require("../database/models");
 const { sequelize } = require("../database/models");
 const { NotFoundError, BadRequestError } = require("../errors");
 const ACTIVITY_TYPES = require("../constants/activity-types");
@@ -9,6 +9,8 @@ const {
   toDateOnly,
 } = require("../utils/expense.utils");
 const { logActivity } = require("./activity.service");
+const eventBus = require("../events/event-bus");
+const EVENTS = require("../events/events");
 
 const calculateEqualSplits = (totalAmountCents, participantCount) => {
   const baseShare = Math.floor(totalAmountCents / participantCount);
@@ -113,6 +115,23 @@ const createExpense = async (
       },
       splits: splitsWithUser.map(formatSplitResponse),
     };
+  });
+
+  const [group, actor] = await Promise.all([
+    Group.findByPk(groupId),
+    User.findByPk(actorUserId),
+  ]);
+
+  eventBus.emit(EVENTS.EXPENSE_CREATED, {
+    recipientIds: participant_ids,
+    actorUserId,
+    groupId,
+    title: `${actor ? actor.name : "Someone"} added an expense`,
+    message: `${payer.name} added Rs. ${amount} for ${description} in ${
+      group ? group.name : "the group"
+    }.`,
+    referenceType: "expense",
+    referenceId: result.expense_id,
   });
 
   return result;
@@ -339,6 +358,23 @@ const updateExpense = async (
     };
   });
 
+  const [group, actor] = await Promise.all([
+    Group.findByPk(groupId),
+    User.findByPk(actorUserId),
+  ]);
+
+  eventBus.emit(EVENTS.EXPENSE_UPDATED, {
+    recipientIds: participants,
+    actorUserId,
+    groupId,
+    title: `${actor ? actor.name : "Someone"} updated an expense`,
+    message: `${actor ? actor.name : "Someone"} updated the ${newDescription} expense in ${
+      group ? group.name : "the group"
+    }.`,
+    referenceType: "expense",
+    referenceId: expenseId,
+  });
+
   return result;
 };
 
@@ -353,6 +389,11 @@ const deleteExpense = async (groupId, expenseId, actorUserId) => {
 
   const description = expense.description;
 
+  const existingSplits = await ExpenseSplit.findAll({
+    where: { expense_id: expenseId },
+  });
+  const participantIds = existingSplits.map((s) => s.user_id);
+
   await sequelize.transaction(async (t) => {
     await expense.destroy({ transaction: t });
 
@@ -365,6 +406,23 @@ const deleteExpense = async (groupId, expenseId, actorUserId) => {
       `${actor.name} deleted the ${description} expense.`,
       t,
     );
+  });
+
+  const [group, actor] = await Promise.all([
+    Group.findByPk(groupId),
+    User.findByPk(actorUserId),
+  ]);
+
+  eventBus.emit(EVENTS.EXPENSE_DELETED, {
+    recipientIds: participantIds,
+    actorUserId,
+    groupId,
+    title: `${actor ? actor.name : "Someone"} deleted an expense`,
+    message: `${actor ? actor.name : "Someone"} deleted the ${description} expense in ${
+      group ? group.name : "the group"
+    }.`,
+    referenceType: "expense",
+    referenceId: expenseId,
   });
 
   return { message: "Expense deleted successfully" };

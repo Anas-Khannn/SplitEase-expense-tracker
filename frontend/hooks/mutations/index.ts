@@ -9,3 +9,6 @@ export { useDeleteExpense } from "./useDeleteExpense";
 export { useCreatePayment } from "./useCreatePayment";
 export { useAddExpenseReaction } from "./useAddExpenseReaction";
 export { useRemoveExpenseReaction } from "./useRemoveExpenseReaction";
+export { useMarkNotificationRead } from "./useMarkNotificationRead";
+export { useMarkAllNotificationsRead } from "./useMarkNotificationRead";
+export { useUpdateNotificationPreferences } from "./useUpdateNotificationPreferences";

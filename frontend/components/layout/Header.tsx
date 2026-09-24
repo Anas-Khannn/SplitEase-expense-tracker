@@ -4,7 +4,8 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui";
-import { Search, Bell, Plus, DollarSign } from "lucide-react";
+import { Search, Plus, DollarSign } from "lucide-react";
+import { NotificationsDropdown } from "@/components/notifications/NotificationsDropdown";
 
 export default function Header() {
   const pathname = usePathname();
@@ -60,14 +61,7 @@ export default function Header() {
           </div>
 
           {/* Notification Bell */}
-          <button
-            type="button"
-            aria-label="Notifications"
-            className="relative flex size-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-          >
-            <Bell className="size-4" />
-            <span className="absolute right-2 top-2 size-2 rounded-full bg-rose-500 ring-2 ring-background" />
-          </button>
+          <NotificationsDropdown />
 
           <span className="hidden h-4 w-px bg-border sm:block" />
 

@@ -2,11 +2,12 @@ import { apiClient } from "../lib/api/client";
 import type {
   ApiResponse,
   AuthData,
+  SignupRequest,
   User,
 } from "@/types";
 
 export const authApi = {
-  signup(data: { name: string; email: string; password: string }) {
+  signup(data: SignupRequest) {
     return apiClient.post<ApiResponse<AuthData>>("/auth/signup", data);
   },
 
