@@ -41,8 +41,6 @@ export interface SendVerificationOtpRequest {
 
 export interface SendVerificationOtpResponse {
   expires_in: number;
-  dev_otp?: string;
-  delivery_note?: string;
 }
 
 export interface VerifyEmailRequest {

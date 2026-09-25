@@ -107,20 +107,11 @@ const sendVerificationOtp = async ({ email }) => {
     throw new BadRequestError("This email is already verified");
   }
 
-  const { otp, emailResult } = await issueVerificationOtp(user);
+  await issueVerificationOtp(user);
 
-  const response = {
+  return {
     expires_in: env.email.otpTtlMinutes * 60,
   };
-
-  if (!emailResult?.delivered || env.nodeEnv !== "production") {
-    response.dev_otp = otp;
-    if (emailResult?.error) {
-      response.delivery_note = emailResult.error;
-    }
-  }
-
-  return response;
 };
 
 const verifyEmail = async ({ email, otp }) => {

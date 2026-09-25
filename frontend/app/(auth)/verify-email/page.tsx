@@ -45,8 +45,6 @@ function VerifyEmailContent() {
   const [otpError, setOtpError] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [serverError, setServerError] = useState<string | null>(null);
-  const [devOtp, setDevOtp] = useState<string | null>(null);
-  const [deliveryNote, setDeliveryNote] = useState<string | null>(null);
   const [sendState, setSendState] = useState<
     "idle" | "sending" | "sent" | "error"
   >("idle");
@@ -66,15 +64,9 @@ function VerifyEmailContent() {
     setServerError(null);
     setSendState("sending");
     try {
-      const res = await authApi.sendVerificationOtp({ email });
+      await authApi.sendVerificationOtp({ email });
       setSendState("sent");
       setCooldown(RESEND_COOLDOWN);
-      if (res.data?.dev_otp) {
-        setDevOtp(res.data.dev_otp);
-      }
-      if (res.data?.delivery_note) {
-        setDeliveryNote(res.data.delivery_note);
-      }
       return true;
     } catch (err: unknown) {
       setSendState("error");
@@ -95,8 +87,6 @@ function VerifyEmailContent() {
   const handleResend = useCallback(() => {
     setOtp("");
     setOtpError(null);
-    setDevOtp(null);
-    setDeliveryNote(null);
     sendOtp();
   }, [sendOtp]);
 
@@ -220,35 +210,6 @@ function VerifyEmailContent() {
                     <span className="font-medium text-foreground">{email}</span>.
                     It expires in 10 minutes.
                   </p>
-                  {devOtp && (
-                    <div className="mt-6 rounded-xl border border-primary/30 bg-primary/10 p-4 text-left">
-                      <div className="flex items-center justify-between gap-3">
-                        <div>
-                          <p className="text-xs font-semibold text-primary">Test / Demo Verification Code</p>
-                          <p className="font-mono text-xl font-bold tracking-widest text-foreground">
-                            {devOtp}
-                          </p>
-                        </div>
-                        <Button
-                          type="button"
-                          size="sm"
-                          variant="secondary"
-                          className="text-xs font-semibold"
-                          onClick={() => {
-                            setOtp(devOtp);
-                            handleComplete(devOtp);
-                          }}
-                        >
-                          Auto-fill
-                        </Button>
-                      </div>
-                      {deliveryNote && (
-                        <p className="mt-2 text-xs text-muted-foreground leading-relaxed">
-                          Note from email provider: {deliveryNote}
-                        </p>
-                      )}
-                    </div>
-                  )}
 
                   <div className="mt-8">
                     {serverError && (
