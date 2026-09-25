@@ -18,13 +18,13 @@ const issueVerificationOtp = async (user) => {
     email_verification_otp_expires_at: new Date(Date.now() + OTP_TTL_MS),
   });
 
-  await sendVerificationOtpEmail({
+  const emailResult = await sendVerificationOtpEmail({
     to: user.email,
     otp,
     expiresInMinutes: env.email.otpTtlMinutes,
   });
 
-  return otp;
+  return { otp, emailResult };
 };
 
 const resolveUniqueUsername = async (raw, email) => {
@@ -107,11 +107,20 @@ const sendVerificationOtp = async ({ email }) => {
     throw new BadRequestError("This email is already verified");
   }
 
-  await issueVerificationOtp(user);
+  const { otp, emailResult } = await issueVerificationOtp(user);
 
-  return {
+  const response = {
     expires_in: env.email.otpTtlMinutes * 60,
   };
+
+  if (!emailResult?.delivered || env.nodeEnv !== "production") {
+    response.dev_otp = otp;
+    if (emailResult?.error) {
+      response.delivery_note = emailResult.error;
+    }
+  }
+
+  return response;
 };
 
 const verifyEmail = async ({ email, otp }) => {

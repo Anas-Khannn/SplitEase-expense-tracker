@@ -99,10 +99,8 @@ const sendEmail = async ({ to, subject, html, text }) => {
   const isTest = process.env.NODE_ENV === "test";
 
   if (isTest || !env.email.resendApiKey) {
-    // No network calls without a Resend key. Reachable in development, in
-    // tests, and in production only when LOG_OTP_EMAILS explicitly opts in.
     if (isTest) {
-      return { id: `dev-${Date.now()}`, deliveredTo: to };
+      return { id: `dev-${Date.now()}`, deliveredTo: to, delivered: true };
     }
 
     console.warn(
@@ -117,23 +115,51 @@ const sendEmail = async ({ to, subject, html, text }) => {
           .trim()
       }`,
     );
-    return { id: `dev-${Date.now()}`, deliveredTo: to };
+    return { id: `dev-${Date.now()}`, deliveredTo: to, delivered: false, simulated: true };
   }
 
-  const resend = new Resend(env.email.resendApiKey);
-  const { data, error } = await resend.emails.send({
-    from: env.email.fromEmail,
-    to,
-    subject,
-    html,
-    ...(text ? { text } : {}),
-  });
+  try {
+    const resend = new Resend(env.email.resendApiKey);
+    const { data, error } = await resend.emails.send({
+      from: env.email.fromEmail,
+      to,
+      subject,
+      html,
+      ...(text ? { text } : {}),
+    });
 
-  if (error) {
-    throw new Error(`Failed to send email: ${error.message}`);
+    if (error) {
+      console.warn(
+        `[email:warning] Resend could not deliver "${subject}" to ${to}: ${error.message} (${error.name || "error"})`,
+      );
+      console.warn(
+        `[email:fallback] Content for ${to}: ${
+          text || html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+        }`,
+      );
+      return {
+        id: null,
+        deliveredTo: to,
+        delivered: false,
+        error: error.message,
+      };
+    }
+
+    return { id: data?.id, deliveredTo: to, delivered: true };
+  } catch (err) {
+    console.warn(`[email:error] Exception sending email via Resend to ${to}: ${err.message}`);
+    console.warn(
+      `[email:fallback] Content for ${to}: ${
+        text || html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+      }`,
+    );
+    return {
+      id: null,
+      deliveredTo: to,
+      delivered: false,
+      error: err.message,
+    };
   }
-
-  return { id: data?.id, deliveredTo: to };
 };
 
 const sendVerificationOtpEmail = async ({ to, otp, expiresInMinutes }) => {
