@@ -45,9 +45,7 @@ router.get("/service/:service/:method", async (req, res) => {
     });
   } catch (error) {
     const status =
-      error && error.statusCode
-        ? error.statusCode
-        : HTTP_STATUSES.INTERNAL_SERVER_ERROR;
+      error && error.statusCode ? error.statusCode : HTTP_STATUSES.INTERNAL_SERVER_ERROR;
 
     return res.status(status).json({
       success: false,

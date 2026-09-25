@@ -20,9 +20,11 @@ const updatePreferencesSchema = Joi.object({
   reactions: Joi.boolean().messages({
     "boolean.base": "reactions must be a boolean",
   }),
-}).min(1).messages({
-  "object.min": "Provide at least one preference to update",
-});
+})
+  .min(1)
+  .messages({
+    "object.min": "Provide at least one preference to update",
+  });
 
 module.exports = {
   readNotificationParamsSchema,

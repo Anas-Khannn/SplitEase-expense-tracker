@@ -30,9 +30,7 @@ describe("POST /api/auth/send-verification-otp", () => {
   it("generates and stores a 6-digit OTP for an unverified user", async () => {
     await createUnverifiedUser();
 
-    const res = await request(app)
-      .post("/api/auth/send-verification-otp")
-      .send({ email: EMAIL });
+    const res = await request(app).post("/api/auth/send-verification-otp").send({ email: EMAIL });
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
@@ -57,9 +55,7 @@ describe("POST /api/auth/send-verification-otp", () => {
     user.email_verified = true;
     await user.save();
 
-    const res = await request(app)
-      .post("/api/auth/send-verification-otp")
-      .send({ email: EMAIL });
+    const res = await request(app).post("/api/auth/send-verification-otp").send({ email: EMAIL });
 
     expect(res.status).toBe(400);
     expect(res.body.success).toBe(false);
@@ -86,9 +82,7 @@ describe("POST /api/auth/verify-email", () => {
     const user = await User.findOne({ where: { email: EMAIL } });
     const otp = user.email_verification_otp;
 
-    const res = await request(app)
-      .post("/api/auth/verify-email")
-      .send({ email: EMAIL, otp });
+    const res = await request(app).post("/api/auth/verify-email").send({ email: EMAIL, otp });
 
     expect(res.status).toBe(200);
     expect(res.body.success).toBe(true);
@@ -128,9 +122,7 @@ describe("POST /api/auth/verify-email", () => {
     const otp = user.email_verification_otp;
     await user.update({ email_verification_otp_expires_at: new Date(Date.now() - 1000) });
 
-    const res = await request(app)
-      .post("/api/auth/verify-email")
-      .send({ email: EMAIL, otp });
+    const res = await request(app).post("/api/auth/verify-email").send({ email: EMAIL, otp });
 
     expect(res.status).toBe(400);
     expect(res.body.message).toMatch(/expired/i);

@@ -2,8 +2,7 @@ const crypto = require("crypto");
 
 const OTP_LENGTH = 6;
 
-const generateOtp = () =>
-  String(crypto.randomInt(0, 10 ** OTP_LENGTH)).padStart(OTP_LENGTH, "0");
+const generateOtp = () => String(crypto.randomInt(0, 10 ** OTP_LENGTH)).padStart(OTP_LENGTH, "0");
 
 const otpMatches = (provided, stored) => {
   if (typeof provided !== "string" || typeof stored !== "string") {

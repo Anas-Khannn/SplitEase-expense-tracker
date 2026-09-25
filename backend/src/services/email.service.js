@@ -108,7 +108,15 @@ const sendEmail = async ({ to, subject, html, text }) => {
     console.log(
       `[email:dev] Would send "${subject}" to ${to} (set RESEND_API_KEY to send for real).`,
     );
-    console.log(`[email:dev] ${text || html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()}`);
+    console.log(
+      `[email:dev] ${
+        text ||
+        html
+          .replace(/<[^>]*>/g, " ")
+          .replace(/\s+/g, " ")
+          .trim()
+      }`,
+    );
     return { id: `dev-${Date.now()}`, deliveredTo: to };
   }
 

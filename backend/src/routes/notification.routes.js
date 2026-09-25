@@ -14,11 +14,12 @@ router.get("/", notificationController.listNotifications);
 router.get("/stream", notificationController.streamNotifications);
 router.get("/unread-count", notificationController.getUnreadCount);
 router.get("/preferences", notificationController.getPreferences);
-router.put("/preferences", validate(updatePreferencesSchema), notificationController.updatePreferences);
-router.patch(
-  "/read-all",
-  notificationController.markAllRead,
+router.put(
+  "/preferences",
+  validate(updatePreferencesSchema),
+  notificationController.updatePreferences,
 );
+router.patch("/read-all", notificationController.markAllRead);
 router.patch(
   "/:notificationId/read",
   validate(readNotificationParamsSchema, "params"),

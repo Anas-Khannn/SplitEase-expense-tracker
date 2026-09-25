@@ -4,7 +4,11 @@ erDiagram
         uuid user_id PK, NOT NULL
         varchar name NOT NULL
         varchar email NOT NULL, UNIQUE
+        varchar username UNIQUE
         varchar password_hash NOT NULL
+        boolean email_verified NOT NULL
+        varchar email_verification_otp 
+        timestamp email_verification_otp_expires_at 
     }
 
     GROUP {
@@ -78,6 +82,7 @@ erDiagram
     USER ||--o{ EXPENSEREACTION : "user_id" "expenseReactions"
     GROUP ||--o{ ACTIVITYLOG : "group_id" "activities"
     USER ||--o{ ACTIVITYLOG : "user_id" "activities"
+    USER ||--o{ NOTIFICATION : "user_id" "notifications"
     GROUP }o--|| USER : "created_by" "creator"
     GROUPMEMBER }o--|| USER : "user_id" "user"
     GROUPMEMBER }o--|| GROUP : "group_id" "group"
@@ -92,6 +97,8 @@ erDiagram
     EXPENSEREACTION }o--|| USER : "user_id" "user"
     ACTIVITYLOG }o--|| GROUP : "group_id" "group"
     ACTIVITYLOG }o--|| USER : "user_id" "user"
+    NOTIFICATION }o--|| USER : "user_id" "user"
+    NOTIFICATIONPREFERENCE }o--|| USER : "user_id" "user"
     USER }o--o{ GROUPMEMBER : "groups"
     GROUPMEMBER }o--|| GROUP : ""
     GROUP }o--o{ GROUPMEMBER : "groupUsers"

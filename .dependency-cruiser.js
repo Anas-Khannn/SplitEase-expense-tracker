@@ -19,14 +19,14 @@ module.exports = {
       comment: "Backend follows Clean Architecture: controllers -> services -> models",
       severity: "error",
       from: { path: "^backend/src/controllers" },
-      to: { pathNot: "^backend/src/(services|models|utils|middlewares|errors|validators|constants|config)" },
+      to: { pathNot: "^backend/src/(services|models|sse|utils|middlewares|errors|validators|constants|config)" },
     },
     {
       name: "services-use-valid-deps",
-      comment: "Services should only depend on models, utils, services, constants, errors (sequelize allowed for transactions)",
+      comment: "Services should only depend on models, utils, services, constants, errors, events, sse, config and external providers (sequelize/resend allowed)",
       severity: "error",
       from: { path: "^backend/src/services" },
-      to: { pathNot: "^backend/src/(models|utils|services|constants|errors|database/models)|node_modules/sequelize" },
+      to: { pathNot: "^backend/src/(models|utils|services|constants|errors|events|sse|config|database/models)|node_modules/(sequelize|resend)" },
     },
     {
       name: "models-are-leaves",

@@ -11,7 +11,11 @@ Auto-generated from Sequelize models.
 | `user_id` | uuid | PK, NOT NULL, DEFAULT DataTypes.UUIDV4 |
 | `name` | varchar | NOT NULL |
 | `email` | varchar | NOT NULL, UNIQUE |
+| `username` | varchar | UNIQUE |
 | `password_hash` | varchar | NOT NULL |
+| `email_verified` | boolean | NOT NULL, DEFAULT false |
+| `email_verification_otp` | varchar | — |
+| `email_verification_otp_expires_at` | timestamp | — |
 
 ### group (`groups`)
 
@@ -144,6 +148,10 @@ Auto-generated from Sequelize models.
   - Foreign Key: `user_id`
   - Alias: `activities`
 
+- **User** → **Notification**
+  - Foreign Key: `user_id`
+  - Alias: `notifications`
+
 ### MANY TO ONE
 
 - **Group** → **User**
@@ -199,6 +207,14 @@ Auto-generated from Sequelize models.
   - Alias: `group`
 
 - **ActivityLog** → **User**
+  - Foreign Key: `user_id`
+  - Alias: `user`
+
+- **Notification** → **User**
+  - Foreign Key: `user_id`
+  - Alias: `user`
+
+- **NotificationPreference** → **User**
   - Foreign Key: `user_id`
   - Alias: `user`
 

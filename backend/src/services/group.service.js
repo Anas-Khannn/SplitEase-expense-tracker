@@ -202,10 +202,7 @@ const addMember = async (groupId, identifierOrUserId, actorUserId) => {
     return membership;
   });
 
-  const [group, actor] = await Promise.all([
-    Group.findByPk(groupId),
-    User.findByPk(actorUserId),
-  ]);
+  const [group, actor] = await Promise.all([Group.findByPk(groupId), User.findByPk(actorUserId)]);
 
   eventBus.emit(EVENTS.MEMBER_ADDED, {
     targetUserId,
@@ -258,10 +255,7 @@ const removeMember = async (groupId, targetUserId, actorUserId) => {
     );
   });
 
-  const [group, actor] = await Promise.all([
-    Group.findByPk(groupId),
-    User.findByPk(actorUserId),
-  ]);
+  const [group, actor] = await Promise.all([Group.findByPk(groupId), User.findByPk(actorUserId)]);
 
   eventBus.emit(EVENTS.MEMBER_REMOVED, {
     targetUserId,
@@ -310,9 +304,7 @@ const updateMemberRole = async (groupId, targetUserId, newRole, actorUserId) => 
     groupId,
     actorUserId,
     ACTIVITY_TYPES.MEMBER_ROLE_CHANGED,
-    `${actorName} changed ${
-      targetUser ? targetUser.name : "a member"
-    }'s role to ${newRole}.`,
+    `${actorName} changed ${targetUser ? targetUser.name : "a member"}'s role to ${newRole}.`,
   );
 
   eventBus.emit(EVENTS.MEMBER_ROLE_CHANGED, {

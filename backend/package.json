@@ -5,6 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
+    "build": "node -e \"const fs=require('fs');fs.rmSync('dist',{recursive:true,force:true});fs.cpSync('src','dist',{recursive:true});fs.copyFileSync('package.json','dist/package.json')\"",
     "dev": "nodemon src/app.js",
     "test": "cross-env NODE_ENV=test jest --runInBand --forceExit",
     "lint": "eslint src __tests__ config",

@@ -104,18 +104,14 @@ const createPayment = async (groupId, payerId, { paid_to, amount, note, payment_
   });
 
   const payerName = fullPayment.payer ? fullPayment.payer.name : "Someone";
-  const receiverName = fullPayment.receiver
-    ? fullPayment.receiver.name
-    : "someone";
+  const receiverName = fullPayment.receiver ? fullPayment.receiver.name : "someone";
 
   eventBus.emit(EVENTS.PAYMENT_CREATED, {
     targetUserId: paid_to,
     actorUserId: payerId,
     groupId,
     title: `${payerName} made a payment`,
-    message: `${payerName} paid Rs. ${amount} to ${receiverName} in ${
-      group.name
-    }.`,
+    message: `${payerName} paid Rs. ${amount} to ${receiverName} in ${group.name}.`,
     referenceType: "payment",
     referenceId: fullPayment.payment_id,
   });

@@ -29,10 +29,42 @@
           "defaultValue": null
         },
         {
+          "name": "username",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": true,
+          "unique": true,
+          "defaultValue": null
+        },
+        {
           "name": "password_hash",
           "type": "varchar",
           "primaryKey": false,
           "allowNull": false,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "email_verified",
+          "type": "boolean",
+          "primaryKey": false,
+          "allowNull": false,
+          "unique": false,
+          "defaultValue": "false"
+        },
+        {
+          "name": "email_verification_otp",
+          "type": "varchar",
+          "primaryKey": false,
+          "allowNull": true,
+          "unique": false,
+          "defaultValue": null
+        },
+        {
+          "name": "email_verification_otp_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "allowNull": true,
           "unique": false,
           "defaultValue": null
         }
@@ -469,6 +501,13 @@
       "alias": "activities"
     },
     {
+      "type": "one-to-many",
+      "source": "User",
+      "target": "Notification",
+      "foreignKey": "user_id",
+      "alias": "notifications"
+    },
+    {
       "type": "many-to-one",
       "source": "Group",
       "target": "User",
@@ -567,6 +606,20 @@
       "alias": "user"
     },
     {
+      "type": "many-to-one",
+      "source": "Notification",
+      "target": "User",
+      "foreignKey": "user_id",
+      "alias": "user"
+    },
+    {
+      "type": "many-to-one",
+      "source": "NotificationPreference",
+      "target": "User",
+      "foreignKey": "user_id",
+      "alias": "user"
+    },
+    {
       "type": "many-to-many",
       "source": "User",
       "target": "Group",
@@ -621,5 +674,5 @@
       "alias": "reactors"
     }
   ],
-  "generatedAt": "2026-09-20T12:47:39.371Z"
+  "generatedAt": "2026-09-25T12:58:02.994Z"
 }

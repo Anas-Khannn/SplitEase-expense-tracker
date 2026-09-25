@@ -106,10 +106,7 @@ const markRead = async (userId, notificationId) => {
 };
 
 const markAllRead = async (userId) => {
-  await Notification.update(
-    { is_read: true },
-    { where: { user_id: userId, is_read: false } },
-  );
+  await Notification.update({ is_read: true }, { where: { user_id: userId, is_read: false } });
 
   return { message: "All notifications marked as read" };
 };

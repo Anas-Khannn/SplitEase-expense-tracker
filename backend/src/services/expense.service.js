@@ -117,10 +117,7 @@ const createExpense = async (
     };
   });
 
-  const [group, actor] = await Promise.all([
-    Group.findByPk(groupId),
-    User.findByPk(actorUserId),
-  ]);
+  const [group, actor] = await Promise.all([Group.findByPk(groupId), User.findByPk(actorUserId)]);
 
   eventBus.emit(EVENTS.EXPENSE_CREATED, {
     recipientIds: participant_ids,
@@ -358,10 +355,7 @@ const updateExpense = async (
     };
   });
 
-  const [group, actor] = await Promise.all([
-    Group.findByPk(groupId),
-    User.findByPk(actorUserId),
-  ]);
+  const [group, actor] = await Promise.all([Group.findByPk(groupId), User.findByPk(actorUserId)]);
 
   eventBus.emit(EVENTS.EXPENSE_UPDATED, {
     recipientIds: participants,
@@ -408,10 +402,7 @@ const deleteExpense = async (groupId, expenseId, actorUserId) => {
     );
   });
 
-  const [group, actor] = await Promise.all([
-    Group.findByPk(groupId),
-    User.findByPk(actorUserId),
-  ]);
+  const [group, actor] = await Promise.all([Group.findByPk(groupId), User.findByPk(actorUserId)]);
 
   eventBus.emit(EVENTS.EXPENSE_DELETED, {
     recipientIds: participantIds,

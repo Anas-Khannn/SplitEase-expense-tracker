@@ -38,6 +38,23 @@
           "valid": true
         },
         {
+          "module": "./events/notification.listener",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/notification.listener.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
           "module": "./middlewares/error.middleware",
           "moduleSystem": "cjs",
           "dynamic": false,
@@ -151,7 +168,9 @@
       "dependents": [
         "backend/src/app.js",
         "backend/src/config/database.js",
-        "backend/src/utils/jwt.js"
+        "backend/src/utils/jwt.js",
+        "backend/src/services/auth.service.js",
+        "backend/src/services/email.service.js"
       ],
       "orphan": false,
       "valid": true
@@ -257,6 +276,7 @@
         "node_modules/jsonwebtoken/verify.js",
         "node_modules/etag/index.js",
         "node_modules/cookie-signature/index.js",
+        "backend/src/utils/otp.js",
         "node_modules/bcrypt/bcrypt.js"
       ],
       "orphan": false,
@@ -351,13 +371,12 @@
       "dependencies": [],
       "dependents": [
         "backend/src/app.js",
+        "backend/src/errors/bad-request.error.js",
+        "backend/src/errors/conflict.error.js",
+        "backend/src/errors/forbidden.error.js",
+        "backend/src/errors/not-found.error.js",
+        "backend/src/errors/unauthorized.error.js",
         "backend/src/middlewares/error.middleware.js",
-        "backend/src/errors/AppError.js",
-        "backend/src/errors/BadRequestError.js",
-        "backend/src/errors/ConflictError.js",
-        "backend/src/errors/ForbiddenError.js",
-        "backend/src/errors/NotFoundError.js",
-        "backend/src/errors/UnauthorizedError.js",
         "backend/src/controllers/activity.controller.js",
         "backend/src/middlewares/auth.middleware.js",
         "backend/src/controllers/auth.controller.js",
@@ -366,19 +385,21 @@
         "backend/src/controllers/dashboard.controller.js",
         "backend/src/controllers/expense.controller.js",
         "backend/src/controllers/group.controller.js",
+        "backend/src/controllers/notification.controller.js",
         "backend/src/controllers/payment.controller.js",
         "backend/src/controllers/reaction.controller.js",
         "backend/src/controllers/summary.controller.js",
+        "backend/src/controllers/user.controller.js",
         "backend/src/routes/debug.routes.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/src/middlewares/error.middleware.js",
+      "source": "backend/src/events/notification.listener.js",
       "dependencies": [
         {
-          "module": "../constants/http-statuses",
+          "module": "../constants/notification-types",
           "moduleSystem": "cjs",
           "dynamic": false,
           "exoticallyRequired": false,
@@ -386,7 +407,94 @@
             "local",
             "require"
           ],
-          "resolved": "backend/src/constants/http-statuses.js",
+          "resolved": "backend/src/constants/notification-types.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../services/notification.service",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/services/notification.service.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./event-bus",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/event-bus.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/events.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/app.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/constants/notification-types.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/src/events/notification.listener.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/services/notification.service.js",
+      "dependencies": [
+        {
+          "module": "../database/models",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/database/models/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -410,36 +518,9 @@
           "matchesDoNotFollow": false,
           "circular": false,
           "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/app.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/errors/index.js",
-      "dependencies": [
-        {
-          "module": "./AppError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/AppError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
         },
         {
-          "module": "./BadRequestError",
+          "module": "../sse/notification-sse",
           "moduleSystem": "cjs",
           "dynamic": false,
           "exoticallyRequired": false,
@@ -447,653 +528,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/src/errors/BadRequestError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./ConflictError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/ConflictError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./ForbiddenError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/ForbiddenError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./NotFoundError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/NotFoundError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./UnauthorizedError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/UnauthorizedError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/middlewares/error.middleware.js",
-        "backend/src/middlewares/group.middleware.js",
-        "backend/src/services/auth.service.js",
-        "backend/src/services/balance.service.js",
-        "backend/src/services/expense.service.js",
-        "backend/src/services/group.service.js",
-        "backend/src/services/payment.service.js",
-        "backend/src/services/reaction.service.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/errors/AppError.js",
-      "dependencies": [
-        {
-          "module": "../constants/http-statuses",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/constants/http-statuses.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/errors/index.js",
-        "backend/src/errors/BadRequestError.js",
-        "backend/src/errors/ConflictError.js",
-        "backend/src/errors/ForbiddenError.js",
-        "backend/src/errors/NotFoundError.js",
-        "backend/src/errors/UnauthorizedError.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/errors/BadRequestError.js",
-      "dependencies": [
-        {
-          "module": "../constants/http-statuses",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/constants/http-statuses.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./AppError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/AppError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/errors/index.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/errors/ConflictError.js",
-      "dependencies": [
-        {
-          "module": "../constants/http-statuses",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/constants/http-statuses.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./AppError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/AppError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/errors/index.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/errors/ForbiddenError.js",
-      "dependencies": [
-        {
-          "module": "../constants/http-statuses",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/constants/http-statuses.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./AppError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/AppError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/errors/index.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/errors/NotFoundError.js",
-      "dependencies": [
-        {
-          "module": "../constants/http-statuses",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/constants/http-statuses.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./AppError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/AppError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/errors/index.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/errors/UnauthorizedError.js",
-      "dependencies": [
-        {
-          "module": "../constants/http-statuses",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/constants/http-statuses.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./AppError",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/errors/AppError.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/errors/index.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/routes/index.js",
-      "dependencies": [
-        {
-          "module": "./activity.routes",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/routes/activity.routes.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./auth.routes",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/routes/auth.routes.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./balance.routes",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/routes/balance.routes.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./dashboard.routes",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/routes/dashboard.routes.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./expense.routes",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/routes/expense.routes.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./group.routes",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/routes/group.routes.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./payment.routes",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/routes/payment.routes.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./reaction.routes",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/routes/reaction.routes.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "./summary.routes",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/routes/summary.routes.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "express",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "npm",
-            "require"
-          ],
-          "resolved": "node_modules/express/index.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/app.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/routes/activity.routes.js",
-      "dependencies": [
-        {
-          "module": "../controllers/activity.controller",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/controllers/activity.controller.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "../middlewares/auth.middleware",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/middlewares/auth.middleware.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "../middlewares/group.middleware",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/middlewares/group.middleware.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "express",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "npm",
-            "require"
-          ],
-          "resolved": "node_modules/express/index.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/routes/index.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/controllers/activity.controller.js",
-      "dependencies": [
-        {
-          "module": "../constants/http-statuses",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/constants/http-statuses.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "../middlewares/async-handler.middleware",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/middlewares/async-handler.middleware.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "../services/activity.service",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/services/activity.service.js",
+          "resolved": "backend/src/sse/notification-sse.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -1120,72 +555,8 @@
         }
       ],
       "dependents": [
-        "backend/src/routes/activity.routes.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/middlewares/async-handler.middleware.js",
-      "dependencies": [],
-      "dependents": [
-        "backend/src/controllers/activity.controller.js",
-        "backend/src/controllers/auth.controller.js",
-        "backend/src/controllers/balance.controller.js",
-        "backend/src/controllers/dashboard.controller.js",
-        "backend/src/controllers/expense.controller.js",
-        "backend/src/controllers/group.controller.js",
-        "backend/src/controllers/payment.controller.js",
-        "backend/src/controllers/reaction.controller.js",
-        "backend/src/controllers/summary.controller.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "backend/src/services/activity.service.js",
-      "dependencies": [
-        {
-          "module": "../database/models",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/database/models/index.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        },
-        {
-          "module": "../utils/activity.utils",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "local",
-            "require"
-          ],
-          "resolved": "backend/src/utils/activity.utils.js",
-          "coreModule": false,
-          "followable": true,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "backend/src/controllers/activity.controller.js",
-        "backend/src/services/expense.service.js",
-        "backend/src/services/group.service.js",
-        "backend/src/services/payment.service.js",
-        "backend/src/utils/service-registry.js"
+        "backend/src/events/notification.listener.js",
+        "backend/src/controllers/notification.controller.js"
       ],
       "orphan": false,
       "valid": true
@@ -1313,6 +684,40 @@
           "valid": true
         },
         {
+          "module": "./notification",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/database/models/notification.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./notification-preference",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/database/models/notification-preference.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
           "module": "./payment",
           "moduleSystem": "cjs",
           "dynamic": false,
@@ -1365,6 +770,7 @@
         }
       ],
       "dependents": [
+        "backend/src/services/notification.service.js",
         "backend/src/services/activity.service.js",
         "backend/src/middlewares/auth.middleware.js",
         "backend/src/middlewares/group.middleware.js",
@@ -1375,7 +781,9 @@
         "backend/src/services/group.service.js",
         "backend/src/services/payment.service.js",
         "backend/src/services/reaction.service.js",
-        "backend/src/services/summary.service.js"
+        "backend/src/services/summary.service.js",
+        "backend/src/services/user.service.js",
+        "backend/src/database/seeders/20260818-01-seed-users.js"
       ],
       "orphan": false,
       "valid": true
@@ -1454,11 +862,14 @@
         "backend/src/database/models/expense-split.js",
         "backend/src/database/models/group.js",
         "backend/src/database/models/group-member.js",
+        "backend/src/database/models/notification.js",
+        "backend/src/database/models/notification-preference.js",
         "backend/src/database/models/payment.js",
         "backend/src/database/models/user.js",
         "backend/src/services/balance.service.js",
         "backend/src/services/expense.service.js",
-        "backend/src/services/summary.service.js"
+        "backend/src/services/summary.service.js",
+        "backend/src/services/user.service.js"
       ],
       "orphan": false,
       "valid": true
@@ -13150,8 +12561,7 @@
         "node_modules/sequelize/lib/utils.js",
         "node_modules/sequelize/lib/dialects/abstract/query.js",
         "node_modules/sequelize/lib/dialects/abstract/query-generator.js",
-        "node_modules/sequelize/lib/dialects/abstract/query-generator/transaction.js",
-        "backend/src/database/seeders/20260818-01-seed-users.js"
+        "node_modules/sequelize/lib/dialects/abstract/query-generator/transaction.js"
       ],
       "orphan": false,
       "valid": true
@@ -23095,6 +22505,60 @@
       "valid": true
     },
     {
+      "source": "backend/src/database/models/notification.js",
+      "dependencies": [
+        {
+          "module": "sequelize",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/sequelize/lib/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/database/models/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/database/models/notification-preference.js",
+      "dependencies": [
+        {
+          "module": "sequelize",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/sequelize/lib/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/database/models/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
       "source": "backend/src/database/models/payment.js",
       "dependencies": [
         {
@@ -23149,10 +22613,365 @@
       "valid": true
     },
     {
-      "source": "backend/src/utils/activity.utils.js",
+      "source": "backend/src/errors/index.js",
+      "dependencies": [
+        {
+          "module": "./app.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/app.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./bad-request.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/bad-request.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./conflict.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/conflict.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./forbidden.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/forbidden.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./not-found.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/not-found.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./unauthorized.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/unauthorized.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/services/notification.service.js",
+        "backend/src/middlewares/error.middleware.js",
+        "backend/src/middlewares/group.middleware.js",
+        "backend/src/services/auth.service.js",
+        "backend/src/services/balance.service.js",
+        "backend/src/services/expense.service.js",
+        "backend/src/services/group.service.js",
+        "backend/src/services/payment.service.js",
+        "backend/src/services/reaction.service.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/errors/app.error.js",
       "dependencies": [],
       "dependents": [
-        "backend/src/services/activity.service.js"
+        "backend/src/errors/index.js",
+        "backend/src/errors/bad-request.error.js",
+        "backend/src/errors/conflict.error.js",
+        "backend/src/errors/forbidden.error.js",
+        "backend/src/errors/not-found.error.js",
+        "backend/src/errors/unauthorized.error.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/errors/bad-request.error.js",
+      "dependencies": [
+        {
+          "module": "../constants/http-statuses",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/constants/http-statuses.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./app.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/app.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/errors/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/errors/conflict.error.js",
+      "dependencies": [
+        {
+          "module": "../constants/http-statuses",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/constants/http-statuses.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./app.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/app.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/errors/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/errors/forbidden.error.js",
+      "dependencies": [
+        {
+          "module": "../constants/http-statuses",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/constants/http-statuses.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./app.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/app.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/errors/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/errors/not-found.error.js",
+      "dependencies": [
+        {
+          "module": "../constants/http-statuses",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/constants/http-statuses.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./app.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/app.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/errors/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/errors/unauthorized.error.js",
+      "dependencies": [
+        {
+          "module": "../constants/http-statuses",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/constants/http-statuses.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./app.error",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/app.error.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/errors/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/sse/notification-sse.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/src/services/notification.service.js",
+        "backend/src/controllers/notification.controller.js"
       ],
       "orphan": false,
       "valid": true
@@ -23161,7 +22980,561 @@
       "source": "backend/src/utils/pagination.utils.js",
       "dependencies": [],
       "dependents": [
+        "backend/src/services/notification.service.js",
         "backend/src/controllers/activity.controller.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/events/event-bus.js",
+      "dependencies": [
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/events/notification.listener.js",
+        "backend/src/services/expense.service.js",
+        "backend/src/services/group.service.js",
+        "backend/src/services/payment.service.js",
+        "backend/src/services/reaction.service.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "events",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "backend/src/events/event-bus.js",
+        "node_modules/express/lib/express.js",
+        "node_modules/minipass/dist/commonjs/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/events/events.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/src/events/notification.listener.js",
+        "backend/src/services/expense.service.js",
+        "backend/src/services/group.service.js",
+        "backend/src/services/payment.service.js",
+        "backend/src/services/reaction.service.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/middlewares/error.middleware.js",
+      "dependencies": [
+        {
+          "module": "../constants/http-statuses",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/constants/http-statuses.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../errors",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/errors/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/app.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/routes/index.js",
+      "dependencies": [
+        {
+          "module": "./activity.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/activity.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./auth.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/auth.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./balance.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/balance.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./dashboard.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/dashboard.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./expense.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/expense.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./group.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/group.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./notification.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/notification.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./payment.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/payment.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./reaction.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/reaction.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./summary.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/summary.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./user.routes",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/routes/user.routes.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "express",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/express/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/app.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/routes/activity.routes.js",
+      "dependencies": [
+        {
+          "module": "../controllers/activity.controller",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/controllers/activity.controller.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../middlewares/auth.middleware",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/middlewares/auth.middleware.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../middlewares/group.middleware",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/middlewares/group.middleware.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "express",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/express/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/routes/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/controllers/activity.controller.js",
+      "dependencies": [
+        {
+          "module": "../constants/http-statuses",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/constants/http-statuses.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../middlewares/async-handler.middleware",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/middlewares/async-handler.middleware.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../services/activity.service",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/services/activity.service.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../utils/pagination.utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/utils/pagination.utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/routes/activity.routes.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/middlewares/async-handler.middleware.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/src/controllers/activity.controller.js",
+        "backend/src/controllers/auth.controller.js",
+        "backend/src/controllers/balance.controller.js",
+        "backend/src/controllers/dashboard.controller.js",
+        "backend/src/controllers/expense.controller.js",
+        "backend/src/controllers/group.controller.js",
+        "backend/src/controllers/notification.controller.js",
+        "backend/src/controllers/payment.controller.js",
+        "backend/src/controllers/reaction.controller.js",
+        "backend/src/controllers/summary.controller.js",
+        "backend/src/controllers/user.controller.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/services/activity.service.js",
+      "dependencies": [
+        {
+          "module": "../database/models",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/database/models/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../utils/activity.utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/utils/activity.utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/controllers/activity.controller.js",
+        "backend/src/services/expense.service.js",
+        "backend/src/services/group.service.js",
+        "backend/src/services/payment.service.js",
+        "backend/src/utils/service-registry.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/utils/activity.utils.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/src/services/activity.service.js"
       ],
       "orphan": false,
       "valid": true
@@ -23228,9 +23601,11 @@
         "backend/src/routes/dashboard.routes.js",
         "backend/src/routes/expense.routes.js",
         "backend/src/routes/group.routes.js",
+        "backend/src/routes/notification.routes.js",
         "backend/src/routes/payment.routes.js",
         "backend/src/routes/reaction.routes.js",
-        "backend/src/routes/summary.routes.js"
+        "backend/src/routes/summary.routes.js",
+        "backend/src/routes/user.routes.js"
       ],
       "orphan": false,
       "valid": true
@@ -24773,9 +25148,11 @@
         "backend/src/routes/dashboard.routes.js",
         "backend/src/routes/expense.routes.js",
         "backend/src/routes/group.routes.js",
+        "backend/src/routes/notification.routes.js",
         "backend/src/routes/payment.routes.js",
         "backend/src/routes/reaction.routes.js",
         "backend/src/routes/summary.routes.js",
+        "backend/src/routes/user.routes.js",
         "backend/src/routes/debug.routes.js",
         "node_modules/swagger-ui-express/index.js"
       ],
@@ -24925,24 +25302,6 @@
       ],
       "dependents": [
         "node_modules/express/index.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "events",
-      "followable": false,
-      "coreModule": true,
-      "couldNotResolve": false,
-      "matchesDoNotFollow": false,
-      "dependencyTypes": [
-        "core",
-        "require"
-      ],
-      "dependencies": [],
-      "dependents": [
-        "node_modules/express/lib/express.js",
-        "node_modules/minipass/dist/commonjs/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -31141,6 +31500,23 @@
       "source": "backend/src/services/auth.service.js",
       "dependencies": [
         {
+          "module": "../config/env",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/config/env.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
           "module": "../database/models",
           "moduleSystem": "cjs",
           "dynamic": false,
@@ -31192,6 +31568,23 @@
           "valid": true
         },
         {
+          "module": "../utils/otp",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/utils/otp.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
           "module": "../utils/password",
           "moduleSystem": "cjs",
           "dynamic": false,
@@ -31224,11 +31617,72 @@
           "matchesDoNotFollow": false,
           "circular": false,
           "valid": true
+        },
+        {
+          "module": "../utils/username.utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/utils/username.utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./email.service",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/services/email.service.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
         }
       ],
       "dependents": [
         "backend/src/controllers/auth.controller.js",
         "backend/src/utils/service-registry.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/utils/otp.js",
+      "dependencies": [
+        {
+          "module": "crypto",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "crypto",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/services/auth.service.js"
       ],
       "orphan": false,
       "valid": true
@@ -31255,7 +31709,8 @@
         }
       ],
       "dependents": [
-        "backend/src/services/auth.service.js"
+        "backend/src/services/auth.service.js",
+        "backend/src/database/seeders/20260818-01-seed-users.js"
       ],
       "orphan": false,
       "valid": true
@@ -31445,6 +31900,563 @@
       "valid": true
     },
     {
+      "source": "backend/src/utils/username.utils.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/src/services/auth.service.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/services/email.service.js",
+      "dependencies": [
+        {
+          "module": "../config/env",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/config/env.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "resend",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/resend/dist/index.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/services/auth.service.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/resend/dist/index.cjs",
+      "dependencies": [
+        {
+          "module": "@react-email/render",
+          "moduleSystem": "es6",
+          "dynamic": true,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "@react-email/render",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "postal-mime",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/postal-mime.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "standardwebhooks",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/standardwebhooks/dist/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/services/email.service.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "@react-email/render",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/resend/dist/index.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/postal-mime.cjs",
+      "dependencies": [
+        {
+          "module": "./address-parser.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/address-parser.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./base64-encoder.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/base64-encoder.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./decode-strings.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/decode-strings.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./mime-node.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/mime-node.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./text-format.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/text-format.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/resend/dist/index.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/address-parser.cjs",
+      "dependencies": [
+        {
+          "module": "./decode-strings.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/decode-strings.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/postal-mime/dist/postal-mime.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/decode-strings.cjs",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/postal-mime/dist/postal-mime.cjs",
+        "node_modules/postal-mime/dist/address-parser.cjs",
+        "node_modules/postal-mime/dist/mime-node.cjs",
+        "node_modules/postal-mime/dist/base64-decoder.cjs",
+        "node_modules/postal-mime/dist/pass-through-decoder.cjs",
+        "node_modules/postal-mime/dist/qp-decoder.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/base64-encoder.cjs",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/postal-mime/dist/postal-mime.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/mime-node.cjs",
+      "dependencies": [
+        {
+          "module": "./base64-decoder.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/base64-decoder.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./decode-strings.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/decode-strings.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./pass-through-decoder.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/pass-through-decoder.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./qp-decoder.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/qp-decoder.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/postal-mime/dist/postal-mime.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/base64-decoder.cjs",
+      "dependencies": [
+        {
+          "module": "./decode-strings.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/decode-strings.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/postal-mime/dist/mime-node.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/pass-through-decoder.cjs",
+      "dependencies": [
+        {
+          "module": "./decode-strings.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/decode-strings.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/postal-mime/dist/mime-node.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/qp-decoder.cjs",
+      "dependencies": [
+        {
+          "module": "./decode-strings.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/decode-strings.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/postal-mime/dist/mime-node.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/text-format.cjs",
+      "dependencies": [
+        {
+          "module": "./html-entities.cjs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/postal-mime/dist/html-entities.cjs",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/postal-mime/dist/postal-mime.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postal-mime/dist/html-entities.cjs",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/postal-mime/dist/text-format.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/standardwebhooks/dist/index.js",
+      "dependencies": [
+        {
+          "module": "./timing_safe_equal",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/standardwebhooks/dist/timing_safe_equal.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "@stablelib/base64",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/@stablelib/base64/lib/base64.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "fast-sha256",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/fast-sha256/sha256.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/resend/dist/index.cjs"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/standardwebhooks/dist/timing_safe_equal.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/standardwebhooks/dist/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/@stablelib/base64/lib/base64.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/standardwebhooks/dist/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/fast-sha256/sha256.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/standardwebhooks/dist/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
       "source": "backend/src/middlewares/validate.middleware.js",
       "dependencies": [
         {
@@ -31469,9 +32481,11 @@
         "backend/src/routes/auth.routes.js",
         "backend/src/routes/expense.routes.js",
         "backend/src/routes/group.routes.js",
+        "backend/src/routes/notification.routes.js",
         "backend/src/routes/payment.routes.js",
         "backend/src/routes/reaction.routes.js",
-        "backend/src/routes/summary.routes.js"
+        "backend/src/routes/summary.routes.js",
+        "backend/src/routes/user.routes.js"
       ],
       "orphan": false,
       "valid": true
@@ -32612,9 +33626,11 @@
         "node_modules/joi/lib/schemas.js",
         "backend/src/validators/expense.validation.js",
         "backend/src/validators/group.validation.js",
+        "backend/src/validators/notification.validation.js",
         "backend/src/validators/payment.validation.js",
         "backend/src/validators/reaction.validation.js",
-        "backend/src/validators/summary.validation.js"
+        "backend/src/validators/summary.validation.js",
+        "backend/src/validators/user.validation.js"
       ],
       "orphan": false,
       "valid": true
@@ -39392,6 +40408,40 @@
           "valid": true
         },
         {
+          "module": "../events/event-bus",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/event-bus.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../events/events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/events.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
           "module": "../utils/expense.utils",
           "moduleSystem": "cjs",
           "dynamic": false,
@@ -39726,6 +40776,40 @@
           "valid": true
         },
         {
+          "module": "../events/event-bus",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/event-bus.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../events/events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/events.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
           "module": "./activity.service",
           "moduleSystem": "cjs",
           "dynamic": false,
@@ -39773,6 +40857,206 @@
       ],
       "dependents": [
         "backend/src/routes/group.routes.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/routes/notification.routes.js",
+      "dependencies": [
+        {
+          "module": "../controllers/notification.controller",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/controllers/notification.controller.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../middlewares/auth.middleware",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/middlewares/auth.middleware.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../middlewares/validate.middleware",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/middlewares/validate.middleware.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../validators/notification.validation",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/validators/notification.validation.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "express",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/express/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/routes/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/controllers/notification.controller.js",
+      "dependencies": [
+        {
+          "module": "../constants/http-statuses",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/constants/http-statuses.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../middlewares/async-handler.middleware",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/middlewares/async-handler.middleware.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../services/notification.service",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/services/notification.service.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../sse/notification-sse",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/sse/notification-sse.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/routes/notification.routes.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/validators/notification.validation.js",
+      "dependencies": [
+        {
+          "module": "joi",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/joi/lib/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/routes/notification.routes.js"
       ],
       "orphan": false,
       "valid": true
@@ -39997,6 +41281,40 @@
             "require"
           ],
           "resolved": "backend/src/errors/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../events/event-bus",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/event-bus.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../events/events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/events.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -40285,6 +41603,40 @@
             "require"
           ],
           "resolved": "backend/src/errors/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../events/event-bus",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/event-bus.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../events/events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/events/events.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -40642,6 +41994,233 @@
       "valid": true
     },
     {
+      "source": "backend/src/routes/user.routes.js",
+      "dependencies": [
+        {
+          "module": "../controllers/user.controller",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/controllers/user.controller.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../middlewares/auth.middleware",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/middlewares/auth.middleware.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../middlewares/validate.middleware",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/middlewares/validate.middleware.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../validators/user.validation",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/validators/user.validation.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "express",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/express/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/routes/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/controllers/user.controller.js",
+      "dependencies": [
+        {
+          "module": "../constants/http-statuses",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/constants/http-statuses.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../middlewares/async-handler.middleware",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/middlewares/async-handler.middleware.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../services/user.service",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/services/user.service.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/routes/user.routes.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/services/user.service.js",
+      "dependencies": [
+        {
+          "module": "../database/models",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/database/models/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "sequelize",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/sequelize/lib/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/controllers/user.controller.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/src/validators/user.validation.js",
+      "dependencies": [
+        {
+          "module": "joi",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/joi/lib/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/routes/user.routes.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
       "source": "backend/src/routes/debug.routes.js",
       "dependencies": [
         {
@@ -40982,18 +42561,63 @@
       "valid": true
     },
     {
+      "source": "backend/src/database/migrations/20260925-01-add-username-to-users.js",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "backend/src/database/migrations/20260925-02-create-notifications.js",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "backend/src/database/migrations/20260925-03-create-notification-preferences.js",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
+      "source": "backend/src/database/migrations/20260925-04-add-email-verification-to-users.js",
+      "dependencies": [],
+      "dependents": [],
+      "orphan": true,
+      "valid": true
+    },
+    {
       "source": "backend/src/database/seeders/20260818-01-seed-users.js",
       "dependencies": [
         {
-          "module": "uuid",
+          "module": "../../utils/password",
           "moduleSystem": "cjs",
           "dynamic": false,
           "exoticallyRequired": false,
           "dependencyTypes": [
-            "npm-no-pkg",
+            "local",
             "require"
           ],
-          "resolved": "node_modules/uuid/dist/index.js",
+          "resolved": "backend/src/utils/password.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../models",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/src/database/models/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -51291,10 +52915,10 @@
     "warn": 0,
     "info": 0,
     "ignore": 0,
-    "totalCruised": 894,
-    "totalDependenciesCruised": 2181,
+    "totalCruised": 932,
+    "totalDependenciesCruised": 2253,
     "optionsUsed": {
-      "baseDir": "/home/aimalshah/code/SplitEase-expense-tracker",
+      "baseDir": "D:\\Projects\\Expense\\SplitEase-expense-tracker",
       "combinedDependencies": false,
       "detectJSDocImports": false,
       "detectProcessBuiltinModuleCalls": false,
@@ -51355,19 +52979,19 @@
             "path": "^backend/src/controllers"
           },
           "to": {
-            "pathNot": "^backend/src/(services|models|utils|middlewares|errors|validators|constants|config)"
+            "pathNot": "^backend/src/(services|models|sse|utils|middlewares|errors|validators|constants|config)"
           },
           "scope": "module"
         },
         {
           "name": "services-use-valid-deps",
-          "comment": "Services should only depend on models, utils, services, constants, errors (sequelize allowed for transactions)",
+          "comment": "Services should only depend on models, utils, services, constants, errors, events, sse, config and external providers (sequelize/resend allowed)",
           "severity": "error",
           "from": {
             "path": "^backend/src/services"
           },
           "to": {
-            "pathNot": "^backend/src/(models|utils|services|constants|errors|database/models)|node_modules/sequelize"
+            "pathNot": "^backend/src/(models|utils|services|constants|errors|events|sse|config|database/models)|node_modules/(sequelize|resend)"
           },
           "scope": "module"
         },
@@ -51425,8 +53049,8 @@
     "environment": {
       "version": "18.3.1",
       "nodeVersionSupported": "^22||^24||>=26",
-      "nodeVersionFound": "v24.18.0",
-      "osVersionFound": "x64 linux@7.1.5-76070105-generic",
+      "nodeVersionFound": "v24.19.0",
+      "osVersionFound": "x64 win32@10.0.26200",
       "transpilersFound": [
         {
           "name": "javascript",

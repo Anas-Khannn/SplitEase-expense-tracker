@@ -3,10 +3,7 @@ const HTTP_STATUSES = require("../constants/http-statuses");
 const asyncHandler = require("../middlewares/async-handler.middleware");
 
 const listNotifications = asyncHandler(async (req, res) => {
-  const result = await notificationService.listNotifications(
-    req.user.user_id,
-    req.query,
-  );
+  const result = await notificationService.listNotifications(req.user.user_id, req.query);
 
   return res.status(HTTP_STATUSES.OK).json({
     success: true,
@@ -54,10 +51,7 @@ const getPreferences = asyncHandler(async (req, res) => {
 });
 
 const updatePreferences = asyncHandler(async (req, res) => {
-  const preferences = await notificationService.updatePreferences(
-    req.user.user_id,
-    req.body,
-  );
+  const preferences = await notificationService.updatePreferences(req.user.user_id, req.body);
 
   return res.status(HTTP_STATUSES.OK).json({
     success: true,

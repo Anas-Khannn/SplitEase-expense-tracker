@@ -17,11 +17,7 @@ router.post(
   validate(sendVerificationOtpSchema),
   authController.sendVerificationOtp,
 );
-router.post(
-  "/verify-email",
-  validate(verifyEmailSchema),
-  authController.verifyEmail,
-);
+router.post("/verify-email", validate(verifyEmailSchema), authController.verifyEmail);
 router.post("/logout", authenticate, authController.logout);
 router.get("/me", authenticate, authController.getMe);
 

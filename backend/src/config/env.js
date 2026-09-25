@@ -53,8 +53,7 @@ const env = {
 
   email: {
     resendApiKey,
-    fromEmail:
-      process.env.RESEND_FROM_EMAIL || "SplitEase <onboarding@resend.dev>",
+    fromEmail: process.env.RESEND_FROM_EMAIL || "SplitEase <onboarding@resend.dev>",
     otpTtlMinutes: parseInt(process.env.OTP_TTL_MINUTES, 10) || 10,
   },
 

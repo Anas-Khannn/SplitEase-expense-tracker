@@ -6,12 +6,7 @@ const { generateOtp, otpMatches } = require("../utils/otp");
 const { sendVerificationOtpEmail } = require("./email.service");
 const { sanitizeUsername, usernameFromEmail } = require("../utils/username.utils");
 const env = require("../config/env");
-const {
-  ConflictError,
-  UnauthorizedError,
-  NotFoundError,
-  BadRequestError,
-} = require("../errors");
+const { ConflictError, UnauthorizedError, NotFoundError, BadRequestError } = require("../errors");
 
 const OTP_TTL_MS = env.email.otpTtlMinutes * 60 * 1000;
 
@@ -139,9 +134,7 @@ const verifyEmail = async ({ email, otp }) => {
   }
 
   if (!expiresAt || new Date(expiresAt).getTime() < Date.now()) {
-    throw new BadRequestError(
-      "This verification code has expired. Please request a new one.",
-    );
+    throw new BadRequestError("This verification code has expired. Please request a new one.");
   }
 
   await user.update({

@@ -91,20 +91,6 @@ jobs:
   backend-tests:
     name: Backend Tests
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:${{ env.POSTGRES_VERSION }}
-        env:
-          POSTGRES_USER: test
-          POSTGRES_PASSWORD: test
-          POSTGRES_DB: splitease_test
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -119,37 +105,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Wait for PostgreSQL
-        run: |
-          for i in {1..30}; do
-            if pg_isready -h localhost -p 5432 -U test; then
-              echo "PostgreSQL is ready"
-              break
-            fi
-            sleep 1
-          done
-
       - name: Run backend tests
         run: npm run test:backend
         env:
           NODE_ENV: test
           JWT_SECRET: test-secret-for-ci-only
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_USERNAME: test
-          DB_PASSWORD: test
-          DB_NAME: splitease_test
 
       - name: Generate coverage report
         run: npm run test:backend -- --coverage
         env:
           NODE_ENV: test
           JWT_SECRET: test-secret-for-ci-only
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_USERNAME: test
-          DB_PASSWORD: test
-          DB_NAME: splitease_test
 
       - name: Upload coverage
         uses: actions/upload-artifact@v4
@@ -178,7 +144,7 @@ jobs:
         run: npm ci
 
       - name: Run frontend tests
-        run: npm run test:frontend
+        run: npm run test:run
         working-directory: ./frontend
 
       - name: Generate coverage report
@@ -219,7 +185,7 @@ jobs:
         run: npm run docs:erd
 
       - name: Generate architecture docs
-        run: npm run arch:docs
+        run: npm run docs:generate
 
       - name: Upload all documentation
         uses: actions/upload-artifact@v4
@@ -229,6 +195,7 @@ jobs:
             docs/api/
             docs/database/
             docs/architecture/
+            backend/docs/api/
           retention-days: 30
 
   # ============================================================

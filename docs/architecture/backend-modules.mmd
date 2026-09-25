@@ -7,14 +7,18 @@ graph LR
         controllers_dashboard_controller["controllers.dashboard.controller"]
         controllers_expense_controller["controllers.expense.controller"]
         controllers_group_controller["controllers.group.controller"]
+        controllers_notification_controller["controllers.notification.controller"]
         controllers_payment_controller["controllers.payment.controller"]
         controllers_reaction_controller["controllers.reaction.controller"]
         controllers_summary_controller["controllers.summary.controller"]
+        controllers_user_controller["controllers.user.controller"]
     end
 
     subgraph Services["🔧 Services"]
+        services_notification_service["services.notification.service"]
         services_activity_service["services.activity.service"]
         services_auth_service["services.auth.service"]
+        services_email_service["services.email.service"]
         services_balance_service["services.balance.service"]
         services_dashboard_service["services.dashboard.service"]
         services_expense_service["services.expense.service"]
@@ -22,6 +26,7 @@ graph LR
         services_payment_service["services.payment.service"]
         services_reaction_service["services.reaction.service"]
         services_summary_service["services.summary.service"]
+        services_user_service["services.user.service"]
     end
 
     subgraph Models["🗄️ Models"]
@@ -32,6 +37,8 @@ graph LR
         database_models_expense-split["database.models.expense-split"]
         database_models_group["database.models.group"]
         database_models_group-member["database.models.group-member"]
+        database_models_notification["database.models.notification"]
+        database_models_notification-preference["database.models.notification-preference"]
         database_models_payment["database.models.payment"]
         database_models_user["database.models.user"]
     end
@@ -44,9 +51,11 @@ graph LR
         routes_dashboard_routes["routes.dashboard.routes"]
         routes_expense_routes["routes.expense.routes"]
         routes_group_routes["routes.group.routes"]
+        routes_notification_routes["routes.notification.routes"]
         routes_payment_routes["routes.payment.routes"]
         routes_reaction_routes["routes.reaction.routes"]
         routes_summary_routes["routes.summary.routes"]
+        routes_user_routes["routes.user.routes"]
         routes_debug_routes["routes.debug.routes"]
     end
 
@@ -62,17 +71,21 @@ graph LR
         validators_auth_validation["validators.auth.validation"]
         validators_expense_validation["validators.expense.validation"]
         validators_group_validation["validators.group.validation"]
+        validators_notification_validation["validators.notification.validation"]
         validators_payment_validation["validators.payment.validation"]
         validators_reaction_validation["validators.reaction.validation"]
         validators_summary_validation["validators.summary.validation"]
+        validators_user_validation["validators.user.validation"]
     end
 
     subgraph Utils["🛠️ Utils"]
-        utils_activity_utils["utils.activity.utils"]
         utils_pagination_utils["utils.pagination.utils"]
+        utils_activity_utils["utils.activity.utils"]
         utils_jwt["utils.jwt"]
+        utils_otp["utils.otp"]
         utils_password["utils.password"]
         utils_user_utils["utils.user.utils"]
+        utils_username_utils["utils.username.utils"]
         utils_expense_utils["utils.expense.utils"]
         utils_payment_utils["utils.payment.utils"]
         utils_reaction_utils["utils.reaction.utils"]
@@ -81,37 +94,59 @@ graph LR
 
     app --> config_env
     app --> constants_http-statuses
+    app --> events_notification_listener
     app --> middlewares_error_middleware
     app --> routes_index
     app --> routes_debug_routes
+    events_notification_listener --> constants_notification-types
+    events_notification_listener --> services_notification_service
+    events_notification_listener --> events_event-bus
+    events_notification_listener --> events_events
+    services_notification_service --> database_models_index
+    services_notification_service --> errors_index
+    services_notification_service --> sse_notification-sse
+    services_notification_service --> utils_pagination_utils
+    database_models_index --> config_database
+    database_models_index --> database_models_activity-log
+    database_models_index --> database_models_expense
+    database_models_index --> database_models_expense-reaction
+    database_models_index --> database_models_expense-split
+    database_models_index --> database_models_group
+    database_models_index --> database_models_group-member
+    database_models_index --> database_models_notification
+    database_models_index --> database_models_notification-preference
+    database_models_index --> database_models_payment
+    database_models_index --> database_models_user
+    config_database --> config_env
+    errors_index --> errors_app_error
+    errors_index --> errors_bad-request_error
+    errors_index --> errors_conflict_error
+    errors_index --> errors_forbidden_error
+    errors_index --> errors_not-found_error
+    errors_index --> errors_unauthorized_error
+    errors_bad-request_error --> constants_http-statuses
+    errors_bad-request_error --> errors_app_error
+    errors_conflict_error --> constants_http-statuses
+    errors_conflict_error --> errors_app_error
+    errors_forbidden_error --> constants_http-statuses
+    errors_forbidden_error --> errors_app_error
+    errors_not-found_error --> constants_http-statuses
+    errors_not-found_error --> errors_app_error
+    errors_unauthorized_error --> constants_http-statuses
+    errors_unauthorized_error --> errors_app_error
     middlewares_error_middleware --> constants_http-statuses
     middlewares_error_middleware --> errors_index
-    errors_index --> errors_AppError
-    errors_index --> errors_BadRequestError
-    errors_index --> errors_ConflictError
-    errors_index --> errors_ForbiddenError
-    errors_index --> errors_NotFoundError
-    errors_index --> errors_UnauthorizedError
-    errors_AppError --> constants_http-statuses
-    errors_BadRequestError --> constants_http-statuses
-    errors_BadRequestError --> errors_AppError
-    errors_ConflictError --> constants_http-statuses
-    errors_ConflictError --> errors_AppError
-    errors_ForbiddenError --> constants_http-statuses
-    errors_ForbiddenError --> errors_AppError
-    errors_NotFoundError --> constants_http-statuses
-    errors_NotFoundError --> errors_AppError
-    errors_UnauthorizedError --> constants_http-statuses
-    errors_UnauthorizedError --> errors_AppError
     routes_index --> routes_activity_routes
     routes_index --> routes_auth_routes
     routes_index --> routes_balance_routes
     routes_index --> routes_dashboard_routes
     routes_index --> routes_expense_routes
     routes_index --> routes_group_routes
+    routes_index --> routes_notification_routes
     routes_index --> routes_payment_routes
     routes_index --> routes_reaction_routes
     routes_index --> routes_summary_routes
+    routes_index --> routes_user_routes
     routes_activity_routes --> controllers_activity_controller
     routes_activity_routes --> middlewares_auth_middleware
     routes_activity_routes --> middlewares_group_middleware
@@ -121,16 +156,6 @@ graph LR
     controllers_activity_controller --> utils_pagination_utils
     services_activity_service --> database_models_index
     services_activity_service --> utils_activity_utils
-    database_models_index --> config_database
-    database_models_index --> database_models_activity-log
-    database_models_index --> database_models_expense
-    database_models_index --> database_models_expense-reaction
-    database_models_index --> database_models_expense-split
-    database_models_index --> database_models_group
-    database_models_index --> database_models_group-member
-    database_models_index --> database_models_payment
-    database_models_index --> database_models_user
-    config_database --> config_env
     middlewares_auth_middleware --> constants_http-statuses
     middlewares_auth_middleware --> database_models_index
     middlewares_auth_middleware --> utils_jwt
@@ -144,11 +169,16 @@ graph LR
     controllers_auth_controller --> constants_http-statuses
     controllers_auth_controller --> middlewares_async-handler_middleware
     controllers_auth_controller --> services_auth_service
+    services_auth_service --> config_env
     services_auth_service --> database_models_index
     services_auth_service --> errors_index
     services_auth_service --> utils_jwt
+    services_auth_service --> utils_otp
     services_auth_service --> utils_password
     services_auth_service --> utils_user_utils
+    services_auth_service --> utils_username_utils
+    services_auth_service --> services_email_service
+    services_email_service --> config_env
     middlewares_validate_middleware --> constants_http-statuses
     routes_balance_routes --> controllers_balance_controller
     routes_balance_routes --> middlewares_auth_middleware
@@ -176,6 +206,8 @@ graph LR
     services_expense_service --> constants_activity-types
     services_expense_service --> database_models_index
     services_expense_service --> errors_index
+    services_expense_service --> events_event-bus
+    services_expense_service --> events_events
     services_expense_service --> utils_expense_utils
     services_expense_service --> services_activity_service
     routes_group_routes --> controllers_group_controller
@@ -189,7 +221,17 @@ graph LR
     services_group_service --> constants_activity-types
     services_group_service --> database_models_index
     services_group_service --> errors_index
+    services_group_service --> events_event-bus
+    services_group_service --> events_events
     services_group_service --> services_activity_service
+    routes_notification_routes --> controllers_notification_controller
+    routes_notification_routes --> middlewares_auth_middleware
+    routes_notification_routes --> middlewares_validate_middleware
+    routes_notification_routes --> validators_notification_validation
+    controllers_notification_controller --> constants_http-statuses
+    controllers_notification_controller --> middlewares_async-handler_middleware
+    controllers_notification_controller --> services_notification_service
+    controllers_notification_controller --> sse_notification-sse
     routes_payment_routes --> controllers_payment_controller
     routes_payment_routes --> middlewares_auth_middleware
     routes_payment_routes --> middlewares_group_middleware
@@ -201,6 +243,8 @@ graph LR
     services_payment_service --> constants_activity-types
     services_payment_service --> database_models_index
     services_payment_service --> errors_index
+    services_payment_service --> events_event-bus
+    services_payment_service --> events_events
     services_payment_service --> utils_payment_utils
     services_payment_service --> services_activity_service
     services_payment_service --> services_balance_service
@@ -213,6 +257,8 @@ graph LR
     controllers_reaction_controller --> services_reaction_service
     services_reaction_service --> database_models_index
     services_reaction_service --> errors_index
+    services_reaction_service --> events_event-bus
+    services_reaction_service --> events_events
     services_reaction_service --> utils_reaction_utils
     validators_reaction_validation --> constants_reaction-types
     validators_reaction_validation --> validators_expense_validation
@@ -225,6 +271,14 @@ graph LR
     controllers_summary_controller --> middlewares_async-handler_middleware
     controllers_summary_controller --> services_summary_service
     services_summary_service --> database_models_index
+    routes_user_routes --> controllers_user_controller
+    routes_user_routes --> middlewares_auth_middleware
+    routes_user_routes --> middlewares_validate_middleware
+    routes_user_routes --> validators_user_validation
+    controllers_user_controller --> constants_http-statuses
+    controllers_user_controller --> middlewares_async-handler_middleware
+    controllers_user_controller --> services_user_service
+    services_user_service --> database_models_index
     routes_debug_routes --> constants_http-statuses
     routes_debug_routes --> utils_service-registry
     utils_service-registry --> services_activity_service
@@ -236,6 +290,8 @@ graph LR
     utils_service-registry --> services_payment_service
     utils_service-registry --> services_reaction_service
     utils_service-registry --> services_summary_service
+    database_seeders_20260818-01-seed-users --> utils_password
+    database_seeders_20260818-01-seed-users --> database_models_index
 
     classDef ctrl fill:#3b82f6,color:#fff,stroke:#1e40af;
     classDef svc fill:#8b5cf6,color:#fff,stroke:#5b21b6;
@@ -245,10 +301,10 @@ graph LR
     classDef val fill:#ef4444,color:#fff,stroke:#991b1b;
     classDef util fill:#6b7280,color:#fff,stroke:#374151;
 
-    class controllers_activity_controller,controllers_auth_controller,controllers_balance_controller,controllers_dashboard_controller,controllers_expense_controller,controllers_group_controller,controllers_payment_controller,controllers_reaction_controller,controllers_summary_controller ctrl;
-    class services_activity_service,services_auth_service,services_balance_service,services_dashboard_service,services_expense_service,services_group_service,services_payment_service,services_reaction_service,services_summary_service svc;
-    class database_models_index,database_models_activity-log,database_models_expense,database_models_expense-reaction,database_models_expense-split,database_models_group,database_models_group-member,database_models_payment,database_models_user mod;
-    class routes_index,routes_activity_routes,routes_auth_routes,routes_balance_routes,routes_dashboard_routes,routes_expense_routes,routes_group_routes,routes_payment_routes,routes_reaction_routes,routes_summary_routes,routes_debug_routes rt;
+    class controllers_activity_controller,controllers_auth_controller,controllers_balance_controller,controllers_dashboard_controller,controllers_expense_controller,controllers_group_controller,controllers_notification_controller,controllers_payment_controller,controllers_reaction_controller,controllers_summary_controller,controllers_user_controller ctrl;
+    class services_notification_service,services_activity_service,services_auth_service,services_email_service,services_balance_service,services_dashboard_service,services_expense_service,services_group_service,services_payment_service,services_reaction_service,services_summary_service,services_user_service svc;
+    class database_models_index,database_models_activity-log,database_models_expense,database_models_expense-reaction,database_models_expense-split,database_models_group,database_models_group-member,database_models_notification,database_models_notification-preference,database_models_payment,database_models_user mod;
+    class routes_index,routes_activity_routes,routes_auth_routes,routes_balance_routes,routes_dashboard_routes,routes_expense_routes,routes_group_routes,routes_notification_routes,routes_payment_routes,routes_reaction_routes,routes_summary_routes,routes_user_routes,routes_debug_routes rt;
     class middlewares_error_middleware,middlewares_async-handler_middleware,middlewares_auth_middleware,middlewares_group_middleware,middlewares_validate_middleware mw;
-    class validators_auth_validation,validators_expense_validation,validators_group_validation,validators_payment_validation,validators_reaction_validation,validators_summary_validation val;
-    class utils_activity_utils,utils_pagination_utils,utils_jwt,utils_password,utils_user_utils,utils_expense_utils,utils_payment_utils,utils_reaction_utils,utils_service-registry util;
+    class validators_auth_validation,validators_expense_validation,validators_group_validation,validators_notification_validation,validators_payment_validation,validators_reaction_validation,validators_summary_validation,validators_user_validation val;
+    class utils_pagination_utils,utils_activity_utils,utils_jwt,utils_otp,utils_password,utils_user_utils,utils_username_utils,utils_expense_utils,utils_payment_utils,utils_reaction_utils,utils_service-registry util;

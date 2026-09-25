@@ -1,10 +1,7 @@
 const eventBus = require("./event-bus");
 const EVENTS = require("./events");
 const NOTIFICATION_TYPES = require("../constants/notification-types");
-const {
-  createNotification,
-  PREFERENCE_KEY_BY_TYPE,
-} = require("../services/notification.service");
+const { createNotification, PREFERENCE_KEY_BY_TYPE } = require("../services/notification.service");
 
 const mapEventToType = (eventName) => {
   switch (eventName) {

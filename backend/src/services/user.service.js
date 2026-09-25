@@ -3,14 +3,15 @@ const { User } = require("../database/models");
 const { sequelize } = require("../database/models");
 
 const searchUsers = async (query, { excludeUserId, limit = 20 } = {}) => {
-  const q = String(query || "").trim().toLowerCase();
+  const q = String(query || "")
+    .trim()
+    .toLowerCase();
 
   if (q.length < 2) {
     return [];
   }
 
-  const likeOperator =
-    sequelize.getDialect() === "postgres" ? Op.iLike : Op.like;
+  const likeOperator = sequelize.getDialect() === "postgres" ? Op.iLike : Op.like;
 
   const users = await User.findAll({
     where: {

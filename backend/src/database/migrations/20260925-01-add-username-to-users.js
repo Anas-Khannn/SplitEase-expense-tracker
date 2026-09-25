@@ -7,10 +7,9 @@ module.exports = {
       allowNull: true,
     });
 
-    const users = await queryInterface.sequelize.query(
-      "SELECT user_id, email FROM users",
-      { type: Sequelize.QueryTypes.SELECT },
-    );
+    const users = await queryInterface.sequelize.query("SELECT user_id, email FROM users", {
+      type: Sequelize.QueryTypes.SELECT,
+    });
 
     const seen = new Map();
     for (const user of users) {
