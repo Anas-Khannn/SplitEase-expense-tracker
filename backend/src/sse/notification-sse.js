@@ -1,4 +1,5 @@
-const HEARTBEAT_INTERVAL_MS = 25000;
+const HEARTBEAT_INTERVAL_MS = 15000;
+const MAX_CONNECTION_LIFETIME_MS = 45000;
 
 const clientGroups = new Map();
 
@@ -25,6 +26,15 @@ const removeClient = (userId, res) => {
   group.delete(res);
   if (group.size === 0) {
     clientGroups.delete(String(userId));
+  }
+};
+
+const closeClient = (userId, res) => {
+  removeClient(userId, res);
+  try {
+    res.end();
+  } catch {
+    // client already disconnected
   }
 };
 
@@ -56,8 +66,10 @@ setInterval(() => {
 }, HEARTBEAT_INTERVAL_MS).unref();
 
 module.exports = {
+  MAX_CONNECTION_LIFETIME_MS,
   setSSEHeaders,
   addClient,
   removeClient,
+  closeClient,
   broadcast,
 };

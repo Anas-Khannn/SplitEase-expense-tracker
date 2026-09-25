@@ -33,7 +33,7 @@ app.use("/api", routes);
 
 app.use(errorHandler);
 
-if (process.env.NODE_ENV !== "test") {
+if (process.env.NODE_ENV !== "test" && !process.env.VERCEL) {
   const PORT = env.port;
   app.listen(PORT, () => {
     console.log(`SplitEase server running on port ${PORT} [${env.nodeEnv}]`);

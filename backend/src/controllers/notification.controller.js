@@ -66,7 +66,16 @@ const streamNotifications = asyncHandler(async (req, res) => {
 
   sse.addClient(req.user.user_id, res);
 
+  // Serverless platforms cap how long one invocation may stay open, so the
+  // stream ends on a bounded lifetime instead of being killed mid-response.
+  // The client reconnects when the stream closes.
+  const lifetime = setTimeout(
+    () => sse.closeClient(req.user.user_id, res),
+    sse.MAX_CONNECTION_LIFETIME_MS,
+  );
+
   req.on("close", () => {
+    clearTimeout(lifetime);
     sse.removeClient(req.user.user_id, res);
   });
 });
