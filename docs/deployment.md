@@ -1,45 +1,46 @@
 # Deploying to Vercel
 
-SplitEase deploys as a single Vercel project using **Services**: the Next.js
-frontend and the Express backend are built separately and served from one
-domain. `vercel.json` at the repository root is the source of truth for that
-topology.
+SplitEase deploys as **two separate Vercel projects**: one for the Next.js
+frontend and one for the Express backend. The repository is an npm workspaces
+monorepo (`package.json` declares `frontend` and `backend`), so each project
+points Vercel at its own workspace with a Root Directory.
+
+There is deliberately **no `vercel.json` at the repository root**. A root config
+with `services` plus a catch-all rewrite (`/(.*)`) makes Vercel route every
+request to a service at the proxy layer, which breaks Next.js routing and fails
+with `500 FUNCTION_INVOCATION_FAILED`. Next.js handles its own routes; do not
+rewrite in front of it.
 
 ## Required project settings
 
-Both conditions must hold or the build fails with
-`Project framework is set to "services", but no services are declared`:
-
-| Setting | Value | Where |
+| Project | Root Directory | Framework Preset |
 | --- | --- | --- |
-| Root Directory | `/` (Repository Root) | Settings → General |
-| Framework Preset | `Services` | Settings → Build and Deployment |
+| Backend | `backend` | Express |
+| Frontend | `frontend` | Next.js |
 
-**Root Directory must be the repository root, not `frontend/` or `backend/`.**
-Vercel resolves `vercel.json` relative to the Root Directory, so a subdirectory
-setting makes the root `vercel.json` invisible and every service is dropped.
+Set these under **Settings → General → Root Directory** and **Settings → Build
+and Deployment → Framework Preset**. The Framework Preset must not be
+`Services`; that preset requires a root `vercel.json`, which no longer exists.
 
-Services is a Vercel beta and is permission-gated per account. If the Services
-preset is unavailable, deploy the frontend and backend as two separate projects
-instead and set `NEXT_PUBLIC_API_URL` to the backend's absolute URL.
+`backend/vercel.json` pins the function entrypoint to a 60s max duration. It is
+only read when the backend Root Directory is `backend`.
 
-## Routing
-
-`vercel.json` routes `/api/*` to the backend and everything else to the
-frontend. A service receives the **original** request path, so the backend is
-mounted under `/api` because that is where `backend/src/app.js` registers its
-routes. Do not add a prefix such as `/api/backend` in the rewrite source.
-
-## Environment variables
-
-Set `NEXT_PUBLIC_API_URL=/api` (relative, same domain). Backend variables are
-shared with the frontend service because Services projects share one env scope.
+## Frontend environment variables
 
 ```
-NEXT_PUBLIC_API_URL=/api
+NEXT_PUBLIC_API_URL=https://<backend-domain>/api
+```
 
+This must be the backend's **absolute** URL. The two projects are on different
+domains, so the relative `/api` used by a single-project Services setup will
+not resolve. `NEXT_PUBLIC_*` values are inlined at build time, so changing this
+requires a redeploy, not just a restart.
+
+## Backend environment variables
+
+```
 NODE_ENV=production
-CORS_ORIGIN=https://<your-domain>
+CORS_ORIGIN=https://<frontend-domain>
 DB_HOST=ep-tiny-feather-b5itww1l-pooler.c-7.us-east-2.aws.neon.tech
 DB_PORT=5432
 DB_NAME=neondb
@@ -52,15 +53,34 @@ RESEND_FROM_EMAIL=SplitEase <onboarding@resend.dev>
 OTP_TTL_MINUTES=10
 ```
 
-The backend refuses to boot in production without `JWT_SECRET`,
-`RESEND_API_KEY`, and `CORS_ORIGIN` (`backend/src/config/env.js`).
+`CORS_ORIGIN` must be the frontend domain, since the browser calls the backend
+cross-origin. `RESEND_FROM_EMAIL` must be a verified sender in the Resend
+account.
+
+The backend validates all of the above at boot and reports **every** missing
+variable in one error (`backend/src/config/env.js`), so a misconfigured deploy
+takes one attempt to diagnose rather than one attempt per variable.
+
+`PORT` and `NODE_ENV` are not worth setting: Vercel assigns the port and sets
+`NODE_ENV=production` itself.
+
+### Trying the app without Resend
+
+`RESEND_API_KEY` is required in production, but `LOG_OTP_EMAILS=true` waives it
+and writes verification codes to the server log instead of emailing them. The
+default stays fail-fast, so a deploy without the flag still refuses to start.
+
+Codes in the log are readable by anyone with log access and are enough to
+complete a login. Use it to exercise the app locally or on a throwaway
+deployment, then remove it. Search the Vercel logs for `[email:log]` to read a
+code.
 
 ## Local verification
 
 ```bash
-vercel dev -L
+npm run dev
 ```
 
-Runs every service locally from the same `vercel.json` without authenticating
-against the Vercel Cloud, which is the fastest way to catch a routing mistake
-before deploying.
+Runs the frontend and backend together via npm workspaces. To exercise the
+Vercel routing itself, `vercel dev` requires authentication against the Vercel
+Cloud and is no longer needed now that each project is configured separately.

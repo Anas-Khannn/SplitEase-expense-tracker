@@ -11,11 +11,21 @@ function loadEnvInFreshProcess(
   nodeEnv,
   jwtSecret,
   corsOrigin = "https://app.example.com",
-  db = { DB_HOST: "db.example.com", DB_NAME: "splitease", DB_USER: "splitease", DB_PASSWORD: "ci-test-password" },
+  db = {
+    DB_HOST: "db.example.com",
+    DB_NAME: "splitease",
+    DB_USER: "splitease",
+    DB_PASSWORD: "ci-test-password",
+  },
 ) {
   const cwd = fs.mkdtempSync(path.join(os.tmpdir(), "splitease-env-"));
   try {
-    const env = { NODE_ENV: nodeEnv, CORS_ORIGIN: corsOrigin, RESEND_API_KEY: "re_test_key", ...db };
+    const env = {
+      NODE_ENV: nodeEnv,
+      CORS_ORIGIN: corsOrigin,
+      RESEND_API_KEY: "re_test_key",
+      ...db,
+    };
     if (jwtSecret !== undefined) env.JWT_SECRET = jwtSecret;
 
     const res = spawnSync(process.execPath, ["-e", `require(${JSON.stringify(ENV_PATH)});`], {
@@ -66,12 +76,17 @@ describe("JWT_SECRET production validation", () => {
   it("does not expose the secret in the error message", () => {
     // Boot fails on a missing DB_PASSWORD while a real JWT secret and a real
     // CORS origin are set, so the message must not echo either of them.
-    const { status, stderr } = loadEnvInFreshProcess("production", "s3cret-value-do-not-log", undefined, {
-      DB_HOST: "db.example.com",
-      DB_NAME: "splitease",
-      DB_USER: "splitease",
-      DB_PASSWORD: "",
-    });
+    const { status, stderr } = loadEnvInFreshProcess(
+      "production",
+      "s3cret-value-do-not-log",
+      undefined,
+      {
+        DB_HOST: "db.example.com",
+        DB_NAME: "splitease",
+        DB_USER: "splitease",
+        DB_PASSWORD: "",
+      },
+    );
     expect(status).not.toBe(0);
     expect(stderr).toMatch(/DB_PASSWORD/);
     expect(stderr).not.toMatch(/s3cret-value-do-not-log/);
