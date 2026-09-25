@@ -64,16 +64,16 @@ takes one attempt to diagnose rather than one attempt per variable.
 `PORT` and `NODE_ENV` are not worth setting: Vercel assigns the port and sets
 `NODE_ENV=production` itself.
 
-### Trying the app without Resend
+### Running without Resend
 
-`RESEND_API_KEY` is required in production, but `LOG_OTP_EMAILS=true` waives it
-and writes verification codes to the server log instead of emailing them. The
-default stays fail-fast, so a deploy without the flag still refuses to start.
+`RESEND_API_KEY` is optional. When unset, the server logs a warning at boot and
+writes verification codes to the server logs instead of emailing them (`[email:log]`).
+This lets deployments succeed immediately on Vercel even before setting up a
+Resend account.
 
-Codes in the log are readable by anyone with log access and are enough to
-complete a login. Use it to exercise the app locally or on a throwaway
-deployment, then remove it. Search the Vercel logs for `[email:log]` to read a
-code.
+Search the Vercel runtime logs for `[email:log]` to read verification codes.
+Once you configure `RESEND_API_KEY` under Settings > Environment Variables in
+Vercel, emails will be delivered directly via Resend.
 
 ## Local verification
 

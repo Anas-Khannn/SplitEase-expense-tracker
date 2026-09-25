@@ -29,11 +29,6 @@ const corsOrigin = parsedCorsOrigins.length ? parsedCorsOrigins : ["http://local
 const requiredInProduction = [
   { name: "JWT_SECRET", isSet: Boolean(jwtSecret), purpose: "signs auth tokens" },
   {
-    name: "RESEND_API_KEY",
-    isSet: Boolean(resendApiKey) || logOtpEmails,
-    purpose: "sends verification emails",
-  },
-  {
     name: "CORS_ORIGIN",
     isSet: parsedCorsOrigins.length > 0,
     purpose: "comma-separated list of allowed origins",
@@ -59,9 +54,9 @@ if (isProduction) {
     );
   }
 
-  if (logOtpEmails && !resendApiKey) {
+  if (!resendApiKey) {
     console.warn(
-      "[env] LOG_OTP_EMAILS is enabled without RESEND_API_KEY, so verification codes are written to the server logs instead of being emailed. Remove it once email delivery is configured.",
+      "[env] RESEND_API_KEY is not configured. Verification codes will be written to the server logs instead of being emailed. Set RESEND_API_KEY in the Vercel project under Settings > Environment Variables to enable email delivery.",
     );
   }
 }
@@ -87,7 +82,7 @@ const env = {
     resendApiKey,
     fromEmail: process.env.RESEND_FROM_EMAIL || "SplitEase <onboarding@resend.dev>",
     otpTtlMinutes: parseInt(process.env.OTP_TTL_MINUTES, 10) || 10,
-    logOtpEmails,
+    logOtpEmails: logOtpEmails || !resendApiKey,
   },
 
   cors: {
