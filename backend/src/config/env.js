@@ -5,8 +5,11 @@ const isProduction = nodeEnv === "production";
 
 const read = (name) => (process.env[name] || "").trim();
 
+const readBoolean = (name) => ["1", "true", "yes", "on"].includes(read(name).toLowerCase());
+
 const jwtSecret = read("JWT_SECRET");
 const resendApiKey = read("RESEND_API_KEY");
+const logOtpEmails = readBoolean("LOG_OTP_EMAILS");
 
 const corsOriginRaw = process.env.CORS_ORIGIN;
 
@@ -25,7 +28,11 @@ const corsOrigin = parsedCorsOrigins.length ? parsedCorsOrigins : ["http://local
 // values, so secrets cannot leak through the error message.
 const requiredInProduction = [
   { name: "JWT_SECRET", isSet: Boolean(jwtSecret), purpose: "signs auth tokens" },
-  { name: "RESEND_API_KEY", isSet: Boolean(resendApiKey), purpose: "sends verification emails" },
+  {
+    name: "RESEND_API_KEY",
+    isSet: Boolean(resendApiKey) || logOtpEmails,
+    purpose: "sends verification emails",
+  },
   {
     name: "CORS_ORIGIN",
     isSet: parsedCorsOrigins.length > 0,
@@ -51,6 +58,12 @@ if (isProduction) {
       } in the Vercel project under Settings > Environment Variables, then redeploy. Values are intentionally not shown here.`,
     );
   }
+
+  if (logOtpEmails && !resendApiKey) {
+    console.warn(
+      "[env] LOG_OTP_EMAILS is enabled without RESEND_API_KEY, so verification codes are written to the server logs instead of being emailed. Remove it once email delivery is configured.",
+    );
+  }
 }
 
 const env = {
@@ -74,6 +87,7 @@ const env = {
     resendApiKey,
     fromEmail: process.env.RESEND_FROM_EMAIL || "SplitEase <onboarding@resend.dev>",
     otpTtlMinutes: parseInt(process.env.OTP_TTL_MINUTES, 10) || 10,
+    logOtpEmails,
   },
 
   cors: {

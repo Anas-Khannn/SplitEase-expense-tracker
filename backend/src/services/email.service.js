@@ -99,17 +99,17 @@ const sendEmail = async ({ to, subject, html, text }) => {
   const isTest = process.env.NODE_ENV === "test";
 
   if (isTest || !env.email.resendApiKey) {
-    // No network calls without a Resend key. In development the code is logged
-    // so the flow can be exercised end-to-end locally.
+    // No network calls without a Resend key. Reachable in development, in
+    // tests, and in production only when LOG_OTP_EMAILS explicitly opts in.
     if (isTest) {
       return { id: `dev-${Date.now()}`, deliveredTo: to };
     }
 
-    console.log(
-      `[email:dev] Would send "${subject}" to ${to} (set RESEND_API_KEY to send for real).`,
+    console.warn(
+      `[email:log] NOT SENT - "${subject}" to ${to}. No RESEND_API_KEY configured, so this is printed to the server log instead.`,
     );
-    console.log(
-      `[email:dev] ${
+    console.warn(
+      `[email:log] ${
         text ||
         html
           .replace(/<[^>]*>/g, " ")
