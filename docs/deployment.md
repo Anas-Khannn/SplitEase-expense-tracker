@@ -28,13 +28,12 @@ only read when the backend Root Directory is `backend`.
 ## Frontend environment variables
 
 ```
-NEXT_PUBLIC_API_URL=https://<backend-domain>/api
+API_URL=https://<backend-domain>/api
 ```
 
 This must be the backend's **absolute** URL. The two projects are on different
-domains, so the relative `/api` used by a single-project Services setup will
-not resolve. `NEXT_PUBLIC_*` values are inlined at build time, so changing this
-requires a redeploy, not just a restart.
+domains, so the relative `/api` will not resolve. Values are inlined at build
+time, so changing this requires a redeploy. (`NEXT_PUBLIC_API_URL` is also supported for backwards compatibility).
 
 ## Backend environment variables
 

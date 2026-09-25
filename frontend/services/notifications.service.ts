@@ -46,7 +46,9 @@ export const notificationsApi = {
 
   streamUrl() {
     const baseUrl =
-      process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+      process.env.API_URL ||
+      process.env.NEXT_PUBLIC_API_URL ||
+      "http://localhost:5000/api";
     return `${baseUrl}/notifications/stream`;
   },
 };

@@ -17,7 +17,9 @@ export interface ApiErrorResponse {
 }
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+  process.env.API_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:5000/api";
 
 interface RequestOptions {
   params?: Record<string, string | number | undefined>;

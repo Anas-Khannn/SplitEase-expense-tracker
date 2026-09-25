@@ -5,7 +5,9 @@ import { useMutation } from "@tanstack/react-query";
 type OAuthProvider = "google" | "github" | "facebook";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+  process.env.API_URL ||
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:5000/api";
 
 function redirectToOAuth(provider: OAuthProvider): Promise<void> {
   return new Promise(() => {
