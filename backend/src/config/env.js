@@ -1,35 +1,54 @@
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 
 const nodeEnv = process.env.NODE_ENV || "development";
+const isProduction = nodeEnv === "production";
 
-const jwtSecret = process.env.JWT_SECRET || "";
-const resendApiKey = process.env.RESEND_API_KEY || "";
+const read = (name) => (process.env[name] || "").trim();
 
-if (nodeEnv === "production" && !jwtSecret.trim()) {
-  throw new Error(
-    "JWT_SECRET is required in production. Set JWT_SECRET to a non-empty secret before starting the server.",
-  );
-}
-
-if (nodeEnv === "production" && !resendApiKey.trim()) {
-  throw new Error(
-    "RESEND_API_KEY is required in production to send verification emails. Set RESEND_API_KEY to a non-empty Resend API key before starting the server.",
-  );
-}
+const jwtSecret = read("JWT_SECRET");
+const resendApiKey = read("RESEND_API_KEY");
 
 const corsOriginRaw = process.env.CORS_ORIGIN;
 
-const corsOrigin =
+const parsedCorsOrigins =
   corsOriginRaw && corsOriginRaw.trim()
-    ? corsOriginRaw.split(",").map((origin) => origin.trim())
-    : ["http://localhost:3000"];
+    ? corsOriginRaw
+        .split(",")
+        .map((origin) => origin.trim())
+        .filter(Boolean)
+    : [];
 
-if (nodeEnv === "production") {
-  const isExplicitlySet = Boolean(corsOriginRaw && corsOriginRaw.trim());
-  const hasValidOrigin = corsOrigin.some((origin) => origin.length > 0);
-  if (!isExplicitlySet || !hasValidOrigin) {
+const corsOrigin = parsedCorsOrigins.length ? parsedCorsOrigins : ["http://localhost:3000"];
+
+// Collected together so a misconfigured deploy fails once with the full list
+// instead of one variable per deploy attempt. Only names are reported, never
+// values, so secrets cannot leak through the error message.
+const requiredInProduction = [
+  { name: "JWT_SECRET", isSet: Boolean(jwtSecret), purpose: "signs auth tokens" },
+  { name: "RESEND_API_KEY", isSet: Boolean(resendApiKey), purpose: "sends verification emails" },
+  {
+    name: "CORS_ORIGIN",
+    isSet: parsedCorsOrigins.length > 0,
+    purpose: "comma-separated list of allowed origins",
+  },
+  { name: "DB_HOST", isSet: Boolean(read("DB_HOST")), purpose: "Postgres host" },
+  { name: "DB_NAME", isSet: Boolean(read("DB_NAME")), purpose: "Postgres database" },
+  { name: "DB_USER", isSet: Boolean(read("DB_USER")), purpose: "Postgres user" },
+  { name: "DB_PASSWORD", isSet: Boolean(read("DB_PASSWORD")), purpose: "Postgres password" },
+];
+
+if (isProduction) {
+  const missing = requiredInProduction.filter((variable) => !variable.isSet);
+
+  if (missing.length) {
+    const details = missing.map((v) => `  - ${v.name} (${v.purpose})`).join("\n");
+
     throw new Error(
-      "CORS_ORIGIN is required in production. Set CORS_ORIGIN to a non-empty, comma-separated list of allowed origins before starting the server.",
+      `Missing ${missing.length} required environment variable${
+        missing.length === 1 ? "" : "s"
+      } for production:\n${details}\n\nSet ${
+        missing.length === 1 ? "it" : "them"
+      } in the Vercel project under Settings > Environment Variables, then redeploy. Values are intentionally not shown here.`,
     );
   }
 }
