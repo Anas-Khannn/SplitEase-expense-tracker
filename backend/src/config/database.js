@@ -1,4 +1,5 @@
 const { Sequelize } = require("sequelize");
+const pg = require("pg");
 const env = require("./env");
 
 let sequelize;
@@ -14,6 +15,7 @@ if (process.env.NODE_ENV === "test") {
     host: env.db.host,
     port: env.db.port,
     dialect: "postgres",
+    dialectModule: pg,
     dialectOptions: {
       ssl: {
         require: true,
