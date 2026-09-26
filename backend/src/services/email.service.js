@@ -124,9 +124,7 @@ const sendEmail = async ({ to, subject, html, text }) => {
   const transporter = getSmtpTransporter();
   if (transporter) {
     try {
-      const from = env.smtp.from.includes("<")
-        ? env.smtp.from
-        : `SplitEase <${env.smtp.user}>`;
+      const from = env.smtp.from.includes("<") ? env.smtp.from : `SplitEase <${env.smtp.user}>`;
 
       const info = await transporter.sendMail({
         from,
@@ -163,7 +161,11 @@ const sendEmail = async ({ to, subject, html, text }) => {
         );
         console.warn(
           `[email:fallback] Content for ${to}: ${
-            text || html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+            text ||
+            html
+              .replace(/<[^>]*>/g, " ")
+              .replace(/\s+/g, " ")
+              .trim()
           }`,
         );
         return {
@@ -179,7 +181,11 @@ const sendEmail = async ({ to, subject, html, text }) => {
       console.warn(`[email:error] Exception sending email via Resend to ${to}: ${err.message}`);
       console.warn(
         `[email:fallback] Content for ${to}: ${
-          text || html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+          text ||
+          html
+            .replace(/<[^>]*>/g, " ")
+            .replace(/\s+/g, " ")
+            .trim()
         }`,
       );
       return {

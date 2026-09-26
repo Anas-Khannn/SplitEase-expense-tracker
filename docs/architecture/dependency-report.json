@@ -266,6 +266,7 @@
       "dependencies": [],
       "dependents": [
         "node_modules/dotenv/lib/main.js",
+        "node_modules/pg/lib/crypto/utils.js",
         "node_modules/uuid/dist/rng.js",
         "node_modules/uuid/dist/md5.js",
         "node_modules/uuid/dist/sha1.js",
@@ -277,7 +278,14 @@
         "node_modules/etag/index.js",
         "node_modules/cookie-signature/index.js",
         "backend/src/utils/otp.js",
-        "node_modules/bcrypt/bcrypt.js"
+        "node_modules/bcrypt/bcrypt.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -295,12 +303,16 @@
       "dependencies": [],
       "dependents": [
         "node_modules/dotenv/lib/main.js",
-        "node_modules/sequelize/lib/dialects/sqlite/connection-manager.js",
         "node_modules/pg-connection-string/index.js",
+        "node_modules/pgpass/lib/index.js",
+        "node_modules/sequelize/lib/dialects/sqlite/connection-manager.js",
         "node_modules/etag/index.js",
         "node_modules/express/lib/view.js",
         "node_modules/send/index.js",
         "node_modules/node-gyp-build/node-gyp-build.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
         "backend/src/docs/generate-erd.js",
         "backend/src/docs/mermaid-sequence.js",
         "backend/src/docs/openapi.js",
@@ -325,7 +337,9 @@
       "dependents": [
         "node_modules/dotenv/lib/main.js",
         "node_modules/supports-color/index.js",
-        "node_modules/node-gyp-build/node-gyp-build.js"
+        "node_modules/node-gyp-build/node-gyp-build.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -343,6 +357,8 @@
       "dependencies": [],
       "dependents": [
         "node_modules/dotenv/lib/main.js",
+        "node_modules/pgpass/lib/index.js",
+        "node_modules/pgpass/lib/helper.js",
         "node_modules/sequelize/lib/sequelize.js",
         "node_modules/sequelize/lib/dialects/sqlite/connection-manager.js",
         "node_modules/express/lib/application.js",
@@ -354,6 +370,8 @@
         "node_modules/serve-static/index.js",
         "node_modules/bcrypt/bcrypt.js",
         "node_modules/node-gyp-build/node-gyp-build.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
         "backend/src/docs/generate-erd.js",
         "backend/src/docs/mermaid-sequence.js",
         "backend/src/docs/openapi.js",
@@ -809,6 +827,23 @@
           "valid": true
         },
         {
+          "module": "pg",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
           "module": "sequelize",
           "moduleSystem": "cjs",
           "dynamic": false,
@@ -828,6 +863,2137 @@
       ],
       "dependents": [
         "backend/src/database/models/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/index.js",
+      "dependencies": [
+        {
+          "module": "./client",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/client.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./connection",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/connection.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./defaults",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/defaults.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./native",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/native/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./result",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/result.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./type-overrides",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/type-overrides.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "pg-pool",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg-pool/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": true,
+          "cycle": [
+            {
+              "name": "node_modules/pg-pool/index.js",
+              "dependencyTypes": [
+                "npm",
+                "require"
+              ]
+            },
+            {
+              "name": "node_modules/pg/lib/index.js",
+              "dependencyTypes": [
+                "npm-peer",
+                "require"
+              ]
+            }
+          ],
+          "valid": true
+        },
+        {
+          "module": "pg-protocol",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg-protocol/dist/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "pg-types",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg-types/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/config/database.js",
+        "node_modules/pg-pool/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/client.js",
+      "dependencies": [
+        {
+          "module": "./connection",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/connection.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./connection-parameters",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/connection-parameters.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./crypto/sasl",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/crypto/sasl.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./crypto/utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/crypto/utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./defaults",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/defaults.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./query",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/query.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./type-overrides",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/type-overrides.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "pgpass",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pgpass/lib/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "util",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "util",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "events",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg/lib/client.js",
+        "node_modules/pg/lib/connection.js",
+        "node_modules/pg-cloudflare/dist/index.js",
+        "node_modules/pg/lib/query.js",
+        "node_modules/pg/lib/native/client.js",
+        "node_modules/pg/lib/native/query.js",
+        "node_modules/pg-pool/index.js",
+        "backend/src/events/event-bus.js",
+        "node_modules/express/lib/express.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+        "node_modules/minipass/dist/commonjs/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "util",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg/lib/client.js",
+        "node_modules/pgpass/lib/helper.js",
+        "node_modules/pg/lib/native/client.js",
+        "node_modules/pg/lib/native/query.js",
+        "node_modules/sequelize/lib/data-types.js",
+        "node_modules/wkx/lib/geometrycollection.js",
+        "node_modules/wkx/lib/linestring.js",
+        "node_modules/wkx/lib/point.js",
+        "node_modules/wkx/lib/multilinestring.js",
+        "node_modules/wkx/lib/multipoint.js",
+        "node_modules/wkx/lib/multipolygon.js",
+        "node_modules/wkx/lib/polygon.js",
+        "node_modules/sequelize/lib/utils/logger.js",
+        "node_modules/debug/src/node.js",
+        "node_modules/sequelize/lib/utils/deprecations.js",
+        "node_modules/sequelize/lib/dialects/db2/query.js",
+        "node_modules/sequelize/lib/dialects/abstract/query-generator.js",
+        "node_modules/sequelize/lib/instance-validator.js",
+        "node_modules/sequelize/lib/dialects/mysql/query-generator.js",
+        "node_modules/sequelize/lib/dialects/mysql/connection-manager.js",
+        "node_modules/sequelize/lib/dialects/oracle/connection-manager.js",
+        "node_modules/sequelize/lib/dialects/oracle/query-generator.js",
+        "node_modules/sequelize/lib/dialects/postgres/connection-manager.js",
+        "node_modules/sequelize/lib/dialects/postgres/query-generator.js",
+        "node_modules/sequelize/lib/dialects/snowflake/query-generator.js",
+        "node_modules/sequelize/lib/dialects/sqlite/connection-manager.js",
+        "node_modules/jws/lib/sign-stream.js",
+        "node_modules/jws/lib/data-stream.js",
+        "node_modules/jwa/index.js",
+        "node_modules/jws/lib/verify-stream.js",
+        "node_modules/object-inspect/util.inspect.js",
+        "node_modules/inherits/inherits.js",
+        "node_modules/send/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/@hapi/address/dist/email.js",
+        "node_modules/@apidevtools/swagger-parser/lib/util.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/connection.js",
+      "dependencies": [
+        {
+          "module": "./stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/stream.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "net",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "net",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "pg-protocol",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg-protocol/dist/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js",
+        "node_modules/pg/lib/client.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "net",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg/lib/connection.js",
+        "node_modules/pg/lib/stream.js",
+        "node_modules/express/lib/request.js",
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+        "backend/node_modules/nodemailer/dist/cjs/fetch/cookies.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/stream.js",
+      "dependencies": [
+        {
+          "module": "net",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "net",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "pg-cloudflare",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm-optional",
+            "require"
+          ],
+          "resolved": "node_modules/pg-cloudflare/dist/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "tls",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "tls",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/connection.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "tls",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg/lib/stream.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-cloudflare/dist/index.js",
+      "dependencies": [
+        {
+          "module": "cloudflare:sockets",
+          "moduleSystem": "es6",
+          "dynamic": true,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "cloudflare:sockets",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/stream.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "cloudflare:sockets",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg-cloudflare/dist/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-protocol/dist/index.js",
+      "dependencies": [
+        {
+          "module": "./messages",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-protocol/dist/messages.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./parser",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-protocol/dist/parser.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./serializer",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-protocol/dist/serializer.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js",
+        "node_modules/pg/lib/connection.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-protocol/dist/messages.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg-protocol/dist/index.js",
+        "node_modules/pg-protocol/dist/parser.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-protocol/dist/parser.js",
+      "dependencies": [
+        {
+          "module": "./buffer-reader",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-protocol/dist/buffer-reader.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./messages",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-protocol/dist/messages.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg-protocol/dist/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-protocol/dist/buffer-reader.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg-protocol/dist/parser.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-protocol/dist/serializer.js",
+      "dependencies": [
+        {
+          "module": "./buffer-writer",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-protocol/dist/buffer-writer.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg-protocol/dist/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-protocol/dist/buffer-writer.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg-protocol/dist/serializer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/connection-parameters.js",
+      "dependencies": [
+        {
+          "module": "./defaults",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/defaults.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "dns",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "dns",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "pg-connection-string",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg-connection-string/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/client.js",
+        "node_modules/pg/lib/native/client.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "dns",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg/lib/connection-parameters.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/defaults.js",
+      "dependencies": [
+        {
+          "module": "pg-types",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg-types/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js",
+        "node_modules/pg/lib/client.js",
+        "node_modules/pg/lib/connection-parameters.js",
+        "node_modules/pg/lib/utils.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-types/index.js",
+      "dependencies": [
+        {
+          "module": "./lib/arrayParser",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-types/lib/arrayParser.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./lib/binaryParsers",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-types/lib/binaryParsers.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./lib/builtins",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-types/lib/builtins.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./lib/textParsers",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-types/lib/textParsers.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js",
+        "node_modules/pg/lib/defaults.js",
+        "node_modules/pg/lib/result.js",
+        "node_modules/pg/lib/type-overrides.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-types/lib/arrayParser.js",
+      "dependencies": [
+        {
+          "module": "postgres-array",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/postgres-array/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg-types/index.js",
+        "node_modules/pg-types/lib/textParsers.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postgres-array/index.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg-types/lib/arrayParser.js",
+        "node_modules/pg-types/lib/textParsers.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-types/lib/binaryParsers.js",
+      "dependencies": [
+        {
+          "module": "pg-int8",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg-int8/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg-types/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-int8/index.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg-types/lib/binaryParsers.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-types/lib/builtins.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg-types/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-types/lib/textParsers.js",
+      "dependencies": [
+        {
+          "module": "./arrayParser",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg-types/lib/arrayParser.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "postgres-array",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/postgres-array/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "postgres-bytea",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/postgres-bytea/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "postgres-date",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/postgres-date/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "postgres-interval",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/postgres-interval/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg-types/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postgres-bytea/index.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg-types/lib/textParsers.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postgres-date/index.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg-types/lib/textParsers.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/postgres-interval/index.js",
+      "dependencies": [
+        {
+          "module": "xtend/mutable",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/xtend/mutable.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg-types/lib/textParsers.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/xtend/mutable.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/postgres-interval/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-connection-string/index.js",
+      "dependencies": [
+        {
+          "module": "fs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "fs",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/connection-parameters.js",
+        "node_modules/sequelize/lib/sequelize.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/crypto/sasl.js",
+      "dependencies": [
+        {
+          "module": "./cert-signatures",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/crypto/cert-signatures.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/crypto/utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/client.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/crypto/cert-signatures.js",
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg/lib/crypto/sasl.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/crypto/utils.js",
+      "dependencies": [
+        {
+          "module": "crypto",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "crypto",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/client.js",
+        "node_modules/pg/lib/crypto/sasl.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/query.js",
+      "dependencies": [
+        {
+          "module": "./result",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/result.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/client.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/result.js",
+      "dependencies": [
+        {
+          "module": "pg-types",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg-types/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js",
+        "node_modules/pg/lib/query.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/utils.js",
+      "dependencies": [
+        {
+          "module": "./defaults",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/defaults.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "util/types",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "util/types",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js",
+        "node_modules/pg/lib/client.js",
+        "node_modules/pg/lib/query.js",
+        "node_modules/pg/lib/native/client.js",
+        "node_modules/pg/lib/native/query.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "util/types",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg/lib/utils.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/type-overrides.js",
+      "dependencies": [
+        {
+          "module": "pg-types",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/pg-types/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js",
+        "node_modules/pg/lib/client.js",
+        "node_modules/pg/lib/native/client.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pgpass/lib/index.js",
+      "dependencies": [
+        {
+          "module": "./helper.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pgpass/lib/helper.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "fs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "fs",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "path",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "path",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/client.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pgpass/lib/helper.js",
+      "dependencies": [
+        {
+          "module": "path",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "path",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "split2",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "node_modules/split2/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "util",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "util",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pgpass/lib/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "stream",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pgpass/lib/helper.js",
+        "node_modules/split2/index.js",
+        "node_modules/jws/lib/sign-stream.js",
+        "node_modules/jws/lib/data-stream.js",
+        "node_modules/jws/lib/verify-stream.js",
+        "node_modules/send/index.js",
+        "node_modules/iconv-lite/lib/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/message-parser.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
+        "backend/node_modules/nodemailer/dist/cjs/base64/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/qp/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/last-newline.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/data-stream.js",
+        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+        "node_modules/minipass/dist/commonjs/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/split2/index.js",
+      "dependencies": [
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "string_decoder",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "string_decoder",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pgpass/lib/helper.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "string_decoder",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/split2/index.js",
+        "node_modules/iconv-lite/encodings/internal.js",
+        "node_modules/minipass/dist/commonjs/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/native/index.js",
+      "dependencies": [
+        {
+          "module": "./client",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/native/client.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/native/client.js",
+      "dependencies": [
+        {
+          "module": "../connection-parameters",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/connection-parameters.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../type-overrides",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/type-overrides.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./query",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/native/query.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "pg-native",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "unknown"
+          ],
+          "resolved": "pg-native",
+          "coreModule": false,
+          "followable": false,
+          "couldNotResolve": true,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "util",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "util",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/native/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "pg-native",
+      "followable": false,
+      "coreModule": false,
+      "couldNotResolve": true,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "unknown"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "node_modules/pg/lib/native/client.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg/lib/native/query.js",
+      "dependencies": [
+        {
+          "module": "../utils",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/utils.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "util",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "util",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/native/client.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "node_modules/pg-pool/index.js",
+      "dependencies": [
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "pg",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm-peer",
+            "require"
+          ],
+          "resolved": "node_modules/pg/lib/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": true,
+          "cycle": [
+            {
+              "name": "node_modules/pg/lib/index.js",
+              "dependencyTypes": [
+                "npm-peer",
+                "require"
+              ]
+            },
+            {
+              "name": "node_modules/pg-pool/index.js",
+              "dependencyTypes": [
+                "npm",
+                "require"
+              ]
+            }
+          ],
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "node_modules/pg/lib/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -1528,6 +3694,8 @@
         "node_modules/sequelize/lib/sequelize.js",
         "node_modules/parseurl/index.js",
         "node_modules/serve-static/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
         "node_modules/@hapi/address/dist/domain.js",
         "node_modules/swagger-jsdoc/node_modules/glob/dist/commonjs/glob.js",
         "node_modules/path-scurry/dist/commonjs/index.js"
@@ -2264,53 +4432,6 @@
         "node_modules/sequelize/lib/dialects/snowflake/connection-manager.js",
         "node_modules/sequelize/lib/dialects/sqlite/index.js",
         "node_modules/sequelize/lib/dialects/sqlite/connection-manager.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "util",
-      "followable": false,
-      "coreModule": true,
-      "couldNotResolve": false,
-      "matchesDoNotFollow": false,
-      "dependencyTypes": [
-        "core",
-        "require"
-      ],
-      "dependencies": [],
-      "dependents": [
-        "node_modules/sequelize/lib/data-types.js",
-        "node_modules/wkx/lib/geometrycollection.js",
-        "node_modules/wkx/lib/linestring.js",
-        "node_modules/wkx/lib/point.js",
-        "node_modules/wkx/lib/multilinestring.js",
-        "node_modules/wkx/lib/multipoint.js",
-        "node_modules/wkx/lib/multipolygon.js",
-        "node_modules/wkx/lib/polygon.js",
-        "node_modules/sequelize/lib/utils/logger.js",
-        "node_modules/debug/src/node.js",
-        "node_modules/sequelize/lib/utils/deprecations.js",
-        "node_modules/sequelize/lib/dialects/db2/query.js",
-        "node_modules/sequelize/lib/dialects/abstract/query-generator.js",
-        "node_modules/sequelize/lib/instance-validator.js",
-        "node_modules/sequelize/lib/dialects/mysql/query-generator.js",
-        "node_modules/sequelize/lib/dialects/mysql/connection-manager.js",
-        "node_modules/sequelize/lib/dialects/oracle/connection-manager.js",
-        "node_modules/sequelize/lib/dialects/oracle/query-generator.js",
-        "node_modules/sequelize/lib/dialects/postgres/connection-manager.js",
-        "node_modules/sequelize/lib/dialects/postgres/query-generator.js",
-        "node_modules/sequelize/lib/dialects/snowflake/query-generator.js",
-        "node_modules/sequelize/lib/dialects/sqlite/connection-manager.js",
-        "node_modules/jws/lib/sign-stream.js",
-        "node_modules/jws/lib/data-stream.js",
-        "node_modules/jwa/index.js",
-        "node_modules/jws/lib/verify-stream.js",
-        "node_modules/object-inspect/util.inspect.js",
-        "node_modules/inherits/inherits.js",
-        "node_modules/send/index.js",
-        "node_modules/@hapi/address/dist/email.js",
-        "node_modules/@apidevtools/swagger-parser/lib/util.js"
       ],
       "orphan": false,
       "valid": true
@@ -22307,33 +24428,6 @@
       "valid": true
     },
     {
-      "source": "node_modules/pg-connection-string/index.js",
-      "dependencies": [
-        {
-          "module": "fs",
-          "moduleSystem": "cjs",
-          "dynamic": false,
-          "exoticallyRequired": false,
-          "dependencyTypes": [
-            "core",
-            "require"
-          ],
-          "resolved": "fs",
-          "coreModule": true,
-          "followable": false,
-          "couldNotResolve": false,
-          "matchesDoNotFollow": false,
-          "circular": false,
-          "valid": true
-        }
-      ],
-      "dependents": [
-        "node_modules/sequelize/lib/sequelize.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
       "source": "node_modules/retry-as-promised/dist/index.js",
       "dependencies": [],
       "dependents": [
@@ -23013,25 +25107,6 @@
         "backend/src/services/group.service.js",
         "backend/src/services/payment.service.js",
         "backend/src/services/reaction.service.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "events",
-      "followable": false,
-      "coreModule": true,
-      "couldNotResolve": false,
-      "matchesDoNotFollow": false,
-      "dependencyTypes": [
-        "core",
-        "require"
-      ],
-      "dependencies": [],
-      "dependents": [
-        "backend/src/events/event-bus.js",
-        "node_modules/express/lib/express.js",
-        "node_modules/minipass/dist/commonjs/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -23949,28 +26024,6 @@
       ],
       "dependents": [
         "node_modules/jws/index.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "stream",
-      "followable": false,
-      "coreModule": true,
-      "couldNotResolve": false,
-      "matchesDoNotFollow": false,
-      "dependencyTypes": [
-        "core",
-        "require"
-      ],
-      "dependencies": [],
-      "dependents": [
-        "node_modules/jws/lib/sign-stream.js",
-        "node_modules/jws/lib/data-stream.js",
-        "node_modules/jws/lib/verify-stream.js",
-        "node_modules/send/index.js",
-        "node_modules/iconv-lite/lib/index.js",
-        "node_modules/minipass/dist/commonjs/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -25471,7 +27524,8 @@
         "node_modules/router/index.js",
         "node_modules/router/lib/route.js",
         "node_modules/express/lib/request.js",
-        "node_modules/express/lib/response.js"
+        "node_modules/express/lib/response.js",
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -28457,23 +30511,6 @@
       "valid": true
     },
     {
-      "source": "net",
-      "followable": false,
-      "coreModule": true,
-      "couldNotResolve": false,
-      "matchesDoNotFollow": false,
-      "dependencyTypes": [
-        "core",
-        "require"
-      ],
-      "dependencies": [],
-      "dependents": [
-        "node_modules/express/lib/request.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
       "source": "node_modules/accepts/index.js",
       "dependencies": [
         {
@@ -29939,7 +31976,8 @@
       ],
       "dependencies": [],
       "dependents": [
-        "node_modules/body-parser/lib/read.js"
+        "node_modules/body-parser/lib/read.js",
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -30714,24 +32752,6 @@
       ],
       "dependents": [
         "node_modules/iconv-lite/encodings/index.js"
-      ],
-      "orphan": false,
-      "valid": true
-    },
-    {
-      "source": "string_decoder",
-      "followable": false,
-      "coreModule": true,
-      "couldNotResolve": false,
-      "matchesDoNotFollow": false,
-      "dependencyTypes": [
-        "core",
-        "require"
-      ],
-      "dependencies": [],
-      "dependents": [
-        "node_modules/iconv-lite/encodings/internal.js",
-        "node_modules/minipass/dist/commonjs/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -31929,6 +33949,23 @@
           "valid": true
         },
         {
+          "module": "nodemailer",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "npm",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
           "module": "resend",
           "moduleSystem": "cjs",
           "dynamic": false,
@@ -31948,6 +33985,3095 @@
       ],
       "dependents": [
         "backend/src/services/auth.service.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
+      "dependencies": [
+        {
+          "module": "./errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./fetch/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./json-transport/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/json-transport/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./mailer/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./sendmail-transport/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./ses-transport/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./smtp-pool/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./smtp-transport/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./stream-transport/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/src/services/email.service.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+      "dependencies": [
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/objects.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/url.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./cookies.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/cookies.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "http",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "http",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "https",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "https",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "net",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "net",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "zlib",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "zlib",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "https",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/json-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+      "dependencies": [
+        {
+          "module": "../punycode/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/punycode/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "net",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "net",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "url",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "url",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/fetch/cookies.js",
+        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/punycode/index.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+        "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/fetch/cookies.js",
+      "dependencies": [
+        {
+          "module": "../shared/url.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "net",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "net",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/json-transport/index.js",
+      "dependencies": [
+        {
+          "module": "../package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+      "dependencies": [
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../fetch/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./objects.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./url.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "dns",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "dns",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "fs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "fs",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "net",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "net",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "os",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "os",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "util",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "util",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
+        "backend/node_modules/nodemailer/dist/cjs/json-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
+        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+      "dependencies": [
+        {
+          "module": "../dkim/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mail-composer/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mime-funcs/mime-types.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/url.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../smtp-connection/http-proxy-client.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./mail-message.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "crypto",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "crypto",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "dns",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "dns",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "net",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "net",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "util",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "util",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
+      "dependencies": [
+        {
+          "module": "../shared/objects.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./message-parser.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/dkim/message-parser.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./relaxed-body.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./sign.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "crypto",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "crypto",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "fs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "fs",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "path",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "path",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/dkim/message-parser.js",
+      "dependencies": [
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
+      "dependencies": [
+        {
+          "module": "crypto",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "crypto",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
+      "dependencies": [
+        {
+          "module": "../mime-funcs/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../punycode/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/punycode/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "crypto",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "crypto",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+      "dependencies": [
+        {
+          "module": "../base64/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/base64/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../qp/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/qp/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/objects.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./mime-types.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
+        "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/base64/index.js",
+      "dependencies": [
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/qp/index.js",
+      "dependencies": [
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
+      "dependencies": [
+        {
+          "module": "path",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "path",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+      "dependencies": [
+        {
+          "module": "../mime-funcs/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mime-node/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+      "dependencies": [
+        {
+          "module": "../addressparser/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/addressparser/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../base64/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/base64/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../fetch/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mime-funcs/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../punycode/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/punycode/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../qp/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/qp/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./last-newline.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/last-newline.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./le-unix.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./le-windows.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "crypto",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "crypto",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "fs",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "fs",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "url",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "url",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
+        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/addressparser/index.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/mime-node/last-newline.js",
+      "dependencies": [
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+      "dependencies": [
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+      "dependencies": [
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+      "dependencies": [
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/url.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "net",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "net",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "tls",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "tls",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
+      "dependencies": [
+        {
+          "module": "../mime-funcs/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mime-node/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+      "dependencies": [
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mime-node/le-unix.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mime-node/le-windows.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "child_process",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "child_process",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "child_process",
+      "followable": false,
+      "coreModule": true,
+      "couldNotResolve": false,
+      "matchesDoNotFollow": false,
+      "dependencyTypes": [
+        "core",
+        "require"
+      ],
+      "dependencies": [],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+      "dependencies": [
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mime-node/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mime-node/le-windows.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+      "dependencies": [
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../smtp-connection/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../well-known/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/well-known/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./pool-resource.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+      "dependencies": [
+        {
+          "module": "../package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "./data-stream.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/data-stream.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "crypto",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "crypto",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "net",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "net",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "os",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "os",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "tls",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "tls",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/data-stream.js",
+      "dependencies": [
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/well-known/index.js",
+      "dependencies": [
+        {
+          "module": "./services.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/well-known/services.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/well-known/services.js",
+      "dependencies": [],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/well-known/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+      "dependencies": [
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../smtp-connection/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../xoauth2/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+      "dependencies": [
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../fetch/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "crypto",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "crypto",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "stream",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "stream",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+      "dependencies": [
+        {
+          "module": "../errors.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../smtp-connection/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../well-known/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/well-known/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../xoauth2/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "events",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "core",
+            "require"
+          ],
+          "protocol": "node:",
+          "resolved": "events",
+          "coreModule": true,
+          "followable": false,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+      ],
+      "orphan": false,
+      "valid": true
+    },
+    {
+      "source": "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js",
+      "dependencies": [
+        {
+          "module": "../mime-node/le-unix.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../mime-node/le-windows.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../package-info.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        },
+        {
+          "module": "../shared/index.js",
+          "moduleSystem": "cjs",
+          "dynamic": false,
+          "exoticallyRequired": false,
+          "dependencyTypes": [
+            "local",
+            "require"
+          ],
+          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "coreModule": false,
+          "followable": true,
+          "couldNotResolve": false,
+          "matchesDoNotFollow": false,
+          "circular": false,
+          "valid": true
+        }
+      ],
+      "dependents": [
+        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
       ],
       "orphan": false,
       "valid": true
@@ -52915,8 +58041,8 @@
     "warn": 0,
     "info": 0,
     "ignore": 0,
-    "totalCruised": 932,
-    "totalDependenciesCruised": 2253,
+    "totalCruised": 1015,
+    "totalDependenciesCruised": 2490,
     "optionsUsed": {
       "baseDir": "D:\\Projects\\Expense\\SplitEase-expense-tracker",
       "combinedDependencies": false,
@@ -52985,13 +58111,13 @@
         },
         {
           "name": "services-use-valid-deps",
-          "comment": "Services should only depend on models, utils, services, constants, errors, events, sse, config and external providers (sequelize/resend allowed)",
+          "comment": "Services should only depend on models, utils, services, constants, errors, events, sse, config and external providers (sequelize/resend/nodemailer allowed)",
           "severity": "error",
           "from": {
             "path": "^backend/src/services"
           },
           "to": {
-            "pathNot": "^backend/src/(models|utils|services|constants|errors|events|sse|config|database/models)|node_modules/(sequelize|resend)"
+            "pathNot": "^backend/src/(models|utils|services|constants|errors|events|sse|config|database/models)|node_modules/(sequelize|resend|nodemailer)"
           },
           "scope": "module"
         },

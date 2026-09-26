@@ -23,10 +23,10 @@ module.exports = {
     },
     {
       name: "services-use-valid-deps",
-      comment: "Services should only depend on models, utils, services, constants, errors, events, sse, config and external providers (sequelize/resend allowed)",
+      comment: "Services should only depend on models, utils, services, constants, errors, events, sse, config and external providers (sequelize/resend/nodemailer allowed)",
       severity: "error",
       from: { path: "^backend/src/services" },
-      to: { pathNot: "^backend/src/(models|utils|services|constants|errors|events|sse|config|database/models)|node_modules/(sequelize|resend)" },
+      to: { pathNot: "^backend/src/(models|utils|services|constants|errors|events|sse|config|database/models)|node_modules/(sequelize|resend|nodemailer)" },
     },
     {
       name: "models-are-leaves",
