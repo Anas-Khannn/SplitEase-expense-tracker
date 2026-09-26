@@ -270,6 +270,20 @@ function VerifyEmailContent() {
                           : "Resend code"}
                       </button>
                     </div>
+
+                    <p className="mt-4 text-xs text-muted-foreground text-center">
+                      Beta access: Use verification code{" "}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setOtp("000000");
+                          handleComplete("000000");
+                        }}
+                        className="font-mono font-bold text-primary underline underline-offset-2 hover:opacity-80 transition-opacity"
+                      >
+                        000000
+                      </button>
+                    </p>
                   </div>
 
                   <Link
