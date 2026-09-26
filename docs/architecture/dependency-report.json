@@ -279,13 +279,13 @@
         "node_modules/cookie-signature/index.js",
         "backend/src/utils/otp.js",
         "node_modules/bcrypt/bcrypt.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js"
+        "node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
+        "node_modules/nodemailer/dist/cjs/dkim/sign.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "node_modules/nodemailer/dist/cjs/xoauth2/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -310,9 +310,9 @@
         "node_modules/express/lib/view.js",
         "node_modules/send/index.js",
         "node_modules/node-gyp-build/node-gyp-build.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/shared/index.js",
+        "node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
         "backend/src/docs/generate-erd.js",
         "backend/src/docs/mermaid-sequence.js",
         "backend/src/docs/openapi.js",
@@ -338,8 +338,8 @@
         "node_modules/dotenv/lib/main.js",
         "node_modules/supports-color/index.js",
         "node_modules/node-gyp-build/node-gyp-build.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
+        "node_modules/nodemailer/dist/cjs/shared/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -370,8 +370,8 @@
         "node_modules/serve-static/index.js",
         "node_modules/bcrypt/bcrypt.js",
         "node_modules/node-gyp-build/node-gyp-build.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
+        "node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
         "backend/src/docs/generate-erd.js",
         "backend/src/docs/mermaid-sequence.js",
         "backend/src/docs/openapi.js",
@@ -1282,12 +1282,12 @@
         "node_modules/pg-pool/index.js",
         "backend/src/events/event-bus.js",
         "node_modules/express/lib/express.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
         "node_modules/minipass/dist/commonjs/index.js"
       ],
       "orphan": false,
@@ -1338,8 +1338,8 @@
         "node_modules/object-inspect/util.inspect.js",
         "node_modules/inherits/inherits.js",
         "node_modules/send/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/nodemailer/dist/cjs/shared/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/index.js",
         "node_modules/@hapi/address/dist/email.js",
         "node_modules/@apidevtools/swagger-parser/lib/util.js"
       ],
@@ -1440,13 +1440,13 @@
         "node_modules/pg/lib/connection.js",
         "node_modules/pg/lib/stream.js",
         "node_modules/express/lib/request.js",
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
-        "backend/node_modules/nodemailer/dist/cjs/fetch/cookies.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
+        "node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "node_modules/nodemailer/dist/cjs/shared/url.js",
+        "node_modules/nodemailer/dist/cjs/fetch/cookies.js",
+        "node_modules/nodemailer/dist/cjs/shared/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -1525,8 +1525,8 @@
       "dependencies": [],
       "dependents": [
         "node_modules/pg/lib/stream.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
+        "node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -1826,8 +1826,8 @@
       "dependencies": [],
       "dependents": [
         "node_modules/pg/lib/connection-parameters.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+        "node_modules/nodemailer/dist/cjs/shared/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -2625,19 +2625,19 @@
         "node_modules/jws/lib/verify-stream.js",
         "node_modules/send/index.js",
         "node_modules/iconv-lite/lib/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/message-parser.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
-        "backend/node_modules/nodemailer/dist/cjs/base64/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/qp/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/last-newline.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/data-stream.js",
-        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+        "node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "node_modules/nodemailer/dist/cjs/dkim/message-parser.js",
+        "node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
+        "node_modules/nodemailer/dist/cjs/base64/index.js",
+        "node_modules/nodemailer/dist/cjs/qp/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/last-newline.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/data-stream.js",
+        "node_modules/nodemailer/dist/cjs/xoauth2/index.js",
         "node_modules/minipass/dist/commonjs/index.js"
       ],
       "orphan": false,
@@ -3694,8 +3694,8 @@
         "node_modules/sequelize/lib/sequelize.js",
         "node_modules/parseurl/index.js",
         "node_modules/serve-static/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/shared/url.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
         "node_modules/@hapi/address/dist/domain.js",
         "node_modules/swagger-jsdoc/node_modules/glob/dist/commonjs/glob.js",
         "node_modules/path-scurry/dist/commonjs/index.js"
@@ -27525,7 +27525,7 @@
         "node_modules/router/lib/route.js",
         "node_modules/express/lib/request.js",
         "node_modules/express/lib/response.js",
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js"
+        "node_modules/nodemailer/dist/cjs/fetch/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -31977,7 +31977,7 @@
       "dependencies": [],
       "dependents": [
         "node_modules/body-parser/lib/read.js",
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js"
+        "node_modules/nodemailer/dist/cjs/fetch/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -33957,7 +33957,7 @@
             "npm",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/nodemailer.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -33990,7 +33990,7 @@
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
+      "source": "node_modules/nodemailer/dist/cjs/nodemailer.js",
       "dependencies": [
         {
           "module": "./errors.js",
@@ -34001,7 +34001,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34018,7 +34018,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/fetch/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34035,7 +34035,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/json-transport/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/json-transport/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34052,7 +34052,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mailer/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34069,7 +34069,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34086,7 +34086,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34103,7 +34103,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/ses-transport/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34120,7 +34120,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34137,7 +34137,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34154,7 +34154,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34171,7 +34171,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/stream-transport/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34187,27 +34187,27 @@
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+      "source": "node_modules/nodemailer/dist/cjs/errors.js",
       "dependencies": [],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
-        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
-        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js",
+        "node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "node_modules/nodemailer/dist/cjs/shared/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+        "node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/fetch/index.js",
       "dependencies": [
         {
           "module": "../errors.js",
@@ -34218,7 +34218,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34235,7 +34235,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34252,7 +34252,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/objects.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34269,7 +34269,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/url.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34286,7 +34286,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/cookies.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/fetch/cookies.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34386,10 +34386,10 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js",
+        "node_modules/nodemailer/dist/cjs/shared/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/xoauth2/index.js"
       ],
       "orphan": false,
       "valid": true
@@ -34406,43 +34406,43 @@
       ],
       "dependencies": [],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js"
+        "node_modules/nodemailer/dist/cjs/fetch/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+      "source": "node_modules/nodemailer/dist/cjs/package-info.js",
       "dependencies": [],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/json-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js",
+        "node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "node_modules/nodemailer/dist/cjs/json-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/stream-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+      "source": "node_modules/nodemailer/dist/cjs/shared/objects.js",
       "dependencies": [],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js"
+        "node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "node_modules/nodemailer/dist/cjs/shared/index.js",
+        "node_modules/nodemailer/dist/cjs/dkim/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-funcs/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+      "source": "node_modules/nodemailer/dist/cjs/shared/url.js",
       "dependencies": [
         {
           "module": "../punycode/index.js",
@@ -34453,7 +34453,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/punycode/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/punycode/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34499,28 +34499,28 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/fetch/cookies.js",
-        "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js"
+        "node_modules/nodemailer/dist/cjs/fetch/index.js",
+        "node_modules/nodemailer/dist/cjs/fetch/cookies.js",
+        "node_modules/nodemailer/dist/cjs/shared/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/punycode/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/punycode/index.js",
       "dependencies": [],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
-        "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+        "node_modules/nodemailer/dist/cjs/shared/url.js",
+        "node_modules/nodemailer/dist/cjs/dkim/sign.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/fetch/cookies.js",
+      "source": "node_modules/nodemailer/dist/cjs/fetch/cookies.js",
       "dependencies": [
         {
           "module": "../shared/url.js",
@@ -34531,7 +34531,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/url.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34559,13 +34559,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/fetch/index.js"
+        "node_modules/nodemailer/dist/cjs/fetch/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/json-transport/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/json-transport/index.js",
       "dependencies": [
         {
           "module": "../package-info.js",
@@ -34576,7 +34576,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34593,7 +34593,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34603,13 +34603,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/shared/index.js",
       "dependencies": [
         {
           "module": "../errors.js",
@@ -34620,7 +34620,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34637,7 +34637,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/fetch/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34654,7 +34654,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/objects.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34671,7 +34671,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/url.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34771,26 +34771,26 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js",
-        "backend/node_modules/nodemailer/dist/cjs/json-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
-        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
-        "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js",
+        "node_modules/nodemailer/dist/cjs/json-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
+        "node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/stream-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/mailer/index.js",
       "dependencies": [
         {
           "module": "../dkim/index.js",
@@ -34801,7 +34801,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/dkim/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34818,7 +34818,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34835,7 +34835,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mail-composer/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34852,7 +34852,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34869,7 +34869,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34886,7 +34886,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34903,7 +34903,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/url.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34920,7 +34920,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -34937,7 +34937,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35037,13 +35037,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/dkim/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/dkim/index.js",
       "dependencies": [
         {
           "module": "../shared/objects.js",
@@ -35054,7 +35054,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/objects.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35071,7 +35071,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/dkim/message-parser.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/dkim/message-parser.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35088,7 +35088,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35105,7 +35105,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/dkim/sign.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35187,13 +35187,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+        "node_modules/nodemailer/dist/cjs/mailer/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/dkim/message-parser.js",
+      "source": "node_modules/nodemailer/dist/cjs/dkim/message-parser.js",
       "dependencies": [
         {
           "module": "stream",
@@ -35215,13 +35215,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js"
+        "node_modules/nodemailer/dist/cjs/dkim/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
+      "source": "node_modules/nodemailer/dist/cjs/dkim/relaxed-body.js",
       "dependencies": [
         {
           "module": "crypto",
@@ -35261,13 +35261,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js"
+        "node_modules/nodemailer/dist/cjs/dkim/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
+      "source": "node_modules/nodemailer/dist/cjs/dkim/sign.js",
       "dependencies": [
         {
           "module": "../mime-funcs/index.js",
@@ -35278,7 +35278,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35295,7 +35295,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/punycode/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/punycode/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35323,13 +35323,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/dkim/index.js"
+        "node_modules/nodemailer/dist/cjs/dkim/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
       "dependencies": [
         {
           "module": "../base64/index.js",
@@ -35340,7 +35340,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/base64/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/base64/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35357,7 +35357,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/qp/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/qp/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35374,7 +35374,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/objects.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/objects.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35391,7 +35391,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35401,16 +35401,16 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/dkim/sign.js",
-        "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js"
+        "node_modules/nodemailer/dist/cjs/dkim/sign.js",
+        "node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/mail-message.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/base64/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/base64/index.js",
       "dependencies": [
         {
           "module": "stream",
@@ -35432,14 +35432,14 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+        "node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/qp/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/qp/index.js",
       "dependencies": [
         {
           "module": "stream",
@@ -35461,14 +35461,14 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+        "node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
+      "source": "node_modules/nodemailer/dist/cjs/mime-funcs/mime-types.js",
       "dependencies": [
         {
           "module": "path",
@@ -35490,14 +35490,14 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js"
+        "node_modules/nodemailer/dist/cjs/mailer/index.js",
+        "node_modules/nodemailer/dist/cjs/mime-funcs/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/mail-composer/index.js",
       "dependencies": [
         {
           "module": "../mime-funcs/index.js",
@@ -35508,7 +35508,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35525,7 +35525,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35542,7 +35542,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35552,13 +35552,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+        "node_modules/nodemailer/dist/cjs/mailer/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/mime-node/index.js",
       "dependencies": [
         {
           "module": "../addressparser/index.js",
@@ -35569,7 +35569,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/addressparser/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/addressparser/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35586,7 +35586,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/base64/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/base64/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35603,7 +35603,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35620,7 +35620,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/fetch/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35637,7 +35637,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35654,7 +35654,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/punycode/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/punycode/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35671,7 +35671,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/qp/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/qp/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35688,7 +35688,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35705,7 +35705,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/last-newline.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/last-newline.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35722,7 +35722,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35739,7 +35739,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35821,24 +35821,24 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mail-composer/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
-        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/mail-composer/index.js",
+        "node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
+        "node_modules/nodemailer/dist/cjs/ses-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/addressparser/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/addressparser/index.js",
       "dependencies": [],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/mime-node/last-newline.js",
+      "source": "node_modules/nodemailer/dist/cjs/mime-node/last-newline.js",
       "dependencies": [
         {
           "module": "stream",
@@ -35860,13 +35860,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js"
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+      "source": "node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
       "dependencies": [
         {
           "module": "stream",
@@ -35888,15 +35888,15 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/stream-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+      "source": "node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
       "dependencies": [
         {
           "module": "stream",
@@ -35918,16 +35918,16 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/mime-node/index.js",
+        "node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+        "node_modules/nodemailer/dist/cjs/stream-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
+      "source": "node_modules/nodemailer/dist/cjs/smtp-connection/http-proxy-client.js",
       "dependencies": [
         {
           "module": "../errors.js",
@@ -35938,7 +35938,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -35955,7 +35955,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/url.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/url.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36001,13 +36001,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+        "node_modules/nodemailer/dist/cjs/mailer/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
+      "source": "node_modules/nodemailer/dist/cjs/mailer/mail-message.js",
       "dependencies": [
         {
           "module": "../mime-funcs/index.js",
@@ -36018,7 +36018,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-funcs/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36035,7 +36035,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36052,7 +36052,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36062,13 +36062,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/mailer/index.js"
+        "node_modules/nodemailer/dist/cjs/mailer/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/sendmail-transport/index.js",
       "dependencies": [
         {
           "module": "../errors.js",
@@ -36079,7 +36079,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36096,7 +36096,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36113,7 +36113,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36130,7 +36130,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36147,7 +36147,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36175,7 +36175,7 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js"
       ],
       "orphan": false,
       "valid": true
@@ -36192,13 +36192,13 @@
       ],
       "dependencies": [],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/sendmail-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/sendmail-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/ses-transport/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/ses-transport/index.js",
       "dependencies": [
         {
           "module": "../errors.js",
@@ -36209,7 +36209,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36226,7 +36226,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36243,7 +36243,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36260,7 +36260,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36277,7 +36277,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36305,13 +36305,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
       "dependencies": [
         {
           "module": "../errors.js",
@@ -36322,7 +36322,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36339,7 +36339,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36356,7 +36356,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36373,7 +36373,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36390,7 +36390,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/well-known/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/well-known/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36407,7 +36407,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36435,13 +36435,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
       "dependencies": [
         {
           "module": "../package-info.js",
@@ -36452,7 +36452,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36469,7 +36469,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36486,7 +36486,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/data-stream.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/smtp-connection/data-stream.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36604,15 +36604,15 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/data-stream.js",
+      "source": "node_modules/nodemailer/dist/cjs/smtp-connection/data-stream.js",
       "dependencies": [
         {
           "module": "stream",
@@ -36634,13 +36634,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
+        "node_modules/nodemailer/dist/cjs/smtp-connection/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/well-known/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/well-known/index.js",
       "dependencies": [
         {
           "module": "./services.js",
@@ -36651,7 +36651,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/well-known/services.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/well-known/services.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36661,23 +36661,23 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/smtp-pool/index.js",
+        "node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/well-known/services.js",
+      "source": "node_modules/nodemailer/dist/cjs/well-known/services.js",
       "dependencies": [],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/well-known/index.js"
+        "node_modules/nodemailer/dist/cjs/well-known/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+      "source": "node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
       "dependencies": [
         {
           "module": "../errors.js",
@@ -36688,7 +36688,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36705,7 +36705,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36722,7 +36722,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36739,7 +36739,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/xoauth2/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36767,13 +36767,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/index.js"
+        "node_modules/nodemailer/dist/cjs/smtp-pool/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/xoauth2/index.js",
       "dependencies": [
         {
           "module": "../errors.js",
@@ -36784,7 +36784,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36801,7 +36801,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/fetch/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/fetch/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36818,7 +36818,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36864,14 +36864,14 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
-        "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
+        "node_modules/nodemailer/dist/cjs/smtp-pool/pool-resource.js",
+        "node_modules/nodemailer/dist/cjs/smtp-transport/index.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/smtp-transport/index.js",
       "dependencies": [
         {
           "module": "../errors.js",
@@ -36882,7 +36882,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/errors.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/errors.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36899,7 +36899,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36916,7 +36916,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36933,7 +36933,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/smtp-connection/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36950,7 +36950,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/well-known/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/well-known/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36967,7 +36967,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/xoauth2/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/xoauth2/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -36995,13 +36995,13 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js"
       ],
       "orphan": false,
       "valid": true
     },
     {
-      "source": "backend/node_modules/nodemailer/dist/cjs/stream-transport/index.js",
+      "source": "node_modules/nodemailer/dist/cjs/stream-transport/index.js",
       "dependencies": [
         {
           "module": "../mime-node/le-unix.js",
@@ -37012,7 +37012,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/le-unix.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -37029,7 +37029,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/mime-node/le-windows.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -37046,7 +37046,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/package-info.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/package-info.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -37063,7 +37063,7 @@
             "local",
             "require"
           ],
-          "resolved": "backend/node_modules/nodemailer/dist/cjs/shared/index.js",
+          "resolved": "node_modules/nodemailer/dist/cjs/shared/index.js",
           "coreModule": false,
           "followable": true,
           "couldNotResolve": false,
@@ -37073,7 +37073,7 @@
         }
       ],
       "dependents": [
-        "backend/node_modules/nodemailer/dist/cjs/nodemailer.js"
+        "node_modules/nodemailer/dist/cjs/nodemailer.js"
       ],
       "orphan": false,
       "valid": true
