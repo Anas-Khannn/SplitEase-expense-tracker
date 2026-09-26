@@ -85,6 +85,15 @@ const env = {
     logOtpEmails: logOtpEmails || !resendApiKey,
   },
 
+  smtp: {
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: parseInt(process.env.SMTP_PORT, 10) || 465,
+    secure: process.env.SMTP_SECURE !== "false",
+    user: read("SMTP_USER") || read("GMAIL_USER"),
+    pass: read("SMTP_PASS") || read("GMAIL_PASS") || read("GMAIL_APP_PASSWORD"),
+    from: read("SMTP_FROM") || process.env.RESEND_FROM_EMAIL || "SplitEase <support@splitease.com>",
+  },
+
   cors: {
     origin: corsOrigin,
   },

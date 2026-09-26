@@ -95,43 +95,88 @@ const buildOtpTemplate = ({ otp, expiresInMinutes }) => {
   `;
 };
 
+const nodemailer = require("nodemailer");
+
+let smtpTransporter = null;
+const getSmtpTransporter = () => {
+  if (!smtpTransporter && env.smtp.user && env.smtp.pass) {
+    smtpTransporter = nodemailer.createTransport({
+      host: env.smtp.host,
+      port: env.smtp.port,
+      secure: env.smtp.secure,
+      auth: {
+        user: env.smtp.user,
+        pass: env.smtp.pass,
+      },
+    });
+  }
+  return smtpTransporter;
+};
+
 const sendEmail = async ({ to, subject, html, text }) => {
   const isTest = process.env.NODE_ENV === "test";
 
-  if (isTest || !env.email.resendApiKey) {
-    if (isTest) {
-      return { id: `dev-${Date.now()}`, deliveredTo: to, delivered: true };
-    }
-
-    console.warn(
-      `[email:log] NOT SENT - "${subject}" to ${to}. No RESEND_API_KEY configured, so this is printed to the server log instead.`,
-    );
-    console.warn(
-      `[email:log] ${
-        text ||
-        html
-          .replace(/<[^>]*>/g, " ")
-          .replace(/\s+/g, " ")
-          .trim()
-      }`,
-    );
-    return { id: `dev-${Date.now()}`, deliveredTo: to, delivered: false, simulated: true };
+  if (isTest) {
+    return { id: `dev-${Date.now()}`, deliveredTo: to, delivered: true };
   }
 
-  try {
-    const resend = new Resend(env.email.resendApiKey);
-    const { data, error } = await resend.emails.send({
-      from: env.email.fromEmail,
-      to,
-      subject,
-      html,
-      ...(text ? { text } : {}),
-    });
+  // 1. Prefer SMTP if configured (e.g. Gmail SMTP) - sends to ANY email address in the world
+  const transporter = getSmtpTransporter();
+  if (transporter) {
+    try {
+      const from = env.smtp.from.includes("<")
+        ? env.smtp.from
+        : `SplitEase <${env.smtp.user}>`;
 
-    if (error) {
-      console.warn(
-        `[email:warning] Resend could not deliver "${subject}" to ${to}: ${error.message} (${error.name || "error"})`,
+      const info = await transporter.sendMail({
+        from,
+        to,
+        subject,
+        html,
+        text,
+      });
+
+      console.log(
+        `[email:smtp] Successfully delivered "${subject}" to ${to} (Message ID: ${info.messageId})`,
       );
+      return { id: info.messageId, deliveredTo: to, delivered: true };
+    } catch (err) {
+      console.warn(`[email:smtp:error] Failed to send via SMTP to ${to}:`, err.message);
+    }
+  }
+
+  // 2. Fallback to Resend if configured
+  if (env.email.resendApiKey) {
+    try {
+      const resend = new Resend(env.email.resendApiKey);
+      const { data, error } = await resend.emails.send({
+        from: env.email.fromEmail,
+        to,
+        subject,
+        html,
+        ...(text ? { text } : {}),
+      });
+
+      if (error) {
+        console.warn(
+          `[email:warning] Resend could not deliver "${subject}" to ${to}: ${error.message} (${error.name || "error"})`,
+        );
+        console.warn(
+          `[email:fallback] Content for ${to}: ${
+            text || html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
+          }`,
+        );
+        return {
+          id: null,
+          deliveredTo: to,
+          delivered: false,
+          error: error.message,
+        };
+      }
+
+      return { id: data?.id, deliveredTo: to, delivered: true };
+    } catch (err) {
+      console.warn(`[email:error] Exception sending email via Resend to ${to}: ${err.message}`);
       console.warn(
         `[email:fallback] Content for ${to}: ${
           text || html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
@@ -141,25 +186,24 @@ const sendEmail = async ({ to, subject, html, text }) => {
         id: null,
         deliveredTo: to,
         delivered: false,
-        error: error.message,
+        error: err.message,
       };
     }
-
-    return { id: data?.id, deliveredTo: to, delivered: true };
-  } catch (err) {
-    console.warn(`[email:error] Exception sending email via Resend to ${to}: ${err.message}`);
-    console.warn(
-      `[email:fallback] Content for ${to}: ${
-        text || html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()
-      }`,
-    );
-    return {
-      id: null,
-      deliveredTo: to,
-      delivered: false,
-      error: err.message,
-    };
   }
+
+  console.warn(
+    `[email:log] NOT SENT - "${subject}" to ${to}. No SMTP or RESEND_API_KEY configured, so this is printed to the server log instead.`,
+  );
+  console.warn(
+    `[email:log] ${
+      text ||
+      html
+        .replace(/<[^>]*>/g, " ")
+        .replace(/\s+/g, " ")
+        .trim()
+    }`,
+  );
+  return { id: `dev-${Date.now()}`, deliveredTo: to, delivered: false, simulated: true };
 };
 
 const sendVerificationOtpEmail = async ({ to, otp, expiresInMinutes }) => {
